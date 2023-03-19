@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MainComponent } from './main/main.component';
+import { SideComponent } from './side/side.component';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +9,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [
-    MatSidenavModule
-  ]
+    MatSidenavModule,
+    SideComponent,
+    MainComponent
+  ],
 })
 export class AppComponent {
   title = 'join';

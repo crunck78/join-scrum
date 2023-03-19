@@ -1,0 +1,22 @@
+:host {
+    display: block;
+    width: 232px;
+    height: 100%;
+
+    mat-toolbar {
+        height: 100%;
+
+        mat-toolbar-row {
+            height: unset;
+
+            &.logo {
+                justify-content: center;
+            }
+
+            &.navigation{
+                flex: 1;
+            }
+
+        }
+    }
+}

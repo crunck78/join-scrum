@@ -1,0 +1,11 @@
+:host{
+    a {
+        display: block;
+        color: #CDCDCD;
+
+        &.active-link{
+            color: white;
+            background-color: #091931;
+        }
+    }
+}
