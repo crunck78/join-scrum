@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { PageComponent } from '../admin/page/page.component';
 import { HeaderComponent } from './header/header.component';
 
 @Component({
@@ -7,7 +8,7 @@ import { HeaderComponent } from './header/header.component';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent]
+  imports: [RouterOutlet, HeaderComponent, PageComponent]
 })
 export class MainComponent {
 
