@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Route, RouterModule } from '@angular/router';
+import { Route, RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-router-link',
@@ -10,6 +10,7 @@ import { Route, RouterModule } from '@angular/router';
   imports: [
     MatButtonModule,
     RouterModule,
+    RouterLinkActive
   ]
 })
 export class RouterLinkComponent {

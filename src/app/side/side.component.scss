@@ -5,6 +5,10 @@
 
     mat-toolbar {
         height: 100%;
+        padding-top: 66px;
+        padding-bottom: 66px;
+
+        gap: 66px;
 
         mat-toolbar-row {
             height: unset;
