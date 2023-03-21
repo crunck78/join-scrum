@@ -16,5 +16,4 @@ import { Route, RouterLinkActive, RouterModule } from '@angular/router';
 export class RouterLinkComponent {
 
   @Input() route!: Route;
-
 }

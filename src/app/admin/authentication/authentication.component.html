@@ -1,0 +1,15 @@
+<div class="header">
+    <app-logo [light]="true"></app-logo>
+    <div class="to-register">
+        Not a Join user?
+        <ng-container *ngIf="signUpRoute">
+            <app-router-link [route]="signUpRoute" ></app-router-link>
+        </ng-container>
+
+    </div>
+</div>
+
+<app-page>
+    <router-outlet></router-outlet>
+</app-page>
+

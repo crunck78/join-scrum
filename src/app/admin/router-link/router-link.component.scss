@@ -1,7 +1,8 @@
 :host{
     a {
-        display: block;
+        display: flex;
         color: #CDCDCD;
+        justify-content: flex-start;
 
         &.active-link{
             color: white;
