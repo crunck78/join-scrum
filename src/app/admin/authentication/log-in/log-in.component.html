@@ -1,3 +1,30 @@
 <app-card>
     <app-page-title title></app-page-title>
+
+    <div [formGroup]="loginForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password">
+        </mat-form-field>
+    </div>
+
+    <div class="footer" footer>
+
+        <div>
+            <mat-checkbox [formControl]="rememberMe">Remember me</mat-checkbox>
+            <a color="primary" mat-stroked-button routerLink='forgot-password'>Forgot my password</a>
+        </div>
+
+        <div>
+            <button mat-raised-button color="primary">Log in</button>
+            <button mat-stroked-button color="primary">Guest Log in</button>
+        </div>
+
+    </div>
+
 </app-card>

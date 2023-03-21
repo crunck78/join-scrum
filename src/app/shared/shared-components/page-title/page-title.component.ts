@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-title',
@@ -9,7 +8,7 @@ import { Router } from '@angular/router';
   standalone: true,
 })
 export class PageTitleComponent {
-  constructor(private router: Router, private titleService: Title){
+  constructor(private titleService: Title){
 
   }
 

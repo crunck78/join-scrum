@@ -13,21 +13,26 @@
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-$my-custom-level: mat.define-typography-level(
-  $font-family: Inter,
+$my-custom-level: mat.define-typography-level($font-family: Inter,
     $font-weight: 400,
     $font-size: 1rem,
     $line-height: 1,
     $letter-spacing: normal,
   );
 
-$fonts: mat.define-typography-config($headline-1: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+$fonts: mat.define-typography-config(
+  $headline-1: mat.define-typography-level($font-size: 112px, $line-height: 112px, $font-weight: 300,  $font-family: Inter, $letter-spacing: -0.05em),
     $headline-2: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
     $headline-3: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
     $headline-4: mat.define-typography-level(34px, 40px, 400),
     $headline-5: mat.define-typography-level(24px, 32px, 400),
-    $button: mat.define-typography-level(14px, 14px, 500, Inter, $letter-spacing: 0.0893em)
-  );
+    $headline-6: mat.define-typography-level(61px, 120%, 700, Inter),
+    $subtitle-1: mat.define-typography-level(24px, 32px, 400),
+    $subtitle-2: mat.define-typography-level(24px, 32px, 400),
+    $body-1: mat.define-typography-level(21px, 120%, 400, Inter),
+    $body-2: mat.define-typography-level(21px, 120%, 400, Inter),
+    $caption: mat.define-typography-level(21px, 32px, 400),
+    $button: mat.define-typography-level(21px, 120%, 700, Inter));
 
 // Foreground Elements
 
