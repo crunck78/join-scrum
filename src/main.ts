@@ -1,4 +1,5 @@
-import { importProvidersFrom } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { importProvidersFrom, Provider } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideRouter, Routes } from '@angular/router';
@@ -13,6 +14,8 @@ import { ContactsComponent } from './app/admin/contacts/contacts.component';
 import { LegalNoticeComponent } from './app/admin/legal-notice/legal-notice.component';
 import { SummaryComponent } from './app/admin/summary/summary.component';
 import { AppComponent } from './app/app.component';
+import { LoginInterceptor } from './app/scrum-api/login-interceptor.service';
+import { ScrumApiModule } from './app/scrum-api/scrum-api.module';
 
 const routes: Routes = [
     { path: '', component: SummaryComponent, title: 'Summary' },
@@ -23,7 +26,7 @@ const routes: Routes = [
     {
         path: 'auth', component: AuthenticationComponent, title: 'Authentication',
         children: [
-            {path: '', redirectTo: 'log-in', pathMatch: 'full'},
+            { path: '', redirectTo: 'log-in', pathMatch: 'full' },
             { path: 'log-in', component: LogInComponent, title: 'Log in' },
             { path: 'sign-up', component: RegisterComponent, title: 'Sign up' },
             { path: 'forgot-password', component: ForgotPasswordComponent, title: 'Forgot your Password' },
@@ -32,9 +35,14 @@ const routes: Routes = [
     }
 ];
 
+const interceptorProviders: Provider[] = [
+    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true } as Provider
+];
+
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        provideRouter(routes)
+        importProvidersFrom(HttpClientModule, ScrumApiModule, BrowserAnimationsModule),
+        provideRouter(routes),
+        interceptorProviders
     ]
 });

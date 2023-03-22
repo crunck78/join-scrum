@@ -1,7 +1,7 @@
 <app-card>
     <app-page-title title></app-page-title>
 
-    <div [formGroup]="loginForm">
+    <div class="main-content" [formGroup]="loginForm">
         <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email">
@@ -15,13 +15,13 @@
 
     <div class="footer" footer>
 
-        <div>
+        <div class="simple-grid">
             <mat-checkbox [formControl]="rememberMe">Remember me</mat-checkbox>
             <a color="primary" mat-stroked-button routerLink='forgot-password'>Forgot my password</a>
         </div>
 
-        <div>
-            <button mat-raised-button color="primary">Log in</button>
+        <div class="simple-grid">
+            <button (click)="login()" mat-raised-button color="primary">Log in</button>
             <button mat-stroked-button color="primary">Guest Log in</button>
         </div>
 

@@ -71,7 +71,8 @@
               "browserTarget": "join:build:production"
             },
             "development": {
-              "browserTarget": "join:build:development"
+              "browserTarget": "join:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

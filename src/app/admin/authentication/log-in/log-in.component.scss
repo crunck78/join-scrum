@@ -1,15 +1,26 @@
-mat-form-field{
+mat-form-field {
     display: block;
     // max-width: 100%;
     // width: 422px;
 }
 
-.footer{
+.footer {
     display: grid;
     grid-gap: 35px;
     padding: 16px;
 
-    button,a{
-        width: fit-content;
+    .simple-grid {
+        display: flex;
+        gap: 35px;
+        flex-wrap: wrap;
+
+        button,
+        a {
+            width: fit-content;
+        }
     }
+}
+
+.main-content{
+    margin-top: 35px;
 }

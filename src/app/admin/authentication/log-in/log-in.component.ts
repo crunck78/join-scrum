@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
+import { LoginCredentials } from 'src/app/scrum-api/scrum-login.service';
 
 @Component({
   selector: 'app-log-in',
@@ -24,9 +26,19 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class LogInComponent {
 
+  constructor(private scrumApi: ScrumApiService){
+
+  }
+
   loginForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     password: new FormControl('', Validators.compose([Validators.required]))
   });
   rememberMe = new FormControl(false);
+
+  login(){
+    if(this.loginForm.valid){
+      this.scrumApi.login(this.loginForm.value as LoginCredentials);
+    }
+  }
 }
