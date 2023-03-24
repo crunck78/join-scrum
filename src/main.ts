@@ -14,8 +14,9 @@ import { ContactsComponent } from './app/admin/contacts/contacts.component';
 import { LegalNoticeComponent } from './app/admin/legal-notice/legal-notice.component';
 import { SummaryComponent } from './app/admin/summary/summary.component';
 import { AppComponent } from './app/app.component';
-import { LoginInterceptor } from './app/scrum-api/login-interceptor.service';
+import { LoginInterceptor } from './app/scrum-api/scrum-login/login-interceptor.service';
 import { ScrumApiModule } from './app/scrum-api/scrum-api.module';
+import { ProfileInterceptor } from './app/scrum-api/scrum-profile/profile-interceptor.service';
 
 const routes: Routes = [
     { path: '', component: SummaryComponent, title: 'Summary' },
@@ -36,7 +37,8 @@ const routes: Routes = [
 ];
 
 const interceptorProviders: Provider[] = [
-    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true } as Provider
+    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true } as Provider,
+    { provide: HTTP_INTERCEPTORS, useClass: ProfileInterceptor, multi: true } as Provider
 ];
 
 bootstrapApplication(AppComponent, {

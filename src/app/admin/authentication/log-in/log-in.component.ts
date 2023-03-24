@@ -1,15 +1,25 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
-import { LoginCredentials } from 'src/app/scrum-api/scrum-login.service';
+import { LoginCredentials, ScrumLoginService } from 'src/app/scrum-api/scrum-login/scrum-login.service';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+
+import { MatExpansionModule } from '@angular/material/expansion';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class CustomErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    return !!(control && control.invalid && control.touched);
+  }
+}
 
 @Component({
   selector: 'app-log-in',
@@ -17,16 +27,18 @@ import { LoginCredentials } from 'src/app/scrum-api/scrum-login.service';
   styleUrls: ['./log-in.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     CardComponent, PageTitleComponent,
     MatInputModule, MatFormFieldModule, MatCheckboxModule,
     MatButtonModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    MatExpansionModule
   ]
 })
 export class LogInComponent {
 
-  constructor(private scrumApi: ScrumApiService){
+  constructor(private scrumLogin: ScrumLoginService) {
 
   }
 
@@ -35,10 +47,16 @@ export class LogInComponent {
     password: new FormControl('', Validators.compose([Validators.required]))
   });
   rememberMe = new FormControl(false);
+  customMatcher = new CustomErrorStateMatcher();
 
-  login(){
-    if(this.loginForm.valid){
-      this.scrumApi.login(this.loginForm.value as LoginCredentials);
+  login() {
+    if (this.loginForm.valid) {
+      this.scrumLogin.login(this.loginForm.value as LoginCredentials);
     }
+  }
+
+  resetErrorState(controlName: string) {
+    if (this.loginForm.get(controlName)?.touched)
+      this.loginForm.get(controlName)?.markAsUntouched();
   }
 }

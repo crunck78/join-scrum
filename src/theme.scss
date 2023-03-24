@@ -25,12 +25,12 @@ $fonts: mat.define-typography-config(
     $headline-2: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
     $headline-3: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
     $headline-4: mat.define-typography-level(34px, 40px, 400),
-    $headline-5: mat.define-typography-level(24px, 32px, 400),
+    $headline-5: mat.define-typography-level(24px, 32px, 400, Inter),
     $headline-6: mat.define-typography-level(61px, 120%, 700, Inter),
-    $subtitle-1: mat.define-typography-level(24px, 32px, 400),
-    $subtitle-2: mat.define-typography-level(24px, 32px, 400),
-    $body-1: mat.define-typography-level(21px, 120%, 400, Inter),
-    $body-2: mat.define-typography-level(21px, 120%, 400, Inter),
+    $subtitle-1: mat.define-typography-level(24px, 32px, 400, Inter),
+    $subtitle-2: mat.define-typography-level(16px, 120%, 400, Inter),
+    $body-1: mat.define-typography-level(16px, 120%, 400, Inter),
+    $body-2: mat.define-typography-level(16px, 120%, 400, Inter),
     $caption: mat.define-typography-level(21px, 32px, 400),
     $button: mat.define-typography-level(21px, 120%, 700, Inter));
 

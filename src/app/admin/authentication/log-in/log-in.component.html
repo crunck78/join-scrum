@@ -1,17 +1,51 @@
 <app-card>
     <app-page-title title></app-page-title>
 
-    <div class="main-content" [formGroup]="loginForm">
+    <form class="main-content" [formGroup]="loginForm">
         <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input type="email" matInput formControlName="email">
+            <input required maxlength="100" (focus)="resetErrorState('email')" [autocomplete]="'login-email'" type="email"
+                matInput formControlName="email" [errorStateMatcher]="customMatcher">
+            <img matTextSuffix src="assets/mail.svg" alt="">
+            <mat-error
+                *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                Email is <strong>required</strong>
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input type="password" matInput formControlName="password">
+            <input required maxlength="100" (focus)="resetErrorState('password')" minlength="8" maxlength="100" #password
+                [autocomplete]="'login-password'" type="password" matInput formControlName="password"
+                [errorStateMatcher]="customMatcher">
+            <img matTextSuffix src="assets/password.svg" alt="">
+
+            <mat-hint></mat-hint>
+
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                Password is <strong>required</strong>
+            </mat-error>
+            <mat-error
+                *ngIf="loginForm.get('password')?.hasError('minlength') && !loginForm.get('password')?.hasError('required')">
+                Password is <strong>to short</strong>
+            </mat-error>
+
         </mat-form-field>
-    </div>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-description>
+                    Password requirements
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Must be at least 8 character long</p>
+            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
+
+        </mat-expansion-panel>
+    </form>
 
     <div class="footer" footer>
 
@@ -21,7 +55,7 @@
         </div>
 
         <div class="simple-grid">
-            <button (click)="login()" mat-raised-button color="primary">Log in</button>
+            <button [disabled]="loginForm.invalid" (click)="login()" mat-raised-button color="primary">Log in</button>
             <button mat-stroked-button color="primary">Guest Log in</button>
         </div>
 
