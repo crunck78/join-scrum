@@ -1,1 +1,66 @@
-<p>register works!</p>
+<app-card>
+    <app-page-title title></app-page-title>
+
+    <form class="main-content" [formGroup]="signupForm">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input maxlength="100" [autocomplete]="'signup-name'" type="text"
+                matInput formControlName="name">
+            <img matTextSuffix src="assets/person.svg" alt="">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input required maxlength="100" (focus)="resetErrorState('email')" [autocomplete]="'signup-email'" type="email"
+                matInput formControlName="email" [errorStateMatcher]="customMatcher">
+            <img matTextSuffix src="assets/mail.svg" alt="">
+            <mat-error
+                *ngIf="signupForm.get('email')?.hasError('email') && !signupForm.get('email')?.hasError('required')">
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
+                Email is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input required maxlength="100" (focus)="resetErrorState('password')" minlength="8" #password
+                [autocomplete]="'signup-password'" type="password" matInput formControlName="password"
+                [errorStateMatcher]="customMatcher">
+            <img matTextSuffix src="assets/password.svg" alt="">
+
+            <mat-hint></mat-hint>
+
+            <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+                Password is <strong>required</strong>
+            </mat-error>
+            <mat-error
+                *ngIf="signupForm.get('password')?.hasError('minlength') && !signupForm.get('password')?.hasError('required')">
+                Password is <strong>to short</strong>
+            </mat-error>
+
+        </mat-form-field>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-description>
+                    Password requirements
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Must be at least 8 characters long</p>
+            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
+
+        </mat-expansion-panel>
+    </form>
+
+    <div class="footer" footer>
+
+        <div class="simple-grid">
+            <button [disabled]="signupForm.invalid" (click)="signUp()" mat-raised-button color="primary">Sign Up</button>
+        </div>
+
+    </div>
+
+</app-card>

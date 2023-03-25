@@ -18,7 +18,7 @@
 
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input required maxlength="100" (focus)="resetErrorState('password')" minlength="8" maxlength="100" #password
+            <input required maxlength="100" (focus)="resetErrorState('password')" #password
                 [autocomplete]="'login-password'" type="password" matInput formControlName="password"
                 [errorStateMatcher]="customMatcher">
             <img matTextSuffix src="assets/password.svg" alt="">
@@ -28,23 +28,23 @@
             <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
                 Password is <strong>required</strong>
             </mat-error>
-            <mat-error
+            <!-- <mat-error
                 *ngIf="loginForm.get('password')?.hasError('minlength') && !loginForm.get('password')?.hasError('required')">
                 Password is <strong>to short</strong>
-            </mat-error>
+            </mat-error> -->
 
         </mat-form-field>
 
-        <mat-expansion-panel>
+        <!-- <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-description>
                     Password requirements
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <p>Must be at least 8 character long</p>
-            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
+            <p>Must be a combination of letters, numbers and at least one special character.</p>
 
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
     </form>
 
     <div class="footer" footer>

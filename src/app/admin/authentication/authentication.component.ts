@@ -21,8 +21,6 @@ import { RouterLinkComponent } from '../router-link/router-link.component';
 export class AuthenticationComponent {
   signUpRoute!: Route;
   constructor(private router: Router) {
-    console.log(this.router.config.flat())
     this.signUpRoute = this.router.config.find(r => r.path == 'auth')?.children?.find(r => r.path == 'sign-up') as Route;
-    console.log(this.signUpRoute);
   }
 }
