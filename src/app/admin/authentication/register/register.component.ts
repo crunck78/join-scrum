@@ -41,7 +41,7 @@ export class RegisterComponent {
   constructor(private scrumSignup: ScrumSignupService) {}
 
   signupForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.compose([Validators.required])),
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     password: new FormControl('', Validators.compose([Validators.required]))
   });

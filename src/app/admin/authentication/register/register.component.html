@@ -3,11 +3,27 @@
 
     <form class="main-content" [formGroup]="signupForm">
 
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-description>
+                    Name requirements
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Can only contain numbers, letters.</p>
+            <p>Special characters are not allowed.</p>
+            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
+
+        </mat-expansion-panel>
+
         <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
-            <input maxlength="100" [autocomplete]="'signup-name'" type="text"
+            <input required="" maxlength="100" [autocomplete]="'signup-name'" type="text"
                 matInput formControlName="name">
             <img matTextSuffix src="assets/person.svg" alt="">
+
+            <mat-error *ngIf="signupForm.get('name')?.hasError('required')">
+                Name is <strong>required</strong>
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -23,6 +39,17 @@
                 Email is <strong>required</strong>
             </mat-error>
         </mat-form-field>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-description>
+                    Password requirements
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Must be at least 8 characters long</p>
+            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
+
+        </mat-expansion-panel>
 
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
@@ -43,16 +70,7 @@
 
         </mat-form-field>
 
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-description>
-                    Password requirements
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <p>Must be at least 8 characters long</p>
-            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
 
-        </mat-expansion-panel>
     </form>
 
     <div class="footer" footer>
