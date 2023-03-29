@@ -18,7 +18,7 @@
 
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input required maxlength="100" (focus)="resetErrorState('password')" #password
+            <input required maxlength="100" (focus)="resetErrorState('password')"
                 [autocomplete]="'login-password'" type="password" matInput formControlName="password"
                 [errorStateMatcher]="customMatcher">
             <img matTextSuffix src="assets/password.svg" alt="">

@@ -17,6 +17,8 @@ import { AppComponent } from './app/app.component';
 import { LoginInterceptor } from './app/scrum-api/scrum-login/login-interceptor.service';
 import { ScrumApiModule } from './app/scrum-api/scrum-api.module';
 import { ProfileInterceptor } from './app/scrum-api/scrum-profile/profile-interceptor.service';
+import { SignupInterceptor } from './app/scrum-api/scrum-signup/signup-interceptor.service';
+import { ForgotPasswordInterceptor } from './app/scrum-api/scrum-forgot-password/forgot-password-interceptor.service';
 
 const routes: Routes = [
     { path: '', component: SummaryComponent, title: 'Summary' },
@@ -38,7 +40,9 @@ const routes: Routes = [
 
 const interceptorProviders: Provider[] = [
     { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true } as Provider,
-    { provide: HTTP_INTERCEPTORS, useClass: ProfileInterceptor, multi: true } as Provider
+    { provide: HTTP_INTERCEPTORS, useClass: ProfileInterceptor, multi: true } as Provider,
+    { provide: HTTP_INTERCEPTORS, useClass: SignupInterceptor, multi: true } as Provider,
+    { provide: HTTP_INTERCEPTORS, useClass: ForgotPasswordInterceptor, multi: true } as Provider
 ];
 
 bootstrapApplication(AppComponent, {
