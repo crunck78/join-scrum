@@ -25,7 +25,7 @@ export class ScrumSignupService {
     this.http.post<ApiToken>(this.signupEndPoint, credentials).pipe(
       catchError(err => of(err))
     ).subscribe(response => {
-      console.log(response)
+      //console.log(response)
     });
   }
 }

@@ -21,7 +21,7 @@ export class ScrumProfileService {
     this.http.get<Profile>(this.profileEndpoint).pipe(
       catchError(err => of(err))
     ).subscribe(response => {
-        console.log(response);
+        //console.log(response);
     });
   }
 }

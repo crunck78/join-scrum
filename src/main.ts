@@ -19,13 +19,17 @@ import { ScrumApiModule } from './app/scrum-api/scrum-api.module';
 import { ProfileInterceptor } from './app/scrum-api/scrum-profile/profile-interceptor.service';
 import { SignupInterceptor } from './app/scrum-api/scrum-signup/signup-interceptor.service';
 import { ForgotPasswordInterceptor } from './app/scrum-api/scrum-forgot-password/forgot-password-interceptor.service';
+import { ResetPasswordInterceptor } from './app/scrum-api/scrum-reset-password/reset-password-interceptor.service';
+import { ErrorCatchingInterceptor } from './app/scrum-api/error-catching-interceptor.service';
+import { LogInGuard } from './app/scrum-api/scrum-login/log-in.guard';
+import { CustomInterceptor } from './app/scrum-api/custom-interceptor.service';
 
 const routes: Routes = [
-    { path: '', component: SummaryComponent, title: 'Summary' },
-    { path: 'board', component: BoardComponent, title: 'Board' },
-    { path: 'add-task', component: AddTaskComponent, title: 'Add Task' },
-    { path: 'contacts', component: ContactsComponent, title: 'Contacts' },
-    { path: 'legal-notice', component: LegalNoticeComponent, title: 'Legal Notice' },
+    {canActivate: [LogInGuard], path: '', component: SummaryComponent, title: 'Summary' },
+    {canActivate: [LogInGuard], path: 'board', component: BoardComponent, title: 'Board' },
+    {canActivate: [LogInGuard], path: 'add-task', component: AddTaskComponent, title: 'Add Task' },
+    {canActivate: [LogInGuard], path: 'contacts', component: ContactsComponent, title: 'Contacts' },
+    {canActivate: [LogInGuard], path: 'legal-notice', component: LegalNoticeComponent, title: 'Legal Notice' },
     {
         path: 'auth', component: AuthenticationComponent, title: 'Authentication',
         children: [
@@ -39,10 +43,13 @@ const routes: Routes = [
 ];
 
 const interceptorProviders: Provider[] = [
-    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true } as Provider,
-    { provide: HTTP_INTERCEPTORS, useClass: ProfileInterceptor, multi: true } as Provider,
-    { provide: HTTP_INTERCEPTORS, useClass: SignupInterceptor, multi: true } as Provider,
-    { provide: HTTP_INTERCEPTORS, useClass: ForgotPasswordInterceptor, multi: true } as Provider
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true } as Provider,
+    { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true } as Provider,
+    // { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true } as Provider,
+    // { provide: HTTP_INTERCEPTORS, useClass: ProfileInterceptor, multi: true } as Provider,
+    // { provide: HTTP_INTERCEPTORS, useClass: SignupInterceptor, multi: true } as Provider,
+    // { provide: HTTP_INTERCEPTORS, useClass: ForgotPasswordInterceptor, multi: true } as Provider,
+    // { provide: HTTP_INTERCEPTORS, useClass: ResetPasswordInterceptor, multi: true } as Provider,
 ];
 
 bootstrapApplication(AppComponent, {

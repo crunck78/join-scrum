@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer mode="side" opened="false">
+    <mat-drawer mode="side" [opened]="isLoggedIn$ | async">
         <app-side></app-side>
     </mat-drawer>
     <mat-drawer-content>

@@ -10,8 +10,16 @@ export class ResetPasswordInterceptor {
   constructor() { }
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log("Passed through the interceptor in request:", httpRequest);
     return next.handle(httpRequest).pipe(
-      filter((event: any) => event instanceof HttpResponse && httpRequest.url == RESET_PASSWORD_ENDPOINT),
+      map((event) => {
+        console.log("Passed through the interceptor in response: ", event);
+        return event;
+      }),
+      filter((event: any) => {
+        console.log("Passed through the interceptor in response filter: ", event);
+        return event instanceof HttpResponse && httpRequest.url == RESET_PASSWORD_ENDPOINT
+      }),
       map((event: HttpResponse<any>) => event.clone({ body: event.body }))
     );
   }

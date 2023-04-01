@@ -1,11 +1,9 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, filter, map, Observable, of } from 'rxjs';
-
-export const PROFILE_ENDPOINT = '/api/user/me/'
+import { catchError, filter, finalize, map, Observable, of, tap, throwError } from 'rxjs';
 
 @Injectable()
-export class ProfileInterceptor {
+export class CustomInterceptor implements HttpInterceptor {
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log("Passed through the interceptor in request:", httpRequest);
@@ -16,9 +14,12 @@ export class ProfileInterceptor {
       }),
       filter((event: any) => {
         console.log("Passed through the interceptor in response filter: ", event);
-        return  event instanceof HttpResponse && httpRequest.url == PROFILE_ENDPOINT;
+        return event instanceof HttpResponse
       }),
-      map((event: HttpResponse<any>) => event.clone({ body: event.body }))
+      map((event: HttpResponse<any>) => {
+        console.log(event.status);
+        return event.clone({ body: event.body });
+      })
     );
   }
 }
