@@ -1,6 +1,6 @@
 <div class="header">
     <app-logo [light]="true"></app-logo>
-    <div class="to-register">
+    <div *ngIf="!(mobile$ | async)" class="to-register">
         <span class="mdc-form-field">Not a Join user?</span>
         <ng-container *ngIf="signUpRoute">
             <app-router-link [route]="signUpRoute"></app-router-link>
@@ -10,3 +10,10 @@
 
 
 <router-outlet></router-outlet>
+
+<div *ngIf="mobile$ | async" class="to-register">
+    <span class="mdc-form-field">Not a Join user?</span>
+    <ng-container *ngIf="signUpRoute">
+        <app-router-link [route]="signUpRoute"></app-router-link>
+    </ng-container>
+</div>

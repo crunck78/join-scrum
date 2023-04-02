@@ -12,10 +12,48 @@ export interface ApiToken {
 export class ScrumApiService {
 
   token!: string;
-  apiToken$ = new BehaviorSubject<ApiToken>({ token: '' })
+  apiToken$!: BehaviorSubject<ApiToken>;
+
+  set rememberMe(value: boolean) {
+    try {
+      localStorage.setItem('rememberMe', JSON.stringify(value));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  get rememberMe() {
+    try {
+      return JSON.parse(localStorage.getItem('rememberMe') || 'false') || false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  set localToken(token: string) {
+    try {
+      localStorage.setItem('join-token', token);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  get localToken() {
+    try {
+      return localStorage.getItem('join-token') as string;
+    } catch (error) {
+      console.log(error);
+      return "";
+    }
+  }
 
   constructor(private router: Router) {
+    const init = this.rememberMe ? this.localToken : '';
+    this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
     this.apiToken$.subscribe(apiToken => {
+      if(this.rememberMe)
+        this.localToken = apiToken.token;
       this.token = apiToken?.token;
       if (apiToken && apiToken.token)
         this.router.navigate(['/'])

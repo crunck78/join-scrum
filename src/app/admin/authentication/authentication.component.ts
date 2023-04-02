@@ -4,6 +4,9 @@ import { Route, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LogoComponent } from 'src/app/shared/shared-components/logo/logo.component';
 import { PageComponent } from '../page/page.component';
 import { RouterLinkComponent } from '../router-link/router-link.component';
+import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-authentication',
@@ -20,7 +23,10 @@ import { RouterLinkComponent } from '../router-link/router-link.component';
 })
 export class AuthenticationComponent {
   signUpRoute!: Route;
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private breakpointObserver: BreakpointObserver) {
     this.signUpRoute = this.router.config.find(r => r.path == 'auth')?.children?.find(r => r.path == 'sign-up') as Route;
+
   }
+  mobile$ = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(result => result.matches));
 }

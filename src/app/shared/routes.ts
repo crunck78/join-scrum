@@ -10,6 +10,8 @@ import { ContactsComponent } from '../admin/contacts/contacts.component';
 import { LegalNoticeComponent } from '../admin/legal-notice/legal-notice.component';
 import { SummaryComponent } from '../admin/summary/summary.component';
 import { LogInGuard } from '../scrum-api/scrum-login/log-in.guard';
+import { AuthGuard } from '../scrum-api/scrum-profile/auth.guard';
+import { ProfileComponent } from '../admin/profile/profile/profile.component';
 
 export const routes: Routes = [
     {canActivate: [LogInGuard], path: '', component: SummaryComponent, title: 'Summary' },
@@ -17,6 +19,7 @@ export const routes: Routes = [
     {canActivate: [LogInGuard], path: 'add-task', component: AddTaskComponent, title: 'Add Task' },
     {canActivate: [LogInGuard], path: 'contacts', component: ContactsComponent, title: 'Contacts' },
     {canActivate: [LogInGuard], path: 'legal-notice', component: LegalNoticeComponent, title: 'Legal Notice' },
+    {canActivate: [LogInGuard], path: 'profile', component: ProfileComponent, title: 'Profile'},
     {
         path: 'auth', component: AuthenticationComponent, title: 'Authentication',
         children: [

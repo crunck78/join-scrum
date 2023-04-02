@@ -5,6 +5,7 @@ import { SideComponent } from './side/side.component';
 import { ApiToken, ScrumApiService } from './scrum-api/scrum-api.service';
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { map } from 'rxjs';
     CommonModule,
     MatSidenavModule,
     SideComponent,
+    HeaderComponent,
     MainComponent
   ],
 })

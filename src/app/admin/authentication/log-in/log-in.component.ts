@@ -13,6 +13,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
@@ -38,15 +39,16 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LogInComponent {
 
-  constructor(private scrumLogin: ScrumLoginService) {
-
+  constructor(private scrumLogin: ScrumLoginService,
+    private scrumApi: ScrumApiService) {
+    this.rememberMe.valueChanges.subscribe(value => this.scrumApi.rememberMe = value as boolean)
   }
 
   loginForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     password: new FormControl('', Validators.compose([Validators.required]))
   });
-  rememberMe = new FormControl(false);
+  rememberMe = new FormControl(this.scrumApi.rememberMe);
   customMatcher = new CustomErrorStateMatcher();
 
   login() {
