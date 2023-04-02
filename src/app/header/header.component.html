@@ -1,2 +1,4 @@
-<button (click)="toggleDrawer.emit()" >Toggle Nav</button>
-<button (click)="logout()" >Log Out</button>
+<button (click)="toggleDrawer.emit()" mat-icon-button color="accent">
+    <mat-icon>menu</mat-icon>
+</button>
+<button mat-raised-button color="primary" (click)="logout()">Log Out</button>
