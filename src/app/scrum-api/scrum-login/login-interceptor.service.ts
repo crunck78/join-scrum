@@ -19,11 +19,12 @@ export class LoginInterceptor implements HttpInterceptor {
       }),
       filter((event: any) => {
         console.log("Passed through the interceptor in response filter: ", event);
-        return event instanceof HttpResponse && httpRequest.url == LOGIN_ENDPOINT;
+        return event instanceof HttpResponse;
       }),
       tap((event: HttpResponse<any>) => {
-        if (this.scrumApi.rememberMe)
+        if (this.scrumApi.rememberMe && httpRequest.url == LOGIN_ENDPOINT)
           this.scrumApi.localToken = event.body.token;
+          return event;
       })
     );
   }

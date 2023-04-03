@@ -4,6 +4,8 @@ import { ApiToken, ScrumApiService } from '../scrum-api.service';
 import { SIGNUP_ENDPOINT } from './signup-interceptor.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Profile, ScrumProfileService } from '../scrum-profile/scrum-profile.service';
+import { Router } from '@angular/router';
 
 export interface SignupCredentials {
   name?: string
@@ -19,13 +21,23 @@ export class ScrumSignupService {
   signupCredentials!: SignupCredentials;
   signupEndPoint = SIGNUP_ENDPOINT;
 
-  constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
+  constructor(private http: HttpClient,
+    private scrumProfile: ScrumProfileService,
+    private router: Router) { }
 
   signup(credentials: SignupCredentials) {
-    this.http.post<ApiToken>(this.signupEndPoint, credentials).pipe(
-      catchError(err => of(err))
-    ).subscribe(response => {
-      //console.log(response)
-    });
+    this.http.post<Profile>(this.signupEndPoint, credentials)
+      .subscribe(
+        {
+          next: (response: Profile) => {
+            this.scrumProfile.profile = response;
+            this.router.navigate(['/auth/log-in']);
+            console.log(response);
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        }
+      );
   }
 }

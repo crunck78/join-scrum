@@ -5,7 +5,9 @@ import { catchError } from 'rxjs/operators';
 import { PROFILE_ENDPOINT } from './profile-interceptor.service';
 
 export interface Profile{
-
+  email: string;
+  name: string;
+  image: string;
 }
 
 @Injectable({
@@ -14,6 +16,7 @@ export interface Profile{
 export class ScrumProfileService {
 
   profileEndpoint = PROFILE_ENDPOINT;
+  profile!: Profile;
 
   constructor(private http: HttpClient) { }
 
