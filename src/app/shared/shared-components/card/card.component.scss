@@ -1,3 +1,7 @@
 mat-card{
-    // width: fit-content;
+    height: 100%;
+
+    mat-card-content{
+        flex: 1;
+    }
 }

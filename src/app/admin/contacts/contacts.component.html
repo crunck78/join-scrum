@@ -1,1 +1,12 @@
-<p>contacts works!</p>
+<app-card>
+    <app-page-title title></app-page-title>
+
+    <ng-container *ngFor="let contact of contacts">
+        {{contact | json}}
+    </ng-container>
+
+    <button (click)="openDialog()" class="new-contact" footer mat-raised-button color="primary">
+        <span>New contact</span>
+        <img src="assets/new_contact.svg" alt="">
+    </button>
+</app-card>
