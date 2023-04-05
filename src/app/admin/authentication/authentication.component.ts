@@ -26,7 +26,6 @@ export class AuthenticationComponent {
   constructor(private router: Router,
     private breakpointObserver: BreakpointObserver) {
     this.signUpRoute = this.router.config.find(r => r.path == 'auth')?.children?.find(r => r.path == 'sign-up') as Route;
-
   }
   mobile$ = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(result => result.matches));
 }
