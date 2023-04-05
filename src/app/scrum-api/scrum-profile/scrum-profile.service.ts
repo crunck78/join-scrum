@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { PROFILE_ENDPOINT } from './profile-interceptor.service';
 
-export interface Profile{
+export interface Profile {
   email: string;
   name: string;
   image: string;
@@ -21,10 +21,16 @@ export class ScrumProfileService {
   constructor(private http: HttpClient) { }
 
   getProfile() {
-    this.http.get<Profile>(this.profileEndpoint).pipe(
-      catchError(err => of(err))
-    ).subscribe(response => {
-        //console.log(response);
-    });
+    this.http.get<Profile>(this.profileEndpoint)
+      .subscribe(
+        {
+          next: (response : Profile) => {
+            console.log(response);
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        }
+      );
   }
 }

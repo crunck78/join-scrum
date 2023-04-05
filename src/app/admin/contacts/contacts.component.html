@@ -1,7 +1,7 @@
 <app-card>
     <app-page-title title></app-page-title>
 
-    <ng-container *ngFor="let contact of contacts">
+    <ng-container *ngFor="let contact of contacts$ | async">
         {{contact | json}}
     </ng-container>
 

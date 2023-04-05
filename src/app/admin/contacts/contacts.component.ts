@@ -4,6 +4,8 @@ import { CardComponent } from 'src/app/shared/shared-components/card/card.compon
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { Contact, ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -16,7 +18,11 @@ import { CommonModule } from '@angular/common';
 })
 export class ContactsComponent {
 
-  contacts = [];
+  contacts$!: Observable<Contact[]>;
+
+  constructor(private scrumContacts: ScrumContactsService){
+    this.contacts$ = this.scrumContacts.getContacts$();
+  }
 
   openDialog(){
 
