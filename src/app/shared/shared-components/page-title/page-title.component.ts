@@ -8,9 +8,7 @@ import { Title } from '@angular/platform-browser';
   standalone: true,
 })
 export class PageTitleComponent {
-  constructor(private titleService: Title){
-
-  }
+  constructor(private titleService: Title){}
 
   get title(){
     return this.titleService.getTitle();

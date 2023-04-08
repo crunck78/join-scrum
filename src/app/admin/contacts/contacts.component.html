@@ -3,9 +3,12 @@
 
     <ng-container *ngFor="let contact of contacts$ | async">
         {{contact | json}}
+        <button (click)="editContact(contact)" mat-stroked-button color="primary">
+            Edit Contact
+        </button>
     </ng-container>
 
-    <button (click)="openDialog()" class="new-contact" footer mat-raised-button color="primary">
+    <button (click)="addContact()" class="new-contact" footer mat-raised-button color="primary">
         <span>New contact</span>
         <img src="assets/new_contact.svg" alt="">
     </button>
