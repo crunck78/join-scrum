@@ -14,13 +14,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ForgotPasswordCredentials, ScrumForgotPasswordService } from 'src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class CustomErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return !!(control && control.invalid && control.touched);
-  }
-}
+import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -34,25 +28,17 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
     MatButtonModule,
     ReactiveFormsModule,
     RouterLink,
-    MatExpansionModule
+    MatExpansionModule,
+    FormFieldComponent,
   ]
 })
 export class ForgotPasswordComponent {
 
-  constructor(private scrumForgotPassword: ScrumForgotPasswordService){
-
-  }
+  constructor(private scrumForgotPassword: ScrumForgotPasswordService){}
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email]))
-  })
-
-  customMatcher = new CustomErrorStateMatcher();
-
-  resetErrorState(controlName: string) {
-    if (this.forgotPasswordForm.get(controlName)?.touched)
-      this.forgotPasswordForm.get(controlName)?.markAsUntouched();
-  }
+  });
 
   sendMail(){
     if (this.forgotPasswordForm.valid) {
