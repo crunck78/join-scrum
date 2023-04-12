@@ -1,6 +1,37 @@
-<app-dialog>
-    <ng-container side>
-        Test Side
+<app-dialog [title]="'Add Contact'">
+    <ng-container side></ng-container>
+
+    <form class="main-content" [formGroup]="addContactForm">
+
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'}]"
+            [autocomplete]="'contact-name'" [type]="'text'" [inputType]="'input'" [suffixPath]="'assets/person.svg'"
+            [control]="$any(addContactForm.get('name'))" [labelName]="'Name'"></app-form-field>
+
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
+            {name: 'email', htmlMessage: 'Please enter a valid email address'}]"
+            [autocomplete]="'contact-email'" [type]="'email'" [inputType]="'input'"
+            [suffixPath]="'assets/mail.svg'" [control]="$any(addContactForm.get('email'))"
+            [labelName]="'Email'"></app-form-field>
+
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Phone Number is <strong>required</strong>'}]"
+            [autocomplete]="'contact-phone'" [type]="'tel'" [inputType]="'input'"
+            [suffixPath]="'assets/phone.svg'" [control]="$any(addContactForm.get('phoneNumber'))"
+            [labelName]="'Phone'"></app-form-field>
+
+        <!-- <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-description>
+                    Password requirements
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Must be at least 8 character long</p>
+            <p>Must be a combination of letters, numbers and at least one special character.</p>
+
+        </mat-expansion-panel> -->
+    </form>
+
+    <ng-container actions>
+        <button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
+        <button (click)="addContact()" [disabled]="addContactForm.invalid" mat-raised-button color="primary">Create Contact</button>
     </ng-container>
-    Test Main
 </app-dialog>

@@ -1,36 +1,11 @@
 <mat-form-field appearance="outline">
     <mat-label *ngIf="labelName">{{labelName}}</mat-label>
 
-    <input *ngIf="inputType == 'input'" required maxlength="100" (focus)="resetErrorState()"
+    <input *ngIf="inputType == 'input'" required maxlength="100" minlength="{{minLength || 0}}" (focus)="resetErrorState()"
         [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput [formControl]="$any(control)"
         [errorStateMatcher]="customMatcher">
 
     <img *ngIf="suffixPath" matTextSuffix src="{{suffixPath}}" alt="">
 
     <mat-error *ngIf="$any(control) | hasError : errors" [innerHTML]="$any(control) | messageError: errors"></mat-error>
-
-    <ng-container>
-
-
-
-        <!-- <ng-container *ngIf="error.htmlMessage && !error.message">
-            <mat-error [innerHTML]="error.htmlMessage"
-                *ngIf="control?.hasError(error.name) && !control?.hasError('required') && error.name != 'required'"></mat-error>
-
-            <mat-error [innerHTML]="error.htmlMessage"
-                *ngIf="control?.hasError('required') && error.name == 'required'"></mat-error>
-        </ng-container>
-
-        <ng-container *ngIf="error.message && !error.htmlMessage">
-            <mat-error
-                *ngIf="control?.hasError(error.name) && !control?.hasError('required') && error.name != 'required'">
-                {{error.message}}
-            </mat-error>
-
-            <mat-error *ngIf="control?.hasError('required') && error.name == 'required'">
-                {{error.message}}
-            </mat-error>
-        </ng-container> -->
-
-    </ng-container>
 </mat-form-field>

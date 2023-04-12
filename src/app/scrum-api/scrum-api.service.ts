@@ -52,7 +52,7 @@ export class ScrumApiService {
     const init = this.rememberMe ? this.localToken : '';
     this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
     this.apiToken$.subscribe(apiToken => {
-      if(this.rememberMe)
+      if (this.rememberMe)
         this.localToken = apiToken.token;
       this.token = apiToken?.token;
       if (apiToken && apiToken.token)

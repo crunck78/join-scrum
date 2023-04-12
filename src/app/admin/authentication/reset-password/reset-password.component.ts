@@ -14,14 +14,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ScrumSignupService, SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.service';
 import { ResetPasswordCredentials, ScrumResetPasswordService } from 'src/app/scrum-api/scrum-reset-password/scrum-reset-password.service';
-
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class CustomErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return !!(control && control.invalid && control.touched);
-  }
-}
+import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
   selector: 'app-reset-password',
@@ -35,7 +28,8 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
     MatButtonModule,
     ReactiveFormsModule,
     RouterLink,
-    MatExpansionModule
+    MatExpansionModule,
+    FormFieldComponent,
   ]
 })
 export class ResetPasswordComponent {
@@ -47,18 +41,11 @@ export class ResetPasswordComponent {
     confirmedPassword: new FormControl('', Validators.compose([Validators.required])),
   });
 
-  customMatcher = new CustomErrorStateMatcher();
-
   resetPassword() {
     if (this.resetPasswordForm.valid) {
       const newPassword = this.resetPasswordForm.get('confirmedPassword') as FormControl;
       this.scrumResetPassword.resetPassword(newPassword.value as ResetPasswordCredentials);
     }
-  }
-
-  resetErrorState(controlName: string) {
-    if (this.resetPasswordForm.get(controlName)?.touched)
-      this.resetPasswordForm.get(controlName)?.markAsUntouched();
   }
 
   matches(left: FormControl ,right: FormControl){

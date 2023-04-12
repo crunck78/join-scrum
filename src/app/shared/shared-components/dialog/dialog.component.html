@@ -1,7 +1,14 @@
-<div class="side">
+<div *ngIf="false" class="side">
+    <app-logo [light]="false"></app-logo>
+
     <ng-content select="[side]"></ng-content>
 </div>
 
-<div class="main">
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
     <ng-content></ng-content>
-</div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <ng-content select="[actions]"></ng-content>
+</mat-dialog-actions>

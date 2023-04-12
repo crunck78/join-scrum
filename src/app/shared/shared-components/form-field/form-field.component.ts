@@ -50,9 +50,10 @@ export class FormFieldComponent {
   @Input() labelName!: string;
   @Input() suffixPath!: string;
   @Input() inputType!: 'input' | 'text-area';
-  @Input() type!: 'text' | 'email' | 'password';
+  @Input() type!: 'text' | 'email' | 'password' | 'tel';
   @Input() autocomplete!: string;
   @Input() errors!: ValidatorError[];
+  @Input() minLength!: number;
 
   customMatcher = new CustomErrorStateMatcher();
 

@@ -23,4 +23,8 @@ export class ScrumContactsService {
     return this.http.get<Contact[]>(this.contactsEndpoint)
       .pipe(catchError(error => of<Contact[]>([])));
   }
+
+  addContact$(newContact: Contact) {
+    return this.http.post<Contact>(this.contactsEndpoint, newContact);
+  }
 }

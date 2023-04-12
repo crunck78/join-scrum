@@ -3,7 +3,7 @@
 
     <form class="main-content" [formGroup]="signupForm">
 
-        <mat-expansion-panel>
+        <!-- <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-description>
                     Name requirements
@@ -11,72 +11,43 @@
             </mat-expansion-panel-header>
             <p>Can only contain numbers, letters.</p>
             <p>Special characters are not allowed.</p>
-            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
+            <p>Must be a combination of letters, numbers and at least one special character.</p>
 
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
 
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input required="" maxlength="100" [autocomplete]="'signup-name'" type="text"
-                matInput formControlName="name">
-            <img matTextSuffix src="assets/person.svg" alt="">
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'},
+            {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'signup-name'"
+            [type]="'text'" [inputType]="'input'" [suffixPath]="'assets/person.svg'"
+            [control]="$any(signupForm.get('name'))" [labelName]="'Name'"></app-form-field>
 
-            <mat-error *ngIf="signupForm.get('name')?.hasError('required')">
-                Name is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
+                {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'signup-email'"
+            [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
+            [control]="$any(signupForm.get('email'))" [labelName]="'Email'"></app-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input required maxlength="100" (focus)="resetErrorState('email')" [autocomplete]="'signup-email'" type="email"
-                matInput formControlName="email" [errorStateMatcher]="customMatcher">
-            <img matTextSuffix src="assets/mail.svg" alt="">
-            <mat-error
-                *ngIf="signupForm.get('email')?.hasError('email') && !signupForm.get('email')?.hasError('required')">
-                Please enter a valid email address
-            </mat-error>
-            <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
-                Email is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
-
-        <mat-expansion-panel>
+        <!-- <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-description>
                     Password requirements
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <p>Must be at least 8 characters long</p>
-            <!-- <p>Must be a combination of letters, numbers and at least one special character.</p> -->
+            <p>Must be a combination of letters, numbers and at least one special character.</p>
 
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
 
-        <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input required maxlength="100" (focus)="resetErrorState('password')" minlength="8"
-                [autocomplete]="'signup-password'" type="password" matInput formControlName="password"
-                [errorStateMatcher]="customMatcher">
-            <img matTextSuffix src="assets/password.svg" alt="">
-
-            <mat-hint></mat-hint>
-
-            <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
-                Password is <strong>required</strong>
-            </mat-error>
-            <mat-error
-                *ngIf="signupForm.get('password')?.hasError('minlength') && !signupForm.get('password')?.hasError('required')">
-                Password is <strong>to short</strong>
-            </mat-error>
-
-        </mat-form-field>
-
-
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Password is <strong>required</strong>'},
+            {name: 'minlength', htmlMessage: 'Password is <strong>to short</strong>'}]"
+            [autocomplete]="'signup-password'" [type]="'password'" [inputType]="'input'"
+            [suffixPath]="'assets/password.svg'" [control]="$any(signupForm.get('password'))" [labelName]="'Password'"
+            [minLength]="8"></app-form-field>
     </form>
 
     <div class="footer" footer>
 
         <div class="simple-grid">
-            <button [disabled]="signupForm.invalid" (click)="signUp()" mat-raised-button color="primary">Sign Up</button>
+            <button [disabled]="signupForm.invalid" (click)="signUp()" mat-raised-button color="primary">Sign
+                Up</button>
         </div>
 
     </div>

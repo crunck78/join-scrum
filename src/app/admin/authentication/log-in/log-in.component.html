@@ -2,38 +2,16 @@
     <app-page-title title></app-page-title>
 
     <form class="main-content" [formGroup]="loginForm">
-        <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input required maxlength="100" (focus)="resetErrorState('email')" [autocomplete]="'login-email'" type="email"
-                matInput formControlName="email" [errorStateMatcher]="customMatcher">
-            <img matTextSuffix src="assets/mail.svg" alt="">
-            <mat-error
-                *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">
-                Please enter a valid email address
-            </mat-error>
-            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-                Email is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input required maxlength="100" (focus)="resetErrorState('password')"
-                [autocomplete]="'login-password'" type="password" matInput formControlName="password"
-                [errorStateMatcher]="customMatcher">
-            <img matTextSuffix src="assets/password.svg" alt="">
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
+            {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'login-email'"
+            [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
+            [control]="$any(loginForm.get('email'))" [labelName]="'Email'"></app-form-field>
 
-            <mat-hint></mat-hint>
-
-            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-                Password is <strong>required</strong>
-            </mat-error>
-            <!-- <mat-error
-                *ngIf="loginForm.get('password')?.hasError('minlength') && !loginForm.get('password')?.hasError('required')">
-                Password is <strong>to short</strong>
-            </mat-error> -->
-
-        </mat-form-field>
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Password is <strong>required</strong>'}]"
+            [autocomplete]="'login-password'" [type]="'password'" [inputType]="'input'"
+            [suffixPath]="'assets/password.svg'" [control]="$any(loginForm.get('password'))"
+            [labelName]="'Password'"></app-form-field>
 
         <!-- <mat-expansion-panel>
             <mat-expansion-panel-header>

@@ -13,13 +13,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ScrumSignupService, SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.service';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class CustomErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return !!(control && control.invalid && control.touched);
-  }
-}
+import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
   selector: 'app-register',
@@ -33,7 +27,8 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
     MatButtonModule,
     ReactiveFormsModule,
     RouterLink,
-    MatExpansionModule
+    MatExpansionModule,
+    FormFieldComponent,
   ]
 })
 export class RegisterComponent {
@@ -46,17 +41,10 @@ export class RegisterComponent {
     password: new FormControl('', Validators.compose([Validators.required]))
   });
 
-  customMatcher = new CustomErrorStateMatcher();
-
   signUp() {
     if (this.signupForm.valid) {
       this.scrumSignup.signup(this.signupForm.value as SignupCredentials);
     }
-  }
-
-  resetErrorState(controlName: string) {
-    if (this.signupForm.get(controlName)?.touched)
-      this.signupForm.get(controlName)?.markAsUntouched();
   }
 
 }
