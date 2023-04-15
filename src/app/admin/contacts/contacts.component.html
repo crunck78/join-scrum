@@ -1,12 +1,24 @@
 <app-card>
+    <div #contactsList class="contacts-list">
+        <!--
+            Show first letter of contact name for each first contact name that begins with different letter
+            Contacts are already ordered by name from a to z
+         -->
+        <ng-container *ngFor="let contact of contacts$ | async; let i = index">
+            <ng-container *ngIf="contactsList | atoz : (contact.name[0] | uppercase)">
+                <span id="contact-{{contact.name[0] | uppercase}}" class="atoz mat-mdc-card-subtitle">
+                    {{contact.name[0] | uppercase}}</span>
+                    <mat-divider></mat-divider>
+            </ng-container>
+            <app-contact [selected]="(selectedContact$ | async) == contact" (click)="selectedContact$.next(contact)" [contact]="contact"></app-contact>
+        </ng-container>
+    </div>
+</app-card>
+
+<app-card>
     <app-page-title title></app-page-title>
 
-    <ng-container *ngFor="let contact of contacts$ | async">
-        {{contact | json}}
-        <button (click)="editContact(contact)" mat-stroked-button color="primary">
-            Edit Contact
-        </button>
-    </ng-container>
+    <app-contact-details [contact$]="selectedContact$"></app-contact-details>
 
     <button (click)="addContact()" class="new-contact" footer mat-raised-button color="primary">
         <span>New contact</span>

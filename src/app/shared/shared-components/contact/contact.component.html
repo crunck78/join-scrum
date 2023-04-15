@@ -1,0 +1,23 @@
+<button *ngIf="!selected" mat-stroked-button>
+    <div class="contact-container" subtitle>
+        <div class="contact-initials">
+            {{contact.name[0]}}
+        </div>
+        <div class="text-left">
+            <div>{{contact.name}}</div>
+            <a class="contact-mail" (click)="$event.stopPropagation()" href="mailto: {{contact.email}}">{{contact.email}}</a>
+        </div>
+    </div>
+</button>
+
+<button *ngIf="selected" mat-raised-button color="primary">
+    <div class="contact-container" subtitle>
+        <div class="contact-initials">
+            {{contact.name[0]}}
+        </div>
+        <div class="text-left">
+            <div>{{contact.name}}</div>
+            <a class="contact-mail" (click)="$event.stopPropagation()" href="mailto: {{contact.email}}">{{contact.email}}</a>
+        </div>
+    </div>
+</button>

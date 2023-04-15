@@ -22,7 +22,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   ],
 })
 export class AppComponent {
-  constructor(private scrumApi: ScrumApiService, private breakpointObserver: BreakpointObserver) {}
+  constructor(private scrumApi: ScrumApiService, private breakpointObserver: BreakpointObserver) {
+
+  }
   title = 'join';
 
   web$ = this.breakpointObserver

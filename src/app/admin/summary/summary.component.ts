@@ -10,4 +10,8 @@ import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/
   standalone: true,
   imports: [CardComponent,PageTitleComponent]
 })
-export class SummaryComponent {}
+export class SummaryComponent {
+  constructor(){
+
+  }
+}

@@ -5,7 +5,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormFieldComponent } from '../../form-field/form-field.component';
-import { ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
+import { ScrumContactsService, Contact } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -34,7 +34,14 @@ export class AddContactComponent {
 
   addContact(){
     if(this.addContactForm.valid){
-
+      console.log("Adding Contact");
+      const newContact = this.addContactForm.value;
+      this.scrumContacts.addContact$(newContact as Contact).subscribe(
+        {
+          next: (res)=> this.dialogRef.close(res),
+          error: (err) => console.log(err)
+        }
+      );
     }
   }
 

@@ -1,18 +1,38 @@
-:host{
-    display: block;
+:host {
+    display: flex;
     padding: 16px 0;
     height: 100%;
     box-sizing: border-box;
 
-    app-card{
+    app-card {
         display: block;
         height: 100%;
+        width: 100%;
     }
 
-    .new-contact ::ng-deep .mdc-button__label{
+    .new-contact {
+        margin-left: auto;
+        &::ng-deep .mdc-button__label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+    }
+
+    .contacts-list {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
+        flex-direction: column;
+        overflow: auto;
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .atoz {
+        margin-top: 16px;
+    }
+
+    mat-divider {
+        margin-bottom: 6px;
     }
 }
