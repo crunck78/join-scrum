@@ -1,11 +1,11 @@
 <mat-form-field appearance="outline">
     <mat-label *ngIf="labelName">{{labelName}}</mat-label>
 
-    <input *ngIf="inputType == 'input'" required maxlength="100" minlength="{{minLength || 0}}" (focus)="resetErrorState()"
+    <input *ngIf="inputType == 'input'" [required]="required" maxlength="100" minlength="{{minLength || 0}}" (focus)="resetErrorState()"
         [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput [formControl]="$any(control)"
         [errorStateMatcher]="customMatcher">
 
     <img *ngIf="suffixPath" matTextSuffix src="{{suffixPath}}" alt="">
 
-    <mat-error *ngIf="$any(control) | hasError : errors" [innerHTML]="$any(control) | messageError: errors"></mat-error>
+    <mat-error *ngIf="errors && errors.length > 0 && $any(control) | hasError : errors" [innerHTML]="$any(control) | messageError: errors"></mat-error>
 </mat-form-field>

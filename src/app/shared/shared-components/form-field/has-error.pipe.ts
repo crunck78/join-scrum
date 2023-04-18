@@ -10,7 +10,7 @@ import { ValidatorError } from './form-field.component';
 export class HasErrorPipe implements PipeTransform {
 
   transform(control: FormControl, errors: ValidatorError[]): boolean {
-    const foundErrors = errors.some(err => control.hasError(err.name));
+    const foundErrors = errors?.some(err => control.hasError(err.name));
     return foundErrors;
   }
 

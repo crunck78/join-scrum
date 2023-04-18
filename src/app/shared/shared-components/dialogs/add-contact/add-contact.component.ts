@@ -26,7 +26,7 @@ export class AddContactComponent {
   addContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([Validators.required])),
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    phoneNumber: new FormControl('', Validators.compose([Validators.required])),
+    phone_number: new FormControl('', Validators.compose([Validators.required])),
   })
 
   constructor(public dialogRef: MatDialogRef<AddContactComponent>,

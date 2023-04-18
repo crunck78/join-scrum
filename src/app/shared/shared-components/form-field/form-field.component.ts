@@ -54,6 +54,7 @@ export class FormFieldComponent {
   @Input() autocomplete!: string;
   @Input() errors!: ValidatorError[];
   @Input() minLength!: number;
+  @Input() required = true;
 
   customMatcher = new CustomErrorStateMatcher();
 

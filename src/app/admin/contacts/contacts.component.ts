@@ -16,6 +16,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { ContactDetailsComponent } from 'src/app/shared/shared-components/contact-details/contact-details.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { DialogService } from 'src/app/shared/shared-services/dialog/dialog.service';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -43,7 +44,7 @@ export class ContactsComponent implements AfterViewInit {
   selectedContact$ = new BehaviorSubject<Contact | null>(null);
 
   constructor(private scrumContacts: ScrumContactsService,
-    public dialog: MatDialog){
+    private dialog: MatDialog){
     this.contacts$ = this.scrumContacts.getContacts$();
   }
 
@@ -52,21 +53,12 @@ export class ContactsComponent implements AfterViewInit {
   }
 
   addContact(){
-    const dialogRef = this.openDialog(AddContactComponent);
+    const dialogRef = this.dialog.open(AddContactComponent);
     dialogRef.afterClosed().subscribe(newContact => {
       if(newContact){
         this.contacts$ = this.scrumContacts.getContacts$();
       }
     })
-  }
-
-  editContact(contactToEdit: Contact){
-    const dialogRef = this.openDialog(EditContactComponent);
-    dialogRef.componentInstance.contact = contactToEdit;
-  }
-
-  openDialog(component : ComponentType<any>){
-    return this.dialog.open(component);
   }
 
   alreadyExists(letter: string){

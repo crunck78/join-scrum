@@ -8,11 +8,17 @@ import { ScrumApiModule } from './app/scrum-api/scrum-api.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { routes } from './app/shared/routes';
 import { interceptorProviders } from './app/shared/interceptor-providers';
+import { MatDialogModule } from '@angular/material/dialog';
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(HttpClientModule, ScrumApiModule, BrowserAnimationsModule, LayoutModule),
+        importProvidersFrom(
+            HttpClientModule,
+            ScrumApiModule,
+            BrowserAnimationsModule,
+            LayoutModule,
+            MatDialogModule),
         provideRouter(routes),
-        interceptorProviders
+        interceptorProviders,
     ]
 });

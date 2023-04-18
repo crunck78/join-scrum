@@ -6,6 +6,10 @@ import { ContactInitialsComponent } from '../contact-initials/contact-initials/c
 import { ContactCardComponent } from '../contact-card/contact-card/contact-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { EmailLinkComponent } from '../email-link/email-link.component';
+import { DialogModule } from '@angular/cdk/dialog';
+import { DialogService } from '../../shared-services/dialog/dialog.service';
+import { EditContactComponent } from '../dialogs/edit-contact/edit-contact.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-contact-details',
@@ -21,4 +25,10 @@ import { EmailLinkComponent } from '../email-link/email-link.component';
 })
 export class ContactDetailsComponent {
   @Input() contact!: Contact | null;
+  constructor(private dialog: MatDialog){}
+
+  editContact(){
+    const dialogRef = this.dialog.open(EditContactComponent);
+    dialogRef.componentInstance.editContactForm.patchValue(this.contact as Contact);
+  }
 }

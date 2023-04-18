@@ -1,2 +1,35 @@
-<p>edit-contact works!</p>
-{{contact | json}}
+<app-dialog [title]="'Edit Contact'">
+    <ng-container side></ng-container>
+
+    <form class="main-content" [formGroup]="editContactForm">
+
+        <app-form-field [required]="false" [autocomplete]="'contact-name'" [type]="'text'" [inputType]="'input'"
+            [suffixPath]="'assets/person.svg'" [control]="$any(editContactForm.get('name'))"
+            [labelName]="'Name'"></app-form-field>
+
+        <app-form-field [required]="false" [autocomplete]="'contact-email'" [type]="'email'" [inputType]="'input'"
+            [suffixPath]="'assets/mail.svg'" [control]="$any(editContactForm.get('email'))"
+            [labelName]="'Email'"></app-form-field>
+
+        <app-form-field [required]="false" [autocomplete]="'contact-phone'" [type]="'tel'" [inputType]="'input'"
+            [suffixPath]="'assets/phone.svg'" [control]="$any(editContactForm.get('phone_number'))"
+            [labelName]="'Phone'"></app-form-field>
+
+        <!-- <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-description>
+                    Password requirements
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Must be at least 8 character long</p>
+            <p>Must be a combination of letters, numbers and at least one special character.</p>
+
+        </mat-expansion-panel> -->
+    </form>
+
+    <ng-container actions>
+        <button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
+        <button (click)="editContact()" [disabled]="editContactForm.invalid" mat-raised-button color="primary">Edit
+            Contact</button>
+    </ng-container>
+</app-dialog>
