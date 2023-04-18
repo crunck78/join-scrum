@@ -5,20 +5,24 @@
             Contacts are already ordered by name from a to z
          -->
         <ng-container *ngFor="let contact of contacts$ | async; let i = index">
+
             <ng-container *ngIf="contactsList | atoz : (contact.name[0] | uppercase)">
                 <span id="contact-{{contact.name[0] | uppercase}}" class="atoz mat-mdc-card-subtitle">
                     {{contact.name[0] | uppercase}}</span>
-                    <mat-divider></mat-divider>
+                <mat-divider></mat-divider>
             </ng-container>
-            <app-contact [selected]="(selectedContact$ | async) == contact" (click)="selectedContact$.next(contact)" [contact]="contact"></app-contact>
+
+            <app-contact [selected]="(selectedContact$ | async) == contact" (click)="selectedContact$.next(contact)"
+                [contact]="contact"></app-contact>
         </ng-container>
     </div>
 </app-card>
 
-<app-card>
+<app-card *ngIf="!!(selectedContact$ | async)">
     <app-page-title title></app-page-title>
 
-    <app-contact-details [contact$]="selectedContact$"></app-contact-details>
+
+    <app-contact-details [contact]="selectedContact$ | async"></app-contact-details>
 
     <button (click)="addContact()" class="new-contact" footer mat-raised-button color="primary">
         <span>New contact</span>

@@ -1,1 +1,18 @@
-{{(contact$ | async)?.name}}
+<app-contact-card [contact]="contact">
+    <button mat-button color="primary">
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5 1V16" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" />
+            <path d="M16 8.64148L1 8.64148" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        Add task
+    </button>
+</app-contact-card>
+
+<ng-container>
+    <p>Contact Information</p>
+
+    <div><b>Email</b></div>
+    <app-email-link [email]="contact?.email"></app-email-link>
+    <div><b>Phone </b></div>
+    <a>{{contact?.phone_number}}</a>
+</ng-container>

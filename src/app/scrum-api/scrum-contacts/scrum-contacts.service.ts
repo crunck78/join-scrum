@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { CONTACTS_ENDPOINT, ContactAPI } from './contacts-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
-import { catchError, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 
 export interface Contact {
   name: string,
   email: string,
-  phoneNumber: string,
+  phone_number: string,
   image?: string
 }
 
@@ -31,17 +31,11 @@ export class ScrumContactsService {
 
   addContact$(newContact: Contact) {
 
-    const serializedContact: ContactAPI = {
-      name: newContact.name,
-      email: newContact.email,
-      phone_number: newContact.phoneNumber
-    };
-
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.post<Contact>(this.contactsEndpoint, serializedContact, { headers })
+    return this.http.post<Contact>(this.contactsEndpoint, newContact, { headers })
     .pipe(catchError(error => of(undefined)));
   }
 }

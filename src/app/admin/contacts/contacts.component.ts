@@ -15,7 +15,7 @@ import { AtoZPipe } from './atoz.pipe';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { ContactDetailsComponent } from 'src/app/shared/shared-components/contact-details/contact-details.component';
-
+import {MatToolbarModule} from '@angular/material/toolbar';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -32,6 +32,7 @@ import { ContactDetailsComponent } from 'src/app/shared/shared-components/contac
     MatDividerModule,
     MatListModule,
     ContactDetailsComponent,
+    MatToolbarModule
   ]
 })
 export class ContactsComponent implements AfterViewInit {
