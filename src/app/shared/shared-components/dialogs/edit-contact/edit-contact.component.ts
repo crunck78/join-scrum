@@ -25,10 +25,12 @@ import { ScrumContactsService, Contact } from 'src/app/scrum-api/scrum-contacts/
 })
 export class EditContactComponent {
   editContactForm = new FormGroup({
-    name: new FormControl(''),
-    email: new FormControl(''),
-    phone_number: new FormControl(''),
+    name: new FormControl('', Validators.compose([Validators.required])),
+    email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+    phone_number: new FormControl('', Validators.compose([Validators.required])),
   });
+
+  contactToEdit!: number;
 
   constructor(public dialogRef: MatDialogRef<EditContactComponent>,
     private scrumContacts: ScrumContactsService) { }
@@ -36,7 +38,9 @@ export class EditContactComponent {
 
   editContact() {
     if (this.editContactForm.valid) {
-      console.log(this.editContactForm.value);
+      this.scrumContacts.editContact$(
+        this.editContactForm.value as Partial<Contact>,
+        this.contactToEdit).subscribe(res => this.dialogRef.close(res));
     }
   }
 

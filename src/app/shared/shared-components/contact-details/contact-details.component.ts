@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Contact } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 import { ContactInitialsComponent } from '../contact-initials/contact-initials/contact-initials.component';
@@ -25,10 +25,18 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ContactDetailsComponent {
   @Input() contact!: Contact | null;
-  constructor(private dialog: MatDialog){}
+  @Output() contactChange = new EventEmitter<Contact>();
+  constructor(private dialog: MatDialog) { }
 
-  editContact(){
+  editContact() {
     const dialogRef = this.dialog.open(EditContactComponent);
+    dialogRef.componentInstance.contactToEdit = this.contact?.id ?? -1;
     dialogRef.componentInstance.editContactForm.patchValue(this.contact as Contact);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res)
+        this.contact = res;
+        this.contactChange.emit(res);
+    });
   }
 }

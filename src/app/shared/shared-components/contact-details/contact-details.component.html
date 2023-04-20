@@ -19,11 +19,13 @@
 </app-contact-card>
 
 <ng-container>
-    <p>Contact Information</p>
-    <div><b>Name</b></div>
-    <div>{{contact?.name}}</div>
-    <div><b>Email</b></div>
-    <app-email-link [email]="contact?.email"></app-email-link>
-    <div><b>Phone </b></div>
-    <a>{{contact?.phone_number}}</a>
+    <div class="contact-information">
+        <h2>Contact Information</h2>
+        <p><b>Name</b></p>
+        <div>{{contact?.name}}</div>
+        <p><b>Email</b></p>
+        <app-email-link [email]="contact?.email"></app-email-link>
+        <p><b>Phone </b></p>
+        <a>{{contact?.phone_number}}</a>
+    </div>
 </ng-container>

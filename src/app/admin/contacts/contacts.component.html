@@ -12,17 +12,17 @@
                 <mat-divider></mat-divider>
             </ng-container>
 
-            <app-contact [selected]="(selectedContact$ | async) == contact" (click)="selectedContact$.next(contact)"
+            <app-contact [selected]="selectedContact == contact" (click)="selectedContact = contact"
                 [contact]="contact"></app-contact>
         </ng-container>
     </div>
 </app-card>
 
-<app-card *ngIf="!!(selectedContact$ | async)">
+<app-card *ngIf="!!selectedContact">
     <app-page-title title></app-page-title>
 
 
-    <app-contact-details [contact]="selectedContact$ | async"></app-contact-details>
+    <app-contact-details (contactChange)="updateContacts()" [contact]="selectedContact"></app-contact-details>
 
     <button (click)="addContact()" class="new-contact" footer mat-raised-button color="primary">
         <span>New contact</span>

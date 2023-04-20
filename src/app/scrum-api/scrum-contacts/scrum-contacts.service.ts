@@ -5,6 +5,7 @@ import { ScrumApiService } from '../scrum-api.service';
 import { catchError, map, of } from 'rxjs';
 
 export interface Contact {
+  id: number,
   name: string,
   email: string,
   phone_number: string,
@@ -36,6 +37,15 @@ export class ScrumContactsService {
     });
 
     return this.http.post<Contact>(this.contactsEndpoint, newContact, { headers })
+    .pipe(catchError(error => of(undefined)));
+  }
+
+  editContact$(contact: Partial<Contact>, contactId: number){
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    return this.http.patch<Partial<Contact>>(`${this.contactsEndpoint}/${contactId}/`, contact, {headers})
     .pipe(catchError(error => of(undefined)));
   }
 }

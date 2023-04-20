@@ -41,11 +41,11 @@ export class ContactsComponent implements AfterViewInit {
   @ViewChild('contacts-list') contactsList!: ElementRef<HTMLElement>;
 
   contacts$!: Observable<Contact[]>;
-  selectedContact$ = new BehaviorSubject<Contact | null>(null);
+  selectedContact!: Contact;
 
   constructor(private scrumContacts: ScrumContactsService,
     private dialog: MatDialog){
-    this.contacts$ = this.scrumContacts.getContacts$();
+      this.updateContacts();
   }
 
   ngAfterViewInit(): void {
@@ -56,13 +56,17 @@ export class ContactsComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(AddContactComponent);
     dialogRef.afterClosed().subscribe(newContact => {
       if(newContact){
-        this.contacts$ = this.scrumContacts.getContacts$();
+        this.updateContacts();
       }
     })
   }
 
   alreadyExists(letter: string){
     return document.getElementById(`contacts-${letter}`);
+  }
+
+  updateContacts(){
+    this.contacts$ = this.scrumContacts.getContacts$();
   }
 
 }
