@@ -10,6 +10,7 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { DialogService } from '../../shared-services/dialog/dialog.service';
 import { EditContactComponent } from '../dialogs/edit-contact/edit-contact.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dialog.component';
 
 @Component({
   selector: 'app-contact-details',
@@ -38,5 +39,9 @@ export class ContactDetailsComponent {
         this.contact = res;
         this.contactChange.emit(res);
     });
+  }
+
+  addToTask(){
+    const dialogRef = this.dialog.open(AddTaskDialogComponent);
   }
 }
