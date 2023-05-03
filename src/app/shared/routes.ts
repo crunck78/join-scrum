@@ -12,6 +12,7 @@ import { SummaryComponent } from '../admin/summary/summary.component';
 import { LogInGuard } from '../scrum-api/scrum-login/log-in.guard';
 import { AuthGuard } from '../scrum-api/scrum-profile/auth.guard';
 import { ProfileComponent } from '../admin/profile/profile/profile.component';
+import { AddTaskDialogComponent } from './shared-components/dialogs/add-task-dialog/add-task-dialog.component';
 
 export const routes: Routes = [
     {canActivate: [LogInGuard], path: '', component: SummaryComponent, title: 'Summary' },
