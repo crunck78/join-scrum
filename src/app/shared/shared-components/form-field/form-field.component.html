@@ -1,11 +1,35 @@
 <mat-form-field appearance="outline">
     <mat-label *ngIf="labelName">{{labelName}}</mat-label>
 
-    <input *ngIf="inputType == 'input'" [required]="required" maxlength="100" minlength="{{minLength || 0}}" (focus)="resetErrorState()"
-        [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput [formControl]="$any(control)"
-        [errorStateMatcher]="customMatcher">
+    <input *ngIf="inputType == 'input'" [required]="required" maxlength="100" minlength="{{minLength || 0}}"
+        (focus)="resetErrorState()" [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput
+        [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
+
+    <textarea *ngIf="inputType == 'text-area'" [required]="required" maxlength="500" minlength="{{minLength || 0}}"
+        (focus)="resetErrorState()" [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput
+        [formControl]="$any(control)" [errorStateMatcher]="customMatcher"></textarea>
+
+    <mat-select [multiple]="multiple" *ngIf="inputType == 'select'" [required]="required" (focus)="resetErrorState()"
+        [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
+        <mat-option [value]="option.valueOnSelect" *ngFor="let option of options">
+            <div [innerHTML]="(option.html || option.displayValue) | sanitizeHtml"></div>
+        </mat-option>
+    </mat-select>
+
+
+    <input *ngIf="inputType == 'date'" [formControl]="$any(control)" [errorStateMatcher]="customMatcher"
+        (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
+        [matDatepicker]="picker">
+    <mat-datepicker-toggle (click)="resetErrorState()" *ngIf="inputType == 'date'" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker [hidden]="inputType != 'date'" #picker></mat-datepicker>
+
 
     <img *ngIf="suffixPath" matTextSuffix src="{{suffixPath}}" alt="">
 
-    <mat-error *ngIf="errors && errors.length > 0 && $any(control) | hasError : errors" [innerHTML]="$any(control) | messageError: errors"></mat-error>
+    <button matSuffix (click)="$event.stopPropagation(); action.emit()" *ngIf="suffixIcon" mat-icon-button>
+        <mat-icon>{{suffixIcon}}</mat-icon>
+    </button>
+
+    <mat-error *ngIf="errors && errors.length > 0 && $any(control) | hasError : errors"
+        [innerHTML]="$any(control) | messageError: errors"></mat-error>
 </mat-form-field>
