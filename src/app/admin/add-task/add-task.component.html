@@ -1,1 +1,60 @@
-<p>add-task works!</p>
+<app-card>
+    <app-page-title title></app-page-title>
+
+    <form class="main-content" [formGroup]="addTaskForm">
+        <div class="form-field-group">
+            <app-form-field [errors]="[
+                {name: 'required', htmlMessage: 'Title is <strong>required</strong>'}
+            ]" [autocomplete]="'task-title'" [type]="'text'" [inputType]="'input'" [labelName]="'Enter a Title'"
+                [control]="$any(addTaskForm.get('title'))"></app-form-field>
+
+            <app-form-field [required]="false" [autocomplete]="'task-description'" [type]="'text'"
+                [inputType]="'text-area'" [labelName]="'Enter a Description'"
+                [control]="$any(addTaskForm.get('description'))"></app-form-field>
+
+            <app-form-field [suffixIcon]="'add'" (action)="addCategory()"
+                [options]="categories$ | async | options : 'name' : 'id': this.getCategoryOptionHTML" [required]="false"
+                [inputType]="'select'" [labelName]="'Select a category'" [control]="$any(addTaskForm.get('category'))">
+            </app-form-field>
+
+            <app-form-field [multiple]="true" [suffixIcon]="'add'" (action)="addContact()"
+                [options]="contacts$ | async | options : 'name' : 'id'" [required]="false" [inputType]="'select'"
+                [labelName]="'Select assignees'" [control]="$any(addTaskForm.get('assignedTo'))">
+            </app-form-field>
+        </div>
+
+        <mat-divider [vertical]="true"></mat-divider>
+
+        <div class="form-field-group">
+            <app-form-field [errors]="[
+                {name: 'required', htmlMessage: 'Date is <strong>required</strong>'}
+            ]" [autocomplete]="'date-title'" [inputType]="'date'" [labelName]="'dd/mm/yyyy'"
+                [control]="$any(addTaskForm.get('dueDate'))"></app-form-field>
+
+            <app-form-field [errors]="[{name: 'required', htmlMessage: 'Priority is <strong>required</strong>'}]"
+                [options]="[{name: 'low'}, {name: 'medium'}, {name: 'urgent'}] | options : 'name' : 'name': this.getPriorityOptionHTML"
+                [required]="true" [inputType]="'select'" [labelName]="'Select a priority'"
+                [control]="$any(addTaskForm.get('priority'))">
+            </app-form-field>
+
+            <app-form-field [required]="false" [suffixIcon]="'add'" (action)="addSubtask()" [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
+                [control]="addSubtaskForm"></app-form-field>
+        </div>
+
+
+        <!-- <select name="" id="">
+            <option disabled selected value="">Select Category</option>
+            <option [style.backgroundColor]="cat.color" *ngFor="let cat of categories$ | async" value="{{cat.id}}">
+                {{cat.name}}</option>
+        </select> -->
+    </form>
+
+    <div class="footer" footer>
+
+        <!-- <div class="simple-grid">
+            <button [disabled]="forgotPasswordForm.invalid" (click)="sendMail()" mat-raised-button color="primary">Send
+                mail</button>
+        </div> -->
+
+    </div>
+</app-card>
