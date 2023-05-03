@@ -37,24 +37,23 @@
                 [control]="$any(addTaskForm.get('priority'))">
             </app-form-field>
 
-            <app-form-field [required]="false" [suffixIcon]="'add'" (action)="addSubtask()" [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
+            <app-form-field [required]="false" [suffixIcon]="'add'" (action)="addSubtask()"
+                [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
                 [control]="addSubtaskForm"></app-form-field>
+
+            <ng-container *ngFor="let subtask of addTaskForm.get('subtasks')?.value">
+                {{subtask | json}}
+            </ng-container>
         </div>
 
-
-        <!-- <select name="" id="">
-            <option disabled selected value="">Select Category</option>
-            <option [style.backgroundColor]="cat.color" *ngFor="let cat of categories$ | async" value="{{cat.id}}">
-                {{cat.name}}</option>
-        </select> -->
     </form>
 
     <div class="footer" footer>
 
-        <!-- <div class="simple-grid">
-            <button [disabled]="forgotPasswordForm.invalid" (click)="sendMail()" mat-raised-button color="primary">Send
-                mail</button>
-        </div> -->
+        <div class="simple-grid">
+            <button (click)="addTaskForm.reset()" mat-stroked-button color="primary">Clear</button>
+            <button [disabled]="addTaskForm.invalid" (click)="addTask()" mat-raised-button color="primary">Create Task</button>
+        </div>
 
     </div>
 </app-card>

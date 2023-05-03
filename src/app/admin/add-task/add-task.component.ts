@@ -16,6 +16,7 @@ import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/
 import { OptionsPipe } from 'src/app/shared/shared-components/form-field/options.pipe';
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { ScrumSubtasksService, Subtask } from 'src/app/scrum-api/scrum-subtasks/scrum-subtasks.service';
 
 export interface Priority{
   name?: string,
@@ -49,7 +50,8 @@ export class AddTaskComponent {
 
   constructor(private scrumCategory: ScrumCategoriesService,
     private scrumContacts: ScrumContactsService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private scrumSubtasks: ScrumSubtasksService) {
     this.updateCategories();
     this.updateContacts();
   }
@@ -61,7 +63,7 @@ export class AddTaskComponent {
     assignedTo: new FormControl(null, Validators.compose([Validators.nullValidator])),
     dueDate: new FormControl('', Validators.compose([Validators.required])),
     priority: new FormControl(null, Validators.compose([Validators.nullValidator])),
-    subtasks: new FormControl([], Validators.compose([Validators.nullValidator]))
+    subtasks: new FormControl(<Subtask[]>[], Validators.compose([Validators.nullValidator]))
   });
 
   addSubtaskForm = new FormControl('');
@@ -110,6 +112,24 @@ export class AddTaskComponent {
   }
 
   addSubtask(){
+    if(this.addSubtaskForm.valid){
+      this.scrumSubtasks.addSubtask$({title: this.addSubtaskForm.value, done: false} as Subtask).subscribe(
+        {
+          next: (res)=> this.pushNewSubtasks(res as Subtask),
+          error: (err) => console.log(err)
+        }
+      );
+    }
+  }
+
+  pushNewSubtasks(newSubtask: Subtask){
+    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as Subtask[];
+    currentSubtasks.push(newSubtask);
+    this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
+    this.addSubtaskForm.reset();
+  }
+
+  addTask(){
 
   }
 
