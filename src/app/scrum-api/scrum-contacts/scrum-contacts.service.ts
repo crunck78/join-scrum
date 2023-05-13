@@ -27,7 +27,10 @@ export class ScrumContactsService {
     });
 
     return this.http.get<Contact[]>(this.contactsEndpoint, { headers })
-      .pipe(catchError(error => of<Contact[]>([])));
+      .pipe(
+        catchError(error => of<Contact[]>([])),
+        map(values => values.map(value => this.scrumApi.renameFields(value, ['phone_number'], ['phoneNumber'])))
+      );
   }
 
   addContact$(newContact: Contact) {
@@ -52,7 +55,7 @@ export class ScrumContactsService {
 
     const pathContactAPI = this.scrumApi.renameFields(contact, ['phoneNumber'], ['phone_number'])
 
-    return this.http.patch<Partial<Contact>>(`${this.contactsEndpoint}/${contactId}/`, contact, { headers })
+    return this.http.patch<Partial<Contact>>(`${this.contactsEndpoint}/${contactId}/`, pathContactAPI, { headers })
       .pipe(
         catchError(error => of(undefined)),
         map(value => this.scrumApi.renameFields(value, ['phone_number'], ['phoneNumber']))
