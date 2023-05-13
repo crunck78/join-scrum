@@ -11,14 +11,9 @@ export class LoginInterceptor implements HttpInterceptor {
   constructor(private scrumApi: ScrumApiService) { }
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("Passed through the interceptor in request:", httpRequest);
+    console.log("Passed through the Login interceptor in request:", httpRequest);
     return next.handle(httpRequest).pipe(
-      map((event) => {
-        console.log("Passed through the interceptor in response: ", event);
-        return event;
-      }),
       filter((event: any) => {
-        console.log("Passed through the interceptor in response filter: ", event);
         return event instanceof HttpResponse;
       }),
       tap((event: HttpResponse<any>) => {

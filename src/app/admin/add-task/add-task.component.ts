@@ -17,8 +17,10 @@ import { OptionsPipe } from 'src/app/shared/shared-components/form-field/options
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { ScrumSubtasksService, Subtask } from 'src/app/scrum-api/scrum-subtasks/scrum-subtasks.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ScrumTasksService } from 'src/app/scrum-api/scrum-tasks/scrum-tasks.service';
 
-export interface Priority{
+export interface Priority {
   name?: string,
   icon?: string,
   color?: string
@@ -40,30 +42,34 @@ export interface Priority{
     OptionsPipe,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCheckboxModule
   ]
 })
 export class AddTaskComponent {
 
   categories$!: Observable<Category[]>;
   contacts$!: Observable<Contact[]>;
+  subtasks$!: Observable<Subtask[]>
 
   constructor(private scrumCategory: ScrumCategoriesService,
     private scrumContacts: ScrumContactsService,
     private dialog: MatDialog,
-    private scrumSubtasks: ScrumSubtasksService) {
+    private scrumSubtasks: ScrumSubtasksService,
+    private scrumTask: ScrumTasksService) {
     this.updateCategories();
     this.updateContacts();
+    this.updateSubtasks();
   }
 
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.compose([Validators.required])),
     description: new FormControl(''),
-    category: new FormControl(null, Validators.compose([Validators.nullValidator])),
-    assignedTo: new FormControl(null, Validators.compose([Validators.nullValidator])),
-    dueDate: new FormControl('', Validators.compose([Validators.required])),
-    priority: new FormControl(null, Validators.compose([Validators.nullValidator])),
-    subtasks: new FormControl(<Subtask[]>[], Validators.compose([Validators.nullValidator]))
+    category: new FormControl(0, Validators.compose([Validators.required])),
+    assignees: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator])),
+    dueDate: new FormControl<Date>(new Date(Date.now()), Validators.compose([Validators.required])),
+    priority: new FormControl<'Low' | 'Medium' | 'Urgent'>('Low', Validators.compose([Validators.required])),
+    subtasks: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator]))
   });
 
   addSubtaskForm = new FormControl('');
@@ -94,6 +100,11 @@ export class AddTaskComponent {
     this.contacts$ = this.scrumContacts.getContacts$();
   }
 
+  updateSubtasks(){
+    this.subtasks$ = this.scrumSubtasks.getSubtasks$();
+    this.addSubtaskForm.reset();
+  }
+
   getCategoryOptionHTML(option: Category) {
     return `
     <span class="category-option">
@@ -102,7 +113,7 @@ export class AddTaskComponent {
     </span>`;
   }
 
-  getPriorityOptionHTML(option: Priority){
+  getPriorityOptionHTML(option: Priority) {
     return `
     <span class="priority-option">
       <span class="priority-option">${option.name?.toUpperCase()}</span>
@@ -111,26 +122,47 @@ export class AddTaskComponent {
     `;
   }
 
-  addSubtask(){
-    if(this.addSubtaskForm.valid){
-      this.scrumSubtasks.addSubtask$({title: this.addSubtaskForm.value, done: false} as Subtask).subscribe(
+  addSubtask() {
+    if (this.addSubtaskForm.valid) {
+      this.scrumSubtasks.addSubtask$({ title: this.addSubtaskForm.value, done: false } as Subtask).subscribe(
         {
-          next: (res)=> this.pushNewSubtasks(res as Subtask),
+          next: (res) => this.updateSubtasks(),
           error: (err) => console.log(err)
         }
       );
     }
   }
 
-  pushNewSubtasks(newSubtask: Subtask){
-    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as Subtask[];
-    currentSubtasks.push(newSubtask);
+  pushSubtask(subtask: Subtask) {
+    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as number[];
+    currentSubtasks.push(subtask.id);
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
-    this.addSubtaskForm.reset();
   }
 
-  addTask(){
+  popSubtask(subtask: Subtask){
+    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as number[];
+    currentSubtasks.splice(currentSubtasks.indexOf(subtask.id), 1);
+    this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
+  }
 
+  addTask() {
+    if(this.addTaskForm.valid){
+
+        this.scrumTask.addTask$(this.addTaskForm.value)
+        .subscribe(
+          {
+            next: (res)=> console.log(res),
+            error: (e) => console.log(e)
+          }
+        )
+    }
+  }
+
+  handleSelectSubtask(subtask: Subtask, checked: boolean){
+    if(checked)
+      this.pushSubtask(subtask);
+    else
+      this.popSubtask(subtask);
   }
 
 }

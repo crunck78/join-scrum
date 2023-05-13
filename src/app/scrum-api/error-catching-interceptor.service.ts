@@ -6,17 +6,8 @@ import { catchError, filter, finalize, map, Observable, of, switchMap, tap, thro
 export class ErrorCatchingInterceptor {
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("Passed through the interceptor in request:", httpRequest);
     return next.handle(httpRequest).pipe(
-      map((event) => {
-        console.log("Passed through the interceptor in response: ", event);
-        return event;
-      }),
-      // filter((event: any) => {
-      //   console.log("Passed through the interceptor in response filter: ", event);
-      //   return event instanceof HttpResponse
-      // }),
-      catchError((error: HttpErrorResponse) => {
+      catchError((error: any) => {
         let errorMsg = '';
         if (error instanceof HttpErrorResponse && error.status >= 400 && error.status < 500) {
           // Handle client-side error

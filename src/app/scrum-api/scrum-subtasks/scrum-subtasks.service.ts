@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 export interface Subtask{
-  id?: string,
+  id: number,
   title: string,
   done: boolean
 }

@@ -8,7 +8,7 @@ export interface Contact {
   id: number,
   name: string,
   email: string,
-  phone_number: string,
+  phoneNumber: string,
   image?: string
 }
 
@@ -36,16 +36,28 @@ export class ScrumContactsService {
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.post<Contact>(this.contactsEndpoint, newContact, { headers })
-    .pipe(catchError(error => of(undefined)));
+    const newContactAPI = this.scrumApi.renameFields(newContact, ['phoneNumber'], ['phone_number']);
+
+    return this.http.post<Contact>(this.contactsEndpoint, newContactAPI, { headers })
+      .pipe(
+        catchError(error => of(undefined)),
+        map(value => this.scrumApi.renameFields(value, ['phone_number'], ['phoneNumber']))
+      );
   }
 
-  editContact$(contact: Partial<Contact>, contactId: number){
+  editContact$(contact: Partial<Contact>, contactId: number) {
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.patch<Partial<Contact>>(`${this.contactsEndpoint}/${contactId}/`, contact, {headers})
-    .pipe(catchError(error => of(undefined)));
+    const pathContactAPI = this.scrumApi.renameFields(contact, ['phoneNumber'], ['phone_number'])
+
+    return this.http.patch<Partial<Contact>>(`${this.contactsEndpoint}/${contactId}/`, contact, { headers })
+      .pipe(
+        catchError(error => of(undefined)),
+        map(value => this.scrumApi.renameFields(value, ['phone_number'], ['phoneNumber']))
+      );
   }
+
+
 }

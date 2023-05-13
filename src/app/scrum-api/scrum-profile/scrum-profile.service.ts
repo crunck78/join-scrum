@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { PROFILE_ENDPOINT } from './profile-interceptor.service';
 
 export interface Profile {
+  id?:number,
   email: string;
   name: string;
   image: string;

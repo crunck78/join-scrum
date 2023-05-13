@@ -27,7 +27,7 @@ export class EditContactComponent {
   editContactForm = new FormGroup({
     name: new FormControl('', Validators.compose([Validators.required])),
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    phone_number: new FormControl('', Validators.compose([Validators.required])),
+    phoneNumber: new FormControl('', Validators.compose([Validators.required])),
   });
 
   contactToEdit!: number;

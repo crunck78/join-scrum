@@ -12,14 +12,16 @@
                 [inputType]="'text-area'" [labelName]="'Enter a Description'"
                 [control]="$any(addTaskForm.get('description'))"></app-form-field>
 
-            <app-form-field [suffixIcon]="'add'" (action)="addCategory()"
-                [options]="categories$ | async | options : 'name' : 'id': this.getCategoryOptionHTML" [required]="false"
-                [inputType]="'select'" [labelName]="'Select a category'" [control]="$any(addTaskForm.get('category'))">
+            <app-form-field [errors]="[
+            {name: 'required', htmlMessage: 'Category is <strong>required</strong>'}]" [suffixIcon]="'add'" (action)="
+                addCategory()" [options]="categories$ | async | options : 'name' : 'id': this.getCategoryOptionHTML"
+                [required]="true" [inputType]="'select'" [labelName]="'Select a category'"
+                [control]="$any(addTaskForm.get('category'))">
             </app-form-field>
 
             <app-form-field [multiple]="true" [suffixIcon]="'add'" (action)="addContact()"
                 [options]="contacts$ | async | options : 'name' : 'id'" [required]="false" [inputType]="'select'"
-                [labelName]="'Select assignees'" [control]="$any(addTaskForm.get('assignedTo'))">
+                [labelName]="'Select assignees'" [control]="$any(addTaskForm.get('assignees'))">
             </app-form-field>
         </div>
 
@@ -32,7 +34,7 @@
                 [control]="$any(addTaskForm.get('dueDate'))"></app-form-field>
 
             <app-form-field [errors]="[{name: 'required', htmlMessage: 'Priority is <strong>required</strong>'}]"
-                [options]="[{name: 'low'}, {name: 'medium'}, {name: 'urgent'}] | options : 'name' : 'name': this.getPriorityOptionHTML"
+                [options]="[{name: 'Low'}, {name: 'Medium'}, {name: 'Urgent'}] | options : 'name' : 'name': this.getPriorityOptionHTML"
                 [required]="true" [inputType]="'select'" [labelName]="'Select a priority'"
                 [control]="$any(addTaskForm.get('priority'))">
             </app-form-field>
@@ -41,9 +43,13 @@
                 [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
                 [control]="addSubtaskForm"></app-form-field>
 
-            <ng-container *ngFor="let subtask of addTaskForm.get('subtasks')?.value">
-                {{subtask | json}}
-            </ng-container>
+            <div>
+                <div *ngFor="let subtask of subtasks$ | async">
+                    <mat-checkbox (change)="handleSelectSubtask(subtask, $event.checked)">
+                        {{subtask.title}}
+                    </mat-checkbox>
+                </div>
+            </div>
         </div>
 
     </form>
@@ -52,7 +58,8 @@
 
         <div class="simple-grid">
             <button (click)="addTaskForm.reset()" mat-stroked-button color="primary">Clear</button>
-            <button [disabled]="addTaskForm.invalid" (click)="addTask()" mat-raised-button color="primary">Create Task</button>
+            <button [disabled]="addTaskForm.invalid" (click)="addTask()" mat-raised-button color="primary">Create
+                Task</button>
         </div>
 
     </div>
