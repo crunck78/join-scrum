@@ -2,7 +2,7 @@ import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/comm
 import { Injectable } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 
-export const CATEGORIES_ENDPOINT = 'api/category/categorys/';
+export const CATEGORIES_ENDPOINT = 'api/category/categories/';
 export interface CategoryAPI {
   color: string;
   name: string;
