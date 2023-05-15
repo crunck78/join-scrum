@@ -1,22 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
-body{
+body {
     margin: 0;
     height: 100vh;
 }
 
-.category-option{
+.category-option {
     display: flex;
     gap: 16px;
 }
 
-.category-color{
+.category-color {
     border-radius: 100%;
     width: 1em;
     height: 1em;
     border: 1px solid white;
 }
 
-.priority-option{
+.priority-option {
     display: flex;
     gap: 16px;
+}
+
+
+.drag-drop-container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    vertical-align: top;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.drag-drop-list {
+    border: solid 1px #ccc;
+    min-height: 60px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.drag-drop-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-box:last-child {
+    border: none;
+}
+
+.drag-drop-list.cdk-drop-list-dragging .drag-drop-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

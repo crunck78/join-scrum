@@ -1,3 +1,37 @@
 <app-card>
     <app-page-title title></app-page-title>
+
+    <div class="board-lists">
+        <div class="drag-drop-container">
+            <h2>Backlog</h2>
+
+            <div cdkDropList #backlogList="cdkDropList" [cdkDropListData]="backlog"
+                [cdkDropListConnectedTo]="[todoList]" class="drag-drop-list" (cdkDropListDropped)="drop($event)">
+                <div class="drag-drop-box" *ngFor="let item of backlog" cdkDrag>{{item}}</div>
+            </div>
+        </div>
+
+        <div class="drag-drop-container">
+            <h2>To do</h2>
+
+            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
+                class="drag-drop-list" (cdkDropListDropped)="drop($event)">
+                <div class="drag-drop-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+            </div>
+        </div>
+
+        <div class="drag-drop-container">
+            <h2>Done</h2>
+
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+                class="drag-drop-list" (cdkDropListDropped)="drop($event)">
+                <div class="drag-drop-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+            </div>
+        </div>
+    </div>
+
+    <button (click)="addList()" class="new-list" footer mat-raised-button color="primary">
+        <span>New List</span>
+        <img src="assets/plus.svg" alt="">
+    </button>
 </app-card>
