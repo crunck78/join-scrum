@@ -60,7 +60,25 @@ export class ScrumTasksService {
         map((values: TaskResponseAPI[]) => {
           return values.map((v: TaskResponseAPI) => {
             let taskResponse = this.scrumApi.renameFields(v, ['created_at', 'updated_at', 'due_date'], ['createdAt', 'updatedAt', 'dueDate']);
-            taskResponse = taskResponse.assignees.map((a: ContactAPI) => this.scrumApi.renameFields(a, ['phone_number'], ['phoneNumber']) as Contact);
+            taskResponse.assignees = taskResponse.assignees.map((a: ContactAPI) => this.scrumApi.renameFields(a, ['phone_number'], ['phoneNumber']) as Contact);
+            return taskResponse as TaskResponse;
+          });
+        })
+      );
+  }
+
+  getBacklog$() {
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    return this.http.get<TaskResponse[]>(this.tasksEndpoint + '?list_is_null=true', { headers })
+      .pipe(
+        catchError(error => of<any>([])),
+        map((values: TaskResponseAPI[]) => {
+          return values.map((v: TaskResponseAPI) => {
+            let taskResponse = this.scrumApi.renameFields(v, ['created_at', 'updated_at', 'due_date'], ['createdAt', 'updatedAt', 'dueDate']);
+            taskResponse.assignees = taskResponse.assignees.map((a: ContactAPI) => this.scrumApi.renameFields(a, ['phone_number'], ['phoneNumber']) as Contact);
             return taskResponse as TaskResponse;
           });
         })
@@ -73,7 +91,7 @@ export class ScrumTasksService {
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    const taskRequestAPI = this.scrumApi.renameFields(newTask,['createdAt', 'updatedAt', 'dueDate'], ['created_at', 'updated_at', 'due_date'])
+    const taskRequestAPI = this.scrumApi.renameFields(newTask, ['createdAt', 'updatedAt', 'dueDate'], ['created_at', 'updated_at', 'due_date'])
     taskRequestAPI.due_date = newTask.dueDate?.toISOString().slice(0, 10) ?? '';
     return this.http.post<TaskResponse | undefined | any>(this.tasksEndpoint, taskRequestAPI, { headers })
       .pipe(

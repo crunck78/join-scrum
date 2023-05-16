@@ -6,6 +6,8 @@ import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
+import { ScrumTasksService, TaskResponse } from 'src/app/scrum-api/scrum-tasks/scrum-tasks.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -21,13 +23,20 @@ import { MatButtonModule } from '@angular/material/button';
   ]
 })
 export class BoardComponent {
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep', 'Get to work', 'Pick up groceries', 'Go home', 'Fall asleep', 'Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  todo : TaskResponse[] = [];
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  done : TaskResponse[] = [];
 
-  backlog = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  backlog : TaskResponse[] = [];
+  backlog$ !: Observable<TaskResponse[]>;
+  constructor(private scrumTasks: ScrumTasksService){
+   this.scrumTasks.getBacklog$().subscribe(values => {
+    this.backlog = values;
+    console.log(values);
+   });
+  }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<TaskResponse[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
