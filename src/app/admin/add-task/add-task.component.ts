@@ -6,8 +6,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
-import { Category, ScrumCategoriesService } from 'src/app/scrum-api/scrum-categories/scrum-categories.service';
-import { Contact, ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
+import { ScrumCategoriesService } from 'src/app/scrum-api/scrum-categories/scrum-categories.service';
+import { ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
 import { AddCategoryComponent } from 'src/app/shared/shared-components/dialogs/add-category/add-category/add-category.component';
 import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
@@ -16,14 +16,18 @@ import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/
 import { OptionsPipe } from 'src/app/shared/shared-components/form-field/options.pipe';
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { ScrumSubtasksService, Subtask } from 'src/app/scrum-api/scrum-subtasks/scrum-subtasks.service';
+import { ScrumSubtasksService } from 'src/app/scrum-api/scrum-subtasks/scrum-subtasks.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ScrumTasksService } from 'src/app/scrum-api/scrum-tasks/scrum-tasks.service';
+import { CategoryResponse } from 'src/app/shared/models/category.model';
+import { ContactResponse } from 'src/app/shared/models/contact.model';
+import { SubtaskRequest, SubtaskResponse } from 'src/app/shared/models/subtask.model';
+import { TaskRequest } from 'src/app/shared/models/task.model';
 
 export interface Priority {
-  name?: string,
-  icon?: string,
-  color?: string
+  name: string,
+  icon: string,
+  color: string
 }
 
 @Component({
@@ -48,9 +52,9 @@ export interface Priority {
 })
 export class AddTaskComponent {
 
-  categories$!: Observable<Category[]>;
-  contacts$!: Observable<Contact[]>;
-  subtasks$!: Observable<Subtask[]>
+  categories$!: Observable<CategoryResponse[]>;
+  contacts$!: Observable<ContactResponse[]>;
+  subtasks$!: Observable<SubtaskResponse[]>
 
   constructor(private scrumCategory: ScrumCategoriesService,
     private scrumContacts: ScrumContactsService,
@@ -105,7 +109,7 @@ export class AddTaskComponent {
     this.addSubtaskForm.reset();
   }
 
-  getCategoryOptionHTML(option: Category) {
+  getCategoryOptionHTML(option: CategoryResponse) {
     return `
     <span class="category-option">
       <span class="category-name">${option.name}</span>
@@ -124,7 +128,7 @@ export class AddTaskComponent {
 
   addSubtask() {
     if (this.addSubtaskForm.valid) {
-      this.scrumSubtasks.addSubtask$({ title: this.addSubtaskForm.value, done: false } as Subtask).subscribe(
+      this.scrumSubtasks.addSubtask$({ title: this.addSubtaskForm.value, done: false } as SubtaskRequest).subscribe(
         {
           next: (res) => this.updateSubtasks(),
           error: (err) => console.log(err)
@@ -133,13 +137,13 @@ export class AddTaskComponent {
     }
   }
 
-  pushSubtask(subtask: Subtask) {
+  pushSubtask(subtask: SubtaskResponse) {
     const currentSubtasks = this.addTaskForm.get('subtasks')?.value as number[];
     currentSubtasks.push(subtask.id);
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
   }
 
-  popSubtask(subtask: Subtask){
+  popSubtask(subtask: SubtaskResponse){
     const currentSubtasks = this.addTaskForm.get('subtasks')?.value as number[];
     currentSubtasks.splice(currentSubtasks.indexOf(subtask.id), 1);
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
@@ -148,7 +152,7 @@ export class AddTaskComponent {
   addTask() {
     if(this.addTaskForm.valid){
 
-        this.scrumTask.addTask$(this.addTaskForm.value)
+        this.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
         .subscribe(
           {
             next: (res)=> console.log(res),
@@ -158,7 +162,7 @@ export class AddTaskComponent {
     }
   }
 
-  handleSelectSubtask(subtask: Subtask, checked: boolean){
+  handleSelectSubtask(subtask: SubtaskResponse, checked: boolean){
     if(checked)
       this.pushSubtask(subtask);
     else

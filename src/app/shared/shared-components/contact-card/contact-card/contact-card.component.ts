@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Contact } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 import { ContactInitialsComponent } from '../../contact-initials/contact-initials/contact-initials.component';
 import { CommonModule } from '@angular/common';
 import { EmailLinkComponent } from '../../email-link/email-link.component';
+import { ContactResponse } from 'src/app/shared/models/contact.model';
 
 @Component({
   selector: 'app-contact-card',
@@ -16,7 +16,7 @@ import { EmailLinkComponent } from '../../email-link/email-link.component';
   ]
 })
 export class ContactCardComponent {
-  @Input() contact!: Contact | null;
+  @Input() contact!: ContactResponse | null;
   contentProjected = false;
 
   onContentLoad(event: any){

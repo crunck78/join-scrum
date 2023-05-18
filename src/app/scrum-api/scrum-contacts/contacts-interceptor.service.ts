@@ -3,11 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 
 export const CONTACTS_ENDPOINT = 'api/contact/contacts/';
-export interface ContactAPI{
-  email: string;
-  name: string;
-  phoneNumber: string;
-}
 
 @Injectable()
 export class ContactsInterceptor {

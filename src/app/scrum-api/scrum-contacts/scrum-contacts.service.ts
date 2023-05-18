@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CONTACTS_ENDPOINT, ContactAPI } from './contacts-interceptor.service';
+import { CONTACTS_ENDPOINT } from './contacts-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
-import { catchError, map, of } from 'rxjs';
-
-export interface Contact {
-  id: number,
-  name: string,
-  email: string,
-  phoneNumber: string,
-  image?: string
-}
+import { Observable, catchError, map, of } from 'rxjs';
+import { Contact, ContactRequest, ContactRequestAPI, ContactResponse, ContactResponseAPI } from 'src/app/shared/models/contact.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,45 +13,45 @@ export class ScrumContactsService {
   contactsEndpoint = CONTACTS_ENDPOINT;
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
-  getContacts$() {
+  getContacts$(): Observable<ContactResponse[]> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.get<Contact[]>(this.contactsEndpoint, { headers })
+    return this.http.get<ContactResponseAPI[]>(this.contactsEndpoint, { headers })
       .pipe(
-        catchError(error => of<Contact[]>([])),
-        map(values => values.map(value => this.scrumApi.renameFields(value, ['phone_number'], ['phoneNumber'])))
+        catchError(error => of([])),
+        map((contacts: ContactResponseAPI[]) => contacts.map(c => Contact.createInternalValue(c)))
       );
   }
 
-  addContact$(newContact: Contact) {
+  addContact$(contact: Partial<ContactRequest>): Observable<ContactResponse | null> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    const newContactAPI = this.scrumApi.renameFields(newContact, ['phoneNumber'], ['phone_number']);
+    const newContact = Contact.createRepresentation(contact);
 
-    return this.http.post<Contact>(this.contactsEndpoint, newContactAPI, { headers })
+    return this.http.post<ContactResponseAPI>(this.contactsEndpoint, newContact, { headers })
       .pipe(
-        catchError(error => of(undefined)),
-        map(value => this.scrumApi.renameFields(value, ['phone_number'], ['phoneNumber']))
+        catchError(error => of(null)),
+        map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
       );
   }
 
-  editContact$(contact: Partial<Contact>, contactId: number) {
+  editContact$(contact: Partial<ContactRequest>, contactId: number): Observable<ContactResponse | null> {
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    const pathContactAPI = this.scrumApi.renameFields(contact, ['phoneNumber'], ['phone_number'])
+    const editContact = Contact.createRepresentation(contact);
 
-    return this.http.patch<Partial<Contact>>(`${this.contactsEndpoint}/${contactId}/`, pathContactAPI, { headers })
+    return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint}/${contactId}/`, editContact, { headers })
       .pipe(
-        catchError(error => of(undefined)),
-        map(value => this.scrumApi.renameFields(value, ['phone_number'], ['phoneNumber']))
+        catchError(error => of(null)),
+        map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
       );
   }
 

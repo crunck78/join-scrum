@@ -3,10 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 
 export const SUBTASKS_ENDPOINT = 'api/subtask/subtasks/';
-export interface SubtaskAPI {
-  title: string;
-  done: boolean;
-}
 
 @Injectable()
 export class SubtasksInterceptor {

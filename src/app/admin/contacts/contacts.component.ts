@@ -4,7 +4,7 @@ import { CardComponent } from 'src/app/shared/shared-components/card/card.compon
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { Contact, ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
+import { ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
@@ -17,6 +17,7 @@ import {MatListModule} from '@angular/material/list';
 import { ContactDetailsComponent } from 'src/app/shared/shared-components/contact-details/contact-details.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { DialogService } from 'src/app/shared/shared-services/dialog/dialog.service';
+import { Contact, ContactResponse } from 'src/app/shared/models/contact.model';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -40,8 +41,8 @@ export class ContactsComponent implements AfterViewInit {
 
   @ViewChild('contacts-list') contactsList!: ElementRef<HTMLElement>;
 
-  contacts$!: Observable<Contact[]>;
-  selectedContact!: Contact;
+  contacts$!: Observable<ContactResponse[] | undefined>;
+  selectedContact!: ContactResponse;
 
   constructor(private scrumContacts: ScrumContactsService,
     private dialog: MatDialog){

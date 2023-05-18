@@ -2,14 +2,9 @@ import { Injectable } from '@angular/core';
 import { SUBTASKS_ENDPOINT } from './subtasks-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-export interface Subtask{
-  id: number,
-  title: string,
-  done: boolean
-}
+import { catchError, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Subtask, SubtaskRequest, SubtaskResponse, SubtaskResponseAPI } from 'src/app/shared/models/subtask.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,23 +14,31 @@ export class ScrumSubtasksService {
   subtasksEndpoint = SUBTASKS_ENDPOINT;
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
-  getSubtasks$() {
+  getSubtasks$(): Observable<SubtaskResponse[]> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.get<Subtask[]>(this.subtasksEndpoint, { headers })
-      .pipe(catchError(error => of<Subtask[]>([])));
+    return this.http.get<SubtaskResponseAPI[]>(this.subtasksEndpoint, { headers })
+      .pipe(
+        catchError(error => of([])),
+        map(subtasks => subtasks.map(s => Subtask.createInternalValue(s)))
+      );
   }
 
-  addSubtask$(newSubtask: Subtask) {
+  addSubtask$(subtask: Partial<SubtaskRequest>): Observable<SubtaskResponse | null> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.post<Subtask>(this.subtasksEndpoint, newSubtask, { headers })
-    .pipe(catchError(error => of(undefined)));
+    const newSubtask = Subtask.createRepresentation(subtask);
+
+    return this.http.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask, { headers })
+      .pipe(
+        catchError(error => of(null)),
+        map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
+      );
   }
 }

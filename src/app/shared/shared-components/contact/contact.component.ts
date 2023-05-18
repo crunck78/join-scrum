@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Contact } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 import { CardComponent } from '../card/card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ContactInitialsComponent } from '../contact-initials/contact-initials/contact-initials.component';
 import { ContactCardComponent } from '../contact-card/contact-card/contact-card.component';
+import { ContactResponse } from '../../models/contact.model';
 
 @Component({
   selector: 'app-contact',
@@ -20,6 +20,6 @@ import { ContactCardComponent } from '../contact-card/contact-card/contact-card.
 })
 export class ContactComponent {
 
-    @Input() contact!: Contact;
+    @Input() contact!: ContactResponse;
     @Input() selected!: boolean;
 }

@@ -6,8 +6,11 @@ import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
-import { ScrumTasksService, TaskResponse } from 'src/app/scrum-api/scrum-tasks/scrum-tasks.service';
+import { ScrumTasksService } from 'src/app/scrum-api/scrum-tasks/scrum-tasks.service';
 import { Observable } from 'rxjs';
+import { ScrumBoardsService } from 'src/app/scrum-api/scrum-boards/scrum-boards.service';
+import { TaskResponse } from 'src/app/shared/models/task.model';
+import { BoardResponse } from 'src/app/shared/models/board.model';
 
 @Component({
   selector: 'app-board',
@@ -23,17 +26,17 @@ import { Observable } from 'rxjs';
   ]
 })
 export class BoardComponent {
-  todo : TaskResponse[] = [];
+  todo: TaskResponse[] = [];
 
-  done : TaskResponse[] = [];
+  done: TaskResponse[] = [];
 
-  backlog : TaskResponse[] = [];
+  backlog: TaskResponse[] = [];
   backlog$ !: Observable<TaskResponse[]>;
-  constructor(private scrumTasks: ScrumTasksService){
-   this.scrumTasks.getBacklog$().subscribe(values => {
-    this.backlog = values;
-    console.log(values);
-   });
+  board !: BoardResponse | null;
+  constructor(private scrumTasks: ScrumTasksService,
+    private scrumBoards: ScrumBoardsService) {
+    this.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
+    this.scrumBoards.getBoardById$('1').subscribe(board => this.board = board);
   }
 
   drop(event: CdkDragDrop<TaskResponse[]>) {
@@ -49,7 +52,15 @@ export class BoardComponent {
     }
   }
 
-  addList(){
+  addList() {
 
+  }
+
+  /**
+   * Change to a more complex form, for now new user should only have one board
+   */
+  addBoard(){
+    if(!this.board)
+      this.scrumBoards.addBoard$({title: "First Board"}).subscribe(board => this.board = board);
   }
 }

@@ -2,13 +2,8 @@ import { Injectable } from '@angular/core';
 import { CATEGORIES_ENDPOINT } from './categories-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
-import { catchError, of } from 'rxjs';
-
-export interface Category{
-  id?: string,
-  name: string,
-  color: string
-}
+import { Observable, catchError, map, of } from 'rxjs';
+import { Category, CategoryRequest, CategoryResponse, CategoryResponseAPI } from 'src/app/shared/models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,23 +13,31 @@ export class ScrumCategoriesService {
   categoriesEndpoint = CATEGORIES_ENDPOINT;
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
-  getCategories$() {
+  getCategories$(): Observable<CategoryResponse[]> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.get<Category[]>(this.categoriesEndpoint, { headers })
-      .pipe(catchError(error => of<Category[]>([])));
+    return this.http.get<CategoryResponseAPI[]>(this.categoriesEndpoint, { headers })
+      .pipe(
+        catchError(error => of([])),
+        map((categories : CategoryResponseAPI[]) => categories.map(c => Category.createInternalValue(c)))
+      );
   }
 
-  addCategory$(newCategory: Category) {
+  addCategory$(editCategory: Partial<CategoryRequest>) : Observable<CategoryResponse | null> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.post<Category>(this.categoriesEndpoint, newCategory, { headers })
-    .pipe(catchError(error => of(undefined)));
+    const newCategory = Category.createRepresentation(editCategory);
+
+    return this.http.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory, { headers })
+      .pipe(
+        catchError(error => of(null)),
+        map((category: CategoryResponseAPI | null) => category ? Category.createInternalValue(category) : null)
+      );
   }
 }

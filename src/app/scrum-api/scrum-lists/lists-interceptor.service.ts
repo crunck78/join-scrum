@@ -2,11 +2,10 @@ import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/comm
 import { Injectable } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 
-export const TASKS_ENDPOINT = 'api/task/tasks/';
-
+export const LISTS_ENDPOINT = 'api/list/lists/';
 
 @Injectable()
-export class TasksInterceptor {
+export class ListsInterceptorService {
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(httpRequest).pipe(
@@ -21,9 +20,6 @@ export class TasksInterceptor {
       map((event: HttpResponse<any>) => {
         console.log(event.status);
         console.log(event.body);
-
-
-
         return event.clone({ body: event.body });
       })
     );

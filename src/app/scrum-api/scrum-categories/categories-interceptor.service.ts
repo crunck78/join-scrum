@@ -3,10 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 
 export const CATEGORIES_ENDPOINT = 'api/category/categories/';
-export interface CategoryAPI {
-  color: string;
-  name: string;
-}
 
 @Injectable()
 export class CategoriesInterceptor {
