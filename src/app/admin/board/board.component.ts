@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 import { ScrumBoardsService } from 'src/app/scrum-api/scrum-boards/scrum-boards.service';
 import { TaskResponse } from 'src/app/shared/models/task.model';
 import { BoardResponse } from 'src/app/shared/models/board.model';
+import { AddListComponent } from 'src/app/shared/shared-components/dialogs/add-list/add-list.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-board',
@@ -34,6 +36,7 @@ export class BoardComponent {
   backlog$ !: Observable<TaskResponse[]>;
   board !: BoardResponse | null;
   constructor(private scrumTasks: ScrumTasksService,
+    private dialog: MatDialog,
     private scrumBoards: ScrumBoardsService) {
     this.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
     this.scrumBoards.getBoardById$('1').subscribe(board => this.board = board);
@@ -53,7 +56,13 @@ export class BoardComponent {
   }
 
   addList() {
-
+    const dialogRef = this.dialog.open(AddListComponent);
+    dialogRef.afterClosed().subscribe(newList => {
+      if (newList) {
+        console.log(newList);
+        //this.updateContacts();
+      }
+    });
   }
 
   /**

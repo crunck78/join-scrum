@@ -1,5 +1,6 @@
 import { Category, CategoryResponse, CategoryResponseAPI } from "./category.model";
 import { Contact, ContactResponse, ContactResponseAPI } from "./contact.model";
+import { ListRequest } from "./list.model";
 import { Subtask, SubtaskResponse, SubtaskResponseAPI } from "./subtask.model";
 import { UserResponse } from "./user.model";
 
@@ -15,6 +16,7 @@ export interface TaskRequest {
   dueDate: Date;
   priority: 'Low' | 'Medium' | 'Urgent';
   subtasks: number[];
+  list: number | null;
 }
 
 /**
@@ -24,7 +26,7 @@ export interface TaskResponse {
   id: number;
   title: string;
   description: string;
-  category: CategoryResponse;
+  category: CategoryResponse | null;
   assignees: ContactResponse[];
   dueDate: Date;
   priority: 'Low' | 'Medium' | 'Urgent';
@@ -44,6 +46,7 @@ export interface TaskRequestAPI {
   due_date: string;
   priority: 'Low' | 'Medium' | 'Urgent';
   subtasks: number[];
+  list: number | null;
 }
 
 /**
@@ -53,7 +56,7 @@ export interface TaskResponseAPI {
   id: number;
   title: string;
   description: string;
-  category: CategoryResponseAPI;
+  category: CategoryResponseAPI | null;
   assignees: ContactResponseAPI[];
   due_date: string;
   priority: 'Low' | 'Medium' | 'Urgent';
@@ -75,13 +78,14 @@ export class Task {
   updatedAt!: Date;
 
   static createInternalValue(task: TaskResponseAPI): TaskResponse {
+
     return {
       createdAt: new Date(task.created_at),
       updatedAt: new Date(task.updated_at),
       id: task.id,
       title: task.title,
       description: task.description,
-      category: Category.createInternalValue(task.category),
+      category: task.category ? Category.createInternalValue(task.category) : null,
       assignees: task.assignees.map(a => Contact.createInternalValue(a)),
       dueDate: new Date(task.due_date),
       priority: task.priority,
@@ -97,7 +101,8 @@ export class Task {
       assignees: task.assignees,
       due_date: task.dueDate?.toISOString().slice(0, 10) || new Date(Date.now()).toISOString().slice(0, 10),
       priority: task.priority || 'Low',
-      subtasks: task.subtasks
+      subtasks: task.subtasks,
+      list: task.list
     };
   }
 

@@ -39,7 +39,7 @@ export class List {
             name: list.name,
             createdAt: new Date(list.created_at),
             updatedAt: new Date(list.updated_at),
-            tasks: list.tasks.map(t => Task.createInternalValue(t)),
+            tasks: list.tasks?.map(t => Task.createInternalValue(t)) || [],
         };
     }
 

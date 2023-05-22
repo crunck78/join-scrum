@@ -1,0 +1,33 @@
+<app-dialog [title]="'Add List'">
+    <ng-container side></ng-container>
+
+    <form class="main-content" [formGroup]="addListForm">
+
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'}]"
+            [autocomplete]="'list-name'" [type]="'text'" [inputType]="'input'" [control]="$any(addListForm.get('name'))"
+            [labelName]="'Name'"></app-form-field>
+
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Board is <strong>required</strong>'}]"
+            [suffixIcon]="'add'" [options]="boards$ | async | options : 'name' : 'id': this.getBoardOptionHTML"
+            [required]="true" [inputType]="'select'" [labelName]="'Select a board'"
+            [control]="$any(addListForm.get('board'))">
+        </app-form-field>
+
+        <!-- <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-description>
+                    Password requirements
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Must be at least 8 character long</p>
+            <p>Must be a combination of letters, numbers and at least one special character.</p>
+
+        </mat-expansion-panel> -->
+    </form>
+
+    <ng-container actions>
+        <button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
+        <button (click)="addList()" [disabled]="addListForm.invalid" mat-raised-button color="primary">Create
+            List</button>
+    </ng-container>
+</app-dialog>
