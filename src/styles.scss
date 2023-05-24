@@ -23,7 +23,7 @@ body {
 
 
 .drag-drop-container {
-    width: 400px;
+    width: 300px;
     max-width: 100%;
     margin: 0 25px 25px 0;
     vertical-align: top;
@@ -79,4 +79,8 @@ body {
 
 .drag-drop-list.cdk-drop-list-dragging .drag-drop-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.custom-margin-top-small{
+    margin-top: 20px;
 }

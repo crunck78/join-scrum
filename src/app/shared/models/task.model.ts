@@ -16,7 +16,7 @@ export interface TaskRequest {
   dueDate: Date;
   priority: 'Low' | 'Medium' | 'Urgent';
   subtasks: number[];
-  list: number | null;
+  list: number | null | '';
 }
 
 /**
@@ -46,7 +46,7 @@ export interface TaskRequestAPI {
   due_date: string;
   priority: 'Low' | 'Medium' | 'Urgent';
   subtasks: number[];
-  list: number | null;
+  list: number | null | '';
 }
 
 /**
@@ -99,8 +99,8 @@ export class Task {
       description: task.description,
       category: task.category,
       assignees: task.assignees,
-      due_date: task.dueDate?.toISOString().slice(0, 10) || new Date(Date.now()).toISOString().slice(0, 10),
-      priority: task.priority || 'Low',
+      due_date: task.dueDate?.toISOString().slice(0, 10),
+      priority: task.priority,
       subtasks: task.subtasks,
       list: task.list
     };

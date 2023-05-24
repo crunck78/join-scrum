@@ -1,0 +1,30 @@
+<span [style.background-color]="task.category?.color" class="task-category">
+    {{task.category?.name}}
+</span>
+
+<h3>{{task.title}}</h3>
+
+<p>{{task.description}}</p>
+
+<div *ngIf="task.subtasks.length > 0" class="subtasks-preview custom-margin-top-small">
+    <span class="subtasks-progress-bar"></span>
+    <span>
+        {{doneSubtasksLength}} /{{task.subtasks.length}} Done
+    </span>
+</div>
+
+<div class="task-footer custom-margin-top-small">
+    <div *ngIf="task.assignees.length > 0" class="task-assignees">
+        <ng-container *ngFor="let assignee of task.assignees; let i = index;">
+            <ng-container *ngIf="task.assignees.length > 3; else second">
+                <app-contact-initials *ngIf="i < 2" [contactName]="assignee.name"></app-contact-initials>
+                <app-contact-initials *ngIf="i == 3" [substrEnd]="2"
+                    [contactName]="'+'+(task.assignees.length - 2).toFixed()"></app-contact-initials>
+            </ng-container>
+            <ng-template #second>
+                <app-contact-initials [contactName]="assignee.name"></app-contact-initials>
+            </ng-template>
+        </ng-container>
+    </div>
+    <img class="priority-icon" src="assets/{{task.priority.toLowerCase()}}.svg" alt="Priority Icon">
+</div>

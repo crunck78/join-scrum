@@ -40,7 +40,7 @@ export class ScrumTasksService {
       );
   }
 
-  addTask$(task: Partial<TaskRequest>) {
+  addTask$(task: Partial<TaskRequest>) : Observable<TaskResponse | null> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
@@ -48,6 +48,20 @@ export class ScrumTasksService {
 
     const newTask = Task.createRepresentation(task);
     return this.http.post<TaskResponseAPI | null>(this.tasksEndpoint, newTask, { headers })
+      .pipe(
+        catchError(error => of(null)),
+        map(task => task ? Task.createInternalValue(task) : null)
+      );
+  }
+
+  updateTask$(taskId: number, taskRequest: Partial<TaskRequest>): Observable<TaskResponse | null>{
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    const taskRequestAPI = Task.createRepresentation(taskRequest);
+
+    return this.http.patch<TaskResponseAPI | null>(`${this.tasksEndpoint}${taskId}/`, taskRequestAPI, { headers })
       .pipe(
         catchError(error => of(null)),
         map(task => task ? Task.createInternalValue(task) : null)

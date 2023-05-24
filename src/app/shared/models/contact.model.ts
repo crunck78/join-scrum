@@ -64,13 +64,13 @@ export class Contact {
         };
     }
 
-    toInternalValue(contact: ContactResponseAPI) {
-        this.email = contact.email;
-        this.name = contact.email;
-        this.createdAt = new Date(contact.created_at);
-        this.updateAt = new Date(contact.update_at);
-        this.id = contact.id;
-    }
+    // toInternalValue(contact: ContactResponseAPI) {
+    //     this.email = contact.email;
+    //     this.name = contact.email;
+    //     this.createdAt = new Date(contact.created_at);
+    //     this.updateAt = new Date(contact.update_at);
+    //     this.id = contact.id;
+    // }
 
     toRepresentation() : ContactRequestAPI {
         return {

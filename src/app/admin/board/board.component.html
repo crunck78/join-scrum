@@ -1,34 +1,24 @@
 <app-card>
     <app-page-title title></app-page-title>
 
-    <div *ngIf="board; else createBoard" class="board-lists">
+    <div cdkDropListGroup *ngIf="board; else createBoard" class="board-lists">
         <div class="drag-drop-container">
             <h2>Backlog</h2>
 
-            <div cdkDropList #backlogList="cdkDropList" [cdkDropListData]="backlog"
-                [cdkDropListConnectedTo]="[todoList]" class="drag-drop-list" (cdkDropListDropped)="drop($event)">
-                <div class="drag-drop-box" *ngFor="let item of backlog; let i = index" cdkDrag>{{i}}{{item | json}}
+            <div cdkDropList [cdkDropListData]="backlog" class="drag-drop-list" (cdkDropListDropped)="drop($event)">
+                <app-task class="drag-drop-box" [task]="item" *ngFor="let item of backlog; let i = index" cdkDrag></app-task>
+            </div>
+        </div>
+        <ng-container *ngFor="let list of board.lists;let i = index;">
+            <div class="drag-drop-container">
+                <h2>{{list.name}}</h2>
+
+                <div cdkDropList [cdkDropListData]="list.tasks" class="drag-drop-list"
+                    (cdkDropListDropped)="drop($event, list)">
+                    <app-task class="drag-drop-box" [task]="item" *ngFor="let item of list.tasks; let i = index" cdkDrag></app-task>
                 </div>
             </div>
-        </div>
-
-        <div class="drag-drop-container">
-            <h2>To do</h2>
-
-            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
-                class="drag-drop-list" (cdkDropListDropped)="drop($event)">
-                <div class="drag-drop-box" *ngFor="let item of todo" cdkDrag>{{item | json}}</div>
-            </div>
-        </div>
-
-        <div class="drag-drop-container">
-            <h2>Done</h2>
-
-            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
-                class="drag-drop-list" (cdkDropListDropped)="drop($event)">
-                <div class="drag-drop-box" *ngFor="let item of done" cdkDrag>{{item | json}}</div>
-            </div>
-        </div>
+        </ng-container>
     </div>
 
     <ng-template #createBoard>

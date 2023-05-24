@@ -1,0 +1,41 @@
+:host {
+    display: block;
+}
+
+.task-category {
+    padding: 4px 25px;
+    text-align: center;
+    color: white;
+}
+
+.subtasks-preview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .subtasks-progress-bar {
+        flex: 1;
+        height: 8px;
+        background: #F4F4F4;
+        border-radius: 2px;
+    }
+}
+
+.task-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-assignees{
+    display: inline-flex;
+    align-items: center;
+
+    app-contact-initials:not(:first-child){
+        margin-left: -16px;
+    }
+}
+
+.priority-icon{
+    margin-left: auto;
+}
