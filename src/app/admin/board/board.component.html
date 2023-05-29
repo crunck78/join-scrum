@@ -1,21 +1,21 @@
 <app-card>
     <app-page-title title></app-page-title>
 
-    <div cdkDropListGroup *ngIf="board; else createBoard" class="board-lists">
+    <div cdkDropListGroup *ngIf="board; else createBoard" class="board-lists" cdkScrollable>
         <div class="drag-drop-container">
             <h2>Backlog</h2>
 
-            <div cdkDropList [cdkDropListData]="backlog" class="drag-drop-list" (cdkDropListDropped)="drop($event)">
-                <app-task class="drag-drop-box" [task]="item" *ngFor="let item of backlog; let i = index" cdkDrag></app-task>
+            <div cdkDropList [cdkDropListDisabled]="draggingDisabled" [cdkDropListData]="backlog" class="drag-drop-list" (cdkDropListDropped)="drop($event)">
+                <app-task class="drag-drop-box" [cdkDragDisabled]="draggingDisabled" [task]="item" *ngFor="let item of backlog; let i = index" cdkDrag></app-task>
             </div>
         </div>
         <ng-container *ngFor="let list of board.lists;let i = index;">
             <div class="drag-drop-container">
                 <h2>{{list.name}}</h2>
 
-                <div cdkDropList [cdkDropListData]="list.tasks" class="drag-drop-list"
+                <div cdkDropList [cdkDropListDisabled]="draggingDisabled" [cdkDropListData]="list.tasks" class="drag-drop-list"
                     (cdkDropListDropped)="drop($event, list)">
-                    <app-task class="drag-drop-box" [task]="item" *ngFor="let item of list.tasks; let i = index" cdkDrag></app-task>
+                    <app-task [cdkDragDisabled]="draggingDisabled" class="drag-drop-box" [task]="item" *ngFor="let item of list.tasks; let i = index" cdkDrag></app-task>
                 </div>
             </div>
         </ng-container>

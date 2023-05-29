@@ -1,5 +1,5 @@
-<app-dialog [title]="'Add Task'">
+<app-dialog [title]="title">
     <ng-container side></ng-container>
 
-    <app-add-task></app-add-task>
+    <app-add-task [mode]="mode" [task]="task"></app-add-task>
 </app-dialog>

@@ -1,21 +1,20 @@
 import { Category, CategoryResponse, CategoryResponseAPI } from "./category.model";
 import { Contact, ContactResponse, ContactResponseAPI } from "./contact.model";
 import { ListRequest } from "./list.model";
-import { Subtask, SubtaskResponse, SubtaskResponseAPI } from "./subtask.model";
+import { Subtask, SubtaskRequest, SubtaskRequestAPI, SubtaskResponse, SubtaskResponseAPI } from "./subtask.model";
 import { UserResponse } from "./user.model";
 
 /**
  * JSON format in front end for create, update, path, put request
  */
 export interface TaskRequest {
-  id: string;
   title: string;
   description: string;
   category: number;
   assignees: number[];
   dueDate: Date;
   priority: 'Low' | 'Medium' | 'Urgent';
-  subtasks: number[];
+  subtasks: SubtaskRequest[];
   list: number | null | '';
 }
 
@@ -45,7 +44,7 @@ export interface TaskRequestAPI {
   assignees: number[];
   due_date: string;
   priority: 'Low' | 'Medium' | 'Urgent';
-  subtasks: number[];
+  subtasks: SubtaskRequestAPI[];
   list: number | null | '';
 }
 
@@ -66,16 +65,6 @@ export interface TaskResponseAPI {
 }
 
 export class Task {
-  id!: number;
-  title!: string;
-  description!: string;
-  category!: Category;
-  assignees!: Contact[];
-  dueDate!: Date;
-  priority!: 'Low' | 'Medium' | 'Urgent';
-  subtasks!: Subtask[];
-  createdAt!: Date;
-  updatedAt!: Date;
 
   static createInternalValue(task: TaskResponseAPI): TaskResponse {
 
@@ -104,6 +93,18 @@ export class Task {
       subtasks: task.subtasks,
       list: task.list
     };
+  }
+
+  static convertToRepresentation(task: TaskResponse): Partial<TaskRequest> {
+    return {
+      title: task.title,
+      description: task.description,
+      category: task.category?.id,
+      assignees: task.assignees.map(a => a.id),
+      dueDate: task.dueDate,
+      priority: task.priority,
+      subtasks: task.subtasks
+    }
   }
 
 }

@@ -1,6 +1,14 @@
-<span [style.background-color]="task.category?.color" class="task-category">
-    {{task.category?.name}}
-</span>
+<div class="task-header">
+    <span [style.background-color]="task.category?.color" class="task-category">
+        {{task.category?.name}}
+    </span>
+
+    <!-- <mat-icon [matMenuTriggerFor]="menu">menu</mat-icon>
+    <mat-menu #menu="matMenu">
+        <button (click)="editTask()" mat-menu-item>Edit</button>
+        <button (click)="deleteTask()" mat-menu-item>Delete</button>
+    </mat-menu> -->
+</div>
 
 <h3>{{task.title}}</h3>
 
@@ -9,7 +17,7 @@
 <div *ngIf="task.subtasks.length > 0" class="subtasks-preview custom-margin-top-small">
     <span class="subtasks-progress-bar"></span>
     <span>
-        {{doneSubtasksLength}} /{{task.subtasks.length}} Done
+        {{doneSubtasksLength}}/{{task.subtasks.length}} Done
     </span>
 </div>
 

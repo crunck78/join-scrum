@@ -1,9 +1,11 @@
 export interface SubtaskRequest {
+    task?: number;
     title: string;
     done: boolean;
 }
 
 export interface SubtaskRequestAPI {
+    task?: number;
     title: string;
     done: boolean;
 }
@@ -25,11 +27,6 @@ export interface SubtaskResponseAPI {
 }
 
 export class Subtask {
-    id!: number;
-    title!: string;
-    done!: boolean;
-    createdAt!: Date;
-    updateAt!: Date;
 
     static createInternalValue(subtask: SubtaskResponseAPI): SubtaskResponse {
         return {
@@ -43,6 +40,7 @@ export class Subtask {
 
     static createRepresentation(subtask: Partial<SubtaskRequest>): Partial<SubtaskRequestAPI> {
         return {
+            task: subtask.task,
             title: subtask.title,
             done: subtask.done
         };

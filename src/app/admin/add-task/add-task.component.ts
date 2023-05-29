@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
@@ -22,7 +22,7 @@ import { ScrumTasksService } from 'src/app/scrum-api/scrum-tasks/scrum-tasks.ser
 import { CategoryResponse } from 'src/app/shared/models/category.model';
 import { ContactResponse } from 'src/app/shared/models/contact.model';
 import { SubtaskRequest, SubtaskResponse } from 'src/app/shared/models/subtask.model';
-import { TaskRequest } from 'src/app/shared/models/task.model';
+import { Task, TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
 
 export interface Priority {
   name: string,
@@ -50,7 +50,11 @@ export interface Priority {
     MatCheckboxModule
   ]
 })
-export class AddTaskComponent {
+export class AddTaskComponent implements OnChanges {
+
+  @Input() showPageTitle = false;
+  @Input() task!: TaskResponse;
+  @Input() mode: 'add' | 'edit' = 'add';
 
   categories$!: Observable<CategoryResponse[]>;
   contacts$!: Observable<ContactResponse[]>;
@@ -66,6 +70,13 @@ export class AddTaskComponent {
     this.updateSubtasks();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['task']) {
+      const taskRepresentation = Task.convertToRepresentation(this.task);
+      this.addTaskForm.patchValue(taskRepresentation);
+    }
+  }
+
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.compose([Validators.required])),
     description: new FormControl(''),
@@ -73,7 +84,7 @@ export class AddTaskComponent {
     assignees: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator])),
     dueDate: new FormControl<Date>(new Date(Date.now()), Validators.compose([Validators.required])),
     priority: new FormControl<'Low' | 'Medium' | 'Urgent'>('Low', Validators.compose([Validators.required])),
-    subtasks: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator]))
+    subtasks: new FormControl(<SubtaskRequest[]>[], Validators.compose([Validators.nullValidator]))
   });
 
   addSubtaskForm = new FormControl('');
@@ -104,7 +115,7 @@ export class AddTaskComponent {
     this.contacts$ = this.scrumContacts.getContacts$();
   }
 
-  updateSubtasks(){
+  updateSubtasks() {
     this.subtasks$ = this.scrumSubtasks.getSubtasks$();
     this.addSubtaskForm.reset();
   }
@@ -126,44 +137,71 @@ export class AddTaskComponent {
     `;
   }
 
+  // addSubtask() {
+  //   if (this.addSubtaskForm.valid) {
+  //     this.scrumSubtasks.addSubtask$({ title: this.addSubtaskForm.value, done: false } as SubtaskRequest).subscribe(
+  //       {
+  //         next: (res) => this.updateSubtasks(),
+  //         error: (err) => console.log(err)
+  //       }
+  //     );
+  //   }
+  // }
+
   addSubtask() {
     if (this.addSubtaskForm.valid) {
-      this.scrumSubtasks.addSubtask$({ title: this.addSubtaskForm.value, done: false } as SubtaskRequest).subscribe(
-        {
-          next: (res) => this.updateSubtasks(),
-          error: (err) => console.log(err)
-        }
-      );
+      const newSubtask = { title: this.addSubtaskForm.value, done: false } as SubtaskRequest;
+      this.pushSubtask(newSubtask);
     }
   }
 
-  pushSubtask(subtask: SubtaskResponse) {
-    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as number[];
-    currentSubtasks.push(subtask.id);
+  pushSubtask(subtask: SubtaskRequest) {
+    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as SubtaskRequest[];
+    currentSubtasks.push(subtask);
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
   }
 
-  popSubtask(subtask: SubtaskResponse){
-    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as number[];
-    currentSubtasks.splice(currentSubtasks.indexOf(subtask.id), 1);
+  popSubtask(subtask: SubtaskRequest) {
+    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as SubtaskRequest[];
+    currentSubtasks.splice(currentSubtasks.indexOf(subtask), 1);
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
+  }
+
+  saveTask() {
+    if (this.mode == 'add')
+      this.addTask();
+    if (this.mode == 'edit')
+      this.editTask();
   }
 
   addTask() {
-    if(this.addTaskForm.valid){
+    if (this.addTaskForm.valid) {
 
-        this.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
+      this.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
         .subscribe(
           {
-            next: (res)=> console.log(res),
+            next: (res) => console.log(res),
             error: (e) => console.log(e)
           }
         )
     }
   }
 
-  handleSelectSubtask(subtask: SubtaskResponse, checked: boolean){
-    if(checked)
+  editTask() {
+    if (this.addTaskForm.valid) {
+
+      this.scrumTask.updateTask$(this.task.id, this.addTaskForm.value as Partial<TaskRequest>)
+        .subscribe(
+          {
+            next: (res) => console.log(res),
+            error: (e) => console.log(e)
+          }
+        )
+    }
+  }
+
+  handleSelectSubtask(subtask: SubtaskResponse, checked: boolean) {
+    if (checked)
       this.pushSubtask(subtask);
     else
       this.popSubtask(subtask);

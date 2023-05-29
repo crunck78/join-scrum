@@ -33,6 +33,8 @@ import { TaskComponent } from 'src/app/shared/shared-components/task/task.compon
 export class BoardComponent implements AfterViewInit {
   @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 
+  draggingDisabled = false;
+
   backlog: TaskResponse[] = [];
   backlog$ !: Observable<TaskResponse[]>;
   board !: BoardResponse | null;
@@ -47,8 +49,7 @@ export class BoardComponent implements AfterViewInit {
   }
 
   drop(event: CdkDragDrop<TaskResponse[]>, list?: ListResponse) {
-    console.log(list);
-    console.log("Before change: ", event);
+    // this.draggingDisabled = true;
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -62,8 +63,6 @@ export class BoardComponent implements AfterViewInit {
       this.scrumTasks.updateTask$(droppedTask['id'], { list: list?.id || null })
         .subscribe((value: any) => console.log(value));
     }
-
-    console.log("After change: ", event);
   }
 
   addList() {
