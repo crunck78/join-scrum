@@ -103,7 +103,7 @@ export class Task {
       assignees: task.assignees.map(a => a.id),
       dueDate: task.dueDate,
       priority: task.priority,
-      subtasks: task.subtasks
+      subtasks: task.subtasks.map(s => Subtask.convertToRepresentation(s))
     }
   }
 

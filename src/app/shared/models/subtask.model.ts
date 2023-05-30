@@ -1,4 +1,5 @@
 export interface SubtaskRequest {
+    id?: number;
     task?: number;
     title: string;
     done: boolean;
@@ -45,4 +46,12 @@ export class Subtask {
             done: subtask.done
         };
     }
+
+    static convertToRepresentation(task: SubtaskResponse): SubtaskRequest {
+        return {
+          title: task.title,
+          done: task.done,
+          id: task.id
+        }
+      }
 }

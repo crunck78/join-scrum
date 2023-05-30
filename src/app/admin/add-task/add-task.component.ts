@@ -47,7 +47,7 @@ export interface Priority {
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ]
 })
 export class AddTaskComponent implements OnChanges {
@@ -73,6 +73,7 @@ export class AddTaskComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['task']) {
       const taskRepresentation = Task.convertToRepresentation(this.task);
+      console.log(taskRepresentation);
       this.addTaskForm.patchValue(taskRepresentation);
     }
   }
@@ -189,8 +190,8 @@ export class AddTaskComponent implements OnChanges {
 
   editTask() {
     if (this.addTaskForm.valid) {
-
-      this.scrumTask.updateTask$(this.task.id, this.addTaskForm.value as Partial<TaskRequest>)
+      const toEditTask = this.addTaskForm.value as Partial<TaskRequest>;
+      this.scrumTask.updateTask$(this.task.id, toEditTask)
         .subscribe(
           {
             next: (res) => console.log(res),
@@ -198,6 +199,30 @@ export class AddTaskComponent implements OnChanges {
           }
         )
     }
+  }
+
+  // updateSubtask(checked: boolean, subtask: SubtaskRequest) {
+  //     subtask.done = checked;
+  //     if(this.mode == 'edit'){
+  //       const subtaskId = subtask.id as number;
+  //       this.scrumSubtasks.updateSubtask$( subtaskId ,subtask).subscribe(editSubtask => console.log(editSubtask));
+  //     }
+  // }
+
+  /**
+   * How to update subtask from Edit Form?
+   * 1. Update each subtask on check and remove them from Update Task Request.
+   * 2. Update only the FormControl of each subtask on check and send full Task Upload Payload
+   *    - Backend requires change
+   * @param checked
+   * @param subtask
+   */
+  updateSubtask(checked: boolean, subtask: SubtaskRequest) {
+    subtask.done = checked;
+    // if (this.mode == 'edit') {
+    //   const subtaskId = subtask.id as number;
+    //   this.scrumSubtasks.updateSubtask$(subtaskId, subtask).subscribe(editSubtask => console.log(editSubtask));
+    // }
   }
 
   handleSelectSubtask(subtask: SubtaskResponse, checked: boolean) {

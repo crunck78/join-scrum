@@ -41,4 +41,18 @@ export class ScrumSubtasksService {
         map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
       );
   }
+
+  updateSubtask$(subtaskId: number, taskRequest: Partial<SubtaskRequest>): Observable<SubtaskResponse | null>{
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    const subtaskRequestAPI = Subtask.createRepresentation(taskRequest);
+
+    return this.http.patch<SubtaskResponseAPI | null>(`${this.subtasksEndpoint}${subtaskId}/`, subtaskRequestAPI, { headers })
+      .pipe(
+        catchError(error => of(null)),
+        map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
+      );
+  }
 }

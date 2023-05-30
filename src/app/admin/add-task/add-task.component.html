@@ -45,7 +45,7 @@
 
             <div>
                 <div *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
-                    <mat-checkbox (value)="subtask.done" [disabled]="true">
+                    <mat-checkbox #subtaskCheck (change)="updateSubtask($event.checked, subtask)" [checked]="subtask.done">
                         {{subtask.title}}
                     </mat-checkbox>
                 </div>
