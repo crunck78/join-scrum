@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dialog.component';
+import { ProgressLinearGradientPipe } from '../../pipes/progress-linear-gradient.pipe';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -17,7 +18,8 @@ import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dial
     ContactInitialsComponent,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    ProgressLinearGradientPipe
   ]
 })
 export class TaskComponent {
@@ -35,15 +37,16 @@ export class TaskComponent {
   @HostListener('click', ['$event'])
   onClick(event: any) {
     console.log(event);
-    const dialogRef = this.dialog.open(AddTaskDialogComponent);
-    dialogRef.componentInstance.task = this.task;
-    dialogRef.componentInstance.mode = 'edit';
-
-    dialogRef.afterClosed().subscribe(result => console.log(result));
+    this.editTask();
   }
 
   editTask() {
-
+    const dialogRef = this.dialog.open(AddTaskDialogComponent);
+    dialogRef.componentInstance.task = this.task;
+    dialogRef.componentInstance.mode = 'edit';
+    dialogRef.afterClosed().subscribe(result =>{
+      if(result) this.task = result;
+    });
   }
 
   deleteTask() {

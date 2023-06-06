@@ -5,7 +5,7 @@
         <div class="drag-drop-container">
             <h2>Backlog</h2>
 
-            <div cdkDropList [cdkDropListDisabled]="draggingDisabled" [cdkDropListData]="backlog" class="drag-drop-list" (cdkDropListDropped)="drop($event)">
+            <div cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListDisabled]="draggingDisabled" [cdkDropListData]="backlog" class="drag-drop-list" (cdkDropListDropped)="drop($event)">
                 <app-task class="drag-drop-box" [cdkDragDisabled]="draggingDisabled" [task]="item" *ngFor="let item of backlog; let i = index" cdkDrag></app-task>
             </div>
         </div>
@@ -13,7 +13,7 @@
             <div class="drag-drop-container">
                 <h2>{{list.name}}</h2>
 
-                <div cdkDropList [cdkDropListDisabled]="draggingDisabled" [cdkDropListData]="list.tasks" class="drag-drop-list"
+                <div cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListDisabled]="draggingDisabled" [cdkDropListData]="list.tasks" class="drag-drop-list"
                     (cdkDropListDropped)="drop($event, list)">
                     <app-task [cdkDragDisabled]="draggingDisabled" class="drag-drop-box" [task]="item" *ngFor="let item of list.tasks; let i = index" cdkDrag></app-task>
                 </div>

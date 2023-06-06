@@ -15,7 +15,7 @@
 <p>{{task.description}}</p>
 
 <div *ngIf="task.subtasks.length > 0" class="subtasks-preview custom-margin-top-small">
-    <span class="subtasks-progress-bar"></span>
+    <span [style.background]=" doneSubtasksLength | progressLinearGradient : task.subtasks.length" class="subtasks-progress-bar"></span>
     <span>
         {{doneSubtasksLength}}/{{task.subtasks.length}} Done
     </span>
