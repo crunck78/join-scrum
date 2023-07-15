@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { AddTaskComponent } from 'src/app/admin/add-task/add-task.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TaskResponse } from 'src/app/shared/models/task.model';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-add-task-dialog',
@@ -10,6 +12,8 @@ import { TaskResponse } from 'src/app/shared/models/task.model';
   styleUrls: ['./add-task-dialog.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    MatButtonModule,
     DialogComponent,
     AddTaskComponent
   ]
@@ -17,6 +21,8 @@ import { TaskResponse } from 'src/app/shared/models/task.model';
 export class AddTaskDialogComponent {
   task!: TaskResponse;
   mode: 'add' | 'edit' = 'add';
+  clearTaskForm = new EventEmitter();
+  submitTaskForm = new EventEmitter();
   constructor(private dialogRef: MatDialogRef<AddTaskDialogComponent>) {
 
   }
