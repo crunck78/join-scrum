@@ -4,6 +4,21 @@
     height: 100%;
     box-sizing: border-box;
 
+    position: relative;
+    .close-selected-contact{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    @media(max-width: 800px){
+        app-card:nth-child(2){
+            position: absolute;
+            z-index: 999;
+            height: calc(100% - 32px);
+        }
+    }
+
     app-card {
         display: block;
         height: 100%;
