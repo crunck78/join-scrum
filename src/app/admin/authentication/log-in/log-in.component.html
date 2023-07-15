@@ -1,5 +1,5 @@
 <app-card>
-    <app-page-title title></app-page-title>
+    <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title>
 
     <form class="main-content" [formGroup]="loginForm">
 

@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ForgotPasswordCredentials, ScrumForgotPasswordService } from 'src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service';
 import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -34,7 +35,7 @@ import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/
 })
 export class ForgotPasswordComponent {
 
-  constructor(private scrumForgotPassword: ScrumForgotPasswordService){}
+  constructor(private scrumForgotPassword: ScrumForgotPasswordService, private breakPoints: BreakpointsService){}
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email]))
@@ -44,6 +45,10 @@ export class ForgotPasswordComponent {
     if (this.forgotPasswordForm.valid) {
       this.scrumForgotPassword.sendMail(this.forgotPasswordForm.value as ForgotPasswordCredentials);
     }
+  }
+
+  get matchWebBreakpoint$ (){
+    return this.breakPoints.matchesWebBreakpoint$;
   }
 
 }

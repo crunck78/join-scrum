@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { map } from 'rxjs';
 import { HeaderComponent } from './header/header.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointsService } from './shared/shared-services/breakpoints.service';
 
 @Component({
   selector: 'app-root',
@@ -22,17 +23,14 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   ],
 })
 export class AppComponent {
-  constructor(private scrumApi: ScrumApiService, private breakpointObserver: BreakpointObserver) {
+  constructor(private scrumApi: ScrumApiService, private breakpoints: BreakpointsService) {
 
   }
   title = 'join';
 
-  web$ = this.breakpointObserver
-    .observe([Breakpoints.Web])
-    .pipe(
-      map(result => result.matches),
-      map(matches => matches ? 'side' : 'over' as MatDrawerMode)
-    );
+  web$ = this.breakpoints.matchesWebBreakpoint$.pipe(
+    map(matches => matches ? 'side' : 'over' as MatDrawerMode)
+  );
 
   get isLoggedIn$() {
     return this.scrumApi.apiToken$.pipe(map((apiToken: ApiToken) => !!apiToken.token));

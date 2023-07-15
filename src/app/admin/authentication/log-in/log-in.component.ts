@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
 import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
 
 @Component({
   selector: 'app-log-in',
@@ -41,7 +42,8 @@ export class LogInComponent {
   rememberMe = new FormControl(this.scrumApi.rememberMe);
 
   constructor(private scrumLogin: ScrumLoginService,
-    private scrumApi: ScrumApiService) {
+    private scrumApi: ScrumApiService,
+    private breakPoints: BreakpointsService) {
     this.rememberMe.valueChanges.subscribe(value => this.scrumApi.rememberMe = value as boolean)
   }
 
@@ -49,5 +51,9 @@ export class LogInComponent {
     if (this.loginForm.valid) {
       this.scrumLogin.login(this.loginForm.value as LoginCredentials);
     }
+  }
+
+  get matchWebBreakpoint$ (){
+    return this.breakPoints.matchesWebBreakpoint$;
   }
 }

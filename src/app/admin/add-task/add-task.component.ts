@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ScrumCategoriesService } from 'src/app/scrum-api/scrum-categories/scrum-categories.service';
 import { ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
@@ -23,6 +23,7 @@ import { CategoryResponse } from 'src/app/shared/models/category.model';
 import { ContactResponse } from 'src/app/shared/models/contact.model';
 import { SubtaskRequest, SubtaskResponse } from 'src/app/shared/models/subtask.model';
 import { Task, TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
 
 export interface Priority {
   name: string,
@@ -55,16 +56,20 @@ export class AddTaskComponent implements OnChanges {
   @Input() showPageTitle = false;
   @Input() task!: TaskResponse;
   @Input() mode: 'add' | 'edit' = 'add';
+  @Input() hideFooter: boolean = false;
 
   categories$!: Observable<CategoryResponse[]>;
   contacts$!: Observable<ContactResponse[]>;
   subtasks$!: Observable<SubtaskResponse[]>
+  @Input() clearTaskForm$!: EventEmitter<void>;
+  @Input() submitTaskForm$!: EventEmitter<void>;
 
   constructor(private scrumCategory: ScrumCategoriesService,
     private scrumContacts: ScrumContactsService,
     private dialog: MatDialog,
     private scrumSubtasks: ScrumSubtasksService,
-    private scrumTask: ScrumTasksService) {
+    private scrumTask: ScrumTasksService,
+    private breakPoints: BreakpointsService) {
     this.updateCategories();
     this.updateContacts();
     this.updateSubtasks();
@@ -75,6 +80,15 @@ export class AddTaskComponent implements OnChanges {
       const taskRepresentation = Task.convertToRepresentation(this.task);
       console.log(taskRepresentation);
       this.addTaskForm.patchValue(taskRepresentation);
+
+    }
+
+    if(changes['clearTaskForm$']){
+      this.clearTaskForm$.subscribe(()=> this.addTaskForm.reset());
+    }
+
+    if(changes['submitTaskForm$']){
+      this.submitTaskForm$.subscribe(()=> this.saveTask());
     }
   }
 
@@ -230,6 +244,12 @@ export class AddTaskComponent implements OnChanges {
       this.pushSubtask(subtask);
     else
       this.popSubtask(subtask);
+  }
+
+  get matchWebBreakpoint$ (){
+    return this.breakPoints.matchesWebBreakpoint$.pipe(
+      map(match => match && this.showPageTitle)
+    );
   }
 
 }

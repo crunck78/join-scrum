@@ -15,6 +15,7 @@ import { AddListComponent } from 'src/app/shared/shared-components/dialogs/add-l
 import { MatDialog } from '@angular/material/dialog';
 import { ListResponse } from 'src/app/shared/models/list.model';
 import { TaskComponent } from 'src/app/shared/shared-components/task/task.component';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
 
 @Component({
   selector: 'app-board',
@@ -40,7 +41,8 @@ export class BoardComponent implements AfterViewInit {
   board !: BoardResponse | null;
   constructor(private scrumTasks: ScrumTasksService,
     private dialog: MatDialog,
-    private scrumBoards: ScrumBoardsService) {
+    private scrumBoards: ScrumBoardsService,
+    private breakPoints: BreakpointsService) {
     this.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
     this.scrumBoards.getBoardById$('1').subscribe(board => this.board = board);
   }
@@ -81,5 +83,9 @@ export class BoardComponent implements AfterViewInit {
   addBoard() {
     if (!this.board)
       this.scrumBoards.addBoard$({ title: "First Board" }).subscribe(board => this.board = board);
+  }
+
+  get matchWebBreakpoint$ (){
+    return this.breakPoints.matchesWebBreakpoint$;
   }
 }

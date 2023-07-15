@@ -1,4 +1,16 @@
-<button (click)="toggleDrawer.emit()" mat-icon-button color="accent">
-    <mat-icon>menu</mat-icon>
+<div style="display: flex; align-items: center; gap: 12px;">
+    <button (click)="toggleDrawer.emit()" mat-icon-button color="accent">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <app-page-title class="mat-mdc-card-title" *ngIf="!(matchWebBreakpoint$ | async)"></app-page-title>
+</div>
+<button *ngIf="matchWebBreakpoint$ | async; else iconLogout" mat-raised-button color="primary" (click)="logout()">
+    Log Out
 </button>
-<button mat-raised-button color="primary" (click)="logout()">Log Out</button>
+
+<ng-template #iconLogout>
+    <button mat-icon-button color="primary" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+    </button>
+</ng-template>

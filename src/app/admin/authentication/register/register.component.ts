@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ScrumSignupService, SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.service';
 import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,7 @@ import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/
 })
 export class RegisterComponent {
 
-  constructor(private scrumSignup: ScrumSignupService) {}
+  constructor(private scrumSignup: ScrumSignupService, private breakPoints: BreakpointsService) {}
 
   signupForm = new FormGroup({
     name: new FormControl('', Validators.compose([Validators.required])),
@@ -45,6 +46,10 @@ export class RegisterComponent {
     if (this.signupForm.valid) {
       this.scrumSignup.signup(this.signupForm.value as SignupCredentials);
     }
+  }
+
+  get matchWebBreakpoint$ (){
+    return this.breakPoints.matchesWebBreakpoint$;
   }
 
 }

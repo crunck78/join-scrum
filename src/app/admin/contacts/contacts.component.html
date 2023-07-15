@@ -19,13 +19,15 @@
 </app-card>
 
 <app-card *ngIf="!!selectedContact">
-    <app-page-title title></app-page-title>
-
+    <button class="close-selected-contact" mat-icon-button (click)="closeSelectedContact()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <app-page-title *ngIf="matchWebBreakpoint$ | async" title></app-page-title>
 
     <app-contact-details (contactChange)="updateContacts()" [contact]="selectedContact"></app-contact-details>
 
     <button (click)="addContact()" class="new-contact" footer mat-raised-button color="primary">
-        <span>New contact</span>
+        <span *ngIf="matchWebBreakpoint$ | async">New contact</span>
         <img src="assets/new_contact.svg" alt="">
     </button>
 </app-card>

@@ -1,5 +1,5 @@
 <app-card>
-    <app-page-title *ngIf="showPageTitle" title></app-page-title>
+    <app-page-title *ngIf="matchWebBreakpoint$ | async" title></app-page-title>
 
     <form class="main-content" [formGroup]="addTaskForm">
         <div class="form-field-group">
@@ -54,8 +54,7 @@
 
     </form>
 
-    <div class="footer" footer>
-
+    <div *ngIf="!hideFooter" class="footer" footer>
         <div class="simple-grid">
             <button (click)="addTaskForm.reset()" mat-stroked-button color="primary">Clear</button>
             <button [disabled]="addTaskForm.invalid" (click)="saveTask()" mat-raised-button color="primary">

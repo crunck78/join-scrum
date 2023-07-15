@@ -18,6 +18,8 @@ import { ContactDetailsComponent } from 'src/app/shared/shared-components/contac
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { DialogService } from 'src/app/shared/shared-services/dialog/dialog.service';
 import { Contact, ContactResponse } from 'src/app/shared/models/contact.model';
+import { MatIconModule } from '@angular/material/icon';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -34,7 +36,8 @@ import { Contact, ContactResponse } from 'src/app/shared/models/contact.model';
     MatDividerModule,
     MatListModule,
     ContactDetailsComponent,
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule,
   ]
 })
 export class ContactsComponent implements AfterViewInit {
@@ -42,11 +45,16 @@ export class ContactsComponent implements AfterViewInit {
   @ViewChild('contacts-list') contactsList!: ElementRef<HTMLElement>;
 
   contacts$!: Observable<ContactResponse[] | undefined>;
-  selectedContact!: ContactResponse;
+  selectedContact!: ContactResponse | null;
 
   constructor(private scrumContacts: ScrumContactsService,
-    private dialog: MatDialog){
+    private dialog: MatDialog,
+    private breakPoints: BreakpointsService){
       this.updateContacts();
+  }
+
+  get matchWebBreakpoint$ (){
+    return this.breakPoints.matchesWebBreakpoint$;
   }
 
   ngAfterViewInit(): void {
@@ -68,6 +76,10 @@ export class ContactsComponent implements AfterViewInit {
 
   updateContacts(){
     this.contacts$ = this.scrumContacts.getContacts$();
+  }
+
+  closeSelectedContact(){
+    this.selectedContact = null;
   }
 
 }
