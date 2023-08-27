@@ -53,7 +53,7 @@ export interface Priority {
 })
 export class AddTaskComponent implements OnChanges {
 
-  @Input() showPageTitle = false;
+  @Input() showPageTitle = true;
   @Input() task!: TaskResponse;
   @Input() mode: 'add' | 'edit' = 'add';
   @Input() hideFooter: boolean = false;

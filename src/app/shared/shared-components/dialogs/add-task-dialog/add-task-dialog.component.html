@@ -1,7 +1,7 @@
 <app-dialog [title]="title">
     <ng-container side></ng-container>
 
-    <app-add-task [clearTaskForm$]="clearTaskForm" [submitTaskForm$]="submitTaskForm" [hideFooter]="true" [mode]="mode" [task]="task"></app-add-task>
+    <app-add-task [showPageTitle]="false" [clearTaskForm$]="clearTaskForm" [submitTaskForm$]="submitTaskForm" [hideFooter]="true" [mode]="mode" [task]="task"></app-add-task>
 
     <div class="footer" actions>
         <div class="simple-grid">
