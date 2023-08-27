@@ -36,7 +36,7 @@ export class TaskComponent {
 
   @HostListener('click', ['$event'])
   onClick(event: any) {
-    console.log(event);
+    console.log(" @HostListener('click', ['$event'])onClick(event: any)",event);
     this.editTask();
   }
 

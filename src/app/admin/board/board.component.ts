@@ -16,7 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ListResponse } from 'src/app/shared/models/list.model';
 import { TaskComponent } from 'src/app/shared/shared-components/task/task.component';
 import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -29,12 +30,14 @@ import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.s
     DragDropModule,
     MatButtonModule,
     TaskComponent,
+    MatMenuModule,
+    MatIconModule
   ]
 })
 export class BoardComponent implements AfterViewInit {
   @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 
-  draggingDisabled = false;
+  draggingDisabled = true;
 
   backlog: TaskResponse[] = [];
   backlog$ !: Observable<TaskResponse[]>;
@@ -85,7 +88,7 @@ export class BoardComponent implements AfterViewInit {
       this.scrumBoards.addBoard$({ title: "First Board" }).subscribe(board => this.board = board);
   }
 
-  get matchWebBreakpoint$ (){
+  get matchWebBreakpoint$() {
     return this.breakPoints.matchesWebBreakpoint$;
   }
 }

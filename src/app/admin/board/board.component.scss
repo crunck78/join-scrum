@@ -1,4 +1,4 @@
-:host{
+:host {
     display: flex;
     padding: 16px 0;
     height: 100%;
@@ -13,6 +13,7 @@
 
 .new-list {
     margin-left: auto;
+
     &::ng-deep .mdc-button__label {
         display: flex;
         align-items: center;
@@ -21,10 +22,26 @@
     }
 }
 
-.board-lists{
+.board-lists {
     display: flex;
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     height: 100%;
+}
+
+.board-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-handle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ccc;
+    cursor: move;
+    width: 24px;
+    height: 24px;
 }
