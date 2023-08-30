@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormControl, FormControlStatus, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -53,6 +53,16 @@ export interface Priority {
 })
 export class AddTaskComponent implements OnChanges {
 
+  readonly InitTask = {
+    title: '',
+    description: '',
+    category: 0,
+    assignees: <number[]>[],
+    dueDate: new Date(Date.now()),
+    priority: <'Low' | 'Medium' | 'Urgent'>'Low',
+    subtasks: <SubtaskRequest[]>[]
+  };
+
   @Input() showPageTitle = true;
   @Input() task!: TaskResponse;
   @Input() mode: 'add' | 'edit' = 'add';
@@ -64,6 +74,8 @@ export class AddTaskComponent implements OnChanges {
   @Input() clearTaskForm$!: EventEmitter<void>;
   @Input() submitTaskForm$!: EventEmitter<void>;
 
+  @Output() formStatus$ = new EventEmitter<FormControlStatus>();
+
   constructor(private scrumCategory: ScrumCategoriesService,
     private scrumContacts: ScrumContactsService,
     private dialog: MatDialog,
@@ -73,6 +85,7 @@ export class AddTaskComponent implements OnChanges {
     this.updateCategories();
     this.updateContacts();
     this.updateSubtasks();
+    this.addTaskForm.statusChanges.subscribe((status: FormControlStatus) => this.formStatus$.emit(status));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -83,12 +96,12 @@ export class AddTaskComponent implements OnChanges {
 
     }
 
-    if(changes['clearTaskForm$']){
-      this.clearTaskForm$.subscribe(()=> this.addTaskForm.reset());
+    if (changes['clearTaskForm$']) {
+      this.clearTaskForm$.subscribe(() => this.addTaskForm.reset());
     }
 
-    if(changes['submitTaskForm$']){
-      this.submitTaskForm$.subscribe(()=> this.saveTask());
+    if (changes['submitTaskForm$']) {
+      this.submitTaskForm$.subscribe(() => this.saveTask());
     }
   }
 
@@ -246,7 +259,7 @@ export class AddTaskComponent implements OnChanges {
       this.popSubtask(subtask);
   }
 
-  get matchWebBreakpoint$ (){
+  get matchWebBreakpoint$() {
     return this.breakPoints.matchesWebBreakpoint$.pipe(
       map(match => match && this.showPageTitle)
     );

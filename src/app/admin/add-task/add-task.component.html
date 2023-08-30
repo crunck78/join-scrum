@@ -59,7 +59,7 @@
             <button (click)="addTaskForm.reset()" mat-stroked-button color="primary">Clear</button>
             <button [disabled]="addTaskForm.invalid" (click)="saveTask()" mat-raised-button color="primary">
                 <span *ngIf="mode == 'add'">Create Task</span>
-                <span *ngIf="mode == 'edit'">Edit Task</span>
+                <span *ngIf="mode == 'edit'">Save Task</span>
             </button>
         </div>
     </div>

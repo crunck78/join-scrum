@@ -13,6 +13,18 @@ export class ScrumListsService {
   listsEndpoint = LISTS_ENDPOINT;
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
+  // deleteList$(id: string){
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Token ${this.scrumApi.token}`
+  //   });
+
+  //   return this.http.get<ListResponseAPI[]>(this.listsEndpoint, { headers })
+  //     .pipe(
+  //       catchError(error => of([])),
+  //       map(lists => lists.map(l => List.createInternalValue(l)))
+  //     );
+  // }
+
   getLists$(): Observable<ListResponse[]> {
 
     const headers = new HttpHeaders({

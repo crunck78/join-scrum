@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { TaskResponse } from 'src/app/shared/models/task.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { FormControlStatus } from '@angular/forms';
 
 @Component({
   selector: 'app-add-task-dialog',
@@ -21,17 +22,22 @@ import { MatButtonModule } from '@angular/material/button';
 export class AddTaskDialogComponent {
   task!: TaskResponse;
   mode: 'add' | 'edit' = 'add';
+  formStatus!: FormControlStatus;
   clearTaskForm = new EventEmitter();
   submitTaskForm = new EventEmitter();
   constructor(private dialogRef: MatDialogRef<AddTaskDialogComponent>) {
 
   }
 
+  updateFormStatus(eventStatus: FormControlStatus){
+    this.formStatus = eventStatus;
+  }
+
   get title(){
     if(this.mode == 'add')
       return 'Add Task';
     if(this.mode == 'edit')
-      return 'Edit Task';
+      return 'Save Task';
     return '';
   }
 }
