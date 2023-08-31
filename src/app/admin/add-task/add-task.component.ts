@@ -60,8 +60,8 @@ export class AddTaskComponent implements OnChanges {
     description: '',
     category: null,
     assignees: <number[]>[],
-    dueDate: new Date(Date.now()),
-    priority: <PriorityType>'Low',
+    dueDate: null,
+    priority: null,
     subtasks: <SubtaskRequest[]>[]
   };
 
@@ -112,8 +112,8 @@ export class AddTaskComponent implements OnChanges {
     description: new FormControl(''),
     category: new FormControl<number | null>(null, Validators.compose([Validators.required])),
     assignees: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator])),
-    dueDate: new FormControl<Date>(new Date(Date.now()), Validators.compose([Validators.required])),
-    priority: new FormControl<PriorityType>('Low', Validators.compose([Validators.required])),
+    dueDate: new FormControl<Date | null>(null, Validators.compose([Validators.required, Validators.nullValidator])),
+    priority: new FormControl<PriorityType | null>(null, Validators.compose([Validators.required, Validators.nullValidator])),
     subtasks: new FormControl(<SubtaskRequest[]>[], Validators.compose([Validators.nullValidator]))
   });
 
@@ -179,7 +179,7 @@ export class AddTaskComponent implements OnChanges {
   // }
 
   addSubtask() {
-    if (this.addSubtaskForm.valid) {
+    if (this.addSubtaskForm.value) {
       const newSubtask = { title: this.addSubtaskForm.value, done: false } as SubtaskRequest;
       this.pushSubtask(newSubtask);
     }

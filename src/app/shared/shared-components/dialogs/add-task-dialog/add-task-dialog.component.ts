@@ -37,7 +37,7 @@ export class AddTaskDialogComponent {
     if(this.mode == 'add')
       return 'Add Task';
     if(this.mode == 'edit')
-      return 'Save Task';
+      return 'Edit Task';
     return '';
   }
 }
