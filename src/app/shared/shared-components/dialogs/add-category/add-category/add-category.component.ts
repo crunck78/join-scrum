@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormFieldComponent } from '../../../form-field/form-field.component';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ScrumCategoriesService } from 'src/app/scrum-api/scrum-categories/scrum-categories.service';
 import { MatButtonModule } from '@angular/material/button';
 import { CategoryRequest } from 'src/app/shared/models/category.model';
+import { LogoComponent } from '../../../logo/logo.component';
 
 @Component({
   selector: 'app-add-category',
@@ -16,7 +17,8 @@ import { CategoryRequest } from 'src/app/shared/models/category.model';
     DialogComponent,
     ReactiveFormsModule,
     FormFieldComponent,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
   ]
 })
 export class AddCategoryComponent {
@@ -30,7 +32,6 @@ export class AddCategoryComponent {
 
   addCategory() {
     if (this.addCategoryForm.valid) {
-      console.log("Adding Contact");
       const newContact = this.addCategoryForm.value;
       this.scrumCategories.addCategory$(newContact as Partial<CategoryRequest>).subscribe(
         {

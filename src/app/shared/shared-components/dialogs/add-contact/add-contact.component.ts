@@ -15,11 +15,11 @@ import { Contact, ContactRequest } from 'src/app/shared/models/contact.model';
   standalone: true,
   imports: [
     DialogComponent,
+    ReactiveFormsModule,
+    FormFieldComponent,
+    MatButtonModule,
     LogoComponent,
     MatDialogModule,
-    MatButtonModule,
-    FormFieldComponent,
-    ReactiveFormsModule,
   ]
 })
 export class AddContactComponent {
@@ -35,8 +35,6 @@ export class AddContactComponent {
 
   addContact(){
     if(this.addContactForm.valid){
-      console.log("Adding Contact");
-
       this.scrumContacts.addContact$(this.addContactForm.value as Partial<ContactRequest>).subscribe(
         {
           next: (res)=> this.dialogRef.close(res),

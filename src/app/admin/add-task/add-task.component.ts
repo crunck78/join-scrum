@@ -182,6 +182,7 @@ export class AddTaskComponent implements OnChanges {
     if (this.addSubtaskForm.value) {
       const newSubtask = { title: this.addSubtaskForm.value, done: false } as SubtaskRequest;
       this.pushSubtask(newSubtask);
+      this.addSubtaskForm.reset();
     }
   }
 
