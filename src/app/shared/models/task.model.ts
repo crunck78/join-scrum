@@ -1,3 +1,4 @@
+import { PriorityType } from "src/app/admin/add-task/add-task.component";
 import { Category, CategoryResponse, CategoryResponseAPI } from "./category.model";
 import { Contact, ContactResponse, ContactResponseAPI } from "./contact.model";
 import { ListRequest } from "./list.model";
@@ -13,7 +14,7 @@ export interface TaskRequest {
   category: number;
   assignees: number[];
   dueDate: Date;
-  priority: 'Low' | 'Medium' | 'Urgent';
+  priority: PriorityType;
   subtasks: SubtaskRequest[];
   list: number | null | '';
 }
@@ -28,7 +29,7 @@ export interface TaskResponse {
   category: CategoryResponse | null;
   assignees: ContactResponse[];
   dueDate: Date;
-  priority: 'Low' | 'Medium' | 'Urgent';
+  priority: PriorityType;
   subtasks: SubtaskResponse[];
   createdAt: Date;
   updatedAt: Date;
@@ -43,7 +44,7 @@ export interface TaskRequestAPI {
   category: number;
   assignees: number[];
   due_date: string;
-  priority: 'Low' | 'Medium' | 'Urgent';
+  priority: PriorityType;
   subtasks: SubtaskRequestAPI[];
   list: number | null | '';
 }
@@ -58,7 +59,7 @@ export interface TaskResponseAPI {
   category: CategoryResponseAPI | null;
   assignees: ContactResponseAPI[];
   due_date: string;
-  priority: 'Low' | 'Medium' | 'Urgent';
+  priority: PriorityType;
   subtasks: SubtaskResponseAPI[];
   created_at: string;
   updated_at: string;

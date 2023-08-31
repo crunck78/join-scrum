@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 import { DialogComponent } from '../../dialog/dialog.component';
-import { AddTaskComponent } from 'src/app/admin/add-task/add-task.component';
+import { AddTaskComponent, TaskMode } from 'src/app/admin/add-task/add-task.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TaskResponse } from 'src/app/shared/models/task.model';
 import { CommonModule } from '@angular/common';
@@ -21,7 +21,7 @@ import { FormControlStatus } from '@angular/forms';
 })
 export class AddTaskDialogComponent {
   task!: TaskResponse;
-  mode: 'add' | 'edit' = 'add';
+  mode: TaskMode = 'add';
   formStatus!: FormControlStatus;
   clearTaskForm = new EventEmitter();
   submitTaskForm = new EventEmitter();

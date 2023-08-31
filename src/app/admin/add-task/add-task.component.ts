@@ -31,6 +31,8 @@ export interface Priority {
   color: string
 }
 
+export declare type PriorityType = 'Low' | 'Medium' | 'Urgent';
+export declare type TaskMode = 'add' | 'edit';
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
@@ -56,16 +58,16 @@ export class AddTaskComponent implements OnChanges {
   readonly InitTask = {
     title: '',
     description: '',
-    category: 0,
+    category: null,
     assignees: <number[]>[],
     dueDate: new Date(Date.now()),
-    priority: <'Low' | 'Medium' | 'Urgent'>'Low',
+    priority: <PriorityType>'Low',
     subtasks: <SubtaskRequest[]>[]
   };
 
   @Input() showPageTitle = true;
   @Input() task!: TaskResponse;
-  @Input() mode: 'add' | 'edit' = 'add';
+  @Input() mode: TaskMode = 'add';
   @Input() hideFooter: boolean = false;
 
   categories$!: Observable<CategoryResponse[]>;
@@ -97,7 +99,7 @@ export class AddTaskComponent implements OnChanges {
     }
 
     if (changes['clearTaskForm$']) {
-      this.clearTaskForm$.subscribe(() => this.addTaskForm.reset());
+      this.clearTaskForm$.subscribe(() => this.addTaskForm.reset(this.InitTask));
     }
 
     if (changes['submitTaskForm$']) {
@@ -108,10 +110,10 @@ export class AddTaskComponent implements OnChanges {
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.compose([Validators.required])),
     description: new FormControl(''),
-    category: new FormControl(0, Validators.compose([Validators.required])),
+    category: new FormControl<number | null>(null, Validators.compose([Validators.required])),
     assignees: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator])),
     dueDate: new FormControl<Date>(new Date(Date.now()), Validators.compose([Validators.required])),
-    priority: new FormControl<'Low' | 'Medium' | 'Urgent'>('Low', Validators.compose([Validators.required])),
+    priority: new FormControl<PriorityType>('Low', Validators.compose([Validators.required])),
     subtasks: new FormControl(<SubtaskRequest[]>[], Validators.compose([Validators.nullValidator]))
   });
 
