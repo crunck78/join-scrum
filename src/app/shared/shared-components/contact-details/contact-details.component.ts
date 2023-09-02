@@ -37,11 +37,12 @@ export class ContactDetailsComponent {
     dialogRef.afterClosed().subscribe(res => {
       if (res)
         this.contact = res;
-        this.contactChange.emit(res);
+      this.contactChange.emit(res);
     });
   }
 
-  addToTask(){
+  addToTask() {
     const dialogRef = this.dialog.open(AddTaskDialogComponent);
+    dialogRef.componentInstance.predefinedTaskRequest = { assignees: [this.contact?.id as number] }
   }
 }

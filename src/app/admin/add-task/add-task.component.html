@@ -8,10 +8,6 @@
             ]" [autocomplete]="'task-title'" [type]="'text'" [inputType]="'input'" [labelName]="'Enter a Title'"
                 [control]="$any(addTaskForm.get('title'))"></app-form-field>
 
-            <app-form-field [required]="false" [autocomplete]="'task-description'" [type]="'text'"
-                [inputType]="'text-area'" [labelName]="'Enter a Description'"
-                [control]="$any(addTaskForm.get('description'))"></app-form-field>
-
             <app-form-field [errors]="[
             {name: 'required', htmlMessage: 'Category is <strong>required</strong>'}]" [suffixIcon]="'add'" (action)="
                 addCategory()" [options]="categories$ | async | options : 'name' : 'id': this.getCategoryOptionHTML"
@@ -23,6 +19,10 @@
                 [options]="contacts$ | async | options : 'name' : 'id'" [required]="false" [inputType]="'select'"
                 [labelName]="'Select assignees'" [control]="$any(addTaskForm.get('assignees'))">
             </app-form-field>
+
+            <app-form-field [required]="false" [autocomplete]="'task-description'" [type]="'text'"
+                [inputType]="'text-area'" [labelName]="'Enter a Description'"
+                [control]="$any(addTaskForm.get('description'))"></app-form-field>
         </div>
 
         <mat-divider [vertical]="true"></mat-divider>
@@ -45,7 +45,8 @@
 
             <div>
                 <div *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
-                    <mat-checkbox #subtaskCheck (change)="updateSubtask($event.checked, subtask)" [checked]="subtask.done">
+                    <mat-checkbox #subtaskCheck (change)="updateSubtask($event.checked, subtask)"
+                        [checked]="subtask.done">
                         {{subtask.title}}
                     </mat-checkbox>
                 </div>
@@ -56,7 +57,7 @@
 
     <div *ngIf="!hideFooter" class="footer" footer>
         <div class="simple-grid">
-            <button (click)="addTaskForm.reset(InitTask)" mat-stroked-button color="primary">Clear</button>
+            <button (click)="resetAddTask()" mat-stroked-button color="primary">Clear</button>
             <button [disabled]="addTaskForm.invalid" (click)="saveTask()" mat-raised-button color="primary">
                 <span *ngIf="mode == 'add'">Create Task</span>
                 <span *ngIf="mode == 'edit'">Save Task</span>

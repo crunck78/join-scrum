@@ -2,7 +2,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { AddTaskComponent, TaskMode } from 'src/app/admin/add-task/add-task.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TaskResponse } from 'src/app/shared/models/task.model';
+import { TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormControlStatus } from '@angular/forms';
@@ -25,18 +25,17 @@ export class AddTaskDialogComponent {
   formStatus!: FormControlStatus;
   clearTaskForm = new EventEmitter();
   submitTaskForm = new EventEmitter();
-  constructor(private dialogRef: MatDialogRef<AddTaskDialogComponent>) {
+  predefinedTaskRequest!: Partial<TaskRequest>;
+  constructor(private dialogRef: MatDialogRef<AddTaskDialogComponent>) { }
 
-  }
-
-  updateFormStatus(eventStatus: FormControlStatus){
+  updateFormStatus(eventStatus: FormControlStatus) {
     this.formStatus = eventStatus;
   }
 
-  get title(){
-    if(this.mode == 'add')
+  get title() {
+    if (this.mode == 'add')
       return 'Add Task';
-    if(this.mode == 'edit')
+    if (this.mode == 'edit')
       return 'Edit Task';
     return '';
   }

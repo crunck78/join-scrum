@@ -1,9 +1,7 @@
 import { PriorityType } from "src/app/admin/add-task/add-task.component";
 import { Category, CategoryResponse, CategoryResponseAPI } from "./category.model";
 import { Contact, ContactResponse, ContactResponseAPI } from "./contact.model";
-import { ListRequest } from "./list.model";
 import { Subtask, SubtaskRequest, SubtaskRequestAPI, SubtaskResponse, SubtaskResponseAPI } from "./subtask.model";
-import { UserResponse } from "./user.model";
 
 /**
  * JSON format in front end for create, update, path, put request
@@ -105,7 +103,7 @@ export class Task {
       dueDate: task.dueDate,
       priority: task.priority,
       subtasks: task.subtasks.map(s => Subtask.convertToRepresentation(s))
-    }
+    };
   }
 
 }

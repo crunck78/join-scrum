@@ -75,6 +75,7 @@ export class AddTaskComponent implements OnChanges {
   subtasks$!: Observable<SubtaskResponse[]>
   @Input() clearTaskForm$!: EventEmitter<void>;
   @Input() submitTaskForm$!: EventEmitter<void>;
+  @Input() predefinedTaskRequest!: Partial<TaskRequest>;
 
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
 
@@ -91,7 +92,7 @@ export class AddTaskComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['task']) {
+    if (changes['task'] && !!this.task) {
       const taskRepresentation = Task.convertToRepresentation(this.task);
       console.log(taskRepresentation);
       this.addTaskForm.patchValue(taskRepresentation);
@@ -99,11 +100,15 @@ export class AddTaskComponent implements OnChanges {
     }
 
     if (changes['clearTaskForm$']) {
-      this.clearTaskForm$.subscribe(() => this.addTaskForm.reset(this.InitTask));
+      this.clearTaskForm$.subscribe(() => this.resetAddTask());
     }
 
     if (changes['submitTaskForm$']) {
       this.submitTaskForm$.subscribe(() => this.saveTask());
+    }
+
+    if (changes['predefinedTaskRequest'] && !!this.predefinedTaskRequest) {
+      this.addTaskForm.reset(this.predefinedTaskRequest);
     }
   }
 
@@ -266,6 +271,11 @@ export class AddTaskComponent implements OnChanges {
     return this.breakPoints.matchesWebBreakpoint$.pipe(
       map(match => match && this.showPageTitle)
     );
+  }
+
+  resetAddTask() {
+    this.addTaskForm.reset(this.InitTask);
+    this.addSubtaskForm.reset();
   }
 
 }
