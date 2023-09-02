@@ -55,5 +55,17 @@ export class ScrumContactsService {
       );
   }
 
+  deleteContact$(contact: Partial<ContactResponse>): any {
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    return this.http.delete<ContactResponseAPI>(`${this.contactsEndpoint}/${contact.id}/`, { headers })
+      .pipe(
+        catchError(error => of(false)),
+        map(()=> of(true))
+      );
+  }
+
 
 }

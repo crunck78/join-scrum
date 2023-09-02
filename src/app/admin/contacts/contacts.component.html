@@ -16,6 +16,11 @@
                 [contact]="contact"></app-contact>
         </ng-container>
     </div>
+
+    <button (click)="addContact()" class="new-contact" title mat-raised-button color="primary">
+        <span *ngIf="matchWebBreakpoint$ | async">New contact</span>
+        <img src="assets/new_contact.svg" alt="">
+    </button>
 </app-card>
 
 <app-card *ngIf="!!selectedContact">
@@ -26,8 +31,8 @@
 
     <app-contact-details (contactChange)="updateContacts()" [contact]="selectedContact"></app-contact-details>
 
-    <button (click)="addContact()" class="new-contact" footer mat-raised-button color="primary">
-        <span *ngIf="matchWebBreakpoint$ | async">New contact</span>
-        <img src="assets/new_contact.svg" alt="">
+    <button (click)="deleteContact(selectedContact)" class="delete-contact" footer mat-raised-button color="primary">
+        <span *ngIf="matchWebBreakpoint$ | async">Delete contact</span>
+        <mat-icon>person_remove</mat-icon>
     </button>
 </app-card>

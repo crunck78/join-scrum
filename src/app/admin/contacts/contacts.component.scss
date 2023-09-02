@@ -35,6 +35,16 @@
         }
     }
 
+    .delete-contact {
+        margin-left: auto;
+        &::ng-deep .mdc-button__label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+    }
+
     .contacts-list {
         display: flex;
         flex-direction: column;
