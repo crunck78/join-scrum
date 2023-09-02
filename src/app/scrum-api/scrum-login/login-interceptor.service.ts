@@ -19,7 +19,7 @@ export class LoginInterceptor implements HttpInterceptor {
       tap((event: HttpResponse<any>) => {
         if (this.scrumApi.rememberMe && httpRequest.url == LOGIN_ENDPOINT)
           this.scrumApi.localToken = event.body.token;
-          return event;
+        return event;
       })
     );
   }

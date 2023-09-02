@@ -17,11 +17,7 @@ export class BoardsInterceptor {
         console.log("Passed through the interceptor in response filter: ", event);
         return event instanceof HttpResponse
       }),
-      map((event: HttpResponse<any>) => {
-        console.log(event.status);
-        console.log(event.body);
-        return event.clone({ body: event.body });
-      })
+      map((event: HttpResponse<any>) => event.clone({ body: event.body }))
     );
   }
 }

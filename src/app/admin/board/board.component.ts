@@ -50,7 +50,7 @@ export class BoardComponent implements AfterViewInit {
     this.scrumBoards.getBoardById$('1').subscribe(board => this.board = board);
   }
   ngAfterViewInit(): void {
-    console.log(this.dropLists);
+    console.log("DropLists: ", this.dropLists);
   }
 
   drop(event: CdkDragDrop<TaskResponse[]>, list?: ListResponse) {
@@ -75,7 +75,6 @@ export class BoardComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(newList => {
       if (newList) {
         console.log(newList);
-        //this.updateContacts();
       }
     });
   }

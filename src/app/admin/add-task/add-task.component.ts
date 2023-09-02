@@ -94,7 +94,7 @@ export class AddTaskComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['task'] && !!this.task) {
       const taskRepresentation = Task.convertToRepresentation(this.task);
-      console.log(taskRepresentation);
+
       this.addTaskForm.patchValue(taskRepresentation);
 
     }
@@ -172,17 +172,6 @@ export class AddTaskComponent implements OnChanges {
     `;
   }
 
-  // addSubtask() {
-  //   if (this.addSubtaskForm.valid) {
-  //     this.scrumSubtasks.addSubtask$({ title: this.addSubtaskForm.value, done: false } as SubtaskRequest).subscribe(
-  //       {
-  //         next: (res) => this.updateSubtasks(),
-  //         error: (err) => console.log(err)
-  //       }
-  //     );
-  //   }
-  // }
-
   addSubtask() {
     if (this.addSubtaskForm.value) {
       const newSubtask = { title: this.addSubtaskForm.value, done: false } as SubtaskRequest;
@@ -235,14 +224,6 @@ export class AddTaskComponent implements OnChanges {
         )
     }
   }
-
-  // updateSubtask(checked: boolean, subtask: SubtaskRequest) {
-  //     subtask.done = checked;
-  //     if(this.mode == 'edit'){
-  //       const subtaskId = subtask.id as number;
-  //       this.scrumSubtasks.updateSubtask$( subtaskId ,subtask).subscribe(editSubtask => console.log(editSubtask));
-  //     }
-  // }
 
   /**
    * How to update subtask from Edit Form?

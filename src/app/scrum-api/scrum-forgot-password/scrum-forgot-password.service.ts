@@ -24,7 +24,7 @@ export class ScrumForgotPasswordService {
     this.http.post<any>(this.forgotPasswordEndpoint, credentials).pipe(
       catchError(err => of(err))
     ).subscribe(response => {
-      //console.log(response);
+      console.log(response);
     });
   }
 }
