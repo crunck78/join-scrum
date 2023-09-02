@@ -259,4 +259,10 @@ export class AddTaskComponent implements OnChanges {
     this.addSubtaskForm.reset();
   }
 
+  removeSubtask(subtaskToRemove: SubtaskRequest){
+    const subtasks = this.addTaskForm.get('subtasks')?.value;
+    const patchedSubtasks = subtasks?.filter(st => st != subtaskToRemove) as SubtaskRequest[];
+    this.addTaskForm.get('subtasks')?.patchValue(patchedSubtasks);
+  }
+
 }

@@ -44,11 +44,15 @@
                 [control]="addSubtaskForm"></app-form-field>
 
             <div>
-                <div *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
+                <div class="subtask" *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
                     <mat-checkbox #subtaskCheck (change)="updateSubtask($event.checked, subtask)"
                         [checked]="subtask.done">
                         {{subtask.title}}
                     </mat-checkbox>
+
+                    <button (click)="removeSubtask(subtask)" mat-icon-button aria-label="Remove Subtask">
+                        <mat-icon >remove</mat-icon>
+                    </button>
                 </div>
             </div>
         </div>
