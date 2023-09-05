@@ -6,8 +6,12 @@
             [control]="$any(addCategoryForm.get('name'))" [labelName]="'Name'"></app-form-field>
 
         <app-form-field [errors]="[{name: 'required', htmlMessage: 'Color is <strong>required</strong>'}]"
-            [autocomplete]="'category-color'" [type]="'text'" [inputType]="'input'"
+            [autocomplete]="'category-color'" [type]="'color'" [inputType]="'input'"
             [control]="$any(addCategoryForm.get('color'))" [labelName]="'Color'"></app-form-field>
+
+        <!-- <app-form-field [errors]="[{name: 'required', htmlMessage: 'Color is <strong>required</strong>'}]"
+            [autocomplete]="'category-color'" [type]="'color'" [inputType]="'color'"
+            [control]="$any(addCategoryForm.get('color'))" [labelName]="'Color'"></app-form-field> -->
     </form>
 
     <ng-container actions>

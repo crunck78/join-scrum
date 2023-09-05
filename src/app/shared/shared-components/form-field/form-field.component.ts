@@ -16,6 +16,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { SanitizeHtmlPipe } from '../../pipes/sanitize-html/sanitize-html.pipe';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
@@ -36,6 +38,9 @@ export interface Option {
   value: any,
   html?: string
 }
+
+export declare type InputType = 'input' | 'text-area' | 'select' | 'date' | 'color';
+export declare type FieldType = 'text' | 'email' | 'password' | 'tel' | 'color';
 
 @Component({
   selector: 'app-form-field',
@@ -59,15 +64,19 @@ export interface Option {
     SanitizeHtmlPipe,
     MatDatepickerModule,
     MatNativeDateModule,
-  ]
+    NgxMatColorPickerModule,
+  ],
+  providers: [
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
+  ],
 })
 export class FormFieldComponent {
 
   @Input() control!: FormControl | AbstractControl;
   @Input() labelName!: string;
   @Input() suffixPath!: string;
-  @Input() inputType!: 'input' | 'text-area' | 'select' | 'date';
-  @Input() type!: 'text' | 'email' | 'password' | 'tel';
+  @Input() inputType!: InputType;
+  @Input() type!: FieldType;
   @Input() autocomplete!: string;
   @Input() errors!: ValidatorError[];
   @Input() minLength!: number;
