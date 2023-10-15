@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormControlStatus, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
@@ -23,7 +23,7 @@ import { CategoryResponse } from 'src/app/shared/models/category.model';
 import { ContactResponse } from 'src/app/shared/models/contact.model';
 import { SubtaskRequest, SubtaskResponse } from 'src/app/shared/models/subtask.model';
 import { Task, TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 
 export interface Priority {
   name: string,
@@ -78,6 +78,7 @@ export class AddTaskComponent implements OnChanges {
   @Input() predefinedTaskRequest!: Partial<TaskRequest>;
 
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
+  @Output() editedTask = new EventEmitter<TaskResponse | null>();
 
   constructor(private scrumCategory: ScrumCategoriesService,
     private scrumContacts: ScrumContactsService,
@@ -94,9 +95,7 @@ export class AddTaskComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['task'] && !!this.task) {
       const taskRepresentation = Task.convertToRepresentation(this.task);
-
       this.addTaskForm.patchValue(taskRepresentation);
-
     }
 
     if (changes['clearTaskForm$']) {
@@ -159,7 +158,7 @@ export class AddTaskComponent implements OnChanges {
     return `
     <span class="category-option">
       <span class="category-name">${option.name}</span>
-      <span class="category-color" style="background-color: ${option.color}"></span>
+      <span  class="category-color" style="background-color: ${option.color}"></span>
     </span>`;
   }
 
@@ -218,7 +217,7 @@ export class AddTaskComponent implements OnChanges {
       this.scrumTask.updateTask$(this.task.id, toEditTask)
         .subscribe(
           {
-            next: (res) => console.log(res),
+            next: (res) => this.editedTask.emit(res),
             error: (e) => console.log(e)
           }
         )

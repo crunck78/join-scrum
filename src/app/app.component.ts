@@ -6,8 +6,7 @@ import { ApiToken, ScrumApiService } from './scrum-api/scrum-api.service';
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs';
 import { HeaderComponent } from './header/header.component';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { BreakpointsService } from './shared/shared-services/breakpoints.service';
+import { BreakpointsService } from './shared/shared-services/breakpoints/breakpoints.service';
 
 @Component({
   selector: 'app-root',

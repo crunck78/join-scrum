@@ -41,6 +41,7 @@ export interface Option {
 
 export declare type InputType = 'input' | 'text-area' | 'select' | 'date' | 'color';
 export declare type FieldType = 'text' | 'email' | 'password' | 'tel' | 'color';
+export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
   selector: 'app-form-field',

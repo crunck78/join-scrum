@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 
 
 @Component({

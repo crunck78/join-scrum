@@ -15,7 +15,7 @@ import { AddListComponent } from 'src/app/shared/shared-components/dialogs/add-l
 import { MatDialog } from '@angular/material/dialog';
 import { ListResponse } from 'src/app/shared/models/list.model';
 import { TaskComponent } from 'src/app/shared/shared-components/task/task.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 @Component({
@@ -89,5 +89,11 @@ export class BoardComponent implements AfterViewInit {
 
   get matchWebBreakpoint$() {
     return this.breakPoints.matchesWebBreakpoint$;
+  }
+
+  handleEditedTask(editedTask: TaskResponse) {
+    debugger;
+    this.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
+    this.scrumBoards.getBoardById$('1').subscribe(board => this.board = board);
   }
 }

@@ -6,7 +6,7 @@ export interface ApiToken {
   token: string;
 }
 
-export interface Model{
+export interface Model {
   [key: string]: any
 }
 
@@ -59,18 +59,15 @@ export class ScrumApiService {
       if (this.rememberMe)
         this.localToken = apiToken.token;
       this.token = apiToken?.token;
-      if (apiToken && apiToken.token)
-        this.router.navigate(['/'])
-      else
+      if (!(apiToken && apiToken.token))
         this.router.navigate(['/auth'])
-      console.log("API_TOKEN: ", this.token);
     });
   }
 
   /**
    *
    */
-  renameFields(object : any, oldNames : string[], newNames: string[]) {
+  renameFields(object: any, oldNames: string[], newNames: string[]) {
 
     if (oldNames.length !== newNames.length) {
       throw new Error('Lists of old names and new names do not have same length');

@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ApiToken, ScrumApiService } from '../scrum-api.service';
 import { Router } from '@angular/router';
+import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 
 export interface LoginCredentials {
   email: string;
@@ -20,20 +21,18 @@ export class ScrumLoginService {
   loginCredentials!: LoginCredentials;
   loginEndpoint = LOGIN_ENDPOINT;
 
-  constructor(private http: HttpClient, private scrumApi: ScrumApiService, private router: Router) { }
+  constructor(private http: HttpClient,
+    private scrumApi: ScrumApiService,
+    private router: Router,
+    private feedback: FeedbackService
+  ) { }
 
   login(credentials: LoginCredentials) {
     this.http.post<ApiToken>(this.loginEndpoint, credentials)
       .subscribe(
         {
-          next: (response) => {
-            console.log(response);
-            this.scrumApi.apiToken$.next(response)
-          },
-          error: (error) => {
-            console.log(error);
-            this.scrumApi.apiToken$.next({token: ""})
-          }
+          next: (response) => this.scrumApi.apiToken$.next(response),
+          error: () => this.scrumApi.apiToken$.next({ token: "" })
         }
       );
   }

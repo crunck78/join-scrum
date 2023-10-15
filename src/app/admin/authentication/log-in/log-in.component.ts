@@ -14,8 +14,8 @@ import { CommonModule } from '@angular/common';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
-import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
+import { EMAIL_REGEX, FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 
 @Component({
   selector: 'app-log-in',
@@ -36,7 +36,7 @@ import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.s
 export class LogInComponent {
 
   loginForm = new FormGroup({
-    email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+    email: new FormControl('', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEX)])),
     password: new FormControl('', Validators.compose([Validators.required]))
   });
   rememberMe = new FormControl(this.scrumApi.rememberMe);
@@ -53,7 +53,7 @@ export class LogInComponent {
     }
   }
 
-  get matchWebBreakpoint$ (){
+  get matchWebBreakpoint$() {
     return this.breakPoints.matchesWebBreakpoint$;
   }
 }

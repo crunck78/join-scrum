@@ -19,7 +19,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { DialogService } from 'src/app/shared/shared-services/dialog/dialog.service';
 import { Contact, ContactRequest, ContactResponse } from 'src/app/shared/models/contact.model';
 import { MatIconModule } from '@angular/material/icon';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints.service';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',

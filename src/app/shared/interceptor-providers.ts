@@ -7,7 +7,7 @@ import { ContactsInterceptor } from '../scrum-api/scrum-contacts/contacts-interc
 import { TasksInterceptor } from '../scrum-api/scrum-tasks/tasks-interceptor.service';
 
 export const interceptorProviders: Provider[] = [
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true } as Provider,
-    { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true } as Provider,
+    // { provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true } as Provider,
     { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true } as Provider,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true } as Provider,
 ];

@@ -4,7 +4,7 @@
     <form class="main-content" [formGroup]="loginForm">
 
         <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
-            {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'login-email'"
+            {name: 'pattern', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'login-email'"
             [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
             [control]="$any(loginForm.get('email'))" [labelName]="'Email'"></app-form-field>
 

@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PageTitleComponent } from '../shared/shared-components/page-title/page-title.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { BreakpointsService } from '../shared/shared-services/breakpoints.service';
+import { BreakpointsService } from '../shared/shared-services/breakpoints/breakpoints.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -15,7 +15,7 @@
 
             <div cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListData]="backlog" class="drag-drop-list"
                 (cdkDropListDropped)="drop($event)">
-                <app-task class="drag-drop-box" [task]="item" *ngFor="let item of backlog; let i = index" cdkDrag>
+                <app-task (task)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item" *ngFor="let item of backlog; let i = index" cdkDrag>
                     <div class="example-handle" cdkDragHandle>
                         <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
                             <path
@@ -42,7 +42,7 @@
 
                 <div cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListData]="list.tasks"
                     class="drag-drop-list" (cdkDropListDropped)="drop($event, list)">
-                    <app-task class="drag-drop-box" [task]="item" *ngFor="let item of list.tasks; let i = index"
+                    <app-task (task)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item" *ngFor="let item of list.tasks; let i = index"
                         cdkDrag>
                         <div class="example-handle" cdkDragHandle>
                             <svg width="24px" fill="currentColor" viewBox="0 0 24 24">

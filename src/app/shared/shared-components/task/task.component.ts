@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
-import { TaskResponse } from '../../models/task.model';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Task, TaskResponse } from '../../models/task.model';
 import { ContactInitialsComponent } from '../contact-initials/contact-initials/contact-initials.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,6 +24,7 @@ import { ProgressLinearGradientPipe } from '../../pipes/progress-linear-gradient
 })
 export class TaskComponent {
   @Input() task!: TaskResponse;
+  @Output() taskChange = new EventEmitter<TaskResponse>();
 
   constructor(private dialog: MatDialog) {
 
@@ -45,7 +46,7 @@ export class TaskComponent {
     dialogRef.componentInstance.task = this.task;
     dialogRef.componentInstance.mode = 'edit';
     dialogRef.afterClosed().subscribe(result =>{
-      if(result) this.task = result;
+      if(result) this.taskChange.emit(result);
     });
   }
 

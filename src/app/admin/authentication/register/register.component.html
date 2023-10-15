@@ -21,7 +21,7 @@
             [control]="$any(signupForm.get('name'))" [labelName]="'Name'"></app-form-field>
 
         <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
-                {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'signup-email'"
+                {name: 'pattern', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'signup-email'"
             [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
             [control]="$any(signupForm.get('email'))" [labelName]="'Email'"></app-form-field>
 

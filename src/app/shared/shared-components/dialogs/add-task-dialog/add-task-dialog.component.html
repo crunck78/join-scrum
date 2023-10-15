@@ -1,7 +1,7 @@
 <app-dialog [title]="title">
     <ng-container side></ng-container>
 
-    <app-add-task [predefinedTaskRequest]="predefinedTaskRequest" (formStatus$)="updateFormStatus($event)"
+    <app-add-task (editedTask)="handleEditedTask($any($event))" [predefinedTaskRequest]="predefinedTaskRequest" (formStatus$)="updateFormStatus($event)"
         [showPageTitle]="false" [clearTaskForm$]="clearTaskForm" [submitTaskForm$]="submitTaskForm" [hideFooter]="true"
         [mode]="mode" [task]="task"></app-add-task>
 

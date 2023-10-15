@@ -39,4 +39,8 @@ export class AddTaskDialogComponent {
       return 'Edit Task';
     return '';
   }
+
+  handleEditedTask(editedTask: TaskResponse){
+    this.dialogRef.close(editedTask);
+  }
 }
