@@ -9,6 +9,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { routes } from './app/shared/routes';
 import { interceptorProviders } from './app/shared/interceptor-providers';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -17,7 +18,9 @@ bootstrapApplication(AppComponent, {
             ScrumApiModule,
             BrowserAnimationsModule,
             LayoutModule,
-            MatDialogModule),
+            MatDialogModule,
+            MatSnackBarModule
+        ),
         provideRouter(routes),
         interceptorProviders,
     ]
