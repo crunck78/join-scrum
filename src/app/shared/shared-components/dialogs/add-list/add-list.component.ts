@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { DialogComponent } from '../../dialog/dialog.component';
-import { LogoComponent } from '../../logo/logo.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { FormFieldComponent } from '../../form-field/form-field.component';
-import { ScrumListsService } from 'src/app/scrum-api/scrum-lists/scrum-lists.service';
-import { ListRequest } from 'src/app/shared/models/list.model';
-import { ScrumBoardsService } from 'src/app/scrum-api/scrum-boards/scrum-boards.service';
-import { BoardResponse } from 'src/app/shared/models/board.model';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { OptionsPipe } from '../../form-field/options.pipe';
+import { MatDialogRef } from '@angular/material/dialog';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ScrumBoardsService } from 'src/app/scrum-api/scrum-boards/scrum-boards.service';
+import { ScrumListsService } from 'src/app/scrum-api/scrum-lists/scrum-lists.service';
+import { BoardResponse } from 'src/app/shared/models/board.model';
+import { ListRequest } from 'src/app/shared/models/list.model';
+import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+import { OptionsPipe } from 'src/app/shared/pipes/options/options.pipe';
+import { DialogComponent } from '../../dialog/dialog.component';
+import { FormFieldComponent } from '../../form-field/form-field.component';
+import { LogoComponent } from '../../logo/logo.component';
+
 
 @Component({
   selector: 'app-add-list',
@@ -22,8 +23,7 @@ import { OptionsPipe } from '../../form-field/options.pipe';
     CommonModule,
     DialogComponent,
     LogoComponent,
-    MatDialogModule,
-    MatButtonModule,
+    MaterialModule,
     FormFieldComponent,
     ReactiveFormsModule,
     OptionsPipe,

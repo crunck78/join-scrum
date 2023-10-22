@@ -1,4 +1,5 @@
-import { PriorityType } from "src/app/admin/add-task/add-task.component";
+
+import { PriorityType } from "src/app/admin/add-task/add-task.module";
 import { Category, CategoryResponse, CategoryResponseAPI } from "./category.model";
 import { Contact, ContactResponse, ContactResponseAPI } from "./contact.model";
 import { Subtask, SubtaskRequest, SubtaskRequestAPI, SubtaskResponse, SubtaskResponseAPI } from "./subtask.model";

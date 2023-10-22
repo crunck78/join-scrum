@@ -1,21 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
-import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { LoginCredentials, ScrumLoginService } from 'src/app/scrum-api/scrum-login/scrum-login.service';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
-
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ForgotPasswordCredentials, ScrumForgotPasswordService } from 'src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service';
-import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
+import { ForgotPasswordModule } from './forgot-password.module';
+import { ForgotPasswordService } from './forgot-password.service';
+import { ForgotPasswordCredentials } from 'src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -23,19 +11,12 @@ import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/b
   styleUrls: ['./forgot-password.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    CardComponent, PageTitleComponent,
-    MatInputModule, MatFormFieldModule, MatCheckboxModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatExpansionModule,
-    FormFieldComponent,
+    ForgotPasswordModule
   ]
 })
 export class ForgotPasswordComponent {
 
-  constructor(private scrumForgotPassword: ScrumForgotPasswordService, private breakPoints: BreakpointsService){}
+  constructor(private forgotPasswordService: ForgotPasswordService){}
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email]))
@@ -43,12 +24,12 @@ export class ForgotPasswordComponent {
 
   sendMail(){
     if (this.forgotPasswordForm.valid) {
-      this.scrumForgotPassword.sendMail(this.forgotPasswordForm.value as ForgotPasswordCredentials);
+      this.forgotPasswordService.scrumForgotPassword.sendMail(this.forgotPasswordForm.value as ForgotPasswordCredentials);
     }
   }
 
   get matchWebBreakpoint$ (){
-    return this.breakPoints.matchesWebBreakpoint$;
+    return this.forgotPasswordService.breakPoints.matchesWebBreakpoint$;
   }
 
 }

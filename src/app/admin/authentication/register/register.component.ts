@@ -1,20 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
-import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
-
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
-
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ScrumSignupService, SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.service';
-import { EMAIL_REGEX, FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RegisterModule } from './register.module';
+import { RegisterService } from './register.service';
+import { SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.service';
+import { EMAIL_REGEX } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
   selector: 'app-register',
@@ -22,19 +11,12 @@ import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/b
   styleUrls: ['./register.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    CardComponent, PageTitleComponent,
-    MatInputModule, MatFormFieldModule, MatCheckboxModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatExpansionModule,
-    FormFieldComponent,
+    RegisterModule
   ]
 })
 export class RegisterComponent {
 
-  constructor(private scrumSignup: ScrumSignupService, private breakPoints: BreakpointsService) {}
+  constructor(private registerService: RegisterService) {}
 
   signupForm = new FormGroup({
     name: new FormControl('', Validators.compose([Validators.required])),
@@ -44,12 +26,12 @@ export class RegisterComponent {
 
   signUp() {
     if (this.signupForm.valid) {
-      this.scrumSignup.signup(this.signupForm.value as SignupCredentials);
+      this.registerService.scrumSignup.signup(this.signupForm.value as SignupCredentials);
     }
   }
 
   get matchWebBreakpoint$ (){
-    return this.breakPoints.matchesWebBreakpoint$;
+    return this.registerService.breakPoints.matchesWebBreakpoint$;
   }
 
 }

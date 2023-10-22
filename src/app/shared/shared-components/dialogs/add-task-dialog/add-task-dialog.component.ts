@@ -1,11 +1,13 @@
 import { Component, EventEmitter } from '@angular/core';
-import { DialogComponent } from '../../dialog/dialog.component';
-import { AddTaskComponent, TaskMode } from 'src/app/admin/add-task/add-task.component';
-import { MatDialogRef } from '@angular/material/dialog';
-import { TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 import { FormControlStatus } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { AddTaskComponent } from 'src/app/admin/add-task/add-task.component';
+import { TaskMode } from 'src/app/admin/add-task/add-task.module';
+import { TaskResponse, TaskRequest } from 'src/app/shared/models/task.model';
+import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+import { DialogComponent } from '../../dialog/dialog.component';
+
 
 @Component({
   selector: 'app-add-task-dialog',
@@ -14,9 +16,9 @@ import { FormControlStatus } from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
-    MatButtonModule,
     DialogComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    MaterialModule
   ]
 })
 export class AddTaskDialogComponent {

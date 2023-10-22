@@ -1,16 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ContactInitialsComponent } from '../contact-initials/contact-initials/contact-initials.component';
-import { ContactCardComponent } from '../contact-card/contact-card/contact-card.component';
 import { MatButtonModule } from '@angular/material/button';
-import { EmailLinkComponent } from '../email-link/email-link.component';
-import { DialogModule } from '@angular/cdk/dialog';
-import { DialogService } from '../../shared-services/dialog/dialog.service';
-import { EditContactComponent } from '../dialogs/edit-contact/edit-contact.component';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dialog.component';
 import { ContactResponse } from '../../models/contact.model';
+import { ContactCardComponent } from '../contact-card/contact-card.component';
+import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dialog.component';
+import { EditContactComponent } from '../dialogs/edit-contact/edit-contact.component';
+import { EmailLinkComponent } from '../email-link/email-link.component';
+
 
 @Component({
   selector: 'app-contact-details',

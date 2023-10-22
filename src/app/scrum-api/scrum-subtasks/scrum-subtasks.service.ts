@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { SUBTASKS_ENDPOINT } from './subtasks-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Subtask, SubtaskRequest, SubtaskResponse, SubtaskResponseAPI } from 'src/app/shared/models/subtask.model';
+import { SubtaskResponse, SubtaskResponseAPI, Subtask, SubtaskRequest } from 'src/app/shared/models/subtask.model';
+
+export const SUBTASKS_ENDPOINT = 'api/subtask/subtasks/';
 
 @Injectable({
   providedIn: 'root'

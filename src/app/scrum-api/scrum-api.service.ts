@@ -53,6 +53,10 @@ export class ScrumApiService {
   }
 
   constructor(private router: Router) {
+
+  }
+
+  handleTokenChanges() {
     const init = this.rememberMe ? this.localToken : '';
     this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
     this.apiToken$.subscribe(apiToken => {

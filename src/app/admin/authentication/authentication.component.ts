@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Route, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { LogoComponent } from 'src/app/shared/shared-components/logo/logo.component';
-import { PageComponent } from '../page/page.component';
-import { RouterLinkComponent } from '../router-link/router-link.component';
-import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
+import { Route, Router, RouterOutlet } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
 import { map } from 'rxjs';
+import { LogoComponent } from 'src/app/shared/shared-components/logo/logo.component';
+import { PageComponent } from 'src/app/shared/shared-components/page/page.component';
+import { RouterLinkComponent } from 'src/app/shared/shared-components/router-link/router-link.component';
 
 @Component({
   selector: 'app-authentication',

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CONTACTS_ENDPOINT } from './contacts-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
 import { Observable, catchError, map, of } from 'rxjs';
-import { Contact, ContactRequest, ContactRequestAPI, ContactResponse, ContactResponseAPI } from 'src/app/shared/models/contact.model';
+import { ContactResponse, ContactResponseAPI, Contact, ContactRequest } from 'src/app/shared/models/contact.model';
+
+export const CONTACTS_ENDPOINT = 'api/contact/contacts/';
 
 @Injectable({
   providedIn: 'root'

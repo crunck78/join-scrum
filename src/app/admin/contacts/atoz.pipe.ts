@@ -1,4 +1,4 @@
-import { ElementRef, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'atoz',

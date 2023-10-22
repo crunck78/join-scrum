@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ScrumApiService } from '../scrum-api.service';
-import { RESET_PASSWORD_ENDPOINT } from './reset-password-interceptor.service';
+
+export const RESET_PASSWORD_ENDPOINT = '/api/user/reset-password/';
 
 export interface ResetPasswordCredentials {
   newPassword: string

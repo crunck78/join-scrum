@@ -1,21 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
-import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { LoginCredentials, ScrumLoginService } from 'src/app/scrum-api/scrum-login/scrum-login.service';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
-
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
-import { EMAIL_REGEX, FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
+import { LogInModule } from './log-in.module';
+import { LogInService } from './log-in.service';
+import { LoginCredentials } from 'src/app/scrum-api/scrum-login/scrum-login.service';
+import { EMAIL_REGEX } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
   selector: 'app-log-in',
@@ -23,14 +12,7 @@ import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/b
   styleUrls: ['./log-in.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    CardComponent, PageTitleComponent,
-    MatInputModule, MatFormFieldModule, MatCheckboxModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatExpansionModule,
-    FormFieldComponent,
+    LogInModule
   ]
 })
 export class LogInComponent {
@@ -39,21 +21,19 @@ export class LogInComponent {
     email: new FormControl('', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEX)])),
     password: new FormControl('', Validators.compose([Validators.required]))
   });
-  rememberMe = new FormControl(this.scrumApi.rememberMe);
+  rememberMe = new FormControl(this.loginService.scrumApi.rememberMe);
 
-  constructor(private scrumLogin: ScrumLoginService,
-    private scrumApi: ScrumApiService,
-    private breakPoints: BreakpointsService) {
-    this.rememberMe.valueChanges.subscribe(value => this.scrumApi.rememberMe = value as boolean)
+  constructor(private loginService: LogInService) {
+    this.rememberMe.valueChanges.subscribe(value => this.loginService.scrumApi.rememberMe = value as boolean)
   }
 
   login() {
     if (this.loginForm.valid) {
-      this.scrumLogin.login(this.loginForm.value as LoginCredentials);
+      this.loginService.scrumLogin.login(this.loginForm.value as LoginCredentials);
     }
   }
 
   get matchWebBreakpoint$() {
-    return this.breakPoints.matchesWebBreakpoint$;
+    return this.loginService.breakPoints.matchesWebBreakpoint$;
   }
 }

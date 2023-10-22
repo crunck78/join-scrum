@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { DialogComponent } from '../../dialog/dialog.component';
-import { LogoComponent } from '../../logo/logo.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormFieldComponent } from '../../form-field/form-field.component';
 import { ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
-import { Contact, ContactRequest } from 'src/app/shared/models/contact.model';
-
+import { ContactRequest } from 'src/app/shared/models/contact.model';
+import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+import { DialogComponent } from '../../dialog/dialog.component';
+import { FormFieldComponent } from '../../form-field/form-field.component';
+import { LogoComponent } from '../../logo/logo.component';
 @Component({
   selector: 'app-edit-contact',
   templateUrl: './edit-contact.component.html',
@@ -18,8 +17,7 @@ import { Contact, ContactRequest } from 'src/app/shared/models/contact.model';
     CommonModule,
     DialogComponent,
     LogoComponent,
-    MatDialogModule,
-    MatButtonModule,
+    MaterialModule,
     FormFieldComponent,
     ReactiveFormsModule,
   ]

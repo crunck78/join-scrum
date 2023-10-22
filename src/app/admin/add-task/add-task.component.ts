@@ -1,57 +1,32 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormControl, FormControlStatus, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatOptionModule } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { Observable, map } from 'rxjs';
-import { ScrumCategoriesService } from 'src/app/scrum-api/scrum-categories/scrum-categories.service';
-import { ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
-import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
-import { AddCategoryComponent } from 'src/app/shared/shared-components/dialogs/add-category/add-category/add-category.component';
-import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
-import { AddTaskDialogComponent } from 'src/app/shared/shared-components/dialogs/add-task-dialog/add-task-dialog.component';
-import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { OptionsPipe } from 'src/app/shared/shared-components/form-field/options.pipe';
-import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
-import { MatDividerModule } from '@angular/material/divider';
-import { ScrumSubtasksService } from 'src/app/scrum-api/scrum-subtasks/scrum-subtasks.service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ScrumTasksService } from 'src/app/scrum-api/scrum-tasks/scrum-tasks.service';
+import {
+  Component, EventEmitter, Input, OnChanges, Output, SimpleChanges
+} from '@angular/core';
+import {
+  FormControl, FormControlStatus, FormGroup, Validators
+} from '@angular/forms';
+import {
+  Observable, map
+} from 'rxjs';
+import {
+  AddTaskModule, Priority, PriorityType, TaskMode
+} from './add-task.module';
+import { AddTaskService } from './add-task.service';
 import { CategoryResponse } from 'src/app/shared/models/category.model';
 import { ContactResponse } from 'src/app/shared/models/contact.model';
 import { SubtaskRequest, SubtaskResponse } from 'src/app/shared/models/subtask.model';
-import { Task, TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
+import { TaskResponse, TaskRequest, Task } from 'src/app/shared/models/task.model';
+import { AddCategoryComponent } from 'src/app/shared/shared-components/dialogs/add-category/add-category.component';
+import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
 
-export interface Priority {
-  name: string,
-  icon: string,
-  color: string
-}
-
-export declare type PriorityType = 'Low' | 'Medium' | 'Urgent';
-export declare type TaskMode = 'add' | 'edit';
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss'],
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    AddTaskDialogComponent,
-    CommonModule,
-    CardComponent,
-    PageTitleComponent,
-    FormFieldComponent,
-    MatOptionModule,
-    OptionsPipe,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatCheckboxModule,
-  ]
+    AddTaskModule
+  ],
+  providers: [AddTaskService]
 })
 export class AddTaskComponent implements OnChanges {
 
@@ -80,12 +55,7 @@ export class AddTaskComponent implements OnChanges {
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
   @Output() editedTask = new EventEmitter<TaskResponse | null>();
 
-  constructor(private scrumCategory: ScrumCategoriesService,
-    private scrumContacts: ScrumContactsService,
-    private dialog: MatDialog,
-    private scrumSubtasks: ScrumSubtasksService,
-    private scrumTask: ScrumTasksService,
-    private breakPoints: BreakpointsService) {
+  constructor(private addTaskService: AddTaskService) {
     this.updateCategories();
     this.updateContacts();
     this.updateSubtasks();
@@ -124,7 +94,7 @@ export class AddTaskComponent implements OnChanges {
   addSubtaskForm = new FormControl('');
 
   addCategory() {
-    const dialogRef = this.dialog.open(AddCategoryComponent);
+    const dialogRef = this.addTaskService.dialog.open(AddCategoryComponent);
     dialogRef.afterClosed().subscribe(newCategory => {
       if (newCategory) {
         this.updateCategories();
@@ -133,7 +103,7 @@ export class AddTaskComponent implements OnChanges {
   }
 
   addContact() {
-    const dialogRef = this.dialog.open(AddContactComponent);
+    const dialogRef = this.addTaskService.dialog.open(AddContactComponent);
     dialogRef.afterClosed().subscribe(newContact => {
       if (newContact) {
         this.updateContacts();
@@ -142,15 +112,15 @@ export class AddTaskComponent implements OnChanges {
   }
 
   updateCategories() {
-    this.categories$ = this.scrumCategory.getCategories$();
+    this.categories$ = this.addTaskService.scrumCategory.getCategories$();
   }
 
   updateContacts() {
-    this.contacts$ = this.scrumContacts.getContacts$();
+    this.contacts$ = this.addTaskService.scrumContacts.getContacts$();
   }
 
   updateSubtasks() {
-    this.subtasks$ = this.scrumSubtasks.getSubtasks$();
+    this.subtasks$ = this.addTaskService.scrumSubtasks.getSubtasks$();
     this.addSubtaskForm.reset();
   }
 
@@ -201,7 +171,7 @@ export class AddTaskComponent implements OnChanges {
   addTask() {
     if (this.addTaskForm.valid) {
 
-      this.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
+      this.addTaskService.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
         .subscribe(
           {
             next: (res) => console.log(res),
@@ -214,7 +184,7 @@ export class AddTaskComponent implements OnChanges {
   editTask() {
     if (this.addTaskForm.valid) {
       const toEditTask = this.addTaskForm.value as Partial<TaskRequest>;
-      this.scrumTask.updateTask$(this.task.id, toEditTask)
+      this.addTaskService.scrumTask.updateTask$(this.task.id, toEditTask)
         .subscribe(
           {
             next: (res) => this.editedTask.emit(res),
@@ -248,7 +218,7 @@ export class AddTaskComponent implements OnChanges {
   }
 
   get matchWebBreakpoint$() {
-    return this.breakPoints.matchesWebBreakpoint$.pipe(
+    return this.addTaskService.breakPoints.matchesWebBreakpoint$.pipe(
       map(match => match && this.showPageTitle)
     );
   }
@@ -258,10 +228,12 @@ export class AddTaskComponent implements OnChanges {
     this.addSubtaskForm.reset();
   }
 
-  removeSubtask(subtaskToRemove: SubtaskRequest){
+  removeSubtask(subtaskToRemove: SubtaskRequest) {
     const subtasks = this.addTaskForm.get('subtasks')?.value;
     const patchedSubtasks = subtasks?.filter(st => st != subtaskToRemove) as SubtaskRequest[];
     this.addTaskForm.get('subtasks')?.patchValue(patchedSubtasks);
   }
 
 }
+export { TaskMode, PriorityType };
+

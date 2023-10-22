@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { TASKS_ENDPOINT } from './tasks-interceptor.service';
 import { ScrumApiService } from '../scrum-api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Task, TaskRequest, TaskResponse, TaskResponseAPI } from 'src/app/shared/models/task.model';
+import { TaskResponse, TaskResponseAPI, Task, TaskRequest } from 'src/app/shared/models/task.model';
 
+
+export const TASKS_ENDPOINT = 'api/task/tasks/';
 
 @Injectable({
   providedIn: 'root'

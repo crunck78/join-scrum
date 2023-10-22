@@ -1,22 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroupDirective, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { AbstractControl, FormControl, FormGroupDirective, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { CardComponent } from '../card/card.component';
-import { PageTitleComponent } from '../page-title/page-title.component';
-import { ErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { HasErrorPipe } from './has-error.pipe';
 import { MessageErrorPipe } from './message-error.pipe';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
+import { MaterialModule } from '../../modules/material/material.module';
 import { SanitizeHtmlPipe } from '../../pipes/sanitize-html/sanitize-html.pipe';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+import { CardComponent } from '../card/card.component';
+import { PageTitleComponent } from '../page-title/page-title.component';
+
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -51,20 +45,13 @@ export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*
   imports: [
     CommonModule,
     CardComponent, PageTitleComponent,
-    MatInputModule, MatFormFieldModule, MatCheckboxModule,
-    MatButtonModule,
     ReactiveFormsModule,
     RouterLink,
-    MatExpansionModule,
+    MaterialModule,
     FormFieldComponent,
     HasErrorPipe,
     MessageErrorPipe,
-    MatSelectModule,
-    MatIconModule,
-    MatButtonModule,
     SanitizeHtmlPipe,
-    MatDatepickerModule,
-    MatNativeDateModule,
     NgxMatColorPickerModule,
   ],
   providers: [

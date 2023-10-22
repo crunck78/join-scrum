@@ -4,7 +4,6 @@ import { CardComponent } from 'src/app/shared/shared-components/card/card.compon
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 
-
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',

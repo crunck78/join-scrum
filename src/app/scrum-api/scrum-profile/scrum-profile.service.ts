@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { PROFILE_ENDPOINT } from './profile-interceptor.service';
+
+export const PROFILE_ENDPOINT = '/api/user/me/';
 
 export interface Profile {
   id?:number,

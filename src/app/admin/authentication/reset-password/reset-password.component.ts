@@ -1,21 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
-import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
-
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ScrumSignupService, SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.service';
-import { ResetPasswordCredentials, ScrumResetPasswordService } from 'src/app/scrum-api/scrum-reset-password/scrum-reset-password.service';
-import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
+import { ResetPasswordModule } from './reset-password.module';
+import { ResetPasswordService } from './reset-password.service';
+import { ResetPasswordCredentials } from 'src/app/scrum-api/scrum-reset-password/scrum-reset-password.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -23,20 +11,12 @@ import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/b
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    CardComponent, PageTitleComponent,
-    MatInputModule, MatFormFieldModule, MatCheckboxModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatExpansionModule,
-    FormFieldComponent,
+    ResetPasswordModule
   ]
 })
 export class ResetPasswordComponent {
 
-  constructor(private scrumResetPassword: ScrumResetPasswordService,
-    private breakPoints: BreakpointsService) {}
+  constructor(private resetPasswordService: ResetPasswordService) {}
 
   resetPasswordForm = new FormGroup({
     newPassword: new FormControl('', Validators.compose([Validators.required])),
@@ -46,7 +26,7 @@ export class ResetPasswordComponent {
   resetPassword() {
     if (this.resetPasswordForm.valid) {
       const newPassword = this.resetPasswordForm.get('confirmedPassword') as FormControl;
-      this.scrumResetPassword.resetPassword(newPassword.value as ResetPasswordCredentials);
+      this.resetPasswordService.scrumResetPassword.resetPassword(newPassword.value as ResetPasswordCredentials);
     }
   }
 
@@ -57,7 +37,7 @@ export class ResetPasswordComponent {
   }
 
   get matchWebBreakpoint$ (){
-    return this.breakPoints.matchesWebBreakpoint$;
+    return this.resetPasswordService.breakPoints.matchesWebBreakpoint$;
   }
 
 }

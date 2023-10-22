@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiToken, ScrumApiService } from '../scrum-api.service';
-import { SIGNUP_ENDPOINT } from './signup-interceptor.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { Profile, ScrumProfileService } from '../scrum-profile/scrum-profile.service';
 import { Router } from '@angular/router';
+
+export const SIGNUP_ENDPOINT = '/api/user/create/';
 
 export interface SignupCredentials {
   name?: string

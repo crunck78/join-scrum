@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { LISTS_ENDPOINT } from './lists-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
 import { Observable, catchError, map, of } from 'rxjs';
-import { List, ListRequest, ListResponse, ListResponseAPI } from 'src/app/shared/models/list.model';
+import { ListResponse, ListResponseAPI, List, ListRequest } from 'src/app/shared/models/list.model';
+
+export const LISTS_ENDPOINT = 'api/list/lists/';
 
 @Injectable({
   providedIn: 'root'

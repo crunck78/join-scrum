@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { LogoComponent } from '../shared/shared-components/logo/logo.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationComponent } from './navigation/navigation.component';
+import { LogoComponent } from '../shared/shared-components/logo/logo.component';
+import { MaterialModule } from '../shared/modules/material/material.module';
 
 @Component({
   selector: 'app-side',
@@ -9,7 +9,7 @@ import { NavigationComponent } from './navigation/navigation.component';
   styleUrls: ['./side.component.scss'],
   standalone: true,
   imports: [
-    MatToolbarModule,
+    MaterialModule,
     LogoComponent,
     NavigationComponent
   ]

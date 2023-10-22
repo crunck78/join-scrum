@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { catchError, filter, finalize, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { ScrumApiService } from './scrum-api.service';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { DURATION_SNACK_BAR, FeedbackService } from '../shared/shared-services/feedback/feedback.service';
 
 @Injectable()
 export class ErrorCatchingInterceptor {
 
-  constructor(private scrumApi: ScrumApiService, private feedback: FeedbackService) { }
+  constructor(private feedback: FeedbackService) { }
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(httpRequest).pipe(
@@ -33,7 +32,7 @@ export class ErrorCatchingInterceptor {
 
         }
       }
-    }else{
+    } else {
       errors.push(errorResponse.error === 'string' ? errorResponse.error : errorResponse.message);
     }
 

@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { Task, TaskResponse } from '../../models/task.model';
-import { ContactInitialsComponent } from '../contact-initials/contact-initials/contact-initials.component';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { TaskResponse } from '../../models/task.model';
+import { MaterialModule } from '../../modules/material/material.module';
+import { ProgressLinearGradientPipe } from '../../pipes/progress-linear-gradient/progress-linear-gradient.pipe';
+import { ContactInitialsComponent } from '../contact-initials/contact-initials.component';
 import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dialog.component';
-import { ProgressLinearGradientPipe } from '../../pipes/progress-linear-gradient.pipe';
+
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -16,9 +15,7 @@ import { ProgressLinearGradientPipe } from '../../pipes/progress-linear-gradient
   imports: [
     CommonModule,
     ContactInitialsComponent,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
+    MaterialModule,
     ProgressLinearGradientPipe
   ]
 })

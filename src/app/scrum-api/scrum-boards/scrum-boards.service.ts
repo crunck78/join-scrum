@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BOARDS_ENDPOINT } from './boards-interceptor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
 import { Observable, catchError, map, of } from 'rxjs';
-import { Board, BoardRequest, BoardResponse, BoardResponseAPI } from 'src/app/shared/models/board.model';
+import { BoardResponse, BoardResponseAPI, Board, BoardRequest } from 'src/app/shared/models/board.model';
+
+export const BOARDS_ENDPOINT = 'api/board/boards/';
 
 @Injectable({
   providedIn: 'root'

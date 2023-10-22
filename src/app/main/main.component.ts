@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { PageComponent } from '../admin/page/page.component';
+import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
+import { PageComponent } from '../shared/shared-components/page/page.component';
 
 @Component({
   selector: 'app-main',
