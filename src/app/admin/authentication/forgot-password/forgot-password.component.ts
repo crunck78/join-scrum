@@ -28,8 +28,4 @@ export class ForgotPasswordComponent {
     }
   }
 
-  get matchWebBreakpoint$ (){
-    return this.forgotPasswordService.breakPoints.matchesWebBreakpoint$;
-  }
-
 }

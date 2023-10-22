@@ -32,8 +32,4 @@ export class LogInComponent {
       this.loginService.scrumLogin.login(this.loginForm.value as LoginCredentials);
     }
   }
-
-  get matchWebBreakpoint$() {
-    return this.loginService.breakPoints.matchesWebBreakpoint$;
-  }
 }

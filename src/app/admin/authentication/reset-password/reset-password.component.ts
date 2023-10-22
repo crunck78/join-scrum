@@ -36,8 +36,4 @@ export class ResetPasswordComponent {
     }
   }
 
-  get matchWebBreakpoint$ (){
-    return this.resetPasswordService.breakPoints.matchesWebBreakpoint$;
-  }
-
 }

@@ -30,8 +30,4 @@ export class RegisterComponent {
     }
   }
 
-  get matchWebBreakpoint$ (){
-    return this.registerService.breakPoints.matchesWebBreakpoint$;
-  }
-
 }
