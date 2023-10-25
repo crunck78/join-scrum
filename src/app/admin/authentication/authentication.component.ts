@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Route, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Route, Router, RouterOutlet } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { map } from 'rxjs';
 import { LogoComponent } from 'src/app/shared/shared-components/logo/logo.component';
 import { PageComponent } from 'src/app/shared/shared-components/page/page.component';
 import { RouterLinkComponent } from 'src/app/shared/shared-components/router-link/router-link.component';
+import { ToSignUpComponent } from 'src/app/shared/shared-components/to-sign-up/to-sign-up.component';
 
 @Component({
   selector: 'app-authentication',
@@ -18,14 +19,13 @@ import { RouterLinkComponent } from 'src/app/shared/shared-components/router-lin
     LogoComponent,
     PageComponent,
     RouterLinkComponent,
-    CommonModule
+    CommonModule,
+    ToSignUpComponent
   ]
 })
 export class AuthenticationComponent {
-  signUpRoute!: Route;
   constructor(private router: Router,
     private breakpointObserver: BreakpointObserver) {
-    this.signUpRoute = this.router.config.find(r => r.path == 'auth')?.children?.find(r => r.path == 'sign-up') as Route;
   }
   mobile$ = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(result => result.matches));
 }
