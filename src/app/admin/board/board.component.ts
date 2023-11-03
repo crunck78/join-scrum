@@ -28,7 +28,7 @@ export class BoardComponent implements AfterViewInit {
   board !: BoardResponse | null;
   constructor(private boardService: BoardService) {
     this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
-    this.boardService.scrumBoards.getBoardById$('1').subscribe(board => this.board = board);
+    this.boardService.scrumBoards.getBoardById$('3').subscribe(board => this.board = board);
   }
   ngAfterViewInit(): void {
     console.log("DropLists: ", this.dropLists);

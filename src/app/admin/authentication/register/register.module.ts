@@ -7,6 +7,7 @@ import { CardComponent } from 'src/app/shared/shared-components/card/card.compon
 import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
 import { ToLoginComponent } from 'src/app/shared/shared-components/to-login/to-login.component';
+import { LogoComponent } from 'src/app/shared/shared-components/logo/logo.component';
 
 const imports = [
   CommonModule,
@@ -16,7 +17,8 @@ const imports = [
   RouterLink,
   FormFieldComponent,
   MaterialModule,
-  ToLoginComponent
+  ToLoginComponent,
+  LogoComponent
 ]
 
 @NgModule({

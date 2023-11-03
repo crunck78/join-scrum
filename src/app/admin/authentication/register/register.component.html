@@ -1,5 +1,5 @@
 <app-card>
-    <app-page-title title >
+    <app-page-title title>
         <app-to-login before></app-to-login>
     </app-page-title>
 
@@ -50,6 +50,8 @@
         <div class="simple-grid">
             <button [disabled]="signupForm.invalid" (click)="signUp()" mat-raised-button color="primary">Sign
                 Up</button>
+
+            <app-logo *ngIf="mobile$ | async" after [light]="true"></app-logo>
         </div>
 
     </div>

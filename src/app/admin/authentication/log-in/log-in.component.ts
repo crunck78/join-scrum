@@ -5,6 +5,7 @@ import { LogInModule } from './log-in.module';
 import { LogInService } from './log-in.service';
 import { LoginCredentials } from 'src/app/scrum-api/scrum-login/scrum-login.service';
 import { EMAIL_REGEX } from 'src/app/shared/shared-components/form-field/form-field.component';
+import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 
 @Component({
   selector: 'app-log-in',
@@ -23,7 +24,7 @@ export class LogInComponent {
   });
   rememberMe = new FormControl(this.loginService.scrumApi.rememberMe);
 
-  constructor(private loginService: LogInService) {
+  constructor(private loginService: LogInService, private breakPoints: BreakpointsService) {
     this.rememberMe.valueChanges.subscribe(value => this.loginService.scrumApi.rememberMe = value as boolean)
   }
 
@@ -31,5 +32,9 @@ export class LogInComponent {
     if (this.loginForm.valid) {
       this.loginService.scrumLogin.login(this.loginForm.value as LoginCredentials);
     }
+  }
+
+  get mobile$(){
+    return this.breakPoints.mobile$;
   }
 }

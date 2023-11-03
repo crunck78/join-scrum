@@ -88,9 +88,14 @@ body {
 }
 
 .mat-mdc-card-title, .mat-mdc-dialog-title{
+    font-size: 30.5px !important;
     @media(max-width: 800px){
         font-size: 30.5px !important;
     }
+}
+
+.mat-mdc-card-header-text{
+    width: 100%;
 }
 
 // .mdc-dialog .mdc-dialog__content{

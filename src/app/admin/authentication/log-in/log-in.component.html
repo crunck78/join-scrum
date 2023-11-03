@@ -1,5 +1,7 @@
 <app-card>
-    <app-page-title title ></app-page-title>
+    <app-page-title title >
+        <app-logo *ngIf="mobile$ | async" after [light]="true"></app-logo>
+    </app-page-title>
 
     <form class="main-content" [formGroup]="loginForm">
 

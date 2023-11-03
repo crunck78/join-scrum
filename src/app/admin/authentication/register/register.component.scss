@@ -13,18 +13,20 @@ mat-expansion-panel{
 }
 
 .footer {
+    width: 100%;
+    box-sizing: border-box;
     display: grid;
     grid-gap: 35px;
     padding: 16px;
 
     .simple-grid {
         display: flex;
-        gap: 35px;
-        flex-wrap: wrap;
+        justify-content: space-between;
 
         button,
         a {
             width: fit-content;
+            margin-top: auto;
         }
     }
 }

@@ -1,6 +1,6 @@
-<div class="header">
+<div class="header" *ngIf="!(mobile$ | async)">
     <app-logo [light]="true"></app-logo>
-    <app-to-sign-up *ngIf="!(mobile$ | async)"></app-to-sign-up>
+    <app-to-sign-up></app-to-sign-up>
 </div>
 
 <router-outlet></router-outlet>
