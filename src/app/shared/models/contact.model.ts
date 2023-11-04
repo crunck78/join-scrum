@@ -3,7 +3,7 @@ export interface ContactResponse {
     name: string;
     phoneNumber: string;
     createdAt: Date;
-    updateAt: Date;
+    updatedAt: Date;
     id: number;
 }
 
@@ -12,7 +12,7 @@ export interface ContactResponseAPI {
     name: string;
     phone_number: string;
     created_at: string;
-    update_at: string;
+    updated_at: string;
     id: number;
 }
 
@@ -29,21 +29,6 @@ export interface ContactRequestAPI {
 }
 
 export class Contact {
-    email!: string;
-    name!: string;
-    phoneNumber!: string;
-    createdAt!: Date;
-    updateAt!: Date;
-    id!: number;
-
-    // constructor() {
-    //     this.email = contact?.email || "";
-    //     this.name = contact?.name || "";
-    //     this.phoneNumber = contact?.phoneNumber || "";
-    //     this.createdAt = contact?.createdAt || new Date(Date.now());
-    //     this.updateAt = contact?.updateAt || new Date(Date.now());
-    //     this.id = contact?.id || 0;
-    // }
 
     static createInternalValue(contact: ContactResponseAPI) : ContactResponse{
         return {
@@ -51,7 +36,7 @@ export class Contact {
             email : contact.email,
             name : contact.name,
             createdAt : new Date(contact.created_at),
-            updateAt : new Date(contact.update_at),
+            updatedAt : new Date(contact.updated_at),
             id : contact.id,
         };
     }
@@ -62,21 +47,5 @@ export class Contact {
             email : contact.email,
             name : contact.name,
         };
-    }
-
-    // toInternalValue(contact: ContactResponseAPI) {
-    //     this.email = contact.email;
-    //     this.name = contact.email;
-    //     this.createdAt = new Date(contact.created_at);
-    //     this.updateAt = new Date(contact.update_at);
-    //     this.id = contact.id;
-    // }
-
-    toRepresentation() : ContactRequestAPI {
-        return {
-            email: this.email,
-            name: this.name,
-            phone_number: this.phoneNumber,
-        }
     }
 }

@@ -27,11 +27,6 @@ export interface ListRequest {
 }
 
 export class List {
-    id!: number;
-    name!: string;
-    createdAt!: Date;
-    updatedAt!: Date;
-    tasks!: Task[];
 
     static createInternalValue(list: ListResponseAPI): ListResponse {
         return {

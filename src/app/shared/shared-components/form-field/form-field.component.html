@@ -5,7 +5,7 @@
         (focus)="resetErrorState()" [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput
         [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
 
-    <textarea *ngIf="inputType == 'text-area'" [required]="required" maxlength="500" minlength="{{minLength || 0}}"
+    <textarea (keyup)="autoGrowTextZone($event)" *ngIf="inputType == 'text-area'" [required]="required" maxlength="500" minlength="{{minLength || 0}}"
         (focus)="resetErrorState()" [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput
         [formControl]="$any(control)" [errorStateMatcher]="customMatcher"></textarea>
 

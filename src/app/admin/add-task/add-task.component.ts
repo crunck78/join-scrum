@@ -17,6 +17,8 @@ import { SubtaskRequest, SubtaskResponse } from 'src/app/shared/models/subtask.m
 import { TaskResponse, TaskRequest, Task } from 'src/app/shared/models/task.model';
 import { AddCategoryComponent } from 'src/app/shared/shared-components/dialogs/add-category/add-category.component';
 import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
+import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
+import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-task',
@@ -55,7 +57,7 @@ export class AddTaskComponent implements OnChanges {
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
   @Output() editedTask = new EventEmitter<TaskResponse | null>();
 
-  constructor(private addTaskService: AddTaskService) {
+  constructor(private addTaskService: AddTaskService, private feedback: FeedbackService) {
     this.updateCategories();
     this.updateContacts();
     this.updateSubtasks();
@@ -127,8 +129,8 @@ export class AddTaskComponent implements OnChanges {
   getCategoryOptionHTML(option: CategoryResponse) {
     return `
     <span class="category-option">
-      <span class="category-name">${option.name}</span>
       <span  class="category-color" style="background-color: ${option.color}"></span>
+      <span class="category-name">${option.name}</span>
     </span>`;
   }
 
@@ -174,7 +176,12 @@ export class AddTaskComponent implements OnChanges {
       this.addTaskService.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
         .subscribe(
           {
-            next: (res) => console.log(res),
+            next: (res) => {
+              const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
+              feedbackRef?.afterDismissed().subscribe({
+                next: (value) => this.addTaskService.router.navigate(['/board'])
+              });
+            },
             error: (e) => console.log(e)
           }
         )

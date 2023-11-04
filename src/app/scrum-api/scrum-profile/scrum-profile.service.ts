@@ -4,10 +4,12 @@ import { Injectable } from '@angular/core';
 export const PROFILE_ENDPOINT = '/api/user/me/';
 
 export interface Profile {
-  id?:number,
+  id?:number;
   email: string;
   name: string;
   image: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 @Injectable({

@@ -52,9 +52,7 @@ export class ScrumApiService {
     }
   }
 
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   handleTokenChanges() {
     const init = this.rememberMe ? this.localToken : '';
@@ -63,6 +61,7 @@ export class ScrumApiService {
       if (this.rememberMe)
         this.localToken = apiToken.token;
       this.token = apiToken?.token;
+      this.router.navigate(['/']);
       if (!(apiToken && apiToken.token))
         this.router.navigate(['/auth'])
     });

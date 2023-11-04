@@ -25,11 +25,6 @@ export interface BoardRequestAPI {
 }
 
 export class Board {
-    title!: string;
-    id!: string;
-    lists!: List[];
-    createdAt!: Date;
-    updatedAt!: Date;
 
     static createInternalValue(board: BoardResponseAPI): BoardResponse {
         return {

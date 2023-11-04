@@ -28,7 +28,8 @@ export class BoardComponent implements AfterViewInit {
   board !: BoardResponse | null;
   constructor(private boardService: BoardService) {
     this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
-    this.boardService.scrumBoards.getBoardById$('3').subscribe(board => this.board = board);
+    // this.boardService.scrumBoards.getBoardById$('3').subscribe(board => this.board = board);
+    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
   }
   ngAfterViewInit(): void {
     console.log("DropLists: ", this.dropLists);
@@ -56,6 +57,7 @@ export class BoardComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(newList => {
       if (newList) {
         console.log(newList);
+        this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
       }
     });
   }

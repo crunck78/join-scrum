@@ -82,4 +82,11 @@ export class FormFieldComponent {
       this.control?.markAsUntouched();
   }
 
+  autoGrowTextZone(e: Event) {
+    if (e.target instanceof HTMLTextAreaElement) {
+      e.target.style.height = "0px";
+      e.target.style.height = (e.target?.scrollHeight + 25) + "px";
+    }
+  }
+
 }

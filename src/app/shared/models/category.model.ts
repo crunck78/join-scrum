@@ -25,11 +25,6 @@ export interface CategoryRequestAPI {
 }
 
 export class Category{
-    name!: string;
-    color!: string;
-    createdAt!: Date;
-    updateAt!: Date;
-    id!: number;
 
     static createInternalValue(category: CategoryResponseAPI) : CategoryResponse{
         return {
