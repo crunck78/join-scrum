@@ -1,13 +1,18 @@
 <mat-form-field appearance="outline">
     <mat-label *ngIf="labelName">{{labelName}}</mat-label>
 
-    <input *ngIf="inputType == 'input'" [required]="required" maxlength="100" minlength="{{minLength || 0}}"
-        (focus)="resetErrorState()" [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput
-        [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
+    <input *ngIf="inputType == 'input' && type != 'tel'" [required]="required" maxlength="100"
+        minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
+        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
 
-    <textarea (keyup)="autoGrowTextZone($event)" *ngIf="inputType == 'text-area'" [required]="required" maxlength="500" minlength="{{minLength || 0}}"
-        (focus)="resetErrorState()" [autocomplete]="autocomplete" [attr.type]="type || 'text'" matInput
-        [formControl]="$any(control)" [errorStateMatcher]="customMatcher"></textarea>
+    <input (input)="handleInputPhoneNumber($any($event))" *ngIf="inputType == 'input' && type == 'tel'" [required]="required" maxlength="100"
+        minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
+        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
+
+    <textarea (keyup)="autoGrowTextZone($event)" *ngIf="inputType == 'text-area'" [required]="required" maxlength="500"
+        minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
+        [attr.type]="type || 'text'" matInput [formControl]="$any(control)"
+        [errorStateMatcher]="customMatcher"></textarea>
 
     <mat-select [multiple]="multiple" *ngIf="inputType == 'select'" [required]="required" (focus)="resetErrorState()"
         [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
@@ -25,7 +30,7 @@
     </div>
 
 
-    <input *ngIf="inputType == 'date'" [formControl]="$any(control)" [errorStateMatcher]="customMatcher"
+    <input [min]="today" *ngIf="inputType == 'date'" [formControl]="$any(control)" [errorStateMatcher]="customMatcher"
         (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
         [matDatepicker]="picker">
     <mat-datepicker-toggle (click)="resetErrorState()" *ngIf="inputType == 'date'" matIconSuffix

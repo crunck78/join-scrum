@@ -74,6 +74,7 @@ export class FormFieldComponent {
   @Input() suffixIcon!: string;
   @Input() multiple: boolean = false;
   @Output() action = new EventEmitter<void>();
+  today = new Date();
 
   customMatcher = new CustomErrorStateMatcher();
 
@@ -87,6 +88,21 @@ export class FormFieldComponent {
       e.target.style.height = "0px";
       e.target.style.height = (e.target?.scrollHeight + 25) + "px";
     }
+  }
+
+  handleInputPhoneNumber(event: InputEvent) {
+    let regexDisallowedChars = /[^0-9+]|(?!^)\+/;
+    let inputField = event.target as HTMLInputElement;
+    let inputFieldValue = inputField.value;
+
+    // Removed disallowed characters
+    let sanitizedValue = inputFieldValue.replace(regexDisallowedChars, '');
+
+    // Update the FormControl value with the sanitized value
+    this.control.setValue(sanitizedValue);
+
+    // Stop the default input event
+    event.preventDefault();
   }
 
 }
