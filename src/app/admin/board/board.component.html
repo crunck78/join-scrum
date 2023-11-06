@@ -13,7 +13,7 @@
                 </mat-menu>
             </div>
 
-            <div [style.background]="backlog && backlog.length ? '#E7E7E7' : 'white'" cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListData]="backlog" class="drag-drop-list"
+            <div [style.background]="backlog && backlog.length ? '#E7E7E7' : 'white'" cdkDropList [cdkDropListAutoScrollStep]="25" [cdkDropListSortingDisabled]="true" [cdkDropListData]="backlog" class="drag-drop-list"
                 (cdkDropListDropped)="drop($event)">
 
                 <ng-container *ngIf="backlog && backlog.length; else noTasks">
@@ -47,7 +47,7 @@
                     </mat-menu>
                 </div>
 
-                <div [style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'" cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListData]="list.tasks"
+                <div [style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'" [cdkDropListAutoScrollStep]="25" cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListData]="list.tasks"
                     class="drag-drop-list" (cdkDropListDropped)="drop($event, list)">
 
                     <ng-container *ngIf="list.tasks && list.tasks.length; else noTasks">
