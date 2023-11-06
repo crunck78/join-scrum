@@ -84,13 +84,13 @@ export class FormFieldComponent {
   }
 
   autoGrowTextZone(e: Event) {
-    if (e.target instanceof HTMLTextAreaElement) {
-      const textArea = e.target;
-      requestAnimationFrame(() => {
-        textArea.style.height = 'inherit'; // Set to 'inherit' or some other initial value
-        textArea.style.height = `${textArea.scrollHeight + 25}px`;
-      });
-    }
+    // if (e.target instanceof HTMLTextAreaElement) {
+    //   const textArea = e.target;
+    //   requestAnimationFrame(() => {
+    //     textArea.style.height = 'inherit'; // Set to 'inherit' or some other initial value
+    //     textArea.style.height = `${textArea.scrollHeight + 25}px`;
+    //   });
+    // }
   }
 
   handleInputPhoneNumber(event: InputEvent) {
