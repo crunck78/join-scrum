@@ -43,6 +43,7 @@ export class TaskComponent {
     dialogRef.componentInstance.task = this.task;
     dialogRef.componentInstance.mode = 'edit';
     dialogRef.afterClosed().subscribe(result =>{
+
       if(result) this.taskChange.emit(result);
     });
   }

@@ -1,5 +1,5 @@
 <app-card>
-    <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title>
+    <!-- <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title> -->
 
     <div cdkDropListGroup *ngIf="board; else createBoard" class="board-lists" cdkScrollable>
         <div class="drag-drop-container">
@@ -17,7 +17,7 @@
                 (cdkDropListDropped)="drop($event)">
 
                 <ng-container *ngIf="backlog && backlog.length; else noTasks">
-                    <app-task (task)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item"
+                    <app-task (taskChange)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item"
                         *ngFor="let item of backlog; let i = index" cdkDrag>
                         <div class="example-handle" cdkDragHandle>
                             <svg width="24px" fill="currentColor" viewBox="0 0 24 24">

@@ -43,6 +43,7 @@ export class AddTaskDialogComponent {
   }
 
   handleEditedTask(editedTask: TaskResponse){
+
     this.dialogRef.close(editedTask);
   }
 }

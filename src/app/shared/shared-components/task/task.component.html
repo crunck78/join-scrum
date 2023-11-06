@@ -14,12 +14,16 @@
 
 <p>{{task.description}}</p>
 
-<div *ngIf="task.subtasks.length > 0" class="subtasks-preview custom-margin-top-small">
-    <span [style.background]=" doneSubtasksLength | progressLinearGradient : task.subtasks.length" class="subtasks-progress-bar"></span>
-    <span>
-        {{doneSubtasksLength}}/{{task.subtasks.length}} Done
-    </span>
-</div>
+<ng-container *ngIf="task.subtasks.length > 0">
+    <p>Subtasks</p>
+    <div class="subtasks-preview custom-margin-top-small">
+        <span [style.background]=" doneSubtasksLength | progressLinearGradient : task.subtasks.length"
+            class="subtasks-progress-bar"></span>
+        <span>
+            {{doneSubtasksLength}}/{{task.subtasks.length}} Done
+        </span>
+    </div>
+</ng-container>
 
 <div class="task-footer custom-margin-top-small">
     <div *ngIf="task.assignees.length > 0" class="task-assignees">

@@ -75,8 +75,8 @@ export class BoardComponent implements AfterViewInit {
   }
 
   handleEditedTask(editedTask: TaskResponse) {
-    debugger;
+
     this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
-    this, this.boardService.scrumBoards.getBoardById$('1').subscribe(board => this.board = board);
+    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
   }
 }
