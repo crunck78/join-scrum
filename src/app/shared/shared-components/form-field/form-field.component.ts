@@ -85,8 +85,11 @@ export class FormFieldComponent {
 
   autoGrowTextZone(e: Event) {
     if (e.target instanceof HTMLTextAreaElement) {
-      e.target.style.height = "0px";
-      e.target.style.height = (e.target?.scrollHeight + 25) + "px";
+      const textArea = e.target;
+      requestAnimationFrame(() => {
+        textArea.style.height = 'inherit'; // Set to 'inherit' or some other initial value
+        textArea.style.height = `${textArea.scrollHeight + 25}px`;
+      });
     }
   }
 

@@ -15,4 +15,10 @@ export class ContactInitialsComponent {
   @Input() substrBegin: number = 0;
   @Input() substrEnd: number = 1;
 
+  get contactInitials(){
+    const contactNames = this.contactName?.split(' ');
+    const contactInitials = contactNames?.map(cn => cn[0].toUpperCase());
+    return contactInitials?.join('');
+  }
+
 }
