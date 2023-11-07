@@ -51,7 +51,7 @@
                     class="drag-drop-list" (cdkDropListDropped)="drop($event, list)">
 
                     <ng-container *ngIf="list.tasks && list.tasks.length; else noTasks">
-                        <app-task (task)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item"
+                        <app-task (taskChange)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item"
                             *ngFor="let item of list.tasks; let i = index" cdkDrag>
                             <div class="example-handle" cdkDragHandle>
                                 <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
