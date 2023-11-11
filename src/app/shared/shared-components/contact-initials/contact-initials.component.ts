@@ -12,8 +12,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ContactInitialsComponent {
   @Input() contactName!: string | undefined;
-  @Input() substrBegin: number = 0;
-  @Input() substrEnd: number = 1;
 
   get contactInitials(){
     const contactNames = this.contactName?.split(' ');

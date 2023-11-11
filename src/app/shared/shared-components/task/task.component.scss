@@ -34,11 +34,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 32px;
 }
 
 .task-assignees{
     display: inline-flex;
     align-items: center;
+    overflow-x: hidden;
 
     app-contact-initials:not(:first-child){
         margin-left: -16px;
