@@ -43,23 +43,24 @@
                 [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
                 [control]="addSubtaskForm"></app-form-field>
 
+            <div>
+                <div class="subtask" *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
+                    <mat-checkbox #subtaskCheck (change)="updateSubtask($event.checked, subtask)"
+                        [checked]="subtask.done">
+                        {{subtask.title}}
+                    </mat-checkbox>
 
-            <div class="subtask" *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
-                <mat-checkbox #subtaskCheck (change)="updateSubtask($event.checked, subtask)" [checked]="subtask.done">
-                    {{subtask.title}}
-                </mat-checkbox>
+                    <div>
+                        <button mat-icon-button aria-label="Edit Subtask">
+                            <mat-icon>edit</mat-icon>
+                        </button>
 
-                <div>
-                    <button mat-icon-button aria-label="Edit Subtask">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-
-                    <button (click)="removeSubtask(subtask)" mat-icon-button aria-label="Remove Subtask">
-                        <mat-icon>remove</mat-icon>
-                    </button>
+                        <button (click)="removeSubtask(subtask)" mat-icon-button aria-label="Remove Subtask">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
-
         </div>
 
     </form>
