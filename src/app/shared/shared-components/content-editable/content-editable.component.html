@@ -1,0 +1,5 @@
+<input class="edit-input" [style.display]="'none'"
+    (blur)="updateValue(inputEdit)"
+    (keydown.enter)="updateValue(inputEdit); $event.preventDefault(); $event.stopPropagation()"
+    #inputEdit type="text" #inputField="ngModel" [(ngModel)]="valueToEdit"
+    [ngModelOptions]="{standalone: true}">

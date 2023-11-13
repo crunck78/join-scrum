@@ -5,7 +5,7 @@ import {
   FormControl, FormControlStatus, FormGroup, Validators
 } from '@angular/forms';
 import {
-  Observable, map
+  Observable, Subject, map
 } from 'rxjs';
 import {
   AddTaskModule, Priority, PriorityType, TaskMode
@@ -58,6 +58,8 @@ export class AddTaskComponent implements OnChanges {
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
   @Output() editedTask = new EventEmitter<TaskResponse | null>();
   @Output() deletedTask = new EventEmitter<number | null>();
+
+  changingSubtaskTitle$: Subject<boolean> = new Subject();
 
 
   constructor(private addTaskService: AddTaskService, private feedback: FeedbackService) {
@@ -260,17 +262,21 @@ export class AddTaskComponent implements OnChanges {
     this.addTaskForm.get('subtasks')?.patchValue(patchedSubtasks);
   }
 
-  editSubtask(subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
-    subtaskTitleView.style.display = "none";
-    inputSubtaskEdit.style.display = "inline";
-    inputSubtaskEdit.focus();
+  // editSubtask(subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
+  //   subtaskTitleView.style.display = "none";
+  //   inputSubtaskEdit.style.display = "inline";
+  //   inputSubtaskEdit.focus();
+  // }
+
+  editSubtask(){
+    this.changingSubtaskTitle$.next(true);
   }
 
-  updateSubtaskTitle(subtask: SubtaskRequest, subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
-    console.log(subtask);
-    subtaskTitleView.style.display = "inline";
-    inputSubtaskEdit.style.display = "none";
-  }
+  // updateSubtaskTitle(subtask: SubtaskRequest, subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
+  //   console.log(subtask);
+  //   subtaskTitleView.style.display = "inline";
+  //   inputSubtaskEdit.style.display = "none";
+  // }
 
 }
 export { TaskMode, PriorityType };

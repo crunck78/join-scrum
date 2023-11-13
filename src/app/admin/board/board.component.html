@@ -9,12 +9,13 @@
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Clear Backlog</button>
+                    <button (click)="clearBacklog()" mat-menu-item>Clear Backlog</button>
                 </mat-menu>
             </div>
 
-            <div [style.background]="backlog && backlog.length ? '#E7E7E7' : 'white'" cdkDropList [cdkDropListAutoScrollStep]="25" [cdkDropListSortingDisabled]="true" [cdkDropListData]="backlog" class="drag-drop-list"
-                (cdkDropListDropped)="drop($event)">
+            <div [style.background]="backlog && backlog.length ? '#E7E7E7' : 'white'" cdkDropList
+                [cdkDropListAutoScrollStep]="25" [cdkDropListSortingDisabled]="true" [cdkDropListData]="backlog"
+                class="drag-drop-list" (cdkDropListDropped)="drop($event)">
 
                 <ng-container *ngIf="backlog && backlog.length; else noTasks">
                     <app-task (taskChange)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item"
@@ -43,12 +44,13 @@
                         <mat-icon>menu</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Delete List</button>
+                        <button (click)="deleteList(list.id)" mat-menu-item>Delete List</button>
                     </mat-menu>
                 </div>
 
-                <div [style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'" [cdkDropListAutoScrollStep]="25" cdkDropList [cdkDropListSortingDisabled]="true" [cdkDropListData]="list.tasks"
-                    class="drag-drop-list" (cdkDropListDropped)="drop($event, list)">
+                <div [style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'"
+                    [cdkDropListAutoScrollStep]="25" cdkDropList [cdkDropListSortingDisabled]="true"
+                    [cdkDropListData]="list.tasks" class="drag-drop-list" (cdkDropListDropped)="drop($event, list)">
 
                     <ng-container *ngIf="list.tasks && list.tasks.length; else noTasks">
                         <app-task (taskChange)="handleEditedTask($any($event))" class="drag-drop-box" [task]="item"
@@ -65,7 +67,8 @@
                     </ng-container>
 
                     <ng-template #noTasks>
-                        <div class="no-tasks">No tasks {{ list.name.toLowerCase().includes('in') ? '': 'in'}} {{list.name}} List</div>
+                        <div class="no-tasks">No tasks {{ list.name.toLowerCase().includes('in') ? '': 'in'}}
+                            {{list.name}} List</div>
                     </ng-template>
                 </div>
             </div>

@@ -48,16 +48,17 @@
                     <mat-checkbox #subtaskCheck (change)="updateSubtaskCheck($event.checked, subtask)"
                         [checked]="subtask.done">
                         <span [style.display]="'inline'" #subtaskTitleView>{{subtask.title}}</span>
-                        <input class="subtask-edit-input" [style.display]="'none'"
+                        <!-- <input class="subtask-edit-input" [style.display]="'none'"
                             (blur)="updateSubtaskTitle(subtask, subtaskTitleView, inputSubtaskEdit)"
                             (keydown.enter)="updateSubtaskTitle(subtask, subtaskTitleView, inputSubtaskEdit); $event.preventDefault(); $event.stopPropagation()"
                             #inputSubtaskEdit type="text" #inputSubtask="ngModel" [(ngModel)]="subtask.title"
-                            [ngModelOptions]="{standalone: true}">
+                            [ngModelOptions]="{standalone: true}"> -->
+                        <app-content-editable [(valueToEdit)]="subtask.title" [elementViewDisplay]="'inline'" [elementView]="subtaskTitleView"
+                            [changing]="changingSubtaskTitle$"></app-content-editable>
                     </mat-checkbox>
 
                     <div>
-                        <button (click)="editSubtask(subtaskTitleView, inputSubtaskEdit)" mat-icon-button
-                            aria-label="Edit Subtask">
+                        <button (click)="editSubtask()" mat-icon-button aria-label="Edit Subtask">
                             <mat-icon>edit</mat-icon>
                         </button>
 

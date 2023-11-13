@@ -2,7 +2,7 @@ import { AfterViewInit, Component, QueryList, ViewChildren } from '@angular/core
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, firstValueFrom, take } from 'rxjs';
 
 
 import { BoardModule } from './board.module';
@@ -20,6 +20,7 @@ import { AddListComponent } from 'src/app/shared/shared-components/dialogs/add-l
 })
 export class BoardComponent implements AfterViewInit {
   @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
+  changingListName$: Subject<boolean> = new Subject();
 
   draggingDisabled = true;
 
@@ -75,8 +76,26 @@ export class BoardComponent implements AfterViewInit {
   }
 
   handleEditedTask(editedTask: TaskResponse) {
-
     this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
     this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+  }
+
+  async clearBacklog() {
+    for (let index = 0; index < this.backlog.length; index++) {
+      const task = this.backlog[index];
+      await firstValueFrom(this.boardService.scrumTasks.deleteTask$(task.id));
+    }
+    this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
+    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+  }
+
+  async deleteList(listId: number) {
+    await firstValueFrom(this.boardService.scrumList.deleteList$(listId));
+    this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
+    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+  }
+
+  editListTitle(){
+    this.changingListName$.next(true);
   }
 }
