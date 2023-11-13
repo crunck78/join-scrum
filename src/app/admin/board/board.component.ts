@@ -95,7 +95,17 @@ export class BoardComponent implements AfterViewInit {
     this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
   }
 
-  editListTitle(){
+  editListTitle() {
     this.changingListName$.next(true);
+  }
+
+  updateListName(newListName: string, list: ListResponse) {
+    list.name = newListName;
+    this.boardService.scrumList.updateList$(list.id, list).subscribe(
+      {
+        next: (listUpdate) => console.log(listUpdate),
+        error: (err) => console.error(err)
+      }
+    )
   }
 }

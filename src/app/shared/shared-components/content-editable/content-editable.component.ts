@@ -12,15 +12,22 @@ import { Subject } from 'rxjs';
 })
 export class ContentEditableComponent implements AfterViewInit {
   ngAfterViewInit(): void {
-    this.changing.subscribe(value => {
-        if(value) this.editValue(this.inputEdit.nativeElement);
+    this.changing?.subscribe(value => {
+      if (value) this.editValue(this.inputEdit.nativeElement);
     });
+
+    if (this.elementViewClick)
+      this.elementView
+        .addEventListener('click', (event) => {
+          this.editValue(this.inputEdit.nativeElement);
+        });
   }
 
   @Input() elementView!: HTMLElement;
   @Input() elementViewDisplay!: string;
   @Input() valueToEdit!: string;
   @Input() changing!: Subject<boolean>;
+  @Input() elementViewClick!: boolean;
 
   @Output() valueToEditChange = new EventEmitter<string>();
   @ViewChild('inputEdit') inputEdit!: ElementRef<HTMLInputElement>;

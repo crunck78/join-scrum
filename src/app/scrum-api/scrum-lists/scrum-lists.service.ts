@@ -65,4 +65,18 @@ export class ScrumListsService {
         map(list => list ? List.createInternalValue(list) : null)
       );
   }
+
+  updateList$(listId: number, listRequest: Partial<ListRequest>): Observable<ListResponse | null>{
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    const taskRequestAPI = List.createRepresentation(listRequest);
+
+    return this.http.patch<ListResponseAPI | null>(`${this.listsEndpoint}${listId}/`, taskRequestAPI, { headers })
+      .pipe(
+        catchError(error => of(null)),
+        map(list => list ? List.createInternalValue(list) : null)
+      );
+  }
 }

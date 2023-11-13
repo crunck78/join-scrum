@@ -39,7 +39,9 @@
         <ng-container *ngFor="let list of board.lists;let i = index;">
             <div class="drag-drop-container">
                 <div class="board-list-header">
-                    <h2>{{list.name}}</h2>
+                    <h2 #listTitleElem>{{list.name}}</h2>
+                    <app-content-editable (valueToEditChange)="updateListName($event, list)" [elementViewClick]="true" [valueToEdit]="list.name"
+                        [elementView]="listTitleElem" [elementViewDisplay]="'block'"></app-content-editable>
                     <button mat-icon-button color="accent" [matMenuTriggerFor]="menu">
                         <mat-icon>menu</mat-icon>
                     </button>
