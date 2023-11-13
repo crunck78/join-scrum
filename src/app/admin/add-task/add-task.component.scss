@@ -1,4 +1,4 @@
-:host{
+:host {
     display: block;
     padding: 16px 0;
     height: 100%;
@@ -24,18 +24,30 @@
     }
 }
 
-.main-content{
+.main-content {
     gap: 12px;
     margin-top: 35px;
     display: flex;
     flex-wrap: wrap;
-    .form-field-group{
+
+    .form-field-group {
         flex: 1;
     }
 }
 
-.subtask{
+.subtask {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.subtask-edit-input {
+    outline: 0px;
+    border: 0px;
+    border-bottom: 2px solid black;
+    &:active, &:focus, &:focus-visible {
+        outline: 0px;
+        border: 0px;
+        border-bottom: 2px solid black;
+    }
 }

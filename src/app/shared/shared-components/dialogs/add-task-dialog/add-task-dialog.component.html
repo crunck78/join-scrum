@@ -1,12 +1,13 @@
 <app-dialog [title]="title">
     <ng-container side></ng-container>
 
-    <app-add-task (editedTask)="handleEditedTask($any($event))" [predefinedTaskRequest]="predefinedTaskRequest" (formStatus$)="updateFormStatus($event)"
-        [showPageTitle]="false" [clearTaskForm$]="clearTaskForm" [submitTaskForm$]="submitTaskForm" [hideFooter]="true"
-        [mode]="mode" [task]="task"></app-add-task>
+    <app-add-task (deletedTask)="handleDeletedTask($any($event))" (editedTask)="handleEditedTask($any($event))" [predefinedTaskRequest]="predefinedTaskRequest"
+        (formStatus$)="updateFormStatus($event)" [showPageTitle]="false" [deleteTask$]="deleteTask" [clearTaskForm$]="clearTaskForm"
+        [submitTaskForm$]="submitTaskForm" [hideFooter]="true" [mode]="mode" [task]="task"></app-add-task>
 
     <div class="footer" actions>
         <div class="simple-grid">
+            <button (click)="deleteTask.emit()" color="warn" mat-stroked-button *ngIf="mode == 'edit'">Delete</button>
             <button (click)="clearTaskForm.emit()" mat-stroked-button color="primary">Clear</button>
             <button [disabled]="formStatus && formStatus !== 'VALID'" (click)="submitTaskForm.emit()" mat-raised-button
                 color="primary">

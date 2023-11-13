@@ -52,10 +52,13 @@ export class AddTaskComponent implements OnChanges {
   subtasks$!: Observable<SubtaskResponse[]>
   @Input() clearTaskForm$!: EventEmitter<void>;
   @Input() submitTaskForm$!: EventEmitter<void>;
+  @Input() deleteTask$!: EventEmitter<void>;
   @Input() predefinedTaskRequest!: Partial<TaskRequest>;
 
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
   @Output() editedTask = new EventEmitter<TaskResponse | null>();
+  @Output() deletedTask = new EventEmitter<number | null>();
+
 
   constructor(private addTaskService: AddTaskService, private feedback: FeedbackService) {
     this.updateCategories();
@@ -78,6 +81,10 @@ export class AddTaskComponent implements OnChanges {
       this.submitTaskForm$.subscribe(() => this.saveTask());
     }
 
+    if (changes['deleteTask$']) {
+      this.deleteTask$.subscribe(() => this.deleteTask());
+    }
+
     if (changes['predefinedTaskRequest'] && !!this.predefinedTaskRequest) {
       this.addTaskForm.reset(this.predefinedTaskRequest);
     }
@@ -96,6 +103,7 @@ export class AddTaskComponent implements OnChanges {
   addSubtaskForm = new FormControl('');
 
   addCategory() {
+    debugger;
     const dialogRef = this.addTaskService.dialog.open(AddCategoryComponent);
     dialogRef.afterClosed().subscribe(newCategory => {
       if (newCategory) {
@@ -170,6 +178,17 @@ export class AddTaskComponent implements OnChanges {
       this.editTask();
   }
 
+  deleteTask() {
+    if (this.mode != 'edit') return;
+    this.addTaskService.scrumTask.deleteTask$(this.task.id)
+      .subscribe(
+        {
+          next: (res) => this.deletedTask.emit(this.task.id),
+          error: (e) => console.log(e)
+        }
+      );
+  }
+
   addTask() {
     if (this.addTaskForm.valid) {
 
@@ -184,7 +203,7 @@ export class AddTaskComponent implements OnChanges {
             },
             error: (e) => console.log(e)
           }
-        )
+        );
     }
   }
 
@@ -197,7 +216,7 @@ export class AddTaskComponent implements OnChanges {
             next: (res) => this.editedTask.emit(res),
             error: (e) => console.log(e)
           }
-        )
+        );
     }
   }
 
@@ -209,7 +228,7 @@ export class AddTaskComponent implements OnChanges {
    * @param checked
    * @param subtask
    */
-  updateSubtask(checked: boolean, subtask: SubtaskRequest) {
+  updateSubtaskCheck(checked: boolean, subtask: SubtaskRequest) {
     subtask.done = checked;
     // if (this.mode == 'edit') {
     //   const subtaskId = subtask.id as number;
@@ -239,6 +258,18 @@ export class AddTaskComponent implements OnChanges {
     const subtasks = this.addTaskForm.get('subtasks')?.value;
     const patchedSubtasks = subtasks?.filter(st => st != subtaskToRemove) as SubtaskRequest[];
     this.addTaskForm.get('subtasks')?.patchValue(patchedSubtasks);
+  }
+
+  editSubtask(subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
+    subtaskTitleView.style.display = "none";
+    inputSubtaskEdit.style.display = "inline";
+    inputSubtaskEdit.focus();
+  }
+
+  updateSubtaskTitle(subtask: SubtaskRequest, subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
+    console.log(subtask);
+    subtaskTitleView.style.display = "inline";
+    inputSubtaskEdit.style.display = "none";
   }
 
 }

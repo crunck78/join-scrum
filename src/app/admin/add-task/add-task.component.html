@@ -45,13 +45,19 @@
 
             <div>
                 <div class="subtask" *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
-                    <mat-checkbox #subtaskCheck (change)="updateSubtask($event.checked, subtask)"
+                    <mat-checkbox #subtaskCheck (change)="updateSubtaskCheck($event.checked, subtask)"
                         [checked]="subtask.done">
-                        {{subtask.title}}
+                        <span [style.display]="'inline'" #subtaskTitleView>{{subtask.title}}</span>
+                        <input class="subtask-edit-input" [style.display]="'none'"
+                            (blur)="updateSubtaskTitle(subtask, subtaskTitleView, inputSubtaskEdit)"
+                            (keydown.enter)="updateSubtaskTitle(subtask, subtaskTitleView, inputSubtaskEdit); $event.preventDefault(); $event.stopPropagation()"
+                            #inputSubtaskEdit type="text" #inputSubtask="ngModel" [(ngModel)]="subtask.title"
+                            [ngModelOptions]="{standalone: true}">
                     </mat-checkbox>
 
                     <div>
-                        <button mat-icon-button aria-label="Edit Subtask">
+                        <button (click)="editSubtask(subtaskTitleView, inputSubtaskEdit)" mat-icon-button
+                            aria-label="Edit Subtask">
                             <mat-icon>edit</mat-icon>
                         </button>
 

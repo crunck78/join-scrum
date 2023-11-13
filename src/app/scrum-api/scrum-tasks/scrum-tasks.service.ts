@@ -55,6 +55,19 @@ export class ScrumTasksService {
       );
   }
 
+  deleteTask$(taskId: number) : Observable<any | null> {
+
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    return this.http.delete<number | null>(this.tasksEndpoint + `/${taskId}/`, { headers })
+      .pipe(
+        catchError(error => of(null)),
+        map(value => value || null)
+      );
+  }
+
   updateTask$(taskId: number, taskRequest: Partial<TaskRequest>): Observable<TaskResponse | null>{
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`

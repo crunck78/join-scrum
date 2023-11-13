@@ -26,6 +26,7 @@ export class AddTaskDialogComponent {
   mode: TaskMode = 'add';
   formStatus!: FormControlStatus;
   clearTaskForm = new EventEmitter();
+  deleteTask = new EventEmitter();
   submitTaskForm = new EventEmitter();
   predefinedTaskRequest!: Partial<TaskRequest>;
   constructor(private dialogRef: MatDialogRef<AddTaskDialogComponent>) { }
@@ -43,7 +44,10 @@ export class AddTaskDialogComponent {
   }
 
   handleEditedTask(editedTask: TaskResponse){
-
     this.dialogRef.close(editedTask);
+  }
+
+  handleDeletedTask(deletedTaskId: number){
+    this.dialogRef.close(deletedTaskId);
   }
 }
