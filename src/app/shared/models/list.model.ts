@@ -6,6 +6,7 @@ export interface ListResponseAPI {
     created_at: string;
     updated_at: string;
     tasks: TaskResponseAPI[];
+    position: number;
 }
 
 export interface ListResponse {
@@ -14,16 +15,19 @@ export interface ListResponse {
     createdAt: Date;
     updatedAt: Date;
     tasks: TaskResponse[];
+    position: number;
 }
 
 export interface ListRequestAPI {
     name: string;
     board: number;
+    position: number;
 }
 
 export interface ListRequest {
     name: string;
     board: number;
+    position: number;
 }
 
 export class List {
@@ -35,6 +39,7 @@ export class List {
             createdAt: new Date(list.created_at),
             updatedAt: new Date(list.updated_at),
             tasks: list.tasks?.map(t => Task.createInternalValue(t)) || [],
+            position: list.position
         };
     }
 
@@ -42,6 +47,7 @@ export class List {
         return {
             name: list.name,
             board: list.board,
+            position: list.position
         };
     }
 }

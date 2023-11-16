@@ -11,6 +11,9 @@ import { BoardResponse } from 'src/app/shared/models/board.model';
 import { ListResponse } from 'src/app/shared/models/list.model';
 import { TaskResponse } from 'src/app/shared/models/task.model';
 import { AddListComponent } from 'src/app/shared/shared-components/dialogs/add-list/add-list.component';
+
+export declare type ListDirection = -1 | 1;
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -26,7 +29,7 @@ export class BoardComponent implements AfterViewInit {
 
   backlog: TaskResponse[] = [];
   backlog$ !: Observable<TaskResponse[]>;
-  board !: BoardResponse | null;
+  private _board !: BoardResponse | null;
   constructor(private boardService: BoardService) {
     this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
     // this.boardService.scrumBoards.getBoardById$('3').subscribe(board => this.board = board);
@@ -107,5 +110,27 @@ export class BoardComponent implements AfterViewInit {
         error: (err) => console.error(err)
       }
     )
+  }
+
+  set board(board: BoardResponse | null) {
+    board?.lists.sort((a: ListResponse, b: ListResponse) => a.position - b.position);
+    this._board = board;
+  }
+
+  get board(): BoardResponse | null {
+    return this._board;
+  }
+
+  setPosition(list: ListResponse, direction: ListDirection) {
+    list.position += direction;
+    this.boardService.scrumList.updateList$(list.id, list)
+      .subscribe(
+        {
+          next: () => {
+            this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+          },
+          error: (e) => console.error(e)
+        }
+      )
   }
 }
