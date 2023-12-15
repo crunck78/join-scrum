@@ -13,8 +13,8 @@
                 </mat-menu>
             </div>
 
-            <div [style.background]="backlog && backlog.length ? '#E7E7E7' : 'white'" cdkDropList
-                [cdkDropListAutoScrollStep]="25" [cdkDropListSortingDisabled]="true" [cdkDropListData]="backlog"
+            <div [cdkDropListOrientation]="orientation" [style.background]="backlog && backlog.length ? '#E7E7E7' : 'white'" cdkDropList
+                [cdkDropListAutoScrollStep]="25" [cdkDropListSortingDisabled]="false" [cdkDropListData]="backlog"
                 class="drag-drop-list" (cdkDropListDropped)="drop($event)">
 
                 <ng-container *ngIf="backlog && backlog.length; else noTasks">
@@ -44,7 +44,7 @@
                         <button (click)="setPosition(list, -1)" aria-label="Move List" *ngIf="i != 0" mat-icon-button class="move-list">
                             <mat-icon>arrow_left</mat-icon>
                         </button>
-                        <h3 #listTitleElem>{{list.name}}</h3>
+                        <h3 #listTitleElem>{{list.name}} P.:{{list.position}}</h3>
                         <app-content-editable (valueToEditChange)="updateListName($event, list)"
                             [elementViewClick]="true" [valueToEdit]="list.name" [elementView]="listTitleElem"
                             [elementViewDisplay]="'block'"></app-content-editable>
@@ -63,8 +63,8 @@
                     </div>
                 </div>
 
-                <div [style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'"
-                    [cdkDropListAutoScrollStep]="25" cdkDropList [cdkDropListSortingDisabled]="true"
+                <div [cdkDropListOrientation]="orientation" [style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'"
+                    [cdkDropListAutoScrollStep]="25" cdkDropList [cdkDropListSortingDisabled]="false"
                     [cdkDropListData]="list.tasks" class="drag-drop-list" (cdkDropListDropped)="drop($event, list)">
 
                     <ng-container *ngIf="list.tasks && list.tasks.length; else noTasks">

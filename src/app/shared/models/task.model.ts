@@ -16,6 +16,7 @@ export interface TaskRequest {
   priority: PriorityType;
   subtasks: SubtaskRequest[];
   list: number | null | '';
+  position: number;
 }
 
 /**
@@ -32,6 +33,7 @@ export interface TaskResponse {
   subtasks: SubtaskResponse[];
   createdAt: Date;
   updatedAt: Date;
+  position: number;
 }
 
 /**
@@ -46,6 +48,7 @@ export interface TaskRequestAPI {
   priority: PriorityType;
   subtasks: SubtaskRequestAPI[];
   list: number | null | '';
+  position: number;
 }
 
 /**
@@ -62,6 +65,7 @@ export interface TaskResponseAPI {
   subtasks: SubtaskResponseAPI[];
   created_at: string;
   updated_at: string;
+  position: number;
 }
 
 export class Task {
@@ -78,7 +82,8 @@ export class Task {
       assignees: task.assignees.map(a => Contact.createInternalValue(a)),
       dueDate: new Date(task.due_date),
       priority: task.priority,
-      subtasks: task.subtasks.map(s => Subtask.createInternalValue(s))
+      subtasks: task.subtasks.map(s => Subtask.createInternalValue(s)),
+      position: task.position
     };
   }
 
@@ -91,7 +96,8 @@ export class Task {
       due_date: task.dueDate?.toISOString().slice(0, 10),
       priority: task.priority,
       subtasks: task.subtasks,
-      list: task.list
+      list: task.list,
+      position: task.position
     };
   }
 
@@ -103,7 +109,8 @@ export class Task {
       assignees: task.assignees.map(a => a.id),
       dueDate: task.dueDate,
       priority: task.priority,
-      subtasks: task.subtasks.map(s => Subtask.convertToRepresentation(s))
+      subtasks: task.subtasks.map(s => Subtask.convertToRepresentation(s)),
+      position: task.position
     };
   }
 

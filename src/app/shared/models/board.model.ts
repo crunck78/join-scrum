@@ -30,7 +30,7 @@ export class Board {
         return {
             title: board.title,
             id: board.id,
-            lists: board.lists?.map(l => List.createInternalValue(l)) || [],
+            lists: board.lists?.map(l => List.createInternalValue(l)).sort((a, b) => a.position - b.position).reverse() || [],
             createdAt: new Date(board.created_at),
             updatedAt: new Date(board.updated_at),
         };

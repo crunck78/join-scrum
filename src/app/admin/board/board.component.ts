@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, QueryList, ViewChildren } from '@angular/core';
-import { CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDropList, DropListOrientation } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { Observable, Subject, firstValueFrom, take } from 'rxjs';
@@ -27,6 +27,8 @@ export class BoardComponent implements AfterViewInit {
 
   draggingDisabled = true;
 
+  orientation : DropListOrientation = "vertical";
+
   backlog: TaskResponse[] = [];
   backlog$ !: Observable<TaskResponse[]>;
   private _board !: BoardResponse | null;
@@ -41,18 +43,31 @@ export class BoardComponent implements AfterViewInit {
 
   drop(event: CdkDragDrop<TaskResponse[]>, list?: ListResponse) {
     // this.draggingDisabled = true;
+    // TODO UDPATE POSITION SAME LIST
+    // TODO UPDATE POSITION OTHER LIST CONSTRAIN CHECK here put it at last then move it
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      console.log("Before Move : ", event);
+      // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      console.log("After Move : ", event);
+      const droppedTask = event.container.data[event.previousIndex];
+      const swapTask = event.container.data[event.currentIndex];
+      console.log("droppedTask : ", droppedTask, "swapTask : ", swapTask);
+
+      this.boardService.scrumTasks.updateTask$(droppedTask['id'], { position: swapTask.position })
+        .subscribe((value: any) => this.handleEditedTask(droppedTask));
+
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-      const droppedTask = event.container.data[event.currentIndex];
-      this.boardService.scrumTasks.updateTask$(droppedTask['id'], { list: list?.id || null })
-        .subscribe((value: any) => console.log(value));
+      // transferArrayItem(
+      //   event.previousContainer.data,
+      //   event.container.data,
+      //   event.previousIndex,
+      //   event.currentIndex,
+      // );
+      const droppedTask = event.previousContainer.data[event.previousIndex];
+      const swapTask = event.container.data[event.currentIndex];
+      console.log("droppedTask : ", droppedTask, "swapTask : ", swapTask);
+      this.boardService.scrumTasks.updateTask$(droppedTask['id'], { list: list?.id || null, position: swapTask?.position })
+        .subscribe((value: any) => this.handleEditedTask(droppedTask));
     }
   }
 
@@ -78,7 +93,7 @@ export class BoardComponent implements AfterViewInit {
     return this.boardService.breakPoints.matchesWebBreakpoint$;
   }
 
-  handleEditedTask(editedTask: TaskResponse) {
+  handleEditedTask(editedTask?: TaskResponse) {
     this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
     this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
   }
