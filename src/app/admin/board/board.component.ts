@@ -42,16 +42,9 @@ export class BoardComponent implements AfterViewInit {
   }
 
   drop(event: CdkDragDrop<TaskResponse[]>, list?: ListResponse) {
-    // this.draggingDisabled = true;
-    // TODO UDPATE POSITION SAME LIST
-    // TODO UPDATE POSITION OTHER LIST CONSTRAIN CHECK here put it at last then move it
     if (event.previousContainer === event.container) {
-      console.log("Before Move : ", event);
-      // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      console.log("After Move : ", event);
       const droppedTask = event.container.data[event.previousIndex];
       const swapTask = event.container.data[event.currentIndex];
-      console.log("droppedTask : ", droppedTask, "swapTask : ", swapTask);
 
       this.boardService.scrumTasks.updateTask$(droppedTask['id'], { position: swapTask.position })
         .subscribe((value: any) => this.handleEditedTask(droppedTask));
@@ -65,7 +58,6 @@ export class BoardComponent implements AfterViewInit {
       // );
       const droppedTask = event.previousContainer.data[event.previousIndex];
       const swapTask = event.container.data[event.currentIndex];
-      console.log("droppedTask : ", droppedTask, "swapTask : ", swapTask);
       this.boardService.scrumTasks.updateTask$(droppedTask['id'], { list: list?.id || null, position: swapTask?.position })
         .subscribe((value: any) => this.handleEditedTask(droppedTask));
     }
@@ -128,7 +120,7 @@ export class BoardComponent implements AfterViewInit {
   }
 
   set board(board: BoardResponse | null) {
-    board?.lists.sort((a: ListResponse, b: ListResponse) => a.position - b.position);
+    // board?.lists.sort((a: ListResponse, b: ListResponse) => a.position - b.position);
     this._board = board;
   }
 
