@@ -105,7 +105,6 @@ export class AddTaskComponent implements OnChanges {
   addSubtaskForm = new FormControl('');
 
   addCategory() {
-    debugger;
     const dialogRef = this.addTaskService.dialog.open(AddCategoryComponent);
     dialogRef.afterClosed().subscribe(newCategory => {
       if (newCategory) {
