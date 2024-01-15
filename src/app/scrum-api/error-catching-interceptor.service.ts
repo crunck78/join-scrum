@@ -19,7 +19,7 @@ export class ErrorCatchingInterceptor {
   }
 
   private _handleErrorResponse(errorResponse: HttpErrorResponse) {
-    let errors: string[] = [];
+    const errors: string[] = [];
 
     if (this._isBadRequest(errorResponse)) {
       for (const key in errorResponse.error) {
@@ -38,7 +38,7 @@ export class ErrorCatchingInterceptor {
 
     errors.forEach((e, i) => {
       setTimeout(() => {
-        let snackBarRef = this.feedback.openSnackBar(e);
+        const snackBarRef = this.feedback.openSnackBar(e);
       }, i * DURATION_SNACK_BAR + 500);
     })
   }

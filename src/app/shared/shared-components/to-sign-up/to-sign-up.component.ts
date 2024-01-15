@@ -12,10 +12,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./to-sign-up.component.scss']
 })
 export class ToSignUpComponent implements OnInit, OnDestroy {
-  @Input() hideOnSameRoute: boolean = false;
+  @Input() hideOnSameRoute = false;
   subscriptionRouterEvents !: Subscription;
   signUpRoute!: Route;
-  isSignUpRoute: boolean = false;  // New property to track if current route is signUpRoute
+  isSignUpRoute = false;  // New property to track if current route is signUpRoute
   constructor(private router: Router) {
 
   }

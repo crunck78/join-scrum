@@ -76,8 +76,8 @@
         <div class="simple-grid">
             <button (click)="resetAddTask()" mat-stroked-button color="primary">Clear</button>
             <button [disabled]="addTaskForm.invalid" (click)="saveTask()" mat-raised-button color="primary">
-                <span *ngIf="mode == 'add'">Create Task</span>
-                <span *ngIf="mode == 'edit'">Save Task</span>
+                <span *ngIf="mode === 'add'">Create Task</span>
+                <span *ngIf="mode === 'edit'">Save Task</span>
             </button>
         </div>
     </div>

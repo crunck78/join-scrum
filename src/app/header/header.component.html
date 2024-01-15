@@ -1,4 +1,4 @@
-<div [style.display]="toggleHeaderView == 'closed' ? 'none' : 'flex'" class="header">
+<div [style.display]="toggleHeaderView === 'closed' ? 'none' : 'flex'" class="header">
     <!-- TODO: For the header to hide with the toggle function the header must get display: none toggle -->
     <div style="display: flex; align-items: center; gap: 12px;">
         <button (click)="toggleDrawer.emit()" mat-icon-button color="accent">

@@ -75,7 +75,7 @@ export class ScrumApiService {
     if (oldNames.length !== newNames.length) {
       throw new Error('Lists of old names and new names do not have same length');
     }
-    let newObject = JSON.parse(JSON.stringify(object));; // Create a copy
+    const newObject = JSON.parse(JSON.stringify(object)); // Create a copy
     for (let i = 0; i < oldNames.length; i++) {
       if (newObject.hasOwnProperty(oldNames[i])) {
         newObject[newNames[i]] = newObject[oldNames[i]];

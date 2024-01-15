@@ -72,7 +72,7 @@ export class FormFieldComponent {
   @Input() options!: Option[] | null | undefined;
   @Input() actionName!: string;
   @Input() suffixIcon!: string;
-  @Input() multiple: boolean = false;
+  @Input() multiple = false;
   @Output() action = new EventEmitter<void>();
   today = new Date();
 
@@ -94,12 +94,12 @@ export class FormFieldComponent {
   }
 
   handleInputPhoneNumber(event: InputEvent) {
-    let regexDisallowedChars = /[^0-9+]|(?!^)\+/;
-    let inputField = event.target as HTMLInputElement;
-    let inputFieldValue = inputField.value;
+    const regexDisallowedChars = /[^0-9+]|(?!^)\+/;
+    const inputField = event.target as HTMLInputElement;
+    const inputFieldValue = inputField.value;
 
     // Removed disallowed characters
-    let sanitizedValue = inputFieldValue.replace(regexDisallowedChars, '');
+    const sanitizedValue = inputFieldValue.replace(regexDisallowedChars, '');
 
     // Update the FormControl value with the sanitized value
     this.control.setValue(sanitizedValue);

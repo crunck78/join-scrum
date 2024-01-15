@@ -7,6 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AtoZPipe implements PipeTransform {
 
   transform(element: HTMLElement, letter: string): boolean {
-    return !(!!element.querySelector(`#contact-${letter}`));
+    return !(element.querySelector(`#contact-${letter}`));
   }
 }

@@ -7,12 +7,12 @@
 
     <div class="footer" actions>
         <div class="simple-grid">
-            <button (click)="deleteTask.emit()" color="warn" mat-stroked-button *ngIf="mode == 'edit'">Delete</button>
+            <button (click)="deleteTask.emit()" color="warn" mat-stroked-button *ngIf="mode === 'edit'">Delete</button>
             <button (click)="clearTaskForm.emit()" mat-stroked-button color="primary">Clear</button>
             <button [disabled]="formStatus && formStatus !== 'VALID'" (click)="submitTaskForm.emit()" mat-raised-button
                 color="primary">
-                <span *ngIf="mode == 'add'">Create Task</span>
-                <span *ngIf="mode == 'edit'">Save Task</span>
+                <span *ngIf="mode === 'add'">Create Task</span>
+                <span *ngIf="mode === 'edit'">Save Task</span>
             </button>
         </div>
     </div>

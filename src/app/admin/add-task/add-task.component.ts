@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter, Input, OnChanges, Output, SimpleChanges
+  Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 } from '@angular/core';
 import {
   FormControl, FormControlStatus, FormGroup, Validators
@@ -45,7 +45,7 @@ export class AddTaskComponent implements OnChanges {
   @Input() showPageTitle = true;
   @Input() task!: TaskResponse;
   @Input() mode: TaskMode = 'add';
-  @Input() hideFooter: boolean = false;
+  @Input() hideFooter = false;
 
   categories$!: Observable<CategoryResponse[]>;
   contacts$!: Observable<ContactResponse[]>;
