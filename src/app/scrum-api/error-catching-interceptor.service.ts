@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { DURATION_SNACK_BAR, FeedbackService } from '../shared/shared-services/feedback/feedback.service';
 
@@ -26,7 +26,7 @@ export class ErrorCatchingInterceptor {
         if (Object.prototype.hasOwnProperty.call(errorResponse.error, key)) {
           const errorKey = errorResponse.error[key];
           if (Array.isArray(errorKey))
-            errorKey.forEach((errMessage, errMessageIndex) => {
+            errorKey.forEach((errMessage) => {
               errors.push(`${key.toUpperCase()}: ${errMessage}`);
             });
 
@@ -38,7 +38,7 @@ export class ErrorCatchingInterceptor {
 
     errors.forEach((e, i) => {
       setTimeout(() => {
-        const snackBarRef = this.feedback.openSnackBar(e);
+        this.feedback.openSnackBar(e);
       }, i * DURATION_SNACK_BAR + 500);
     })
   }

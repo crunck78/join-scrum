@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/ad
   standalone: true,
   imports: [ContactsModule]
 })
-export class ContactsComponent implements AfterViewInit {
+export class ContactsComponent {
 
   @ViewChild('contacts-list') contactsList!: ElementRef<HTMLElement>;
 
@@ -26,10 +26,6 @@ export class ContactsComponent implements AfterViewInit {
 
   get matchWebBreakpoint$() {
     return this.contactsService.breakPoints.matchesWebBreakpoint$;
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   addContact() {

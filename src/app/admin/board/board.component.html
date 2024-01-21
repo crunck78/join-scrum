@@ -41,7 +41,7 @@
             <div class="drag-drop-container">
                 <div class="board-list-header">
                     <div style="display: flex; align-items: center;">
-                        <button (click)="setPosition(list, -1)" aria-label="Move List" *ngIf="i != 0" mat-icon-button class="move-list">
+                        <button (click)="setPosition(list, -1)" aria-label="Move List" *ngIf="i !== 0" mat-icon-button class="move-list">
                             <mat-icon>arrow_left</mat-icon>
                         </button>
                         <h3 #listTitleElem>{{list.name}} P.:{{list.position}}</h3>
@@ -57,7 +57,7 @@
                         <mat-menu #menu="matMenu">
                             <button (click)="deleteList(list.id)" mat-menu-item>Delete List</button>
                         </mat-menu>
-                        <button *ngIf="i != board.lists.length - 1" (click)="setPosition(list, 1)" aria-label="Move List" mat-icon-button class="move-list">
+                        <button *ngIf="i !== board.lists.length - 1" (click)="setPosition(list, 1)" aria-label="Move List" mat-icon-button class="move-list">
                             <mat-icon>arrow_right</mat-icon>
                         </button>
                     </div>

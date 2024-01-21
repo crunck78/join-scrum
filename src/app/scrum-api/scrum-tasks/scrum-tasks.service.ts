@@ -24,7 +24,7 @@ export class ScrumTasksService {
 
     return this.http.get<TaskResponseAPI[]>(this.tasksEndpoint, { headers })
       .pipe(
-        catchError(error => of([])),
+        catchError(() => of([])),
         map(tasks => tasks.map(t => Task.createInternalValue(t)))
       );
   }
@@ -36,7 +36,7 @@ export class ScrumTasksService {
 
     return this.http.get<TaskResponseAPI[]>(this.tasksEndpoint + '?list_is_null=true', { headers })
       .pipe(
-        catchError(error => of([])),
+        catchError(() => of([])),
         map(tasks => tasks.map(t => Task.createInternalValue(t)))
       );
   }
@@ -50,12 +50,12 @@ export class ScrumTasksService {
     const newTask = Task.createRepresentation(task);
     return this.http.post<TaskResponseAPI | null>(this.tasksEndpoint, newTask, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(task => task ? Task.createInternalValue(task) : null)
       );
   }
 
-  deleteTask$(taskId: number) : Observable<any | null> {
+  deleteTask$(taskId: number) : Observable<number | null> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
@@ -63,7 +63,7 @@ export class ScrumTasksService {
 
     return this.http.delete<number | null>(this.tasksEndpoint + `/${taskId}/`, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(value => value || null)
       );
   }
@@ -77,7 +77,7 @@ export class ScrumTasksService {
 
     return this.http.patch<TaskResponseAPI | null>(`${this.tasksEndpoint}${taskId}/`, taskRequestAPI, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(task => task ? Task.createInternalValue(task) : null)
       );
   }

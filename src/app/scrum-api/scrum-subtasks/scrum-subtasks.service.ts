@@ -23,7 +23,7 @@ export class ScrumSubtasksService {
 
     return this.http.get<SubtaskResponseAPI[]>(this.subtasksEndpoint, { headers })
       .pipe(
-        catchError(error => of([])),
+        catchError(() => of([])),
         map(subtasks => subtasks.map(s => Subtask.createInternalValue(s)))
       );
   }
@@ -38,7 +38,7 @@ export class ScrumSubtasksService {
 
     return this.http.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
       );
   }
@@ -52,7 +52,7 @@ export class ScrumSubtasksService {
 
     return this.http.patch<SubtaskResponseAPI | null>(`${this.subtasksEndpoint}${subtaskId}/`, subtaskRequestAPI, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
       );
   }

@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationEnd, NavigationStart, Route, Router, RouterLink } from '@angular/router';
+import { NavigationEnd, NavigationStart, Route, Router } from '@angular/router';
 import { RouterLinkComponent } from '../router-link/router-link.component';
 import { Subscription } from 'rxjs';
 

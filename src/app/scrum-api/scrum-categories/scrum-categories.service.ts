@@ -22,12 +22,12 @@ export class ScrumCategoriesService {
 
     return this.http.get<CategoryResponseAPI[]>(this.categoriesEndpoint, { headers })
       .pipe(
-        catchError(error => of([])),
-        map((categories : CategoryResponseAPI[]) => categories.map(c => Category.createInternalValue(c)))
+        catchError(() => of([])),
+        map((categories: CategoryResponseAPI[]) => categories.map(c => Category.createInternalValue(c)))
       );
   }
 
-  addCategory$(editCategory: Partial<CategoryRequest>) : Observable<CategoryResponse | null> {
+  addCategory$(editCategory: Partial<CategoryRequest>): Observable<CategoryResponse | null> {
 
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
@@ -37,7 +37,7 @@ export class ScrumCategoriesService {
 
     return this.http.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map((category: CategoryResponseAPI | null) => category ? Category.createInternalValue(category) : null)
       );
   }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -18,7 +18,7 @@ export class ContentEditableComponent implements AfterViewInit {
 
     if (this.elementViewClick)
       this.elementView
-        .addEventListener('click', (event) => {
+        .addEventListener('click', () => {
           this.editValue(this.inputEdit.nativeElement);
         });
   }

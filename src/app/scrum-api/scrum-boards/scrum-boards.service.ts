@@ -22,7 +22,7 @@ export class ScrumBoardsService {
 
     return this.http.get<BoardResponseAPI[]>(this.boardsEndpoint, { headers })
       .pipe(
-        catchError(error => of([])),
+        catchError(() => of([])),
         map(boards => boards.map(b => Board.createInternalValue(b)))
       );
   }
@@ -37,7 +37,7 @@ export class ScrumBoardsService {
 
     return this.http.post<BoardResponseAPI>(this.boardsEndpoint, newBoard, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(board => board ? Board.createInternalValue(board) : null)
       );
   }
@@ -49,7 +49,7 @@ export class ScrumBoardsService {
 
     return this.http.get<BoardResponseAPI>(this.boardsEndpoint + id + '/', { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(board => board ? Board.createInternalValue(board) : null)
       );
   }

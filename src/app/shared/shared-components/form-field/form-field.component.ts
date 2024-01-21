@@ -35,6 +35,7 @@ export interface Option {
 
 export declare type InputType = 'input' | 'text-area' | 'select' | 'date' | 'color';
 export declare type FieldType = 'text' | 'email' | 'password' | 'tel' | 'color';
+// eslint-disable-next-line
 export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
@@ -81,16 +82,6 @@ export class FormFieldComponent {
   resetErrorState() {
     if (this.control?.touched)
       this.control?.markAsUntouched();
-  }
-
-  autoGrowTextZone(e: Event) {
-    // if (e.target instanceof HTMLTextAreaElement) {
-    //   const textArea = e.target;
-    //   requestAnimationFrame(() => {
-    //     textArea.style.height = 'inherit'; // Set to 'inherit' or some other initial value
-    //     textArea.style.height = `${textArea.scrollHeight + 25}px`;
-    //   });
-    // }
   }
 
   handleInputPhoneNumber(event: InputEvent) {

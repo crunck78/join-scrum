@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, QueryList, ViewChildren } from '@angular/core';
 import { CdkDropList, DropListOrientation } from '@angular/cdk/drag-drop';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import { Observable, Subject, firstValueFrom, take } from 'rxjs';
+import { Observable, Subject, firstValueFrom } from 'rxjs';
 
 
 import { BoardModule } from './board.module';
@@ -47,7 +47,7 @@ export class BoardComponent implements AfterViewInit {
       const swapTask = event.container.data[event.currentIndex];
 
       this.boardService.scrumTasks.updateTask$(droppedTask['id'], { position: swapTask.position })
-        .subscribe((value: any) => this.handleEditedTask(droppedTask));
+        .subscribe(() => this.handleEditedTask(droppedTask));
 
     } else {
       // transferArrayItem(
@@ -59,7 +59,7 @@ export class BoardComponent implements AfterViewInit {
       const droppedTask = event.previousContainer.data[event.previousIndex];
       const swapTask = event.container.data[event.currentIndex];
       this.boardService.scrumTasks.updateTask$(droppedTask['id'], { list: list?.id || null, position: swapTask?.position })
-        .subscribe((value: any) => this.handleEditedTask(droppedTask));
+        .subscribe(() => this.handleEditedTask(droppedTask));
     }
   }
 

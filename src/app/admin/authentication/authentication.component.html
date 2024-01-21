@@ -1,4 +1,4 @@
-<div class="header" *ngIf="!(mobile$ | async)">
+<div class="header" *ngIf="(mobile$ | async) === false">
     <app-logo [light]="true"></app-logo>
     <app-to-sign-up></app-to-sign-up>
 </div>

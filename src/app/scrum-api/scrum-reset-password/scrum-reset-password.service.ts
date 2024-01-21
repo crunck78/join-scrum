@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ScrumApiService } from '../scrum-api.service';
 
 export const RESET_PASSWORD_ENDPOINT = '/api/user/reset-password/';
 
@@ -17,7 +16,7 @@ export class ScrumResetPasswordService {
 
   resetPasswordEndpoint = RESET_PASSWORD_ENDPOINT;
 
-  constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
+  constructor(private http: HttpClient) { }
 
   resetPassword(credentials: ResetPasswordCredentials) {
     this.http.post<any>(this.resetPasswordEndpoint, credentials).pipe(

@@ -32,7 +32,7 @@ export class ResetPasswordComponent {
 
   matches(left: FormControl ,right: FormControl){
     return (left: FormControl) => {
-        right.valueChanges.subscribe(value => left.value == right )
+        right.valueChanges.subscribe(() => left.value == right )
     }
   }
 

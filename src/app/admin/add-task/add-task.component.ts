@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
+  Component, EventEmitter, Input, OnChanges, Output, SimpleChanges
 } from '@angular/core';
 import {
   FormControl, FormControlStatus, FormGroup, Validators
@@ -18,7 +18,6 @@ import { TaskResponse, TaskRequest, Task } from 'src/app/shared/models/task.mode
 import { AddCategoryComponent } from 'src/app/shared/shared-components/dialogs/add-category/add-category.component';
 import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
-import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-task',
@@ -184,7 +183,7 @@ export class AddTaskComponent implements OnChanges {
     this.addTaskService.scrumTask.deleteTask$(this.task.id)
       .subscribe(
         {
-          next: (res) => this.deletedTask.emit(this.task.id),
+          next: () => this.deletedTask.emit(this.task.id),
           error: (e) => console.log(e)
         }
       );
@@ -196,10 +195,10 @@ export class AddTaskComponent implements OnChanges {
       this.addTaskService.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
         .subscribe(
           {
-            next: (res) => {
+            next: () => {
               const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
               feedbackRef?.afterDismissed().subscribe({
-                next: (value) => this.addTaskService.router.navigate(['/board'])
+                next: () => this.addTaskService.router.navigate(['/board'])
               });
             },
             error: (e) => console.log(e)

@@ -33,8 +33,7 @@ export class TaskComponent {
 
 
   @HostListener('click', ['$event'])
-  onClick(event: any) {
-    console.log(" @HostListener('click', ['$event'])onClick(event: any)",event);
+  onClick() {
     this.editTask();
   }
 
@@ -42,13 +41,9 @@ export class TaskComponent {
     const dialogRef = this.dialog.open(AddTaskDialogComponent);
     dialogRef.componentInstance.task = this.task;
     dialogRef.componentInstance.mode = 'edit';
-    dialogRef.afterClosed().subscribe(result =>{
+    dialogRef.afterClosed().subscribe(result => {
 
-      if(result) this.taskChange.emit(result);
+      if (result) this.taskChange.emit(result);
     });
-  }
-
-  deleteTask() {
-
   }
 }

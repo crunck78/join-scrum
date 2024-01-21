@@ -6,10 +6,6 @@ export interface ApiToken {
   token: string;
 }
 
-export interface Model {
-  [key: string]: any
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -65,23 +61,5 @@ export class ScrumApiService {
       if (!(apiToken && apiToken.token))
         this.router.navigate(['/auth'])
     });
-  }
-
-  /**
-   *
-   */
-  renameFields(object: any, oldNames: string[], newNames: string[]) {
-
-    if (oldNames.length !== newNames.length) {
-      throw new Error('Lists of old names and new names do not have same length');
-    }
-    const newObject = JSON.parse(JSON.stringify(object)); // Create a copy
-    for (let i = 0; i < oldNames.length; i++) {
-      if (newObject.hasOwnProperty(oldNames[i])) {
-        newObject[newNames[i]] = newObject[oldNames[i]];
-        delete newObject[oldNames[i]];
-      }
-    }
-    return newObject;
   }
 }

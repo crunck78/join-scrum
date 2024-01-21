@@ -14,14 +14,14 @@ export class ScrumListsService {
   listsEndpoint = LISTS_ENDPOINT;
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
-  deleteList$(id: number): Observable<any | null> {
+  deleteList$(id: number): Observable<number | null> {
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
     return this.http.delete<number | null>(this.listsEndpoint + `/${id}/`, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(value => value || null)
       );
   }
@@ -34,7 +34,7 @@ export class ScrumListsService {
 
     return this.http.get<ListResponseAPI[]>(this.listsEndpoint, { headers })
       .pipe(
-        catchError(error => of([])),
+        catchError(() => of([])),
         map(lists => lists.map(l => List.createInternalValue(l)))
       );
   }
@@ -49,7 +49,7 @@ export class ScrumListsService {
 
     return this.http.post<ListResponseAPI>(this.listsEndpoint, newList, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(list => list ? List.createInternalValue(list) : null)
       );
   }
@@ -61,7 +61,7 @@ export class ScrumListsService {
 
     return this.http.get<ListResponseAPI>(this.listsEndpoint + id + '/', { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(list => list ? List.createInternalValue(list) : null)
       );
   }
@@ -75,7 +75,7 @@ export class ScrumListsService {
 
     return this.http.patch<ListResponseAPI | null>(`${this.listsEndpoint}${listId}/`, taskRequestAPI, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map(list => list ? List.createInternalValue(list) : null)
       );
   }

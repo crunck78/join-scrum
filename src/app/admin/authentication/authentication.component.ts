@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Route, Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { map } from 'rxjs';

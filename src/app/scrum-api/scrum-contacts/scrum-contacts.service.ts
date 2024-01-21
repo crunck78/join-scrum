@@ -22,7 +22,7 @@ export class ScrumContactsService {
 
     return this.http.get<ContactResponseAPI[]>(this.contactsEndpoint, { headers })
       .pipe(
-        catchError(error => of([])),
+        catchError(() => of([])),
         map((contacts: ContactResponseAPI[]) => contacts.map(c => Contact.createInternalValue(c)))
       );
   }
@@ -37,7 +37,7 @@ export class ScrumContactsService {
 
     return this.http.post<ContactResponseAPI>(this.contactsEndpoint, newContact, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
       );
   }
@@ -51,20 +51,20 @@ export class ScrumContactsService {
 
     return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint}/${contactId}/`, editContact, { headers })
       .pipe(
-        catchError(error => of(null)),
+        catchError(() => of(null)),
         map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
       );
   }
 
-  deleteContact$(contact: Partial<ContactResponse>): any {
+  deleteContact$(contact: Partial<ContactResponse>): Observable<boolean> {
     const headers = new HttpHeaders({
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.delete<ContactResponseAPI>(`${this.contactsEndpoint}/${contact.id}/`, { headers })
+    return this.http.delete<number>(`${this.contactsEndpoint}/${contact.id}/`, { headers })
       .pipe(
-        catchError(error => of(false)),
-        map(()=> of(true))
+        catchError(() => of(false)),
+        map(()=> true)
       );
   }
 

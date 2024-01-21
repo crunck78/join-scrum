@@ -12,7 +12,7 @@
                 <mat-divider></mat-divider>
             </ng-container>
 
-            <app-contact [selected]="selectedContact == contact" (click)="selectedContact = contact"
+            <app-contact [selected]="selectedContact === contact" (click)="selectedContact = contact"
                 [contact]="contact"></app-contact>
         </ng-container>
     </div>
