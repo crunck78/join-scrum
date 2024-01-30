@@ -266,7 +266,7 @@ export class AddTaskComponent implements OnChanges {
   //   inputSubtaskEdit.focus();
   // }
 
-  editSubtask(){
+  editSubtask() {
     this.changingSubtaskTitle$.next(true);
   }
 

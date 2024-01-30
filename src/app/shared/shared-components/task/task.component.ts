@@ -38,12 +38,13 @@ export class TaskComponent {
   }
 
   editTask() {
-    const dialogRef = this.dialog.open(AddTaskDialogComponent);
-    dialogRef.componentInstance.task = this.task;
-    dialogRef.componentInstance.mode = 'edit';
+    const dialogRef = this.dialog.open(AddTaskDialogComponent,
+      {
+        data: { task: this.task, mode: 'edit' }
+      });
     dialogRef.afterClosed().subscribe(result => {
-
-      if (result) this.taskChange.emit(result);
+      if (result)
+        this.taskChange.emit(result);
     });
   }
 }
