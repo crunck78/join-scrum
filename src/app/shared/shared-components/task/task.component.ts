@@ -6,6 +6,7 @@ import { MaterialModule } from '../../modules/material/material.module';
 import { ProgressLinearGradientPipe } from '../../pipes/progress-linear-gradient/progress-linear-gradient.pipe';
 import { ContactInitialsComponent } from '../contact-initials/contact-initials.component';
 import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dialog.component';
+import { CategoryCardComponent } from '../category-card/category-card.component';
 
 @Component({
   selector: 'app-task',
@@ -16,7 +17,8 @@ import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dial
     CommonModule,
     ContactInitialsComponent,
     MaterialModule,
-    ProgressLinearGradientPipe
+    ProgressLinearGradientPipe,
+    CategoryCardComponent
   ]
 })
 export class TaskComponent {

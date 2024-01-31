@@ -1,10 +1,50 @@
 <!-- <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title> -->
-<app-card>
-    <header title>
-        Test
-        <p subtitle>Test</p>
-    </header>
-    <main>Test</main>
+<div class="summary-counts">
+    <app-card class="counter-wrapper">
+        <p title class="counter">{{summary?.tasksInBacklog}}</p>
+        <p subtitle class="counter">{{ summary && summary.tasksInBacklog > 1 ? 'Tasks' :
+            'Task'}}<br>in Backlog</p>
+    </app-card>
 
-    <footer footer>Footer</footer>
-</app-card>
+    <div class="tasks-by-priority">
+        <app-card class="counter-wrapper" *ngFor="let counter of summary?.tasksByPriority">
+            <p title class="counter">
+                <img src="assets/{{counter.priority | lowercase}}.svg" alt="">
+                {{counter.count}}
+            </p>
+            <p subtitle class="counter">
+                {{ counter.count > 1 ? 'Tasks' : 'Task'}}
+                {{counter.priority}}
+            </p>
+        </app-card>
+    </div>
+
+    <div class="tasks-in-lists">
+        <app-card class="counter-wrapper" *ngFor="let counter of summary?.tasksInLists">
+            <p title class="counter">{{counter.count}}</p>
+            <p subtitle class="counter">{{ counter.count > 1 ? 'Tasks' : 'Task'}}<br>in {{counter.listName}}</p>
+            <!-- <p footer>{{counter.listBoardTitle}}</p> -->
+        </app-card>
+    </div>
+</div>
+
+<div class="summary-counts">
+    <app-card class="greeting-wrapper">
+        <p title>Hello Join User</p>
+    </app-card>
+    <div class="tasks-by-category">
+        <app-card class="counter-wrapper" *ngFor="let counter of summary?.tasksByCategory">
+            <p title class="counter">{{counter.count}}</p>
+            <p subtitle class="counter">
+                <app-category-card
+                    [category]="{name: counter.categoryName, color: counter.categoryColor}"></app-category-card>
+                {{ counter.count > 1 ? 'Tasks' : 'Task'}}
+            </p>
+            <!-- <p footer>{{counter.listBoardTitle}}</p> -->
+        </app-card>
+    </div>
+</div>
+
+<div *ngIf="false" class="summary-greetings">
+
+</div>

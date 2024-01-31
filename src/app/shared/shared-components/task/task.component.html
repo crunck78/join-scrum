@@ -1,7 +1,5 @@
 <div class="task-header">
-    <span [style.background-color]="task.category?.color" class="task-category">
-        {{task.category?.name}}
-    </span>
+    <app-category-card [category]="task.category"></app-category-card>
 
     <!-- <mat-icon [matMenuTriggerFor]="menu">menu</mat-icon>
     <mat-menu #menu="matMenu">
