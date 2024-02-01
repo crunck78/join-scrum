@@ -1,1 +1,37 @@
-<p>profile works!</p>
+<app-card class="profile-card">
+    <!-- <div card-avatar mat-card-avatar class="header-image"></div> -->
+    <!-- <img card-img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        alt="Photo of a Shiba Inu"> -->
+    <!-- <mat-icon class="person-icon">person</mat-icon> -->
+    <div title>
+        <app-contact-initials [imgSrc]="profile?.image" [size]="'100px'" [borderColor]="'#A8A8A8'"
+            [backgroundColor]="'#D9D9D9'"></app-contact-initials>
+        <p *ngIf="profile?.name">{{profile?.name}}</p>
+    </div>
+
+    <div subtitle>
+        <p *ngIf="profile?.email">Email : {{profile?.email}}</p>
+    </div>
+
+    <div class="profile-menu">
+        <button mat-icon-button color="accent" [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button (click)="openEditProfileDialog()" aria-label="Edit Profile" type="button" mat-menu-item
+                color="primary" title="Edit Profile">
+                <mat-icon>edit</mat-icon> Edit
+            </button>
+
+            <button (click)="deactivateProfile()" aria-label="Deactivate Profile" type="button" mat-menu-item
+                color="accent" title="Deactivate Profile">
+                <mat-icon>toggle_off</mat-icon> Deactivate
+            </button>
+
+            <button (click)="deleteProfile()" aria-label="Delete Profile" type="button" mat-menu-item color="warn"
+                title="Delete Profile">
+                <mat-icon>delete</mat-icon> Delete
+            </button>
+        </mat-menu>
+    </div>
+</app-card>

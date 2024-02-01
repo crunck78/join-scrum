@@ -11,9 +11,13 @@ import { MaterialModule } from './app/shared/modules/material/material.module';
 bootstrapApplication(AppComponent,
     {
         providers: [
-            importProvidersFrom([HttpClientModule,
-                BrowserAnimationsModule,
-                MaterialModule]),
+            importProvidersFrom(
+                [
+                    HttpClientModule,
+                    BrowserAnimationsModule,
+                    MaterialModule
+                ]
+            ),
             provideRouter(routes),
             interceptorProviders,
         ]

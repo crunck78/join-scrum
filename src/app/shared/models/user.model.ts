@@ -30,7 +30,6 @@ export interface UserRequestAPI {
 
 export class User {
     static createInternalValue(user: UserResponseAPI): UserResponse {
-
         return {
             createdAt: new Date(user.created_at),
             updatedAt: new Date(user.updated_at),

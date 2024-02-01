@@ -1,6 +1,6 @@
-:host {
+.host-container {
     flex-shrink: 0;
-    border-radius: 45px;
+    border-radius: 100%;
     width: 42px;
     height: 42px;
     font-size: 1rem;
@@ -11,9 +11,14 @@
     padding: 0px;
     gap: 10px;
 
-    background: #FF7A00;
     border: 1px solid #FFFFFF;
 
     text-transform: capitalize;
 
+}
+
+.person-img{
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
 }

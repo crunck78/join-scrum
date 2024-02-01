@@ -1,0 +1,18 @@
+<app-dialog [title]="'Edit Profile'">
+    <ng-container side></ng-container>
+    <form class="main-content" [formGroup]="editProfileForm">
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'}]"
+            [autocomplete]="'contact-name'" [type]="'text'" [inputType]="'input'" [suffixPath]="'assets/person.svg'"
+            [control]="$any(editProfileForm.get('name'))" [labelName]="'Name'"></app-form-field>
+
+        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
+            {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'contact-email'"
+            [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
+            [control]="$any(editProfileForm.get('email'))" [labelName]="'Email'"></app-form-field>
+    </form>
+
+    <ng-container actions>
+        <button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
+        <button (click)="editProfile()" [disabled]="editProfileForm.invalid" mat-raised-button color="primary">Save</button>
+    </ng-container>
+</app-dialog>

@@ -1,4 +1,10 @@
-<ng-container *ngIf="contactName">
-    <!-- {{contactName.substr(substrBegin, substrEnd)}} -->
-    {{contactInitials}}
-</ng-container>
+<div [style.width]="size" [style.height]="size" [style.borderColor]="borderColor" [style.backgroundColor]="backgroundColor" class="host-container">
+    <ng-container *ngIf="contactName; else personTemplate">
+        <!-- {{contactName.substr(substrBegin, substrEnd)}} -->
+        {{contactInitials}}
+    </ng-container>
+
+    <ng-template #personTemplate>
+        <img class="person-img" [src]="imgSrc || 'assets/person.svg'" alt="person image">
+    </ng-template>
+</div>
