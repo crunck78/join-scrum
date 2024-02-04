@@ -2,8 +2,9 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } fr
 import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
 import { ScrumApiService } from '../scrum-api.service';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const LOGIN_ENDPOINT = '/api/user/token/';
+export const LOGIN_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/token/';
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {

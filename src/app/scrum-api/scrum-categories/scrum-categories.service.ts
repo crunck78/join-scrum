@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { CategoryResponse, CategoryResponseAPI, Category, CategoryRequest } from 'src/app/shared/models/category.model';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const CATEGORIES_ENDPOINT = 'api/category/categories/';
+export const CATEGORIES_ENDPOINT = SCRUM_API_ENDPOINT + '/api/category/categories/';
 
 @Injectable({
   providedIn: 'root'

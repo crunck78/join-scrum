@@ -4,7 +4,12 @@
     <ng-content select="[side]"></ng-content>
 </div>
 
-<h2 mat-dialog-title>{{title}}</h2>
+<div class="title-content">
+    <ng-content select="[titleContentLeft]"></ng-content>
+    <h2 mat-dialog-title>{{title}}</h2>
+    <ng-content select="[titleContentRight]"></ng-content>
+</div>
+
 <mat-dialog-content>
     <ng-content></ng-content>
 </mat-dialog-content>

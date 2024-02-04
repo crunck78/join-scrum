@@ -14,13 +14,21 @@ export class ContactInitialsComponent {
   @Input() contactName!: string | undefined;
   @Input() backgroundColor: string = '#FF7A00';
   @Input() borderColor: string = '#FFFFFF';
-  @Input() size: string = '42px';
-  @Input() imgSrc: string | null | undefined = 'assets/person.svg';
+  @Input() size: string = '21px'; // font-size
+  @Input() imgSrc: string | null | undefined;
 
   get contactInitials() {
-    const contactNames = this.contactName?.split(' ');
-    const contactInitials = contactNames?.map(cn => cn[0].toUpperCase());
-    return contactInitials?.join('');
+    // Check if contactName is not null or undefined and has a length greater than 0
+    if (!this.contactName || this.contactName.length === 0) {
+      return '';
+    }
+
+    const contactNames = this.contactName.split(' ').filter(cn => cn !== '');
+    const initials = contactNames.map(name => name[0].toUpperCase());
+
+    // If there's only one word in the contactName, return the first initial.
+    // Otherwise, return the first initial and the last initial.
+    return initials.length === 1 ? initials[0] : `${initials[0]}${initials[initials.length - 1]}`;
   }
 
 }

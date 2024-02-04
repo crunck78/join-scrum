@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const RESET_PASSWORD_ENDPOINT = '/api/user/reset-password/';
+export const RESET_PASSWORD_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/reset-password/';
 
 export interface ResetPasswordCredentials {
   newPassword: string

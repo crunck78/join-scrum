@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { ScrumApiService } from '../scrum-api.service';
 import { User, UserRequest, UserResponse, UserResponseAPI } from 'src/app/shared/models/user.model';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const PROFILE_ENDPOINT = '/api/user/me/';
+export const PROFILE_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/me/';
+export const PROFILE_IMAGE_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/user-upload-image/';
 
 export interface Profile {
   id?: number;

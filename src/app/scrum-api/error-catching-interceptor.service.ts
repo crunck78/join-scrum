@@ -29,7 +29,6 @@ export class ErrorCatchingInterceptor {
             errorKey.forEach((errMessage) => {
               errors.push(`${key.toUpperCase()}: ${errMessage}`);
             });
-
         }
       }
     } else {

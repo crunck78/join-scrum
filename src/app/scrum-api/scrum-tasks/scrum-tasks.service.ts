@@ -4,9 +4,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { TaskResponse, TaskResponseAPI, Task, TaskRequest } from 'src/app/shared/models/task.model';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
 
-export const TASKS_ENDPOINT = 'api/task/tasks/';
+export const TASKS_ENDPOINT = SCRUM_API_ENDPOINT + '/api/task/tasks/';
 
 @Injectable({
   providedIn: 'root'

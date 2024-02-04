@@ -17,5 +17,7 @@ import { ContactInitialsComponent } from '../contact-initials/contact-initials.c
 })
 export class ContactCardComponent {
   @Input() contact!: ContactResponse | null;
+  @Input() size: string = '21px';
+  @Input() showName: boolean = true;
   contentProjected = false;
 }

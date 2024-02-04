@@ -3,8 +3,9 @@
     <!-- <img card-img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="Photo of a Shiba Inu"> -->
     <!-- <mat-icon class="person-icon">person</mat-icon> -->
-    <div title>
-        <app-contact-initials [imgSrc]="profile?.image" [size]="'100px'" [borderColor]="'#A8A8A8'"
+    <div class="profile-title" title>
+        <app-contact-initials (click)="changeImg()" [contactName]="profile?.name" class="profile-image" (click)="changeImg()"
+            [imgSrc]="profile?.image" [size]="'60px'" [borderColor]="'#A8A8A8'"
             [backgroundColor]="'#D9D9D9'"></app-contact-initials>
         <p *ngIf="profile?.name">{{profile?.name}}</p>
     </div>

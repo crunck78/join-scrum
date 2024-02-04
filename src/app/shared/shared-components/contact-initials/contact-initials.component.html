@@ -1,10 +1,10 @@
-<div [style.width]="size" [style.height]="size" [style.borderColor]="borderColor" [style.backgroundColor]="backgroundColor" class="host-container">
-    <ng-container *ngIf="contactName; else personTemplate">
-        <!-- {{contactName.substr(substrBegin, substrEnd)}} -->
-        {{contactInitials}}
+<div [style.fontSize]="size" [style.borderColor]="borderColor" [style.backgroundColor]="backgroundColor" class="host-container">
+    <ng-container *ngIf="imgSrc; else personTemplate">
+        <img class="person-img" [src]="imgSrc || 'assets/person.svg'" alt="person image">
     </ng-container>
 
     <ng-template #personTemplate>
-        <img class="person-img" [src]="imgSrc || 'assets/person.svg'" alt="person image">
+         <!-- {{contactName.substr(substrBegin, substrEnd)}} -->
+        {{contactInitials}}
     </ng-template>
 </div>

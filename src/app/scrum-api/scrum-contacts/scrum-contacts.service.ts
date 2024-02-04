@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { ContactResponse, ContactResponseAPI, Contact, ContactRequest } from 'src/app/shared/models/contact.model';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const CONTACTS_ENDPOINT = 'api/contact/contacts/';
+export const CONTACTS_ENDPOINT = SCRUM_API_ENDPOINT + '/api/contact/contacts/';
 
 @Injectable({
   providedIn: 'root'

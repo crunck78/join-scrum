@@ -1,0 +1,23 @@
+.cropped-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 2px solid black;
+}
+
+.image-cropper {
+    box-sizing: border-box;
+    max-width: 600px;
+}
+
+.drop-zone {
+    border: dotted 3px lightgray;
+    height: 40vh;
+}
+
+.nv-file-over {
+    border: dotted 3px red;
+}
+
+/* Default class applied to drop zones on over */

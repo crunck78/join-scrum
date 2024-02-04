@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ScrumApiService } from '../scrum-api.service';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const FORGOT_PASSWORD_ENDPOINT = '/api/user/forgot-password/';
+export const FORGOT_PASSWORD_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/forgot-password/';
 
 export interface ForgotPasswordCredentials{
   email: string

@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Profile, ScrumProfileService } from '../scrum-profile/scrum-profile.service';
 import { Router } from '@angular/router';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const SIGNUP_ENDPOINT = '/api/user/create/';
+export const SIGNUP_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/create/';
 
 export interface SignupCredentials {
   name?: string

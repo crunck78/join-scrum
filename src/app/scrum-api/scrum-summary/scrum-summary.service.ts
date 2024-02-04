@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { ScrumApiService } from '../scrum-api.service';
 import { Summary, SummaryResponse, SummaryResponseAPI } from 'src/app/shared/models/summary.model';
+import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 
-export const SUMMARY_ENDPOINT = 'api/summary/';
+export const SUMMARY_ENDPOINT = SCRUM_API_ENDPOINT + '/api/summary/';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
-<app-contact-initials [contactName]="contact?.name"></app-contact-initials>
+<app-contact-initials [size]="size" [contactName]="contact?.name"></app-contact-initials>
 <div class="text-left">
-    <div>{{contact?.name}}</div>
+    <div *ngIf="showName" [style.fontSize]="size">{{contact?.name}}</div>
     <app-email-link *ngIf="!content.children.length" [email]="contact?.email" ></app-email-link>
     <div #content>
         <ng-content></ng-content>

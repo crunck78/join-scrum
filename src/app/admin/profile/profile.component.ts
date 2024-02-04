@@ -6,13 +6,19 @@ import { MaterialModule } from 'src/app/shared/modules/material/material.module'
 import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
 import { ContactInitialsComponent } from 'src/app/shared/shared-components/contact-initials/contact-initials.component';
 import { EditProfileComponent } from 'src/app/shared/shared-components/dialogs/edit-profile/edit-profile.component';
+import { ProfileImageCropperComponent } from 'src/app/shared/shared-components/image-cropper/image-cropper.component';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   standalone: true,
   styleUrls: ['./profile.component.scss'],
-  imports: [CardComponent, MaterialModule, ContactInitialsComponent]
+  imports: [
+    CardComponent,
+    MaterialModule,
+    ContactInitialsComponent,
+    ProfileImageCropperComponent
+  ]
 })
 export class ProfileComponent {
 
@@ -41,5 +47,9 @@ export class ProfileComponent {
 
   deleteProfile() {
     throw new Error('Method not implemented.');
+  }
+
+  changeImg() {
+    this.dialog.open(ProfileImageCropperComponent);
   }
 }
