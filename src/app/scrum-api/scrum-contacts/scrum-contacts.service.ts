@@ -50,7 +50,7 @@ export class ScrumContactsService {
 
     const editContact = Contact.createRepresentation(contact);
 
-    return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint}/${contactId}/`, editContact, { headers })
+    return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint + contactId}/`, editContact, { headers })
       .pipe(
         catchError(() => of(null)),
         map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
@@ -62,7 +62,7 @@ export class ScrumContactsService {
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.delete<number>(`${this.contactsEndpoint}/${contact.id}/`, { headers })
+    return this.http.delete<number>(`${this.contactsEndpoint + contact.id}/`, { headers })
       .pipe(
         catchError(() => of(false)),
         map(()=> true)

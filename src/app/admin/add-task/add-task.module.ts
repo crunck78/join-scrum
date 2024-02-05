@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SubtaskRequest } from 'src/app/shared/models/subtask.model';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 import { OptionsPipe } from 'src/app/shared/pipes/options/options.pipe';
 import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
@@ -12,6 +13,16 @@ export interface Priority {
   name: string,
   icon: string,
   color: string
+}
+
+export interface TaskFormGroup {
+  title: string,
+  description: string,
+  category: number | null,
+  assignees: number[],
+  dueDate: Date | null,
+  priority: PriorityType | null,
+  subtasks: SubtaskRequest[]
 }
 
 export declare type PriorityType = 'Low' | 'Medium' | 'Urgent';

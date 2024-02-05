@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { LOGIN_ENDPOINT } from './login-interceptor.service';
 import { ApiToken, ScrumApiService } from '../scrum-api.service';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
+import { take } from 'rxjs';
 
 export interface LoginCredentials {
   email: string;
@@ -25,14 +26,10 @@ export class ScrumLoginService {
 
   login(credentials: LoginCredentials) {
     this.http.post<ApiToken>(this.loginEndpoint, credentials)
-      .subscribe(
-        {
-          next: (response) => {
-            this.scrumApi.apiToken$.next(response);
-            this.feedback.openSnackBar();
-          },
-          error: () => this.scrumApi.apiToken$.next({ token: "" })
-        }
-      );
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => this.scrumApi.apiToken$.next(response),
+        error: () => this.scrumApi.apiToken$.next({ token: "" })
+      });
   }
 }

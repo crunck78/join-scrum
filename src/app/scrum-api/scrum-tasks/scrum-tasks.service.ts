@@ -62,7 +62,7 @@ export class ScrumTasksService {
       'Authorization': `Token ${this.scrumApi.token}`
     });
 
-    return this.http.delete<number | null>(this.tasksEndpoint + `/${taskId}/`, { headers })
+    return this.http.delete<number | null>(this.tasksEndpoint + taskId + `/`, { headers })
       .pipe(
         catchError(() => of(null)),
         map(value => value || null)

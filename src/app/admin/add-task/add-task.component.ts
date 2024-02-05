@@ -5,10 +5,10 @@ import {
   FormControl, FormControlStatus, FormGroup, Validators
 } from '@angular/forms';
 import {
-  Observable, Subject, map
+  Observable, Subject, map, take
 } from 'rxjs';
 import {
-  AddTaskModule, Priority, PriorityType, TaskMode
+  AddTaskModule, Priority, PriorityType, TaskFormGroup, TaskMode
 } from './add-task.module';
 import { AddTaskService } from './add-task.service';
 import { CategoryResponse } from 'src/app/shared/models/category.model';
@@ -24,9 +24,7 @@ import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedbac
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss'],
   standalone: true,
-  imports: [
-    AddTaskModule
-  ],
+  imports: [AddTaskModule],
   providers: [AddTaskService]
 })
 export class AddTaskComponent implements OnChanges {
@@ -39,27 +37,37 @@ export class AddTaskComponent implements OnChanges {
     dueDate: null,
     priority: null,
     subtasks: <SubtaskRequest[]>[]
-  };
+  } as TaskFormGroup;
+
+  addTaskForm = new FormGroup({
+    title: new FormControl('', Validators.compose([Validators.required])),
+    description: new FormControl(''),
+    category: new FormControl<number | null>(null, Validators.compose([Validators.required])),
+    assignees: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator])),
+    dueDate: new FormControl<Date | null>(null, Validators.compose([Validators.required, Validators.nullValidator])),
+    priority: new FormControl<PriorityType | null>(null, Validators.compose([Validators.required, Validators.nullValidator])),
+    subtasks: new FormControl(<SubtaskRequest[]>[], Validators.compose([Validators.nullValidator]))
+  });
+
+  addSubtaskForm = new FormControl('');
+
+  categories$!: Observable<CategoryResponse[]>;
+  contacts$!: Observable<ContactResponse[]>;
+  subtasks$!: Observable<SubtaskResponse[]>;
+  changingSubtaskTitle$ = new Subject<boolean>();
 
   @Input() showPageTitle = true;
   @Input() task!: TaskResponse;
   @Input() mode: TaskMode = 'add';
   @Input() hideFooter = false;
-
-  categories$!: Observable<CategoryResponse[]>;
-  contacts$!: Observable<ContactResponse[]>;
-  subtasks$!: Observable<SubtaskResponse[]>
   @Input() clearTaskForm$!: EventEmitter<void>;
   @Input() submitTaskForm$!: EventEmitter<void>;
   @Input() deleteTask$!: EventEmitter<void>;
   @Input() predefinedTaskRequest!: Partial<TaskRequest>;
 
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
-  @Output() editedTask = new EventEmitter<TaskResponse | null>();
-  @Output() deletedTask = new EventEmitter<number | null>();
-
-  changingSubtaskTitle$: Subject<boolean> = new Subject();
-
+  @Output() onEditedTask$ = new EventEmitter<TaskResponse | null>();
+  @Output() deletedTaskId$ = new EventEmitter<number | null>();
 
   constructor(private addTaskService: AddTaskService, private feedback: FeedbackService) {
     this.updateCategories();
@@ -91,47 +99,34 @@ export class AddTaskComponent implements OnChanges {
     }
   }
 
-  addTaskForm = new FormGroup({
-    title: new FormControl('', Validators.compose([Validators.required])),
-    description: new FormControl(''),
-    category: new FormControl<number | null>(null, Validators.compose([Validators.required])),
-    assignees: new FormControl(<number[]>[], Validators.compose([Validators.nullValidator])),
-    dueDate: new FormControl<Date | null>(null, Validators.compose([Validators.required, Validators.nullValidator])),
-    priority: new FormControl<PriorityType | null>(null, Validators.compose([Validators.required, Validators.nullValidator])),
-    subtasks: new FormControl(<SubtaskRequest[]>[], Validators.compose([Validators.nullValidator]))
-  });
-
-  addSubtaskForm = new FormControl('');
+  get matchWebBreakpoint$() {
+    return this.addTaskService.breakPoints.matchesWebBreakpoint$.pipe(
+      map(match => match && this.showPageTitle)
+    );
+  }
 
   addCategory() {
     const dialogRef = this.addTaskService.dialog.open(AddCategoryComponent);
     dialogRef.afterClosed().subscribe(newCategory => {
-      if (newCategory) {
+      if (newCategory)
         this.updateCategories();
-      }
     });
+  }
+
+  updateCategories() {
+    this.categories$ = this.addTaskService.categories$;
   }
 
   addContact() {
     const dialogRef = this.addTaskService.dialog.open(AddContactComponent);
     dialogRef.afterClosed().subscribe(newContact => {
-      if (newContact) {
+      if (newContact)
         this.updateContacts();
-      }
     });
   }
 
-  updateCategories() {
-    this.categories$ = this.addTaskService.scrumCategory.getCategories$();
-  }
-
   updateContacts() {
-    this.contacts$ = this.addTaskService.scrumContacts.getContacts$();
-  }
-
-  updateSubtasks() {
-    this.subtasks$ = this.addTaskService.scrumSubtasks.getSubtasks$();
-    this.addSubtaskForm.reset();
+    this.contacts$ = this.addTaskService.contacts$;
   }
 
   getCategoryOptionHTML(option: CategoryResponse) {
@@ -152,11 +147,18 @@ export class AddTaskComponent implements OnChanges {
   }
 
   addSubtask() {
-    if (this.addSubtaskForm.value) {
-      const newSubtask = { title: this.addSubtaskForm.value, done: false } as SubtaskRequest;
-      this.pushSubtask(newSubtask);
-      this.addSubtaskForm.reset();
-    }
+    if (!this.addSubtaskForm.value)
+      return;
+    const newSubtask = { title: this.addSubtaskForm.value, done: false } as SubtaskRequest;
+    this.pushSubtask(newSubtask);
+    this.addSubtaskForm.reset();
+  }
+
+  handleSelectSubtask(subtask: SubtaskResponse, checked: boolean) {
+    if (checked)
+      this.pushSubtask(subtask);
+    else
+      this.popSubtask(subtask);
   }
 
   pushSubtask(subtask: SubtaskRequest) {
@@ -171,86 +173,8 @@ export class AddTaskComponent implements OnChanges {
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
   }
 
-  saveTask() {
-    if (this.mode == 'add')
-      this.addTask();
-    if (this.mode == 'edit')
-      this.editTask();
-  }
-
-  deleteTask() {
-    if (this.mode != 'edit') return;
-    this.addTaskService.scrumTask.deleteTask$(this.task.id)
-      .subscribe(
-        {
-          next: () => this.deletedTask.emit(this.task.id),
-          error: (e) => console.log(e)
-        }
-      );
-  }
-
-  addTask() {
-    if (this.addTaskForm.valid) {
-
-      this.addTaskService.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
-        .subscribe(
-          {
-            next: () => {
-              const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
-              feedbackRef?.afterDismissed().subscribe({
-                next: () => this.addTaskService.router.navigate(['/board'])
-              });
-            },
-            error: (e) => console.log(e)
-          }
-        );
-    }
-  }
-
-  editTask() {
-    if (this.addTaskForm.valid) {
-      const toEditTask = this.addTaskForm.value as Partial<TaskRequest>;
-      this.addTaskService.scrumTask.updateTask$(this.task.id, toEditTask)
-        .subscribe(
-          {
-            next: (res) => this.editedTask.emit(res),
-            error: (e) => console.log(e)
-          }
-        );
-    }
-  }
-
-  /**
-   * How to update subtask from Edit Form?
-   * 1. Update each subtask on check and remove them from Update Task Request.
-   * 2. Update only the FormControl of each subtask on check and send full Task Upload Payload
-   *    - Backend requires change
-   * @param checked
-   * @param subtask
-   */
-  updateSubtaskCheck(checked: boolean, subtask: SubtaskRequest) {
-    subtask.done = checked;
-    // if (this.mode == 'edit') {
-    //   const subtaskId = subtask.id as number;
-    //   this.scrumSubtasks.updateSubtask$(subtaskId, subtask).subscribe(editSubtask => console.log(editSubtask));
-    // }
-  }
-
-  handleSelectSubtask(subtask: SubtaskResponse, checked: boolean) {
-    if (checked)
-      this.pushSubtask(subtask);
-    else
-      this.popSubtask(subtask);
-  }
-
-  get matchWebBreakpoint$() {
-    return this.addTaskService.breakPoints.matchesWebBreakpoint$.pipe(
-      map(match => match && this.showPageTitle)
-    );
-  }
-
-  resetAddTask() {
-    this.addTaskForm.reset(this.InitTask);
+  updateSubtasks() {
+    this.subtasks$ = this.addTaskService.subtasks$;
     this.addSubtaskForm.reset();
   }
 
@@ -260,21 +184,63 @@ export class AddTaskComponent implements OnChanges {
     this.addTaskForm.get('subtasks')?.patchValue(patchedSubtasks);
   }
 
-  // editSubtask(subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
-  //   subtaskTitleView.style.display = "none";
-  //   inputSubtaskEdit.style.display = "inline";
-  //   inputSubtaskEdit.focus();
-  // }
-
   editSubtask() {
     this.changingSubtaskTitle$.next(true);
   }
 
-  // updateSubtaskTitle(subtask: SubtaskRequest, subtaskTitleView: HTMLElement, inputSubtaskEdit: HTMLInputElement) {
-  //   console.log(subtask);
-  //   subtaskTitleView.style.display = "inline";
-  //   inputSubtaskEdit.style.display = "none";
-  // }
+  updateSubtaskCheck(checked: boolean, subtask: SubtaskRequest) {
+    subtask.done = checked;
+  }
+
+  saveTask() {
+    if (this.mode == 'add')
+      this.addTask();
+    if (this.mode == 'edit')
+      this.editTask();
+  }
+
+  addTask() {
+    if (!this.addTaskForm.valid)
+      return;
+    this.addTaskService.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
+          feedbackRef?.afterDismissed()
+            .subscribe(() => this.addTaskService.router.navigate(['/board']));
+        },
+        error: () => this.feedback.openSnackBar('Something went wrong!', 'Close')
+      });
+  }
+
+  editTask() {
+    if (!this.addTaskForm.valid)
+      return;
+    const toEditTask = this.addTaskForm.value as Partial<TaskRequest>;
+    this.addTaskService.scrumTask.updateTask$(this.task.id, toEditTask)
+      .pipe(take(1))
+      .subscribe({
+        next: (res) => this.onEditedTask$.emit(res),
+        error: () => this.feedback.openSnackBar('Something went wrong!', 'Close')
+      });
+  }
+
+  deleteTask() {
+    if (this.mode != 'edit')
+      return;
+    this.addTaskService.scrumTask.deleteTask$(this.task.id)
+      .pipe(take(1))
+      .subscribe({
+        next: () => this.deletedTaskId$.emit(this.task.id),
+        error: () => this.feedback.openSnackBar('Something went wrong!', 'Close')
+      });
+  }
+
+  resetAddTask() {
+    this.addTaskForm.reset(this.InitTask);
+    this.addSubtaskForm.reset();
+  }
 
 }
 export { TaskMode, PriorityType };

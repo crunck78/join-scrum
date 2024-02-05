@@ -21,4 +21,16 @@ export class AddTaskService {
     public breakPoints: BreakpointsService,
     public router: Router
   ) { }
+
+  get categories$() {
+    return this.scrumCategory.getCategories$();
+  }
+
+  get contacts$() {
+    return this.scrumContacts.getContacts$();
+  }
+
+  get subtasks$() {
+    return this.scrumSubtasks.getSubtasks$();
+  }
 }

@@ -12,9 +12,7 @@ export class LoginInterceptor implements HttpInterceptor {
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(httpRequest).pipe(
-      filter((event: any) => {
-        return event instanceof HttpResponse;
-      }),
+      filter((event: any) => event instanceof HttpResponse),
       tap((event: HttpResponse<any>) => {
         if (this.scrumApi.rememberMe && httpRequest.url == LOGIN_ENDPOINT)
           this.scrumApi.localToken = event.body.token;

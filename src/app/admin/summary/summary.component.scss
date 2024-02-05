@@ -5,7 +5,7 @@
     box-sizing: border-box;
     overflow: auto;
     gap: 80px;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
 }
 
 .counter-wrapper {
@@ -37,9 +37,11 @@
 }
 
 .summary-counts {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 16px;
     flex: 1;
+    width: 100%;
 }
 
 .summary-greetings {

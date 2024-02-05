@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
-
-import { map } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 import { AppModule } from './app.module';
 import { ScrumApiService, ApiToken } from './scrum-api/scrum-api.service';
 import { BreakpointsService } from './shared/shared-services/breakpoints/breakpoints.service';
@@ -19,23 +18,34 @@ export declare type ViewState = 'open' | 'closed';
   imports: [AppModule],
   animations: [openCloseAnimationHeader]
 })
-export class AppComponent {
-  constructor(private scrumApi: ScrumApiService, private breakpoints: BreakpointsService) {
-    this.scrumApi.handleTokenChanges();
-  }
+export class AppComponent implements OnInit , OnDestroy{
   title = 'join';
-
   web$ = this.breakpoints.matchesWebBreakpoint$.pipe(
     map(matches => matches ? 'side' : 'over' as MatDrawerMode)
   );
+  toggleViewHeader: ViewState = 'open';
+  onNextTokenSub$!: Subscription;
 
   get isLoggedIn$() {
     return this.scrumApi.apiToken$.pipe(map((apiToken: ApiToken) => !!apiToken.token));
   }
 
-  toggleViewHeader: ViewState = 'open';
   get arrowTransformation() {
     return this.toggleViewHeader == 'closed' ? 'translate(45, 50) rotate(180, 6.99996, 8)' : 'translate(45, 45) ';
+  }
+
+  constructor(
+    private scrumApi: ScrumApiService,
+    private breakpoints: BreakpointsService
+  ) { }
+
+  ngOnInit(): void {
+    this.onNextTokenSub$ = this.scrumApi.apiToken$
+      .subscribe(apiToken => this.scrumApi.onNextToken(apiToken));
+  }
+
+  ngOnDestroy(): void {
+    this.onNextTokenSub$.unsubscribe();
   }
 
   toggleHeader(event: Event) {
@@ -49,6 +59,5 @@ export class AppComponent {
       this.toggleViewHeader = 'open';
       return;
     }
-
   }
 }

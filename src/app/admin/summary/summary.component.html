@@ -1,9 +1,10 @@
 <!-- <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title> -->
 <div class="summary-counts">
-    <app-card class="counter-wrapper">
-        <p title class="counter">{{summary?.tasksInBacklog}}</p>
-        <p subtitle class="counter">{{ summary && summary.tasksInBacklog > 1 ? 'Tasks' :
+    <app-card *ngIf="summary?.tasksInBacklog" class="counter-wrapper">
+        <p title class="counter">{{summary?.tasksInBacklog?.count}}</p>
+        <p subtitle class="counter">{{ summary && summary.tasksInBacklog.count > 1 ? 'Tasks' :
             'Task'}}<br>in Backlog</p>
+        <!-- <span>Due date: {{summary?.tasksInBacklog?.latestDueDate | date: 'MMMM dd, yyyy'}}</span> -->
     </app-card>
 
     <div class="tasks-by-priority">
@@ -30,22 +31,23 @@
 
 <div class="summary-counts">
     <app-card class="greeting-wrapper">
-        <p title>Hello Join User</p>
+        <p title>
+            <span>{{greetUser}}</span>,
+            <span *ngIf="profile; else anonymous">{{profile.name || profile.email || 'Anonymous'}}</span>
+            <ng-template #anonymous>Anonymous</ng-template>
+        </p>
+        <p *ngIf="!summary" subtitle> Nothing to show </p>
     </app-card>
 
     <div class="tasks-by-category">
         <app-card class="counter-wrapper" *ngFor="let counter of summary?.tasksByCategory">
             <p title class="counter">{{counter.count}}</p>
             <p subtitle class="counter">
-                <app-category-card
-                    [category]="{name: counter.categoryName, color: counter.categoryColor}"></app-category-card>
+                <app-category-card [category]="{name: counter.categoryName, color: counter.categoryColor}">
+                </app-category-card>
                 {{ counter.count > 1 ? 'Tasks' : 'Task'}}
             </p>
             <!-- <p footer>{{counter.listBoardTitle}}</p> -->
         </app-card>
     </div>
-</div>
-
-<div *ngIf="false" class="summary-greetings">
-
 </div>

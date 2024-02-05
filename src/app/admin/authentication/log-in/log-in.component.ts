@@ -24,7 +24,10 @@ export class LogInComponent {
   });
   rememberMe = new FormControl(this.loginService.scrumApi.rememberMe);
 
-  constructor(private loginService: LogInService, private breakPoints: BreakpointsService) {
+  constructor(
+    private loginService: LogInService,
+    private breakPoints: BreakpointsService
+  ) {
     this.rememberMe.valueChanges.subscribe(value => this.loginService.scrumApi.rememberMe = value as boolean)
   }
 
@@ -34,7 +37,7 @@ export class LogInComponent {
     }
   }
 
-  get mobile$(){
+  get mobile$() {
     return this.breakPoints.mobile$;
   }
 }

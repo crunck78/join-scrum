@@ -48,18 +48,17 @@ export class ScrumApiService {
     }
   }
 
-  constructor(private router: Router) {}
-
-  handleTokenChanges() {
+  constructor(private router: Router) {
     const init = this.rememberMe ? this.localToken : '';
     this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
-    this.apiToken$.subscribe(apiToken => {
-      if (this.rememberMe)
-        this.localToken = apiToken.token;
-      this.token = apiToken?.token;
-      this.router.navigate(['/']);
-      if (!(apiToken && apiToken.token))
-        this.router.navigate(['/auth'])
-    });
+  }
+
+  onNextToken(apiToken: ApiToken) {
+    if (this.rememberMe)
+      this.localToken = apiToken.token;
+    this.token = apiToken?.token;
+    // this.router.navigate(['/']);
+    if (!(apiToken && apiToken.token))
+      this.router.navigate(['/auth'])
   }
 }

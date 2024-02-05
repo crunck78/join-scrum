@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
 import { ScrumProfileService } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
 import { UserResponse } from 'src/app/shared/models/user.model';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
@@ -23,7 +24,7 @@ import { ProfileImageCropperComponent } from 'src/app/shared/shared-components/i
 export class ProfileComponent {
 
   profile!: UserResponse | null;
-  constructor(private scrumProfile: ScrumProfileService, private dialog: MatDialog) {
+  constructor(private scrumProfile: ScrumProfileService, private dialog: MatDialog, private scrumApi: ScrumApiService) {
     this.scrumProfile.getProfile$().subscribe({
       next: (p) => this.profile = p,
       error: (e) => console.log(e)
@@ -46,7 +47,10 @@ export class ProfileComponent {
   }
 
   deleteProfile() {
-    throw new Error('Method not implemented.');
+    this.scrumProfile.deleteProfile$().subscribe({
+      next: () => this.scrumApi.apiToken$.next({ token: '' }), // triggers navigation to login,
+      error: (e) => console.log(e)
+    })
   }
 
   changeImg() {

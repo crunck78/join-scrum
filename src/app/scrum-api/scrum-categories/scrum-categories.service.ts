@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
-import { Observable, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { CategoryResponse, CategoryResponseAPI, Category, CategoryRequest } from 'src/app/shared/models/category.model';
 import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 

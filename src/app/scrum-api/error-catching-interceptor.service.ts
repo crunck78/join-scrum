@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { DURATION_SNACK_BAR, FeedbackService } from '../shared/shared-services/feedback/feedback.service';
+import { ScrumApiService } from './scrum-api.service';
 
 @Injectable()
 export class ErrorCatchingInterceptor {
 
-  constructor(private feedback: FeedbackService) { }
+  constructor(private feedback: FeedbackService, private scrumApi: ScrumApiService) { }
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(httpRequest).pipe(
       catchError((errorResponse: any) => {
-        // this.scrumApi.apiToken$.next({ token: '' }); // triggers navigation to login
+        console.log("ErrorCatchingInterceptor: ", errorResponse, httpRequest);
+        this.scrumApi.apiToken$.next({ token: '' }); // triggers navigation to login
         this._handleErrorResponse(errorResponse);
         return throwError(() => errorResponse);
       })

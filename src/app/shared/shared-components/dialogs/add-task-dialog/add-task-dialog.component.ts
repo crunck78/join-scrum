@@ -40,9 +40,9 @@ export class AddTaskDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.task = this.data.task;
+    this.task = this.data?.task;
     this.cdr.detectChanges();
-    this.mode = this.data.mode;
+    this.mode = this.data?.mode || 'add';
   }
 
   updateFormStatus(eventStatus: FormControlStatus) {

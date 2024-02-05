@@ -47,12 +47,24 @@ export class ScrumProfileService {
 
     const editProfile = User.createRepresentation(profile);
 
-    return this.http.patch<UserResponseAPI>(`${this.profileEndpoint}/`, editProfile, { headers })
+    return this.http.patch<UserResponseAPI>(this.profileEndpoint, editProfile, { headers })
       .pipe(
         catchError(() => of(null)),
         map((profile: UserResponseAPI | null) => profile ? User.createInternalValue(profile) : null)
       );
   }
 
+  deleteProfile$(): Observable<number | null> {
+
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${this.scrumApi.token}`
+    });
+
+    return this.http.delete<number | null>(this.profileEndpoint, { headers })
+      .pipe(
+        catchError(() => of(null)),
+        map(value => value || null)
+      );
+  }
 
 }

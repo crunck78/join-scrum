@@ -43,18 +43,13 @@
                 [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
                 [control]="addSubtaskForm"></app-form-field>
 
-            <div>
+            <div class="subtasks-list">
                 <div class="subtask" *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
                     <mat-checkbox #subtaskCheck (change)="updateSubtaskCheck($event.checked, subtask)"
                         [checked]="subtask.done">
                         <span [style.display]="'inline'" #subtaskTitleView>{{subtask.title}}</span>
-                        <!-- <input class="subtask-edit-input" [style.display]="'none'"
-                            (blur)="updateSubtaskTitle(subtask, subtaskTitleView, inputSubtaskEdit)"
-                            (keydown.enter)="updateSubtaskTitle(subtask, subtaskTitleView, inputSubtaskEdit); $event.preventDefault(); $event.stopPropagation()"
-                            #inputSubtaskEdit type="text" #inputSubtask="ngModel" [(ngModel)]="subtask.title"
-                            [ngModelOptions]="{standalone: true}"> -->
-                        <app-content-editable [(valueToEdit)]="subtask.title" [elementViewDisplay]="'inline'" [elementView]="subtaskTitleView"
-                            [changing]="changingSubtaskTitle$"></app-content-editable>
+                        <app-content-editable [(valueToEdit)]="subtask.title" [elementViewDisplay]="'inline'"
+                            [elementView]="subtaskTitleView" [changing]="changingSubtaskTitle$"></app-content-editable>
                     </mat-checkbox>
 
                     <div>
