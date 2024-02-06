@@ -45,7 +45,7 @@
                             <mat-icon>arrow_left</mat-icon>
                         </button>
                         <h3 #listTitleElem>{{list.name}} P.:{{list.position}}</h3>
-                        <app-content-editable (valueToEditChange)="updateListName($event, list)"
+                        <app-content-editable [contentId]="i" (valueToEditChange)="updateListName($event, list)"
                             [elementViewClick]="true" [valueToEdit]="list.name" [elementView]="listTitleElem"
                             [elementViewDisplay]="'block'"></app-content-editable>
 

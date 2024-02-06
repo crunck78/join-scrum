@@ -18,6 +18,7 @@ import { TaskResponse, TaskRequest, Task } from 'src/app/shared/models/task.mode
 import { AddCategoryComponent } from 'src/app/shared/shared-components/dialogs/add-category/add-category.component';
 import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
+import { MatSnackBarDismiss } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-task',
@@ -54,7 +55,7 @@ export class AddTaskComponent implements OnChanges {
   categories$!: Observable<CategoryResponse[]>;
   contacts$!: Observable<ContactResponse[]>;
   subtasks$!: Observable<SubtaskResponse[]>;
-  changingSubtaskTitle$ = new Subject<boolean>();
+  changingSubtaskTitle$ = new Subject<number | string>();
 
   @Input() showPageTitle = true;
   @Input() task!: TaskResponse;
@@ -95,6 +96,9 @@ export class AddTaskComponent implements OnChanges {
     }
 
     if (changes['predefinedTaskRequest'] && !!this.predefinedTaskRequest) {
+      // TODO Predefined Partial Task can breaks any of the Form Group in Add Task
+      // Example subtasks FormControl can be a SubtaskRequest[] and if not preset in Partial predefined task
+      // breaks the form
       this.addTaskForm.reset(this.predefinedTaskRequest);
     }
   }
@@ -162,7 +166,7 @@ export class AddTaskComponent implements OnChanges {
   }
 
   pushSubtask(subtask: SubtaskRequest) {
-    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as SubtaskRequest[];
+    const currentSubtasks = this.addTaskForm.get('subtasks')?.value as SubtaskRequest[] || [];
     currentSubtasks.push(subtask);
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
   }
@@ -173,23 +177,19 @@ export class AddTaskComponent implements OnChanges {
     this.addTaskForm.get('subtasks')?.patchValue(currentSubtasks);
   }
 
-  updateSubtasks() {
-    this.subtasks$ = this.addTaskService.subtasks$;
-    this.addSubtaskForm.reset();
-  }
-
   removeSubtask(subtaskToRemove: SubtaskRequest) {
     const subtasks = this.addTaskForm.get('subtasks')?.value;
     const patchedSubtasks = subtasks?.filter(st => st != subtaskToRemove) as SubtaskRequest[];
     this.addTaskForm.get('subtasks')?.patchValue(patchedSubtasks);
   }
 
-  editSubtask() {
-    this.changingSubtaskTitle$.next(true);
+  updateSubtasks() {
+    this.subtasks$ = this.addTaskService.subtasks$;
+    this.addSubtaskForm.reset();
   }
 
-  updateSubtaskCheck(checked: boolean, subtask: SubtaskRequest) {
-    subtask.done = checked;
+  editSubtask(subtaskId: number | string) {
+    this.changingSubtaskTitle$.next(subtaskId);
   }
 
   saveTask() {
@@ -208,7 +208,10 @@ export class AddTaskComponent implements OnChanges {
         next: () => {
           const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
           feedbackRef?.afterDismissed()
-            .subscribe(() => this.addTaskService.router.navigate(['/board']));
+            .subscribe((value: MatSnackBarDismiss) => {
+              if (value.dismissedByAction)
+                this.addTaskService.router.navigate(['/board']);
+            });
         },
         error: () => this.feedback.openSnackBar('Something went wrong!', 'Close')
       });

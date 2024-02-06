@@ -11,9 +11,11 @@ import { Subject } from 'rxjs';
   styleUrls: ['./content-editable.component.scss']
 })
 export class ContentEditableComponent implements AfterViewInit {
+
   ngAfterViewInit(): void {
-    this.changing?.subscribe(value => {
-      if (value) this.editValue(this.inputEdit.nativeElement);
+    this.changing?.subscribe(contentId => {
+      if (contentId === this.contentId)
+        this.editValue(this.inputEdit.nativeElement);
     });
 
     if (this.elementViewClick)
@@ -23,10 +25,11 @@ export class ContentEditableComponent implements AfterViewInit {
         });
   }
 
+  @Input() contentId!: string | number;
   @Input() elementView!: HTMLElement;
   @Input() elementViewDisplay!: string;
   @Input() valueToEdit!: string;
-  @Input() changing!: Subject<boolean>;
+  @Input() changing!: Subject<number | string>;
   @Input() elementViewClick!: boolean;
 
   @Output() valueToEditChange = new EventEmitter<string>();

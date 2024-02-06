@@ -8,6 +8,7 @@ import { CardComponent } from 'src/app/shared/shared-components/card/card.compon
 import { ContentEditableComponent } from 'src/app/shared/shared-components/content-editable/content-editable.component';
 import { FormFieldComponent } from 'src/app/shared/shared-components/form-field/form-field.component';
 import { PageTitleComponent } from 'src/app/shared/shared-components/page-title/page-title.component';
+import { SubtaskComponent } from './subtask/subtask/subtask.component';
 
 export interface Priority {
   name: string,
@@ -41,8 +42,10 @@ const imports = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SubtaskComponent
+  ],
   imports: [imports],
-  exports: [imports]
+  exports: [...imports, SubtaskComponent]
 })
 export class AddTaskModule { }

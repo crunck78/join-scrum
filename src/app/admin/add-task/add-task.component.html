@@ -44,24 +44,8 @@
                 [control]="addSubtaskForm"></app-form-field>
 
             <div class="subtasks-list">
-                <div class="subtask" *ngFor="let subtask of $any(addTaskForm.get('subtasks')?.value)">
-                    <mat-checkbox #subtaskCheck (change)="updateSubtaskCheck($event.checked, subtask)"
-                        [checked]="subtask.done">
-                        <span [style.display]="'inline'" #subtaskTitleView>{{subtask.title}}</span>
-                        <app-content-editable [(valueToEdit)]="subtask.title" [elementViewDisplay]="'inline'"
-                            [elementView]="subtaskTitleView" [changing]="changingSubtaskTitle$"></app-content-editable>
-                    </mat-checkbox>
-
-                    <div>
-                        <button (click)="editSubtask()" mat-icon-button aria-label="Edit Subtask">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-
-                        <button (click)="removeSubtask(subtask)" mat-icon-button aria-label="Remove Subtask">
-                            <mat-icon>remove</mat-icon>
-                        </button>
-                    </div>
-                </div>
+                <app-subtask class="subtask" (onRemoveTask)="removeSubtask($event)" [subtaskId]="i" [subtask]="subtask"
+                    *ngFor="let subtask of addTaskForm.get('subtasks')?.value; let i = index"></app-subtask>
             </div>
         </div>
 
