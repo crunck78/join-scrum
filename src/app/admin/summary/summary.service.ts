@@ -20,13 +20,11 @@ export class SummaryService {
   ) {
     this.scrumSummary.getSummary$().pipe(take(1))
       .subscribe({
-        next: (summary) => this.summary = summary,
-        error: (e) => console.log(e)
+        next: (summary) => this.summary = summary
       });
     this.scrumProfile.getProfile$().pipe(take(1))
       .subscribe({
         next: (profile) => this.profile = profile,
-        error: (e) => console.log(e)
       });
   }
 }

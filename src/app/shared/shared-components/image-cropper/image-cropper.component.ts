@@ -18,7 +18,7 @@ const URL = PROFILE_IMAGE_ENDPOINT;
   templateUrl: './image-cropper.component.html',
   styleUrls: ['./image-cropper.component.scss']
 })
-export class ProfileImageCropperComponent implements AfterViewInit {
+export class ProfileImageCropperComponent {
   @ViewChild('inputImage') inputImage!: ElementRef<HTMLInputElement>;
   @ViewChild('imageCropper') imageCropper!: ImageCropperComponent;
 
@@ -30,7 +30,11 @@ export class ProfileImageCropperComponent implements AfterViewInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
-  constructor(private sanitizer: DomSanitizer, private scrumApi: ScrumApiService, @Optional() private dialogRef?: MatDialogRef<ImageCropperComponent>) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private scrumApi: ScrumApiService,
+    @Optional() private dialogRef?: MatDialogRef<ImageCropperComponent>
+  ) {
     this.uploader = new FileUploader({
       url: URL,
       authToken: `Token ${this.scrumApi.token}`,
@@ -51,10 +55,6 @@ export class ProfileImageCropperComponent implements AfterViewInit {
     this.fileToChange = event[0];
   }
 
-  ngAfterViewInit(): void {
-
-  }
-
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
@@ -73,14 +73,16 @@ export class ProfileImageCropperComponent implements AfterViewInit {
     // this.uploader.queue = [fileItem];
     this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl as string);
     // event.blob can be used to upload the cropped image
-    console.log("imageCropped: ", this.croppedImage);
   }
+
   imageLoaded(image: LoadedImage) {
     console.log("show cropper: ", image);
   }
+
   cropperReady() {
     console.log("cropper ready");
   }
+
   loadImageFailed() {
     console.log("loadImageFailed");
   }

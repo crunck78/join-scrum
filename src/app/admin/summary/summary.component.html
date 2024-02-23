@@ -33,8 +33,8 @@
     <app-card class="greeting-wrapper">
         <p title>
             <span>{{greetUser}}</span>,
-            <span *ngIf="profile; else anonymous">{{profile.name || profile.email || 'Anonymous'}}</span>
-            <ng-template #anonymous>Anonymous</ng-template>
+            <span *ngIf="profile; else anonymous">{{profile.name || profile.email || 'Guest'}}</span>
+            <ng-template #anonymous>Guest</ng-template>
         </p>
         <p *ngIf="!summary" subtitle> Nothing to show </p>
     </app-card>

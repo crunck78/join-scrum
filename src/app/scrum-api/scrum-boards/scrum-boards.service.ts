@@ -15,40 +15,28 @@ export class ScrumBoardsService {
   boardsEndpoint = BOARDS_ENDPOINT;
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
-  getBoards$() : Observable<BoardResponse[]> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<BoardResponseAPI[]>(this.boardsEndpoint, { headers })
+  getBoards$(): Observable<BoardResponse[]> {
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<BoardResponseAPI[]>(this.boardsEndpoint, options)
       .pipe(
         catchError(() => of([])),
         map(boards => boards.map(b => Board.createInternalValue(b)))
       );
   }
 
-  addBoard$(board: Partial<BoardRequest>) : Observable<BoardResponse | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+  addBoard$(board: Partial<BoardRequest>): Observable<BoardResponse | null> {
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const newBoard = Board.createRepresentation(board);
-
-    return this.http.post<BoardResponseAPI>(this.boardsEndpoint, newBoard, { headers })
+    return this.http.post<BoardResponseAPI>(this.boardsEndpoint, newBoard, options)
       .pipe(
         catchError(() => of(null)),
         map(board => board ? Board.createInternalValue(board) : null)
       );
   }
 
-  getBoardById$(id: string) : Observable<BoardResponse | null> {
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<BoardResponseAPI>(this.boardsEndpoint + id + '/', { headers })
+  getBoardById$(id: string): Observable<BoardResponse | null> {
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<BoardResponseAPI>(this.boardsEndpoint + id + '/', options)
       .pipe(
         catchError(() => of(null)),
         map(board => board ? Board.createInternalValue(board) : null)

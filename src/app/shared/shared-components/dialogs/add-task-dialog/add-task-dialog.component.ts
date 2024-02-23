@@ -61,6 +61,10 @@ export class AddTaskDialogComponent implements OnInit {
     this.dialogRef.close(editedTask);
   }
 
+  handleAddedTask(addedTask: TaskResponse) {
+    this.dialogRef.close(addedTask);
+  }
+
   handleDeletedTask(deletedTaskId: number) {
     this.dialogRef.close(deletedTaskId);
   }

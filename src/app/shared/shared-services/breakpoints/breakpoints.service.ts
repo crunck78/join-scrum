@@ -12,9 +12,7 @@ export class BreakpointsService {
   constructor(private breakpointObserver: BreakpointObserver) {
     this.matchesWebBreakpoint$ = this.breakpointObserver
       .observe([Breakpoints.Web])
-      .pipe(
-        map(result => result.matches),
-      );
+      .pipe(map(result => result.matches));
 
     this.mobile$ = this.breakpointObserver
       .observe([Breakpoints.XSmall])

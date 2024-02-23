@@ -16,12 +16,8 @@ export class ScrumCategoriesService {
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
   getCategories$(): Observable<CategoryResponse[]> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<CategoryResponseAPI[]>(this.categoriesEndpoint, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<CategoryResponseAPI[]>(this.categoriesEndpoint, options)
       .pipe(
         catchError(() => of([])),
         map((categories: CategoryResponseAPI[]) => categories.map(c => Category.createInternalValue(c)))
@@ -29,14 +25,9 @@ export class ScrumCategoriesService {
   }
 
   addCategory$(editCategory: Partial<CategoryRequest>): Observable<CategoryResponse | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const newCategory = Category.createRepresentation(editCategory);
-
-    return this.http.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory, { headers })
+    return this.http.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory, options)
       .pipe(
         catchError(() => of(null)),
         map((category: CategoryResponseAPI | null) => category ? Category.createInternalValue(category) : null)

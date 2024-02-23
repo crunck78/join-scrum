@@ -16,12 +16,8 @@ export class ScrumContactsService {
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
   getContacts$(): Observable<ContactResponse[]> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<ContactResponseAPI[]>(this.contactsEndpoint, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<ContactResponseAPI[]>(this.contactsEndpoint, options)
       .pipe(
         catchError(() => of([])),
         map((contacts: ContactResponseAPI[]) => contacts.map(c => Contact.createInternalValue(c)))
@@ -29,14 +25,10 @@ export class ScrumContactsService {
   }
 
   addContact$(contact: Partial<ContactRequest>): Observable<ContactResponse | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const newContact = Contact.createRepresentation(contact);
 
-    return this.http.post<ContactResponseAPI>(this.contactsEndpoint, newContact, { headers })
+    return this.http.post<ContactResponseAPI>(this.contactsEndpoint, newContact, options)
       .pipe(
         catchError(() => of(null)),
         map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
@@ -44,13 +36,10 @@ export class ScrumContactsService {
   }
 
   editContact$(contact: Partial<ContactRequest>, contactId: number): Observable<ContactResponse | null> {
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const editContact = Contact.createRepresentation(contact);
 
-    return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint + contactId}/`, editContact, { headers })
+    return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint + contactId}/`, editContact, options)
       .pipe(
         catchError(() => of(null)),
         map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
@@ -58,16 +47,11 @@ export class ScrumContactsService {
   }
 
   deleteContact$(contact: Partial<ContactResponse>): Observable<boolean> {
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.delete<number>(`${this.contactsEndpoint + contact.id}/`, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.delete<number>(`${this.contactsEndpoint + contact.id}/`, options)
       .pipe(
         catchError(() => of(false)),
         map(()=> true)
       );
   }
-
-
 }

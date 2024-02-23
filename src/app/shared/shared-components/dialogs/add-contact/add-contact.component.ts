@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ScrumContactsService } from 'src/app/scrum-api/scrum-contacts/scrum-contacts.service';
 import { ContactRequest } from 'src/app/shared/models/contact.model';
@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/shared/modules/material/material.module'
 import { DialogComponent } from '../../dialog/dialog.component';
 import { FormFieldComponent } from '../../form-field/form-field.component';
 import { LogoComponent } from '../../logo/logo.component';
+import { take } from 'rxjs';
 
 
 @Component({
@@ -35,12 +36,12 @@ export class AddContactComponent {
 
   addContact() {
     if (this.addContactForm.valid) {
-      this.scrumContacts.addContact$(this.addContactForm.value as Partial<ContactRequest>).subscribe(
-        {
+      this.scrumContacts.addContact$(this.addContactForm.value as Partial<ContactRequest>)
+        .pipe(take(1))
+        .subscribe({
           next: (res) => this.dialogRef.close(res),
           error: (err) => console.log(err)
-        }
-      );
+        });
     }
   }
 

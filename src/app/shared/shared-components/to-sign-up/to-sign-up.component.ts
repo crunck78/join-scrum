@@ -36,15 +36,4 @@ export class ToSignUpComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptionRouterEvents.unsubscribe();
   }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['hideOnSameRoute']) {
-
-  //     this.hideOnSameRoute = changes['hideOnSameRoute'].currentValue;
-  //     if (changes['hideOnSameRoute'].isFirstChange()) {
-  //       // Listen to route changes
-
-  //     }
-  //   }
-  // }
 }

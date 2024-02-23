@@ -17,12 +17,8 @@ export class ScrumSubtasksService {
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
   getSubtasks$(): Observable<SubtaskResponse[]> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<SubtaskResponseAPI[]>(this.subtasksEndpoint, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<SubtaskResponseAPI[]>(this.subtasksEndpoint, options)
       .pipe(
         catchError(() => of([])),
         map(subtasks => subtasks.map(s => Subtask.createInternalValue(s)))
@@ -30,14 +26,9 @@ export class ScrumSubtasksService {
   }
 
   addSubtask$(subtask: Partial<SubtaskRequest>): Observable<SubtaskResponse | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const newSubtask = Subtask.createRepresentation(subtask);
-
-    return this.http.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask, { headers })
+    return this.http.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask, options)
       .pipe(
         catchError(() => of(null)),
         map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
@@ -45,13 +36,9 @@ export class ScrumSubtasksService {
   }
 
   updateSubtask$(subtaskId: number, taskRequest: Partial<SubtaskRequest>): Observable<SubtaskResponse | null>{
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const subtaskRequestAPI = Subtask.createRepresentation(taskRequest);
-
-    return this.http.patch<SubtaskResponseAPI | null>(`${this.subtasksEndpoint}${subtaskId}/`, subtaskRequestAPI, { headers })
+    return this.http.patch<SubtaskResponseAPI | null>(`${this.subtasksEndpoint}${subtaskId}/`, subtaskRequestAPI, options)
       .pipe(
         catchError(() => of(null)),
         map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)

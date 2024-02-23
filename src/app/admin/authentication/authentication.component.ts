@@ -24,8 +24,7 @@ import { ToSignUpComponent } from 'src/app/shared/shared-components/to-sign-up/t
   ]
 })
 export class AuthenticationComponent {
-  constructor(private router: Router,
-    private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver) {
   }
   mobile$ = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(result => result.matches));
 }

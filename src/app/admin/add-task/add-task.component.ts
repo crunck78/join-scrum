@@ -30,6 +30,10 @@ import { MatSnackBarDismiss } from '@angular/material/snack-bar';
 })
 export class AddTaskComponent implements OnChanges {
 
+  /**
+   * Empty Valid Form Group Initial Values
+   * Ca be used for instance to clear the Form Group or validate Partials given Form Group Values
+   */
   readonly InitTask = {
     title: '',
     description: '',
@@ -68,6 +72,7 @@ export class AddTaskComponent implements OnChanges {
 
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
   @Output() onEditedTask$ = new EventEmitter<TaskResponse | null>();
+  @Output() onAddedTask$ = new EventEmitter<TaskResponse | null>();
   @Output() deletedTaskId$ = new EventEmitter<number | null>();
 
   constructor(private addTaskService: AddTaskService, private feedback: FeedbackService) {
@@ -96,17 +101,25 @@ export class AddTaskComponent implements OnChanges {
     }
 
     if (changes['predefinedTaskRequest'] && !!this.predefinedTaskRequest) {
-      // TODO Predefined Partial Task can breaks any of the Form Group in Add Task
-      // Example subtasks FormControl can be a SubtaskRequest[] and if not preset in Partial predefined task
-      // breaks the form
-      this.addTaskForm.reset(this.predefinedTaskRequest);
+      this.addTaskForm.reset(this.validatePredefinedTaskRequest());
     }
   }
 
-  get matchWebBreakpoint$() {
-    return this.addTaskService.breakPoints.matchesWebBreakpoint$.pipe(
-      map(match => match && this.showPageTitle)
-    );
+  /**
+   *
+   * Allow to pass an Input Partial Predefined TaskRequest
+   * But Resetting Form Group to it may cause issues if not validated.
+   */
+  private validatePredefinedTaskRequest() {
+    const validTaskFormGroup = {} as TaskFormGroup;
+    validTaskFormGroup.assignees = this.predefinedTaskRequest.assignees || this.InitTask.assignees;
+    validTaskFormGroup.category = this.predefinedTaskRequest.category || this.InitTask.category;
+    validTaskFormGroup.description = this.predefinedTaskRequest.description || this.InitTask.description;
+    validTaskFormGroup.dueDate = this.predefinedTaskRequest.dueDate || this.InitTask.dueDate;
+    validTaskFormGroup.priority = this.predefinedTaskRequest.priority || this.InitTask.priority;
+    validTaskFormGroup.subtasks = this.predefinedTaskRequest.subtasks || this.InitTask.subtasks;
+    validTaskFormGroup.title = this.predefinedTaskRequest.title || this.InitTask.title;
+    return validTaskFormGroup;
   }
 
   addCategory() {
@@ -205,7 +218,8 @@ export class AddTaskComponent implements OnChanges {
     this.addTaskService.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
       .pipe(take(1))
       .subscribe({
-        next: () => {
+        next: (res) => {
+          this.onAddedTask$.emit(res);
           const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
           feedbackRef?.afterDismissed()
             .subscribe((value: MatSnackBarDismiss) => {
@@ -247,4 +261,3 @@ export class AddTaskComponent implements OnChanges {
 
 }
 export { TaskMode, PriorityType };
-

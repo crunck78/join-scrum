@@ -33,7 +33,6 @@ export class TaskComponent {
     return this.task.subtasks.filter(s => s.done).length;
   }
 
-
   @HostListener('click', ['$event'])
   onClick() {
     this.editTask();

@@ -8,6 +8,7 @@ import { MaterialModule } from 'src/app/shared/modules/material/material.module'
 import { ScrumProfileService } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
 import { UserRequest } from 'src/app/shared/models/user.model';
 import { MatDialogRef } from '@angular/material/dialog';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-edit-profile',
@@ -37,7 +38,7 @@ export class EditProfileComponent {
     if (this.editProfileForm.valid) {
       this.scrumProfile.editProfile$(
         this.editProfileForm.value as Partial<UserRequest>,
-        this.profileToEdit).subscribe(res => this.dialogRef.close(res));
+        this.profileToEdit).pipe(take(1)).subscribe(res => this.dialogRef.close(res));
     }
   }
 }

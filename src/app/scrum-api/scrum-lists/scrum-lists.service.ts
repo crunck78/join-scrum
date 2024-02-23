@@ -16,11 +16,8 @@ export class ScrumListsService {
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
   deleteList$(id: number): Observable<number | null> {
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.delete<number | null>(`${this.listsEndpoint + id}/`, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.delete<number | null>(`${this.listsEndpoint + id}/`, options)
       .pipe(
         catchError(() => of(null)),
         map(value => value || null)
@@ -28,12 +25,8 @@ export class ScrumListsService {
   }
 
   getLists$(): Observable<ListResponse[]> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<ListResponseAPI[]>(this.listsEndpoint, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<ListResponseAPI[]>(this.listsEndpoint, options)
       .pipe(
         catchError(() => of([])),
         map(lists => lists.map(l => List.createInternalValue(l)))
@@ -41,14 +34,9 @@ export class ScrumListsService {
   }
 
   addList$(list: Partial<ListRequest>): Observable<ListResponse | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const newList = List.createRepresentation(list);
-
-    return this.http.post<ListResponseAPI>(this.listsEndpoint, newList, { headers })
+    return this.http.post<ListResponseAPI>(this.listsEndpoint, newList, options)
       .pipe(
         catchError(() => of(null)),
         map(list => list ? List.createInternalValue(list) : null)
@@ -56,25 +44,18 @@ export class ScrumListsService {
   }
 
   getListById$(id: string): Observable<ListResponse | null> {
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<ListResponseAPI>(this.listsEndpoint + id + '/', { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<ListResponseAPI>(this.listsEndpoint + id + '/', options)
       .pipe(
         catchError(() => of(null)),
         map(list => list ? List.createInternalValue(list) : null)
       );
   }
 
-  updateList$(listId: number, listRequest: Partial<ListRequest>): Observable<ListResponse | null>{
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+  updateList$(listId: number, listRequest: Partial<ListRequest>): Observable<ListResponse | null> {
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const taskRequestAPI = List.createRepresentation(listRequest);
-
-    return this.http.patch<ListResponseAPI | null>(`${this.listsEndpoint}${listId}/`, taskRequestAPI, { headers })
+    return this.http.patch<ListResponseAPI | null>(`${this.listsEndpoint}${listId}/`, taskRequestAPI, options)
       .pipe(
         catchError(() => of(null)),
         map(list => list ? List.createInternalValue(list) : null)

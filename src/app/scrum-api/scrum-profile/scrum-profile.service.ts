@@ -28,12 +28,8 @@ export class ScrumProfileService {
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
   getProfile$(): Observable<UserResponse | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<UserResponseAPI>(this.profileEndpoint, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<UserResponseAPI>(this.profileEndpoint, options)
       .pipe(
         catchError(() => of(null)),
         map(profile => profile ? User.createInternalValue(profile) : null)
@@ -41,13 +37,9 @@ export class ScrumProfileService {
   }
 
   editProfile$(profile: Partial<UserRequest>, profileId: number): Observable<UserResponse | null> {
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
     const editProfile = User.createRepresentation(profile);
-
-    return this.http.patch<UserResponseAPI>(this.profileEndpoint, editProfile, { headers })
+    return this.http.patch<UserResponseAPI>(this.profileEndpoint, editProfile, options)
       .pipe(
         catchError(() => of(null)),
         map((profile: UserResponseAPI | null) => profile ? User.createInternalValue(profile) : null)
@@ -55,12 +47,8 @@ export class ScrumProfileService {
   }
 
   deleteProfile$(): Observable<number | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.delete<number | null>(this.profileEndpoint, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.delete<number | null>(this.profileEndpoint, options)
       .pipe(
         catchError(() => of(null)),
         map(value => value || null)

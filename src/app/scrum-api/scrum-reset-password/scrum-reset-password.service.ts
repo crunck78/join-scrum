@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
+import { ActivatedRoute } from '@angular/router';
 
-export const RESET_PASSWORD_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/reset-password/';
+export const RESET_PASSWORD_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/password_reset/confirm/';
 
 export interface ResetPasswordCredentials {
-  newPassword: string
+  password: string,
+  token: string
 }
 
 @Injectable({
@@ -16,14 +18,12 @@ export interface ResetPasswordCredentials {
 export class ScrumResetPasswordService {
 
   resetPasswordEndpoint = RESET_PASSWORD_ENDPOINT;
-
-  constructor(private http: HttpClient) { }
+  token!: string;
+  constructor(private http: HttpClient) {}
 
   resetPassword(credentials: ResetPasswordCredentials) {
-    this.http.post<any>(this.resetPasswordEndpoint, credentials).pipe(
-      catchError(err => of(err))
-    ).subscribe(response => {
-      console.log(response);
-    });
+    return this.http.post<any>(this.resetPasswordEndpoint, credentials).pipe(
+      catchError(err => throwError(() => new Error(err)))
+    );
   }
 }

@@ -4,6 +4,7 @@ import { Profile, ScrumProfileService } from '../scrum-profile/scrum-profile.ser
 import { Router } from '@angular/router';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
+import { take } from 'rxjs';
 
 export const SIGNUP_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/create/';
 
@@ -28,18 +29,14 @@ export class ScrumSignupService {
 
   signup(credentials: SignupCredentials) {
     this.http.post<Profile>(this.signupEndPoint, credentials)
-      .subscribe(
-        {
-          next: (response: Profile) => {
-            this.scrumProfile.profile = response;
-            this.router.navigate(['/auth/log-in']);
-            this.feedback.openSnackBar('Great Job! Successfully Signed Up!');
-            console.log(response);
-          },
-          error: (error) => {
-            console.log(error);
-          }
-        }
-      );
+      .pipe(take(1))
+      .subscribe({
+        next: (response: Profile) => {
+          this.scrumProfile.profile = response;
+          this.router.navigate(['/auth/log-in']);
+          this.feedback.openSnackBar('Great Job! Successfully Signed Up!');
+        },
+        error: (error) => this.feedback.openSnackBar("Something went wrong!", "Try again")
+      });
   }
 }

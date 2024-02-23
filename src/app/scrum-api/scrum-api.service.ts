@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 export interface ApiToken {
@@ -13,6 +14,12 @@ export class ScrumApiService {
 
   token!: string;
   apiToken$!: BehaviorSubject<ApiToken>;
+
+  get headersTokenAuthorization() {
+    return new HttpHeaders({
+      'Authorization': `Token ${this.token}`
+    });
+  }
 
   set rememberMe(value: boolean) {
     try {
@@ -57,8 +64,6 @@ export class ScrumApiService {
     if (this.rememberMe)
       this.localToken = apiToken.token;
     this.token = apiToken?.token;
-    // this.router.navigate(['/']);
-    if (!(apiToken && apiToken.token))
-      this.router.navigate(['/auth'])
+    this.router.navigate(['/']);
   }
 }

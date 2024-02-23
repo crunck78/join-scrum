@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 import { ContactsModule } from './contacts.module';
 import { ContactsService } from './contacts.service';
@@ -50,12 +50,14 @@ export class ContactsComponent {
   }
 
   deleteContact(contactToDelete: Partial<ContactResponse>) {
-    this.contactsService.scrumContacts.deleteContact$(contactToDelete).subscribe((deleted: boolean) => {
-      if(deleted){
-        this.selectedContact = null;
-        this.updateContacts();
-      }
-    })
+    this.contactsService.scrumContacts.deleteContact$(contactToDelete)
+      .pipe(take(1))
+      .subscribe((deleted: boolean) => {
+        if (deleted) {
+          this.selectedContact = null;
+          this.updateContacts();
+        }
+      });
   }
 
 }

@@ -6,19 +6,19 @@ import { ContactsComponent } from '../admin/contacts/contacts.component';
 import { LegalNoticeComponent } from '../admin/legal-notice/legal-notice.component';
 import { ProfileComponent } from '../admin/profile/profile.component';
 import { SummaryComponent } from '../admin/summary/summary.component';
-import { LogInGuard } from '../scrum-api/scrum-login/log-in.guard';
+import { canActivate } from '../scrum-api/scrum-login/log-in.guard';
 import { ForgotPasswordComponent } from '../admin/authentication/forgot-password/forgot-password.component';
 import { LogInComponent } from '../admin/authentication/log-in/log-in.component';
 import { RegisterComponent } from '../admin/authentication/register/register.component';
 import { ResetPasswordComponent } from '../admin/authentication/reset-password/reset-password.component';
 
 export const routes: Routes = [
-    { canActivate: [LogInGuard], path: '', component: SummaryComponent, title: 'Summary' },
-    { canActivate: [LogInGuard], path: 'board', component: BoardComponent, title: 'Board' },
-    { canActivate: [LogInGuard], path: 'add-task', component: AddTaskComponent, title: 'Add Task' },
-    { canActivate: [LogInGuard], path: 'contacts', component: ContactsComponent, title: 'Contacts' },
-    { canActivate: [LogInGuard], path: 'legal-notice', component: LegalNoticeComponent, title: 'Legal Notice' },
-    { canActivate: [LogInGuard], path: 'profile', component: ProfileComponent, title: 'Profile' },
+    { canActivate: [canActivate], path: '', component: SummaryComponent, title: 'Summary' },
+    { canActivate: [canActivate], path: 'board', component: BoardComponent, title: 'Board' },
+    { canActivate: [canActivate], path: 'add-task', component: AddTaskComponent, title: 'Add Task' },
+    { canActivate: [canActivate], path: 'contacts', component: ContactsComponent, title: 'Contacts' },
+    { canActivate: [canActivate], path: 'profile', component: ProfileComponent, title: 'Profile' },
+    { path: 'legal-notice', component: LegalNoticeComponent, title: 'Legal Notice' },
     {
         path: 'auth', component: AuthenticationComponent, title: 'Authentication',
         children: [

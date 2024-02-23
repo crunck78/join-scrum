@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { take } from 'rxjs';
 import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
 import { ScrumProfileService } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
 import { UserResponse } from 'src/app/shared/models/user.model';
@@ -8,6 +9,7 @@ import { CardComponent } from 'src/app/shared/shared-components/card/card.compon
 import { ContactInitialsComponent } from 'src/app/shared/shared-components/contact-initials/contact-initials.component';
 import { EditProfileComponent } from 'src/app/shared/shared-components/dialogs/edit-profile/edit-profile.component';
 import { ProfileImageCropperComponent } from 'src/app/shared/shared-components/image-cropper/image-cropper.component';
+import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,11 +26,17 @@ import { ProfileImageCropperComponent } from 'src/app/shared/shared-components/i
 export class ProfileComponent {
 
   profile!: UserResponse | null;
-  constructor(private scrumProfile: ScrumProfileService, private dialog: MatDialog, private scrumApi: ScrumApiService) {
-    this.scrumProfile.getProfile$().subscribe({
-      next: (p) => this.profile = p,
-      error: (e) => console.log(e)
-    })
+  constructor(
+    private scrumProfile: ScrumProfileService,
+    private dialog: MatDialog,
+    private scrumApi: ScrumApiService,
+    private feedbackService: FeedbackService
+  ) {
+    this.scrumProfile.getProfile$()
+      .pipe(take(1))
+      .subscribe({
+        next: (p) => this.profile = p
+      });
   }
 
   openEditProfileDialog() {
@@ -47,10 +55,12 @@ export class ProfileComponent {
   }
 
   deleteProfile() {
-    this.scrumProfile.deleteProfile$().subscribe({
-      next: () => this.scrumApi.apiToken$.next({ token: '' }), // triggers navigation to login,
-      error: (e) => console.log(e)
-    })
+    this.scrumProfile.deleteProfile$()
+      .pipe(take(1))
+      .subscribe({
+        next: () => this.scrumApi.apiToken$.next({ token: '' }),
+        error: (e) => this.feedbackService.openSnackBar("Something went wrong", "Try again!")
+      });
   }
 
   changeImg() {

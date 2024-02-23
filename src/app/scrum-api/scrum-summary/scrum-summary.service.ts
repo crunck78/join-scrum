@@ -17,12 +17,8 @@ export class ScrumSummaryService {
   constructor(private http: HttpClient, private scrumApi: ScrumApiService) { }
 
   getSummary$(): Observable<SummaryResponse | null> {
-
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${this.scrumApi.token}`
-    });
-
-    return this.http.get<SummaryResponseAPI>(this.summaryEndpoint, { headers })
+    const options = { headers: this.scrumApi.headersTokenAuthorization };
+    return this.http.get<SummaryResponseAPI>(this.summaryEndpoint, options)
       .pipe(
         catchError(() => of(null)),
         map(summary => summary ? Summary.createInternalValue(summary) : null)

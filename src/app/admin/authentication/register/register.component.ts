@@ -4,7 +4,6 @@ import { RegisterModule } from './register.module';
 import { RegisterService } from './register.service';
 import { SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.service';
 import { EMAIL_REGEX } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 
 @Component({
   selector: 'app-register',
@@ -17,18 +16,17 @@ import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/b
 })
 export class RegisterComponent {
 
-  constructor(private registerService: RegisterService, private breakPoints: BreakpointsService) {}
-
-  get mobile$() {
-    return this.breakPoints.mobile$;
-  }
-
-
   signupForm = new FormGroup({
     name: new FormControl('', Validators.compose([Validators.required])),
     email: new FormControl('', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEX)])),
     password: new FormControl('', Validators.compose([Validators.required]))
   });
+
+  constructor(private registerService: RegisterService) {}
+
+  get mobile$() {
+    return this.registerService.breakPoints.mobile$;
+  }
 
   signUp() {
     if (this.signupForm.valid) {

@@ -1,30 +1,19 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ScrumApiService } from '../scrum-api.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class LogInGuard implements CanActivate {
-  constructor(private scrumApi: ScrumApiService, private router: Router) { }
-  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+export const canActivate: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const router = inject(Router);
+  const scrumApi = inject(ScrumApiService);
+  const token = scrumApi.apiToken$.getValue();
 
-    const token = this.scrumApi.apiToken$.getValue();
-
-    if (token && token.token !== '') {
-      // Token is not empty, allow access
-      return true;
-    }
-
-    // Token is empty, redirect to login page
-    this.router.navigate(['/auth']);
-    return false;
-
+  if (token && token.token !== '') {
+    return true;
   }
-
-}
-
-export function loginGuardFactory(loginGuard: LogInGuard) {
-  return () => loginGuard.canActivate();
-}
+  router.navigate(['/auth/log-in'], { queryParams: { returnUrl: state.url } });
+  return false;
+};

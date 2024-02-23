@@ -5,7 +5,8 @@ import { LogInModule } from './log-in.module';
 import { LogInService } from './log-in.service';
 import { LoginCredentials } from 'src/app/scrum-api/scrum-login/scrum-login.service';
 import { EMAIL_REGEX } from 'src/app/shared/shared-components/form-field/form-field.component';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-log-in',
@@ -23,21 +24,29 @@ export class LogInComponent {
     password: new FormControl('', Validators.compose([Validators.required]))
   });
   rememberMe = new FormControl(this.loginService.scrumApi.rememberMe);
+  returnUrl!: string;
 
   constructor(
     private loginService: LogInService,
-    private breakPoints: BreakpointsService
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+    this.route.queryParams.pipe(take(1)).subscribe(params => this.returnUrl = params['returnUrl'] || '');
     this.rememberMe.valueChanges.subscribe(value => this.loginService.scrumApi.rememberMe = value as boolean)
   }
 
   login() {
-    if (this.loginForm.valid) {
-      this.loginService.scrumLogin.login(this.loginForm.value as LoginCredentials);
-    }
+    if (!this.loginForm.valid)
+      return;
+    this.loginService.scrumLogin.login(this.loginForm.value as LoginCredentials)
+      .pipe(take(1))
+      .subscribe({
+        next: () => this.router.navigate([this.returnUrl]),
+        error: () => this.loginService.feedbackService.openSnackBar("Something went wrong!", "Try Again.")
+      });
   }
 
   get mobile$() {
-    return this.breakPoints.mobile$;
+    return this.loginService.breakPoints.mobile$;
   }
 }

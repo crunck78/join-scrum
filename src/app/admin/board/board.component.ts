@@ -2,14 +2,14 @@ import { AfterViewInit, Component, QueryList, ViewChildren } from '@angular/core
 import { CdkDropList, DropListOrientation } from '@angular/cdk/drag-drop';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import { Observable, Subject, firstValueFrom } from 'rxjs';
+import { Observable, Subject, firstValueFrom, take } from 'rxjs';
 
 
 import { BoardModule } from './board.module';
 import { BoardService } from './board.service';
 import { BoardResponse } from 'src/app/shared/models/board.model';
 import { ListResponse } from 'src/app/shared/models/list.model';
-import { TaskResponse } from 'src/app/shared/models/task.model';
+import { TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
 import { AddListComponent } from 'src/app/shared/shared-components/dialogs/add-list/add-list.component';
 
 export declare type ListDirection = -1 | 1;
@@ -21,55 +21,70 @@ export declare type ListDirection = -1 | 1;
   standalone: true,
   imports: [BoardModule]
 })
-export class BoardComponent implements AfterViewInit {
-  @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
-  changingListName$: Subject<boolean> = new Subject();
-
+export class BoardComponent {
   draggingDisabled = true;
-
-  orientation : DropListOrientation = "vertical";
-
+  orientation: DropListOrientation = "vertical";
   backlog: TaskResponse[] = [];
+
+  @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
+
+  changingListName$: Subject<boolean> = new Subject();
   backlog$ !: Observable<TaskResponse[]>;
   private _board !: BoardResponse | null;
-  constructor(private boardService: BoardService) {
-    this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
-    // this.boardService.scrumBoards.getBoardById$('3').subscribe(board => this.board = board);
-    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+
+  set board(board: BoardResponse | null) {
+    this._board = board;
   }
-  ngAfterViewInit(): void {
-    console.log("DropLists: ", this.dropLists);
+
+  get board(): BoardResponse | null {
+    return this._board;
+  }
+
+  get matchWebBreakpoint$() {
+    return this.boardService.breakPoints.matchesWebBreakpoint$;
+  }
+
+  constructor(private boardService: BoardService) {
+    this.updateBoard();
+  }
+
+  private updateBoard() {
+    this.boardService.scrumTasks.getBacklog$()
+      .pipe(take(1))
+      .subscribe(values => this.backlog = values);
+    this.boardService.scrumBoards.getBoards$()
+      .pipe(take(1))
+      .subscribe(boards => this.board = boards[0]);
   }
 
   drop(event: CdkDragDrop<TaskResponse[]>, list?: ListResponse) {
+    let droppedTask: TaskResponse;
+    let swapTask: TaskResponse;
+    let taskRequest: Partial<TaskRequest>;
+
     if (event.previousContainer === event.container) {
-      const droppedTask = event.container.data[event.previousIndex];
-      const swapTask = event.container.data[event.currentIndex];
-
-      this.boardService.scrumTasks.updateTask$(droppedTask['id'], { position: swapTask.position })
-        .subscribe(() => this.handleEditedTask(droppedTask));
-
+      droppedTask = event.container.data[event.previousIndex];
+      swapTask = event.container.data[event.currentIndex];
+      taskRequest = { position: swapTask.position } as Partial<TaskRequest>;
     } else {
-      // transferArrayItem(
-      //   event.previousContainer.data,
-      //   event.container.data,
-      //   event.previousIndex,
-      //   event.currentIndex,
-      // );
-      const droppedTask = event.previousContainer.data[event.previousIndex];
-      const swapTask = event.container.data[event.currentIndex];
-      this.boardService.scrumTasks.updateTask$(droppedTask['id'], { list: list?.id || null, position: swapTask?.position })
-        .subscribe(() => this.handleEditedTask(droppedTask));
+      droppedTask = event.previousContainer.data[event.previousIndex];
+      swapTask = event.container.data[event.currentIndex];
+      taskRequest = { list: list?.id || null, position: swapTask?.position };
     }
+
+    this.boardService.scrumTasks.updateTask$(droppedTask['id'], taskRequest)
+      .pipe(take(1))
+      .subscribe(() => this.handleEditedTask(droppedTask));
   }
 
   addList() {
     const dialogRef = this.boardService.dialog.open(AddListComponent);
     dialogRef.afterClosed().subscribe(newList => {
-      if (newList) {
-        console.log(newList);
-        this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
-      }
+      if (!newList)
+        return;
+      this.boardService.scrumBoards.getBoards$()
+        .pipe(take(1))
+        .subscribe(boards => this.board = boards[0]);
     });
   }
 
@@ -77,17 +92,15 @@ export class BoardComponent implements AfterViewInit {
    * Change to a more complex form, for now new user should only have one board
    */
   addBoard() {
-    if (!this.board)
-      this.boardService.scrumBoards.addBoard$({ title: "First Board" }).subscribe(board => this.board = board);
-  }
-
-  get matchWebBreakpoint$() {
-    return this.boardService.breakPoints.matchesWebBreakpoint$;
+    if (this.board)
+      return;
+    this.boardService.scrumBoards.addBoard$({ title: "First Board" })
+      .pipe(take(1))
+      .subscribe(board => this.board = board);
   }
 
   handleEditedTask(editedTask?: TaskResponse) {
-    this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
-    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+    this.updateBoard();
   }
 
   async clearBacklog() {
@@ -95,14 +108,12 @@ export class BoardComponent implements AfterViewInit {
       const task = this.backlog[index];
       await firstValueFrom(this.boardService.scrumTasks.deleteTask$(task.id));
     }
-    this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
-    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+    this.updateBoard();
   }
 
   async deleteList(listId: number) {
     await firstValueFrom(this.boardService.scrumList.deleteList$(listId));
-    this.boardService.scrumTasks.getBacklog$().subscribe(values => this.backlog = values);
-    this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
+    this.updateBoard();
   }
 
   editListTitle() {
@@ -111,33 +122,23 @@ export class BoardComponent implements AfterViewInit {
 
   updateListName(newListName: string, list: ListResponse) {
     list.name = newListName;
-    this.boardService.scrumList.updateList$(list.id, list).subscribe(
-      {
-        next: (listUpdate) => console.log(listUpdate),
-        error: (err) => console.error(err)
-      }
-    )
-  }
-
-  set board(board: BoardResponse | null) {
-    // board?.lists.sort((a: ListResponse, b: ListResponse) => a.position - b.position);
-    this._board = board;
-  }
-
-  get board(): BoardResponse | null {
-    return this._board;
+    this.boardService.scrumList.updateList$(list.id, list)
+      .pipe(take(1))
+      .subscribe({
+        next: (listUpdate) => this.boardService.feedbackService.openSnackBar("List Updated", "Ok"),
+        error: (err) => this.boardService.feedbackService.openSnackBar("List Name Update Failed!", "Try Again"),
+      });
   }
 
   setPosition(list: ListResponse, direction: ListDirection) {
     list.position += direction;
     this.boardService.scrumList.updateList$(list.id, list)
-      .subscribe(
-        {
-          next: () => {
-            this.boardService.scrumBoards.getBoards$().subscribe(boards => this.board = boards[0]);
-          },
-          error: (e) => console.error(e)
-        }
-      )
+      .pipe(take(1))
+      .subscribe({
+        next: () => this.boardService.scrumBoards
+          .getBoards$()
+          .pipe(take(1)).subscribe(boards => this.board = boards[0]),
+        error: (e) => console.error(e)
+      });
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
+import { MaterialModule } from '../../modules/material/material.module';
 
 @Component({
   selector: 'app-card',
@@ -7,7 +7,7 @@ import {MatCardModule} from '@angular/material/card';
   styleUrls: ['./card.component.scss'],
   standalone: true,
   imports: [
-    MatCardModule
+    MaterialModule
   ]
 })
 export class CardComponent {

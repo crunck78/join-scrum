@@ -6,6 +6,7 @@ import { CategoryRequest } from 'src/app/shared/models/category.model';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { FormFieldComponent } from '../../form-field/form-field.component';
+import { take } from 'rxjs';
 
 
 @Component({
@@ -32,12 +33,12 @@ export class AddCategoryComponent {
   addCategory() {
     if (this.addCategoryForm.valid) {
       const newContact = this.addCategoryForm.value;
-      this.scrumCategories.addCategory$(newContact as Partial<CategoryRequest>).subscribe(
-        {
+      this.scrumCategories.addCategory$(newContact as Partial<CategoryRequest>)
+        .pipe(take(1))
+        .subscribe({
           next: (res) => this.dialogRef.close(res),
           error: (err) => console.log(err)
-        }
-      );
+        });
     }
   }
 }

@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResetPasswordModule } from './reset-password.module';
 import { ResetPasswordService } from './reset-password.service';
 import { ResetPasswordCredentials } from 'src/app/scrum-api/scrum-reset-password/scrum-reset-password.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, map, take } from 'rxjs';
 
 @Component({
   selector: 'app-reset-password',
@@ -15,24 +17,34 @@ import { ResetPasswordCredentials } from 'src/app/scrum-api/scrum-reset-password
   ]
 })
 export class ResetPasswordComponent {
-
-  constructor(private resetPasswordService: ResetPasswordService) {}
+  token!: string;
+  constructor(private resetPasswordService: ResetPasswordService, private route: ActivatedRoute) {
+    this.route.queryParams.pipe(take(1))
+      .subscribe(params => this.token = params['token']);
+  }
 
   resetPasswordForm = new FormGroup({
-    newPassword: new FormControl('', Validators.compose([Validators.required])),
-    confirmedPassword: new FormControl('', Validators.compose([Validators.required])),
+    password: new FormControl('', Validators.compose([Validators.required])),
+    confirmedPassword: new FormControl('', Validators.compose([Validators.required]))
   });
 
   resetPassword() {
     if (this.resetPasswordForm.valid) {
-      const newPassword = this.resetPasswordForm.get('confirmedPassword') as FormControl;
-      this.resetPasswordService.scrumResetPassword.resetPassword(newPassword.value as ResetPasswordCredentials);
+      const newPassword = this.resetPasswordForm.get('password') as FormControl;
+      this.resetPasswordService
+        .scrumResetPassword
+        .resetPassword({ password: newPassword.value, token: this.token } as ResetPasswordCredentials)
+        .pipe(take(1))
+        .subscribe({
+          next: (value) => console.log(value),
+          error: (err) => console.error(err)
+        })
     }
   }
 
-  matches(left: FormControl ,right: FormControl){
+  matches(left: FormControl, right: FormControl) {
     return (left: FormControl) => {
-        right.valueChanges.subscribe(() => left.value == right )
+      right.valueChanges.subscribe(() => left.value == right)
     }
   }
 

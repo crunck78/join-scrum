@@ -8,6 +8,7 @@ import { MaterialModule } from 'src/app/shared/modules/material/material.module'
 import { DialogComponent } from '../../dialog/dialog.component';
 import { FormFieldComponent } from '../../form-field/form-field.component';
 import { LogoComponent } from '../../logo/logo.component';
+import { take } from 'rxjs';
 @Component({
   selector: 'app-edit-contact',
   templateUrl: './edit-contact.component.html',
@@ -39,7 +40,7 @@ export class EditContactComponent {
     if (this.editContactForm.valid) {
       this.scrumContacts.editContact$(
         this.editContactForm.value as Partial<ContactRequest>,
-        this.contactToEdit).subscribe(res => this.dialogRef.close(res));
+        this.contactToEdit).pipe(take(1)).subscribe(res => this.dialogRef.close(res));
     }
   }
 

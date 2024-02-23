@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { ScrumBoardsService } from 'src/app/scrum-api/scrum-boards/scrum-boards.service';
 import { ScrumListsService } from 'src/app/scrum-api/scrum-lists/scrum-lists.service';
 import { BoardResponse } from 'src/app/shared/models/board.model';
@@ -31,7 +31,7 @@ import { LogoComponent } from '../../logo/logo.component';
 })
 export class AddListComponent {
 
-  boards$ : Observable<BoardResponse[]>;
+  boards$: Observable<BoardResponse[]>;
 
   addListForm = new FormGroup({
     name: new FormControl('', Validators.compose([Validators.required])),
@@ -40,20 +40,20 @@ export class AddListComponent {
 
   constructor(public dialogRef: MatDialogRef<AddListComponent>,
     private scrumList: ScrumListsService,
-    private scrumBoard: ScrumBoardsService){
-      this.boards$ = this.scrumBoard.getBoards$();
-    }
+    private scrumBoard: ScrumBoardsService) {
+    this.boards$ = this.scrumBoard.getBoards$();
+  }
 
-  addList(){
-    if(this.addListForm.valid){
+  addList() {
+    if (this.addListForm.valid) {
       console.log("Adding List");
 
-      this.scrumList.addList$(this.addListForm.value as Partial<ListRequest>).subscribe(
-        {
-          next: (res)=> this.dialogRef.close(res),
+      this.scrumList.addList$(this.addListForm.value as Partial<ListRequest>)
+        .pipe(take(1))
+        .subscribe({
+          next: (res) => this.dialogRef.close(res),
           error: (err) => console.log(err)
-        }
-      );
+        });
     }
   }
 
