@@ -27,7 +27,6 @@ export class ScrumContactsService {
   addContact$(contact: Partial<ContactRequest>): Observable<ContactResponse | null> {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     const newContact = Contact.createRepresentation(contact);
-
     return this.http.post<ContactResponseAPI>(this.contactsEndpoint, newContact, options)
       .pipe(
         catchError(() => of(null)),
@@ -38,7 +37,6 @@ export class ScrumContactsService {
   editContact$(contact: Partial<ContactRequest>, contactId: number): Observable<ContactResponse | null> {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     const editContact = Contact.createRepresentation(contact);
-
     return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint + contactId}/`, editContact, options)
       .pipe(
         catchError(() => of(null)),

@@ -11,4 +11,8 @@ export class ContactsService {
   constructor(public scrumContacts: ScrumContactsService,
     public dialog: MatDialog,
     public breakPoints: BreakpointsService) { }
+
+  get contacts$() {
+    return this.scrumContacts.getContacts$();
+  }
 }

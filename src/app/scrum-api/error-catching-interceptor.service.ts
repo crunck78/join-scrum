@@ -13,7 +13,6 @@ export class ErrorCatchingInterceptor {
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(httpRequest).pipe(
       catchError((errorResponse: any) => {
-        console.log("ErrorCatchingInterceptor: ", errorResponse, httpRequest);
         if (errorResponse.status == 401) {
           this.router.navigate(['/auth/log-in']);
           this.scrumApi.apiToken$.next({ token: '' });

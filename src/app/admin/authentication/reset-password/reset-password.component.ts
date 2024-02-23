@@ -6,6 +6,7 @@ import { ResetPasswordService } from './reset-password.service';
 import { ResetPasswordCredentials } from 'src/app/scrum-api/scrum-reset-password/scrum-reset-password.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
+import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,7 +19,7 @@ import { Observable, map, take } from 'rxjs';
 })
 export class ResetPasswordComponent {
   token!: string;
-  constructor(private resetPasswordService: ResetPasswordService, private route: ActivatedRoute) {
+  constructor(private resetPasswordService: ResetPasswordService, private route: ActivatedRoute, private feedbackService: FeedbackService) {
     this.route.queryParams.pipe(take(1))
       .subscribe(params => this.token = params['token']);
   }
@@ -29,17 +30,17 @@ export class ResetPasswordComponent {
   });
 
   resetPassword() {
-    if (this.resetPasswordForm.valid) {
-      const newPassword = this.resetPasswordForm.get('password') as FormControl;
-      this.resetPasswordService
-        .scrumResetPassword
-        .resetPassword({ password: newPassword.value, token: this.token } as ResetPasswordCredentials)
-        .pipe(take(1))
-        .subscribe({
-          next: (value) => console.log(value),
-          error: (err) => console.error(err)
-        })
-    }
+    if (!this.resetPasswordForm.valid)
+      return;
+    const newPassword = this.resetPasswordForm.get('password') as FormControl;
+    this.resetPasswordService
+      .scrumResetPassword
+      .resetPassword({ password: newPassword.value, token: this.token } as ResetPasswordCredentials)
+      .pipe(take(1))
+      .subscribe((isReset => {
+        if (isReset)
+          this.feedbackService.openSnackBar("Password Reset Successfully", "Close");
+      }));
   }
 
   matches(left: FormControl, right: FormControl) {
@@ -47,5 +48,4 @@ export class ResetPasswordComponent {
       right.valueChanges.subscribe(() => left.value == right)
     }
   }
-
 }

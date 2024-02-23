@@ -35,10 +35,10 @@ export class EditProfileComponent {
   profileToEdit!: number;
 
   editProfile() {
-    if (this.editProfileForm.valid) {
-      this.scrumProfile.editProfile$(
-        this.editProfileForm.value as Partial<UserRequest>,
-        this.profileToEdit).pipe(take(1)).subscribe(res => this.dialogRef.close(res));
-    }
+    if (!this.editProfileForm.valid)
+      return;
+    this.scrumProfile.editProfile$(
+      this.editProfileForm.value as Partial<UserRequest>,
+      this.profileToEdit).pipe(take(1)).subscribe(res => this.dialogRef.close(res));
   }
 }

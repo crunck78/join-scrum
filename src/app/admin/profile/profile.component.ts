@@ -34,9 +34,7 @@ export class ProfileComponent {
   ) {
     this.scrumProfile.getProfile$()
       .pipe(take(1))
-      .subscribe({
-        next: (p) => this.profile = p
-      });
+      .subscribe((p) => this.profile = p);
   }
 
   openEditProfileDialog() {
@@ -57,9 +55,9 @@ export class ProfileComponent {
   deleteProfile() {
     this.scrumProfile.deleteProfile$()
       .pipe(take(1))
-      .subscribe({
-        next: () => this.scrumApi.apiToken$.next({ token: '' }),
-        error: (e) => this.feedbackService.openSnackBar("Something went wrong", "Try again!")
+      .subscribe((isDeleted) => {
+        if (isDeleted)
+          this.scrumApi.apiToken$.next({ token: '' })
       });
   }
 

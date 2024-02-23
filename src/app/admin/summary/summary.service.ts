@@ -19,12 +19,8 @@ export class SummaryService {
     private scrumProfile: ScrumProfileService
   ) {
     this.scrumSummary.getSummary$().pipe(take(1))
-      .subscribe({
-        next: (summary) => this.summary = summary
-      });
+      .subscribe((summary) => this.summary = summary);
     this.scrumProfile.getProfile$().pipe(take(1))
-      .subscribe({
-        next: (profile) => this.profile = profile,
-      });
+      .subscribe((profile) => this.profile = profile);
   }
 }

@@ -42,7 +42,7 @@ export class ContactsComponent {
   }
 
   updateContacts() {
-    this.contacts$ = this.contactsService.scrumContacts.getContacts$();
+    this.contacts$ = this.contactsService.contacts$;
   }
 
   closeSelectedContact() {
@@ -53,11 +53,10 @@ export class ContactsComponent {
     this.contactsService.scrumContacts.deleteContact$(contactToDelete)
       .pipe(take(1))
       .subscribe((deleted: boolean) => {
-        if (deleted) {
-          this.selectedContact = null;
-          this.updateContacts();
-        }
+        if (!deleted)
+          return;
+        this.selectedContact = null;
+        this.updateContacts();
       });
   }
-
 }

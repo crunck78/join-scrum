@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { ScrumApiService } from '../scrum-api.service';
 import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
@@ -25,11 +25,10 @@ export class ScrumForgotPasswordService {
     private feedbackService: FeedbackService) { }
 
   sendMail(credentials: ForgotPasswordCredentials) {
-    this.http.post<any>(this.forgotPasswordEndpoint + `?email=${credentials.email}`, credentials)
-      .pipe(take(1))
-      .subscribe({
-        next: () => this.feedbackService.openSnackBar('Reset Password E-mail was send!', 'Close'),
-        error: () => this.feedbackService.openSnackBar('Reset Password E-mail could not be send!', 'Try again')
-      });
+    return this.http.post<any>(this.forgotPasswordEndpoint + `?email=${credentials.email}`, credentials)
+    .pipe(
+      catchError(() => of(false)),
+      map(() => true)
+    );
   }
 }

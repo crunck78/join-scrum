@@ -46,12 +46,12 @@ export class ScrumProfileService {
       );
   }
 
-  deleteProfile$(): Observable<number | null> {
+  deleteProfile$(): Observable<boolean> {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.delete<number | null>(this.profileEndpoint, options)
       .pipe(
-        catchError(() => of(null)),
-        map(value => value || null)
+        catchError(() => of(false)),
+        map(value => true)
       );
   }
 

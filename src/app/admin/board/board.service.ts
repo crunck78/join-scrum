@@ -17,4 +17,12 @@ export class BoardService {
     public breakPoints: BreakpointsService,
     public scrumList: ScrumListsService,
     public feedbackService: FeedbackService) { }
+
+  get boards$() {
+    return this.scrumBoards.getBoards$();
+  }
+
+  get backlog$() {
+    return this.scrumTasks.getBacklog$();
+  }
 }

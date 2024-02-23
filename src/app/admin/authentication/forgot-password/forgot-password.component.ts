@@ -5,6 +5,7 @@ import { ForgotPasswordModule } from './forgot-password.module';
 import { ForgotPasswordService } from './forgot-password.service';
 import { ForgotPasswordCredentials } from 'src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service';
 import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -31,7 +32,13 @@ export class ForgotPasswordComponent {
     if (this.forgotPasswordForm.valid)
       this.forgotPasswordService
         .scrumForgotPassword
-        .sendMail(this.forgotPasswordForm.value as ForgotPasswordCredentials);
+        .sendMail(this.forgotPasswordForm.value as ForgotPasswordCredentials)
+        .pipe(take(1))
+        .subscribe(isSend => {
+          if (isSend)
+            this.forgotPasswordService.feedbackService.openSnackBar('Reset Password E-mail was send!', 'Close');
+          else
+            this.forgotPasswordService.feedbackService.openSnackBar('Reset Password E-mail could not be send!', 'Try again');
+        });
   }
-
 }

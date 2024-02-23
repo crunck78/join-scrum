@@ -217,17 +217,16 @@ export class AddTaskComponent implements OnChanges {
       return;
     this.addTaskService.scrumTask.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
       .pipe(take(1))
-      .subscribe({
-        next: (res) => {
-          this.onAddedTask$.emit(res);
-          const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
-          feedbackRef?.afterDismissed()
-            .subscribe((value: MatSnackBarDismiss) => {
-              if (value.dismissedByAction)
-                this.addTaskService.router.navigate(['/board']);
-            });
-        },
-        error: () => this.feedback.openSnackBar('Something went wrong!', 'Close')
+      .subscribe((newTask) => {
+        if(!newTask)
+          return;
+        this.onAddedTask$.emit(newTask);
+        const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
+        feedbackRef?.afterDismissed()
+          .subscribe((value: MatSnackBarDismiss) => {
+            if (value.dismissedByAction)
+              this.addTaskService.router.navigate(['/board']);
+          });
       });
   }
 
@@ -239,7 +238,6 @@ export class AddTaskComponent implements OnChanges {
       .pipe(take(1))
       .subscribe({
         next: (res) => this.onEditedTask$.emit(res),
-        error: () => this.feedback.openSnackBar('Something went wrong!', 'Close')
       });
   }
 
@@ -250,7 +248,6 @@ export class AddTaskComponent implements OnChanges {
       .pipe(take(1))
       .subscribe({
         next: () => this.deletedTaskId$.emit(this.task.id),
-        error: () => this.feedback.openSnackBar('Something went wrong!', 'Close')
       });
   }
 

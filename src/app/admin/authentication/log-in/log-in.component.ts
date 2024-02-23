@@ -40,10 +40,11 @@ export class LogInComponent {
       return;
     this.loginService.scrumLogin.login(this.loginForm.value as LoginCredentials)
       .pipe(take(1))
-      .subscribe({
-        next: () => this.router.navigate([this.returnUrl]),
-        error: () => this.loginService.feedbackService.openSnackBar("Something went wrong!", "Try Again.")
-      });
+      .subscribe((isLogged => {
+        if (!isLogged)
+          return;
+        this.router.navigate([this.returnUrl]);
+      }));
   }
 
   get mobile$() {

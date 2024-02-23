@@ -50,9 +50,9 @@ export class AddListComponent {
 
       this.scrumList.addList$(this.addListForm.value as Partial<ListRequest>)
         .pipe(take(1))
-        .subscribe({
-          next: (res) => this.dialogRef.close(res),
-          error: (err) => console.log(err)
+        .subscribe((res) => {
+          if (res)
+            this.dialogRef.close(res);
         });
     }
   }

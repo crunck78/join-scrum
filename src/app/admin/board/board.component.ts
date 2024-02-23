@@ -25,6 +25,7 @@ export class BoardComponent {
   draggingDisabled = true;
   orientation: DropListOrientation = "vertical";
   backlog: TaskResponse[] = [];
+  boards$: Observable<BoardResponse[]>;
 
   @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 
@@ -45,14 +46,16 @@ export class BoardComponent {
   }
 
   constructor(private boardService: BoardService) {
+    this.boards$ = this.boardService.boards$;
+    this.backlog$ = this.boardService.backlog$;
     this.updateBoard();
   }
 
   private updateBoard() {
-    this.boardService.scrumTasks.getBacklog$()
+    this.backlog$
       .pipe(take(1))
       .subscribe(values => this.backlog = values);
-    this.boardService.scrumBoards.getBoards$()
+    this.boards$
       .pipe(take(1))
       .subscribe(boards => this.board = boards[0]);
   }
@@ -82,7 +85,7 @@ export class BoardComponent {
     dialogRef.afterClosed().subscribe(newList => {
       if (!newList)
         return;
-      this.boardService.scrumBoards.getBoards$()
+      this.boards$
         .pipe(take(1))
         .subscribe(boards => this.board = boards[0]);
     });
@@ -124,9 +127,11 @@ export class BoardComponent {
     list.name = newListName;
     this.boardService.scrumList.updateList$(list.id, list)
       .pipe(take(1))
-      .subscribe({
-        next: (listUpdate) => this.boardService.feedbackService.openSnackBar("List Updated", "Ok"),
-        error: (err) => this.boardService.feedbackService.openSnackBar("List Name Update Failed!", "Try Again"),
+      .subscribe((listUpdate) => {
+        if (listUpdate)
+          this.boardService.feedbackService.openSnackBar("List Updated", "Ok");
+        else
+          this.boardService.feedbackService.openSnackBar("List Name Update Failed!", "Try Again");
       });
   }
 
@@ -134,11 +139,11 @@ export class BoardComponent {
     list.position += direction;
     this.boardService.scrumList.updateList$(list.id, list)
       .pipe(take(1))
-      .subscribe({
-        next: () => this.boardService.scrumBoards
-          .getBoards$()
-          .pipe(take(1)).subscribe(boards => this.board = boards[0]),
-        error: (e) => console.error(e)
+      .subscribe((listUpdate) => {
+        if (!listUpdate)
+          return;
+        this.boards$
+          .pipe(take(1)).subscribe(boards => this.board = boards[0]);
       });
   }
 }
