@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular
 import { catchError, Observable, throwError } from 'rxjs';
 import { DURATION_SNACK_BAR, FeedbackService } from '../shared/shared-services/feedback/feedback.service';
 import { ScrumApiService } from './scrum-api.service';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 
 @Injectable()
 export class ErrorCatchingInterceptor {
@@ -13,6 +13,7 @@ export class ErrorCatchingInterceptor {
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(httpRequest).pipe(
       catchError((errorResponse: any) => {
+
         if (errorResponse.status == 401) {
           this.router.navigate(['/auth/log-in']);
           this.scrumApi.apiToken$.next({ token: '' });

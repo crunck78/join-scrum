@@ -20,8 +20,8 @@ export class ScrumSubtasksService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<SubtaskResponseAPI[]>(this.subtasksEndpoint, options)
       .pipe(
-        catchError(() => of([])),
-        map(subtasks => subtasks.map(s => Subtask.createInternalValue(s)))
+        map(subtasks => subtasks.map(s => Subtask.createInternalValue(s))),
+        catchError(() => of([]))
       );
   }
 
@@ -30,8 +30,8 @@ export class ScrumSubtasksService {
     const newSubtask = Subtask.createRepresentation(subtask);
     return this.http.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask, options)
       .pipe(
-        catchError(() => of(null)),
-        map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
+        map(subtask => subtask ? Subtask.createInternalValue(subtask) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -40,8 +40,8 @@ export class ScrumSubtasksService {
     const subtaskRequestAPI = Subtask.createRepresentation(taskRequest);
     return this.http.patch<SubtaskResponseAPI | null>(`${this.subtasksEndpoint}${subtaskId}/`, subtaskRequestAPI, options)
       .pipe(
-        catchError(() => of(null)),
-        map(subtask => subtask ? Subtask.createInternalValue(subtask) : null)
+        map(subtask => subtask ? Subtask.createInternalValue(subtask) : null),
+        catchError(() => of(null))
       );
   }
 }

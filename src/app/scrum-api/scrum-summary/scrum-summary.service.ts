@@ -20,8 +20,8 @@ export class ScrumSummaryService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<SummaryResponseAPI>(this.summaryEndpoint, options)
       .pipe(
-        catchError(() => of(null)),
-        map(summary => summary ? Summary.createInternalValue(summary) : null)
+        map(summary => summary ? Summary.createInternalValue(summary) : null),
+        catchError(() => of(null))
       );
   }
 }

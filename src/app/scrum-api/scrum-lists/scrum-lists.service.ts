@@ -19,8 +19,8 @@ export class ScrumListsService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.delete<number | null>(`${this.listsEndpoint + id}/`, options)
       .pipe(
-        catchError(() => of(null)),
-        map(value => value || null)
+        map(value => value || null),
+        catchError(() => of(null))
       );
   }
 
@@ -28,8 +28,8 @@ export class ScrumListsService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<ListResponseAPI[]>(this.listsEndpoint, options)
       .pipe(
-        catchError(() => of([])),
-        map(lists => lists.map(l => List.createInternalValue(l)))
+        map(lists => lists.map(l => List.createInternalValue(l))),
+        catchError(() => of([]))
       );
   }
 
@@ -38,8 +38,8 @@ export class ScrumListsService {
     const newList = List.createRepresentation(list);
     return this.http.post<ListResponseAPI>(this.listsEndpoint, newList, options)
       .pipe(
-        catchError(() => of(null)),
-        map(list => list ? List.createInternalValue(list) : null)
+        map(list => list ? List.createInternalValue(list) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -47,8 +47,8 @@ export class ScrumListsService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<ListResponseAPI>(this.listsEndpoint + id + '/', options)
       .pipe(
-        catchError(() => of(null)),
-        map(list => list ? List.createInternalValue(list) : null)
+        map(list => list ? List.createInternalValue(list) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -57,8 +57,8 @@ export class ScrumListsService {
     const taskRequestAPI = List.createRepresentation(listRequest);
     return this.http.patch<ListResponseAPI | null>(`${this.listsEndpoint}${listId}/`, taskRequestAPI, options)
       .pipe(
-        catchError(() => of(null)),
-        map(list => list ? List.createInternalValue(list) : null)
+        map(list => list ? List.createInternalValue(list) : null),
+        catchError(() => of(null))
       );
   }
 }

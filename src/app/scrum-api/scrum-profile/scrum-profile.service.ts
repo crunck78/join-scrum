@@ -31,8 +31,8 @@ export class ScrumProfileService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<UserResponseAPI>(this.profileEndpoint, options)
       .pipe(
-        catchError(() => of(null)),
-        map(profile => profile ? User.createInternalValue(profile) : null)
+        map(profile => profile ? User.createInternalValue(profile) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -41,8 +41,8 @@ export class ScrumProfileService {
     const editProfile = User.createRepresentation(profile);
     return this.http.patch<UserResponseAPI>(this.profileEndpoint, editProfile, options)
       .pipe(
-        catchError(() => of(null)),
-        map((profile: UserResponseAPI | null) => profile ? User.createInternalValue(profile) : null)
+        map((profile: UserResponseAPI | null) => profile ? User.createInternalValue(profile) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -50,8 +50,8 @@ export class ScrumProfileService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.delete<number | null>(this.profileEndpoint, options)
       .pipe(
-        catchError(() => of(false)),
-        map(value => true)
+        map(() => true),
+        catchError(() => of(false))
       );
   }
 

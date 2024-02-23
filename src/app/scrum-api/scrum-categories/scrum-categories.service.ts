@@ -19,8 +19,8 @@ export class ScrumCategoriesService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<CategoryResponseAPI[]>(this.categoriesEndpoint, options)
       .pipe(
-        catchError(() => of([])),
-        map((categories: CategoryResponseAPI[]) => categories.map(c => Category.createInternalValue(c)))
+        map((categories: CategoryResponseAPI[]) => categories.map(c => Category.createInternalValue(c))),
+        catchError(() => of([]))
       );
   }
 
@@ -29,8 +29,8 @@ export class ScrumCategoriesService {
     const newCategory = Category.createRepresentation(editCategory);
     return this.http.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory, options)
       .pipe(
-        catchError(() => of(null)),
-        map((category: CategoryResponseAPI | null) => category ? Category.createInternalValue(category) : null)
+        map((category: CategoryResponseAPI | null) => category ? Category.createInternalValue(category) : null),
+        catchError(() => of(null))
       );
   }
 }

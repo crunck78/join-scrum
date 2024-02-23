@@ -23,8 +23,8 @@ export class ScrumResetPasswordService {
 
   resetPassword(credentials: ResetPasswordCredentials) {
     return this.http.post<any>(this.resetPasswordEndpoint, credentials).pipe(
-      catchError(() => of(false)),
-      map(()=> true)
+      map(()=> true),
+      catchError(() => of(false))
     );
   }
 }

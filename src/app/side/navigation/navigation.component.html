@@ -1,1 +1,3 @@
-<app-router-link mat-button [route]="route" *ngFor="let route of routes"></app-router-link>
+<ng-container *ngFor="let route of routes">
+    <app-router-link *ngIf="route.title" mat-button [route]="route"></app-router-link>
+</ng-container>

@@ -19,8 +19,8 @@ export class ScrumBoardsService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<BoardResponseAPI[]>(this.boardsEndpoint, options)
       .pipe(
+        map(boards => boards.map(b => Board.createInternalValue(b))),
         catchError(() => of([])),
-        map(boards => boards.map(b => Board.createInternalValue(b)))
       );
   }
 
@@ -29,8 +29,8 @@ export class ScrumBoardsService {
     const newBoard = Board.createRepresentation(board);
     return this.http.post<BoardResponseAPI>(this.boardsEndpoint, newBoard, options)
       .pipe(
-        catchError(() => of(null)),
-        map(board => board ? Board.createInternalValue(board) : null)
+        map(board => board ? Board.createInternalValue(board) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -38,8 +38,8 @@ export class ScrumBoardsService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<BoardResponseAPI>(this.boardsEndpoint + id + '/', options)
       .pipe(
-        catchError(() => of(null)),
-        map(board => board ? Board.createInternalValue(board) : null)
+        map(board => board ? Board.createInternalValue(board) : null),
+        catchError(() => of(null))
       );
   }
 }

@@ -64,6 +64,5 @@ export class ScrumApiService {
     if (this.rememberMe)
       this.localToken = apiToken.token;
     this.token = apiToken?.token;
-    this.router.navigate(['/']);
   }
 }

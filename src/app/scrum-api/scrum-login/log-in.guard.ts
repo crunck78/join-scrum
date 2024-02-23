@@ -14,6 +14,7 @@ export const canActivate: CanActivateFn = (
   if (token && token.token !== '') {
     return true;
   }
+
   router.navigate(['/auth/log-in'], { queryParams: { returnUrl: state.url } });
   return false;
 };

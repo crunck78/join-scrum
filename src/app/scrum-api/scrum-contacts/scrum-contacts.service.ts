@@ -19,8 +19,8 @@ export class ScrumContactsService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<ContactResponseAPI[]>(this.contactsEndpoint, options)
       .pipe(
-        catchError(() => of([])),
-        map((contacts: ContactResponseAPI[]) => contacts.map(c => Contact.createInternalValue(c)))
+        map((contacts: ContactResponseAPI[]) => contacts.map(c => Contact.createInternalValue(c))),
+        catchError(() => of([]))
       );
   }
 
@@ -29,8 +29,8 @@ export class ScrumContactsService {
     const newContact = Contact.createRepresentation(contact);
     return this.http.post<ContactResponseAPI>(this.contactsEndpoint, newContact, options)
       .pipe(
-        catchError(() => of(null)),
-        map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
+        map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -39,8 +39,8 @@ export class ScrumContactsService {
     const editContact = Contact.createRepresentation(contact);
     return this.http.patch<ContactResponseAPI>(`${this.contactsEndpoint + contactId}/`, editContact, options)
       .pipe(
-        catchError(() => of(null)),
-        map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null)
+        map((contact: ContactResponseAPI | null) => contact ? Contact.createInternalValue(contact) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -48,8 +48,8 @@ export class ScrumContactsService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.delete<number>(`${this.contactsEndpoint + contact.id}/`, options)
       .pipe(
+        map(()=> true),
         catchError(() => of(false)),
-        map(()=> true)
       );
   }
 }

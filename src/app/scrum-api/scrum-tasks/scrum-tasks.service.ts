@@ -21,8 +21,8 @@ export class ScrumTasksService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<TaskResponseAPI[]>(this.tasksEndpoint, options)
       .pipe(
-        catchError(() => of([])),
-        map(tasks => tasks.map(t => Task.createInternalValue(t)))
+        map(tasks => tasks.map(t => Task.createInternalValue(t))),
+        catchError(() => of([]))
       );
   }
 
@@ -30,8 +30,8 @@ export class ScrumTasksService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.get<TaskResponseAPI[]>(this.tasksEndpoint + '?list_is_null=true', options)
       .pipe(
-        catchError(() => of([])),
-        map(tasks => tasks.map(t => Task.createInternalValue(t)))
+        map(tasks => tasks.map(t => Task.createInternalValue(t))),
+        catchError(() => of([]))
       );
   }
 
@@ -40,8 +40,8 @@ export class ScrumTasksService {
     const newTask = Task.createRepresentation(task);
     return this.http.post<TaskResponseAPI | null>(this.tasksEndpoint, newTask, options)
       .pipe(
-        catchError(() => of(null)),
-        map(task => task ? Task.createInternalValue(task) : null)
+        map(task => task ? Task.createInternalValue(task) : null),
+        catchError(() => of(null))
       );
   }
 
@@ -49,8 +49,8 @@ export class ScrumTasksService {
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     return this.http.delete<number | null>(this.tasksEndpoint + taskId + `/`, options)
       .pipe(
-        catchError(() => of(null)),
-        map(value => value || null)
+        map(value => value || null),
+        catchError(() => of(null))
       );
   }
 
@@ -59,8 +59,8 @@ export class ScrumTasksService {
     const taskRequestAPI = Task.createRepresentation(taskRequest);
     return this.http.patch<TaskResponseAPI | null>(`${this.tasksEndpoint}${taskId}/`, taskRequestAPI, options)
       .pipe(
-        catchError(() => of(null)),
-        map(task => task ? Task.createInternalValue(task) : null)
+        map(task => task ? Task.createInternalValue(task) : null),
+        catchError(() => of(null))
       );
   }
 }

@@ -13,7 +13,8 @@ import { RegisterComponent } from '../admin/authentication/register/register.com
 import { ResetPasswordComponent } from '../admin/authentication/reset-password/reset-password.component';
 
 export const routes: Routes = [
-    { canActivate: [canActivate], path: '', component: SummaryComponent, title: 'Summary' },
+    { path: '', redirectTo: 'summary', pathMatch: 'full' },
+    { canActivate: [canActivate], path: 'summary', component: SummaryComponent, title: 'Summary' },
     { canActivate: [canActivate], path: 'board', component: BoardComponent, title: 'Board' },
     { canActivate: [canActivate], path: 'add-task', component: AddTaskComponent, title: 'Add Task' },
     { canActivate: [canActivate], path: 'contacts', component: ContactsComponent, title: 'Contacts' },
@@ -22,7 +23,7 @@ export const routes: Routes = [
     {
         path: 'auth', component: AuthenticationComponent, title: 'Authentication',
         children: [
-            { path: '', redirectTo: 'log-in', pathMatch: 'full' },
+            { path: '', redirectTo: 'log-in', pathMatch: 'prefix' },
             { path: 'log-in', component: LogInComponent, title: 'Log in' },
             { path: 'sign-up', component: RegisterComponent, title: 'Sign up' },
             { path: 'forgot-password', component: ForgotPasswordComponent, title: 'Forgot your Password' },

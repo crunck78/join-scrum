@@ -32,8 +32,8 @@ export class ScrumLoginService {
   login(credentials: LoginCredentials) {
     return this.http.post<ApiToken>(this.loginEndpoint, credentials).pipe(
       tap((response) => this.scrumApi.apiToken$.next(response)),
-      catchError(() => of(false)),
-      map(() => true)
+      map(() => true),
+      catchError(() => of(false))
     );
   }
 }
