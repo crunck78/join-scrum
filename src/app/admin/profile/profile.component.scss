@@ -25,19 +25,27 @@
     position: relative;
 }
 
-.profile-menu{
+.profile-menu {
     position: absolute;
     right: 0;
     top: 0;
 }
 
-.profile-title{
+.profile-title {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.profile-image{
+.profile-image {
     margin: 0 auto;
-    cursor: pointer;
+    position: relative;
+}
+
+.change-img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    display: flex;
 }

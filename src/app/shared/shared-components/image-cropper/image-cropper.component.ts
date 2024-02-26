@@ -56,6 +56,7 @@ export class ProfileImageCropperComponent {
   }
 
   fileChangeEvent(event: any): void {
+    debugger;
     this.imageChangedEvent = event;
   }
 
@@ -67,8 +68,9 @@ export class ProfileImageCropperComponent {
     };
 
     // Create a file from the cropped image blob
-    const croppedFile = blobToFile(event.blob as Blob, "croppedImage.png"); // You can dynamically generate or allow the user to input a filename
+    const croppedFile = blobToFile(event.blob as Blob, "profile.png"); // You can dynamically generate or allow the user to input a filename
     // Instead of directly manipulating the queue
+    this.uploader.clearQueue();
     this.uploader.addToQueue([croppedFile]);
     // this.uploader.queue = [fileItem];
     this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl as string);
@@ -76,19 +78,21 @@ export class ProfileImageCropperComponent {
   }
 
   imageLoaded(image: LoadedImage) {
-    console.log("show cropper: ", image);
+    this.imageCropper.hidden = false;
   }
 
   cropperReady() {
-    console.log("cropper ready");
+
   }
 
   loadImageFailed() {
-    console.log("loadImageFailed");
+
   }
 
   saveImage() {
-
+    this.uploader.queue[0].upload();
+    this.uploader.queue[0].onSuccess = () => {
+      this.dialogRef?.close(true);
+    }
   }
-
 }

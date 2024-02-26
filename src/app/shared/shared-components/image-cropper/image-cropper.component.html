@@ -1,13 +1,21 @@
 <app-dialog [title]="'Update Profile Image'">
-    <input #inputImage *ngIf="!croppedImage" title="File input" type="file" (change)="fileChangeEvent($event)" />
+    <input [hidden]="true" #inputImage title="File input" type="file"
+        (change)="fileChangeEvent($event)" />
     <img titleContentLeft *ngIf="croppedImage" class="cropped-image" alt="Cropped image" [src]="croppedImage" />
 
-    <div ng2FileDrop (onFileDrop)="fileDropBase($event)" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-        (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well drop-zone">
-        Drag and drop Image here
+    <div *ngIf="uploader.queue.length == 0" ng2FileDrop (onFileDrop)="fileDropBase($event)"
+        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+        class="well drop-zone">
+        <div>Drag and drop Image here</div>
+        <div>
+            or choose from Device
+            <button (click)="inputImage.click()" mat-icon-button color="primary" aria-label="Example icon button with a file open icon">
+                <mat-icon>file_open</mat-icon>
+            </button>
+        </div>
     </div>
 
-    <image-cropper [hidden]="false" #imageCropper [imageFile]="fileToChange" class="image-cropper" [roundCropper]="true"
+    <image-cropper [hidden]="uploader.queue.length == 0" #imageCropper [imageFile]="fileToChange" class="image-cropper" [roundCropper]="true"
         [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" format="png"
         (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady()"
         (loadImageFailed)="loadImageFailed()"></image-cropper>
@@ -15,10 +23,10 @@
 
     <ng-container actions>
         <button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
-        <button (click)="saveImage()" [disabled]="true" mat-raised-button color="primary">Save</button>
+        <button (click)="saveImage()" [disabled]="uploader.queue.length == 0" mat-raised-button color="primary">Save</button>
     </ng-container>
 
-    <table class="table">
+    <table *ngIf="false" class="table">
         <thead>
             <tr>
                 <th width="50%">Name</th>
@@ -43,15 +51,15 @@
                     <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                 </td>
                 <td nowrap>
-                    <button type="button" class="btn btn-success btn-xs" (click)="item.upload()"
+                    <button #itemUpload type="button" class="btn btn-success btn-xs" (click)="item.upload()"
                         [disabled]="item.isReady || item.isUploading || item.isSuccess">
                         <span class="glyphicon glyphicon-upload"></span> Upload
                     </button>
-                    <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()"
+                    <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel(); uploader.clearQueue(); inputImage.value = ''"
                         [disabled]="!item.isUploading">
                         <span class="glyphicon glyphicon-ban-circle"></span> Cancel
                     </button>
-                    <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                    <button type="button" class="btn btn-danger btn-xs" (click)="item.remove(); uploader.clearQueue(); inputImage.value = ''">
                         <span class="glyphicon glyphicon-trash"></span> Remove
                     </button>
                 </td>

@@ -32,6 +32,10 @@ export class ProfileComponent {
     private scrumApi: ScrumApiService,
     private feedbackService: FeedbackService
   ) {
+    this.updateProfile();
+  }
+
+  updateProfile() {
     this.scrumProfile.getProfile$()
       .pipe(take(1))
       .subscribe((p) => this.profile = p);
@@ -62,6 +66,10 @@ export class ProfileComponent {
   }
 
   changeImg() {
-    this.dialog.open(ProfileImageCropperComponent);
+    const dialogRef = this.dialog.open(ProfileImageCropperComponent);
+    dialogRef.afterClosed().subscribe((isChanged) => {
+      if (isChanged)
+        this.updateProfile();
+    });
   }
 }

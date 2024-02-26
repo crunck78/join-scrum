@@ -37,8 +37,6 @@ export class ForgotPasswordComponent {
         .subscribe(isSend => {
           if (isSend)
             this.forgotPasswordService.feedbackService.openSnackBar('Reset Password E-mail was send!', 'Close');
-          else
-            this.forgotPasswordService.feedbackService.openSnackBar('Reset Password E-mail could not be send!', 'Try again');
         });
   }
 }
