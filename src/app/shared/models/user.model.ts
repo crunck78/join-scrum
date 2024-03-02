@@ -5,6 +5,7 @@ export interface UserResponse {
     image: string | null;
     createdAt: Date;
     updatedAt: Date;
+    isGuest: boolean;
 }
 
 export interface UserResponseAPI {
@@ -14,6 +15,7 @@ export interface UserResponseAPI {
     image: string | null;
     created_at: string;
     updated_at: string;
+    is_guest: boolean;
 }
 
 export interface UserRequest {
@@ -36,7 +38,8 @@ export class User {
             id: user.id,
             image: user.image,
             email: user.email,
-            name: user.name
+            name: user.name,
+            isGuest: user.is_guest
         };
     }
 

@@ -47,6 +47,16 @@ export class LogInComponent {
       }));
   }
 
+  guestLogin() {
+    this.loginService.scrumLogin.guestLogin()
+      .pipe(take(1))
+      .subscribe((isLogged => {
+        if (!isLogged)
+          return;
+        this.router.navigate([this.returnUrl]);
+      }));
+  }
+
   get mobile$() {
     return this.loginService.breakPoints.mobile$;
   }

@@ -8,6 +8,7 @@ import { MaterialModule } from '../../modules/material/material.module';
 import { FileItem, FileUploadModule, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { PROFILE_IMAGE_ENDPOINT } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
 import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
+import { FeedbackService } from '../../shared-services/feedback/feedback.service';
 
 const URL = PROFILE_IMAGE_ENDPOINT;
 
@@ -33,6 +34,7 @@ export class ProfileImageCropperComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private scrumApi: ScrumApiService,
+    private feedbackService: FeedbackService,
     @Optional() private dialogRef?: MatDialogRef<ImageCropperComponent>
   ) {
     this.uploader = new FileUploader({
@@ -91,8 +93,7 @@ export class ProfileImageCropperComponent {
 
   saveImage() {
     this.uploader.queue[0].upload();
-    this.uploader.queue[0].onSuccess = () => {
-      this.dialogRef?.close(true);
-    }
+    this.uploader.queue[0].onSuccess = () => this.dialogRef?.close(true);
+    this.uploader.queue[0].onError = (response, status) => this.feedbackService.openSnackBar(`${response || 'Something went wrong!'}`, 'Close');
   }
 }

@@ -25,7 +25,7 @@
 
         <div class="simple-grid">
             <button [disabled]="loginForm.invalid" (click)="login()" mat-raised-button color="primary">Log in</button>
-            <button mat-stroked-button color="primary">Guest Log in</button>
+            <button mat-stroked-button color="primary" (click)="guestLogin()">Guest Log in</button>
         </div>
 
     </div>

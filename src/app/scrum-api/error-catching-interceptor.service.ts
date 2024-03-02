@@ -26,19 +26,27 @@ export class ErrorCatchingInterceptor {
 
   private _handleErrorResponse(errorResponse: HttpErrorResponse) {
     const errors: string[] = [];
+    if (this._isUnknownError(errorResponse) || this._isServerError(errorResponse))
+      errors.push(this._getErrorMessage(errorResponse));
 
-    if (this._isBadRequest(errorResponse)) {
+    else if (this._isBadRequest(errorResponse)) {
       for (const key in errorResponse.error) {
-        if (Object.prototype.hasOwnProperty.call(errorResponse.error, key)) {
-          const errorKey = errorResponse.error[key];
-          if (Array.isArray(errorKey))
-            errorKey.forEach((errMessage) => {
-              errors.push(`${key.toUpperCase()}: ${errMessage}`);
-            });
+        if (!Object.prototype.hasOwnProperty.call(errorResponse.error, key))
+          continue;
+
+        const errorContent = errorResponse.error[key];
+        if (Array.isArray(errorContent)) {
+          errorContent.forEach((errMessage) => {
+            errors.push(`${key.toUpperCase()}: ${errMessage}`);
+          });
+          continue;
         }
+        if (typeof errorContent === 'string') {
+          errors.push(`${key.toUpperCase()}: ${errorContent}`);
+          continue;
+        }
+        errors.push(this._getErrorMessage(errorResponse));
       }
-    } else {
-      errors.push(errorResponse.error === 'string' ? errorResponse.error : errorResponse.message);
     }
 
     errors.forEach((e, i) => {
@@ -52,5 +60,24 @@ export class ErrorCatchingInterceptor {
 
   private _isBadRequest(errorResponse: HttpErrorResponse) {
     return errorResponse.status >= 400 && errorResponse.status < 500;
+  }
+
+  private _isServerError(errorResponse: HttpErrorResponse) {
+    return errorResponse.status >= 500 && errorResponse.status < 600;
+  }
+
+  private _isUnknownError(errorResponse: HttpErrorResponse) {
+    return errorResponse.status == 0;
+  }
+
+  private _getErrorMessage(errorResponse: HttpErrorResponse) {
+    if (errorResponse.statusText != '' && errorResponse.statusText.toLowerCase() != 'ok')
+      return errorResponse.statusText;
+    if (errorResponse.message != '')
+      return errorResponse.message;
+    if (typeof errorResponse.error === 'string' && errorResponse.error != '')
+      return errorResponse.error;
+
+    return 'Something went wrong!';
   }
 }

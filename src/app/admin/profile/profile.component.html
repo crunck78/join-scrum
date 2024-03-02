@@ -16,7 +16,7 @@
     </div>
 
     <div subtitle>
-        <p *ngIf="profile?.email">Email : {{profile?.email}}</p>
+        <p *ngIf="profile?.email && !profile?.isGuest">Email : {{profile?.email}}</p>
     </div>
 
     <div class="profile-menu">
