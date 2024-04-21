@@ -61,7 +61,7 @@ export class ProfileComponent {
       .pipe(take(1))
       .subscribe((isDeleted) => {
         if (isDeleted)
-          this.scrumApi.apiToken$.next({ token: '' })
+          this.scrumApi.logout();
       });
   }
 
