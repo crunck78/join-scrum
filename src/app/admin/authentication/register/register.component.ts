@@ -22,7 +22,9 @@ export class RegisterComponent {
     password: new FormControl('', Validators.compose([Validators.required]))
   });
 
-  constructor(private registerService: RegisterService) {}
+  constructor(private registerService: RegisterService) {
+    this.signupForm.disable();
+  }
 
   get mobile$() {
     return this.registerService.breakPoints.mobile$;

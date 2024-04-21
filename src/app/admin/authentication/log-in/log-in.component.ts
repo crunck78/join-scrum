@@ -32,7 +32,8 @@ export class LogInComponent {
     private router: Router
   ) {
     this.route.queryParams.pipe(take(1)).subscribe(params => this.returnUrl = params['returnUrl'] || '');
-    this.rememberMe.valueChanges.subscribe(value => this.loginService.scrumApi.rememberMe = value as boolean)
+    this.rememberMe.valueChanges.subscribe(value => this.loginService.scrumApi.rememberMe = value as boolean);
+    this.loginForm.disable();
   }
 
   login() {

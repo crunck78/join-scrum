@@ -22,7 +22,9 @@ export class ForgotPasswordComponent {
     email: new FormControl('', Validators.compose([Validators.required, Validators.email]))
   });
 
-  constructor(private forgotPasswordService: ForgotPasswordService) { }
+  constructor(private forgotPasswordService: ForgotPasswordService) {
+    this.forgotPasswordForm.disable();
+  }
 
   get mobile$() {
     return this.forgotPasswordService.mobile$;
