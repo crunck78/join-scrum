@@ -22,4 +22,5 @@ export class RouterLinkComponent {
   @Input() route!: Route;
   @Input() basePath?: string = ''; // New Input for base path
   @Input() linkType: LinkType = 'mat-raised-button';
+  @Input() hidden: boolean = false;
 }

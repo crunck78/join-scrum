@@ -1,3 +1,6 @@
 <ng-container *ngFor="let route of routes">
-    <app-router-link *ngIf="route.title" mat-button [route]="route"></app-router-link>
+    <ng-container *ngIf="!(isLoggedIn && route.path === 'auth')">
+        <!-- Then check if it should be rendered -->
+        <app-router-link *ngIf="route.title" mat-button [route]="route"></app-router-link>
+    </ng-container>
 </ng-container>
