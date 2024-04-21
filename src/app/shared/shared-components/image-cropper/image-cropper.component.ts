@@ -58,7 +58,6 @@ export class ProfileImageCropperComponent {
   }
 
   fileChangeEvent(event: any): void {
-    debugger;
     this.imageChangedEvent = event;
   }
 
@@ -94,6 +93,9 @@ export class ProfileImageCropperComponent {
   saveImage() {
     this.uploader.queue[0].upload();
     this.uploader.queue[0].onSuccess = () => this.dialogRef?.close(true);
-    this.uploader.queue[0].onError = (response, status) => this.feedbackService.openSnackBar(`${response || 'Something went wrong!'}`, 'Close');
+    this.uploader.queue[0].onError = (response, status) => {
+      const responseJSON = JSON.parse(response);
+      this.feedbackService.openSnackBar(`${responseJSON.detail || 'Something went wrong!'}`, 'Close')
+    };
   }
 }
