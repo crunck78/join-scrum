@@ -11,7 +11,7 @@ export const canActivate: CanActivateFn = (
   const scrumApi = inject(ScrumApiService);
   const token = scrumApi.apiToken$.getValue();
 
-  if (token && token.token !== '') {
+  if (scrumApi.isLoggedIn()) {
     return true;
   }
 

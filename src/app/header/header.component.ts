@@ -18,8 +18,7 @@ export class HeaderComponent {
   @Output() toggleDrawer = new EventEmitter();
 
   logout() {
-    this.headerService.router.navigate(['/auth/log-in'])
-    this.headerService.scrumApi.apiToken$.next({ token: "" });
+    this.headerService.logout();
   }
 
   get matchWebBreakpoint$() {

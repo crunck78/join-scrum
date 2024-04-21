@@ -8,5 +8,12 @@ import { Router } from '@angular/router';
 })
 export class HeaderService {
 
-  constructor(public scrumApi: ScrumApiService, public breakPoints: BreakpointsService, public router: Router) { }
+  constructor(
+    public scrumApi: ScrumApiService,
+    public breakPoints: BreakpointsService,
+    public router: Router) { }
+
+    logout() {
+      this.scrumApi.logout();
+    }
 }

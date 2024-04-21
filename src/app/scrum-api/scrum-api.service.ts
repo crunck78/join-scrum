@@ -15,6 +15,11 @@ export class ScrumApiService {
   token!: string;
   apiToken$!: BehaviorSubject<ApiToken>;
 
+  isLoggedIn(): boolean {
+    const token = this.apiToken$.getValue();
+    return token && token.token !== '';
+  }
+
   get headersTokenAuthorization() {
     return new HttpHeaders({
       'Authorization': `Token ${this.token}`
@@ -64,5 +69,10 @@ export class ScrumApiService {
     if (this.rememberMe)
       this.localToken = apiToken.token;
     this.token = apiToken?.token;
+  }
+
+  logout(){
+    this.router.navigate(['/auth/log-in'])
+    this.apiToken$.next({ token: "" });
   }
 }
