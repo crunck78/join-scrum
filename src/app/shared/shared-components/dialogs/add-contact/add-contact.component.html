@@ -7,14 +7,14 @@
             [autocomplete]="'contact-name'" [type]="'text'" [inputType]="'input'" [suffixPath]="'assets/person.svg'"
             [control]="$any(addContactForm.get('name'))" [labelName]="'Name'"></app-form-field>
 
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
-            {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'contact-email'"
-            [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
+        <app-form-field [required]="false"
+            [errors]="[{name: 'email', htmlMessage: 'Please enter a valid email address'}]"
+            [autocomplete]="'contact-email'" [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
             [control]="$any(addContactForm.get('email'))" [labelName]="'Email'"></app-form-field>
 
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Phone Number is <strong>required</strong>'}]"
-            [autocomplete]="'contact-phone'" [type]="'tel'" [inputType]="'input'" [suffixPath]="'assets/phone.svg'"
-            [control]="$any(addContactForm.get('phoneNumber'))" [labelName]="'Phone'"></app-form-field>
+        <app-form-field [required]="false" [autocomplete]="'contact-phone'" [type]="'tel'" [inputType]="'input'"
+            [suffixPath]="'assets/phone.svg'" [control]="$any(addContactForm.get('phoneNumber'))"
+            [labelName]="'Phone'"></app-form-field>
 
         <!-- <mat-expansion-panel>
             <mat-expansion-panel-header>
