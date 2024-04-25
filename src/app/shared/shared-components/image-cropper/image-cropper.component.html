@@ -3,7 +3,7 @@
         (change)="fileChangeEvent($event)" />
     <img titleContentLeft *ngIf="croppedImage" class="cropped-image" alt="Cropped image" [src]="croppedImage" />
 
-    <div *ngIf="uploader.queue.length == 0" ng2FileDrop (onFileDrop)="fileDropBase($event)"
+    <div *ngIf="uploader.queue.length === 0" ng2FileDrop (onFileDrop)="fileDropBase($event)"
         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
         class="well drop-zone">
         <div>Drag and drop Image here</div>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <image-cropper [hidden]="uploader.queue.length == 0" #imageCropper [imageFile]="fileToChange" class="image-cropper" [roundCropper]="true"
+    <image-cropper [hidden]="uploader.queue.length === 0" #imageCropper [imageFile]="fileToChange" class="image-cropper" [roundCropper]="true"
         [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" format="png"
         (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady()"
         (loadImageFailed)="loadImageFailed()"></image-cropper>
@@ -23,7 +23,7 @@
 
     <ng-container actions>
         <button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
-        <button (click)="saveImage()" [disabled]="uploader.queue.length == 0" mat-raised-button color="primary">Save</button>
+        <button (click)="saveImage()" [disabled]="uploader.queue.length === 0" mat-raised-button color="primary">Save</button>
     </ng-container>
 
     <table *ngIf="false" class="table">

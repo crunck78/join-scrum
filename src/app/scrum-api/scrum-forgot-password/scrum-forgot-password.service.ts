@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ScrumApiService } from '../scrum-api.service';
 import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';

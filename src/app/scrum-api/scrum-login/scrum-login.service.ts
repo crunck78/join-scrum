@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { GUEST_LOGIN_ENDPOINT, LOGIN_ENDPOINT } from './login-interceptor.service';
 import { ApiToken, ScrumApiService } from '../scrum-api.service';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
-import { catchError, map, of, take, tap, throwError } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
 
 export interface LoginCredentials {
   email: string;

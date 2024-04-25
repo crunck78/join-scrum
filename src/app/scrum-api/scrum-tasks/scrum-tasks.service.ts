@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ScrumApiService } from '../scrum-api.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { TaskResponse, TaskResponseAPI, Task, TaskRequest } from 'src/app/shared/models/task.model';

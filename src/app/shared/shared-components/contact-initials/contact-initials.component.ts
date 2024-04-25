@@ -12,9 +12,9 @@ import { Component, Input } from '@angular/core';
 })
 export class ContactInitialsComponent {
   @Input() contactName!: string | undefined;
-  @Input() backgroundColor: string = '#FF7A00';
-  @Input() borderColor: string = '#FFFFFF';
-  @Input() size: string = '21px'; // font-size
+  @Input() backgroundColor = '#FF7A00';
+  @Input() borderColor = '#FFFFFF';
+  @Input() size = '21px'; // font-size
   @Input() imgSrc: string | null | undefined;
 
   get contactInitials() {

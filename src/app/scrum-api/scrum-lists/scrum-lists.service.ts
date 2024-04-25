@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ScrumApiService } from '../scrum-api.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { ListResponse, ListResponseAPI, List, ListRequest } from 'src/app/shared/models/list.model';

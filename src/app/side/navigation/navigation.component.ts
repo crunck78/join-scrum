@@ -16,9 +16,7 @@ import { RouterLinkComponent } from 'src/app/shared/shared-components/router-lin
 })
 export class NavigationComponent {
 
-  constructor(private router: Router, private scrumApi: ScrumApiService) {
-    console.log(this.routes);
-  }
+  constructor(private router: Router, private scrumApi: ScrumApiService) {}
 
   get isLoggedIn(): boolean {
     return this.scrumApi.isLoggedIn();

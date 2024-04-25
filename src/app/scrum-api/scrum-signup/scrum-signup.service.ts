@@ -36,7 +36,7 @@ export class ScrumSignupService {
           this.router.navigate(['/auth/log-in']);
           this.feedback.openSnackBar('Great Job! Successfully Signed Up!');
         },
-        error: (error) => this.feedback.openSnackBar("Something went wrong!", "Try again")
+        error: () => this.feedback.openSnackBar("Something went wrong!", "Try again")
       });
   }
 }

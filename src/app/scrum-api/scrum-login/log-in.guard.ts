@@ -1,6 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { ScrumApiService } from '../scrum-api.service';
 
 export const canActivate: CanActivateFn = (
@@ -9,7 +8,6 @@ export const canActivate: CanActivateFn = (
 ) => {
   const router = inject(Router);
   const scrumApi = inject(ScrumApiService);
-  const token = scrumApi.apiToken$.getValue();
 
   if (scrumApi.isLoggedIn()) {
     return true;

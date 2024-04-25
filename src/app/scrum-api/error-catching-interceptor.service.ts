@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular
 import { catchError, Observable, throwError } from 'rxjs';
 import { DURATION_SNACK_BAR, FeedbackService } from '../shared/shared-services/feedback/feedback.service';
 import { ScrumApiService } from './scrum-api.service';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorCatchingInterceptor {

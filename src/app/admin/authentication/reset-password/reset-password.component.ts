@@ -5,7 +5,7 @@ import { ResetPasswordModule } from './reset-password.module';
 import { ResetPasswordService } from './reset-password.service';
 import { ResetPasswordCredentials } from 'src/app/scrum-api/scrum-reset-password/scrum-reset-password.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map, take } from 'rxjs';
+import { take } from 'rxjs';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 
 @Component({

@@ -47,11 +47,11 @@ export class Subtask {
         };
     }
 
-    static convertToRepresentation(task: SubtaskResponse): SubtaskRequest {
+    static convertToRepresentation(subtask: SubtaskResponse): SubtaskRequest {
         return {
-          title: task.title,
-          done: task.done,
-          id: task.id
+          title: subtask.title,
+          done: subtask.done,
+          id: subtask.id
         }
       }
 }

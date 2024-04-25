@@ -43,7 +43,7 @@
                 [control]="addSubtaskForm"></app-form-field>
 
             <div class="subtasks-list">
-                <app-subtask class="subtask" (onRemoveTask)="removeSubtask($event)" [subtaskId]="i" [subtask]="subtask"
+                <app-subtask class="subtask" (removeTask$)="removeSubtask($event)" [subtaskId]="i" [subtask]="subtask"
                     *ngFor="let subtask of addTaskForm.get('subtasks')?.value; let i = index"></app-subtask>
             </div>
         </div>

@@ -4,7 +4,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ForgotPasswordModule } from './forgot-password.module';
 import { ForgotPasswordService } from './forgot-password.service';
 import { ForgotPasswordCredentials } from 'src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 import { take } from 'rxjs';
 
 @Component({

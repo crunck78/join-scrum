@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ComponentRef, ElementRef, Optional, ViewChild } from '@angular/core';
+import { Component, ElementRef, Optional, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageCroppedEvent, ImageCropperComponent, ImageCropperModule, LoadedImage } from 'ngx-image-cropper';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from '../../modules/material/material.module';
-import { FileItem, FileUploadModule, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
+import { FileUploadModule, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { PROFILE_IMAGE_ENDPOINT } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
 import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
 import { FeedbackService } from '../../shared-services/feedback/feedback.service';
@@ -93,7 +93,7 @@ export class ProfileImageCropperComponent {
   saveImage() {
     this.uploader.queue[0].upload();
     this.uploader.queue[0].onSuccess = () => this.dialogRef?.close(true);
-    this.uploader.queue[0].onError = (response, status) => {
+    this.uploader.queue[0].onError = (response) => {
       const responseJSON = JSON.parse(response);
       this.feedbackService.openSnackBar(`${responseJSON.detail || 'Something went wrong!'}`, 'Close')
     };

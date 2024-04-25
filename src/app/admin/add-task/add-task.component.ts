@@ -5,7 +5,7 @@ import {
   FormControl, FormControlStatus, FormGroup, Validators
 } from '@angular/forms';
 import {
-  Observable, Subject, map, take
+  Observable, Subject, take
 } from 'rxjs';
 import {
   AddTaskModule, Priority, PriorityType, TaskFormGroup, TaskMode
@@ -71,8 +71,8 @@ export class AddTaskComponent implements OnChanges {
   @Input() predefinedTaskRequest!: Partial<TaskRequest>;
 
   @Output() formStatus$ = new EventEmitter<FormControlStatus>();
-  @Output() onEditedTask$ = new EventEmitter<TaskResponse | null>();
-  @Output() onAddedTask$ = new EventEmitter<TaskResponse | null>();
+  @Output() editedTask$ = new EventEmitter<TaskResponse | null>();
+  @Output() addedTask$ = new EventEmitter<TaskResponse | null>();
   @Output() deletedTaskId$ = new EventEmitter<number | null>();
 
   constructor(private addTaskService: AddTaskService, private feedback: FeedbackService) {
@@ -220,7 +220,7 @@ export class AddTaskComponent implements OnChanges {
       .subscribe((newTask) => {
         if(!newTask)
           return;
-        this.onAddedTask$.emit(newTask);
+        this.addedTask$.emit(newTask);
         const feedbackRef = this.feedback.openSnackBar('Task Created!', 'To Board');
         feedbackRef?.afterDismissed()
           .subscribe((value: MatSnackBarDismiss) => {
@@ -237,7 +237,7 @@ export class AddTaskComponent implements OnChanges {
     this.addTaskService.scrumTask.updateTask$(this.task.id, toEditTask)
       .pipe(take(1))
       .subscribe({
-        next: (res) => this.onEditedTask$.emit(res),
+        next: (res) => this.editedTask$.emit(res),
       });
   }
 
