@@ -87,7 +87,11 @@ export class ProfileImageCropperComponent {
   }
 
   loadImageFailed() {
-
+    this.feedbackService.openSnackBar(
+      "Failed to load the image. Please ensure the file is a supported format like PNG or JPG.",
+      "Close",
+      {}, false
+    );
   }
 
   saveImage() {
