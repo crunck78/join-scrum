@@ -24,8 +24,8 @@ export const routes: Routes = [
         path: 'auth', component: AuthenticationComponent, title: 'Authentication',
         children: [
             { path: '', redirectTo: 'log-in', pathMatch: 'prefix' },
-            { path: 'log-in', component: LogInComponent, title: 'Log in' },
-            { path: 'sign-up', component: RegisterComponent, title: 'Sign up' },
+            { path: 'log-in', component: LogInComponent, title: 'Login' },
+            { path: 'sign-up', component: RegisterComponent, title: 'SignUp' },
             { path: 'forgot-password', component: ForgotPasswordComponent, title: 'Forgot your Password' },
             { path: 'reset-password', component: ResetPasswordComponent, title: 'Reset your Password' }
         ]
