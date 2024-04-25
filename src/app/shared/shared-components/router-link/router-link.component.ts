@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Route, RouterLinkActive, RouterModule } from '@angular/router';
+import { Route, Router, RouterLinkActive, RouterModule } from '@angular/router';
 
 export declare type LinkType = 'mat-raised-button' | 'mat-fab' | 'mat-flat-button' | 'mat-icon-button' | 'mat-mini-fab' | 'mat-button' | 'mat-stroked-button';
 
@@ -17,10 +17,18 @@ export declare type LinkType = 'mat-raised-button' | 'mat-fab' | 'mat-flat-butto
     RouterLinkActive
   ]
 })
-export class RouterLinkComponent {
+export class RouterLinkComponent implements OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['routeByPath']){
+      this.route = this.router.config.find(r => r.path === this.routeByPath);
+    }
+  }
 
-  @Input() route!: Route;
+  @Input() route!: Route | undefined;
   @Input() basePath?: string = ''; // New Input for base path
   @Input() linkType: LinkType = 'mat-raised-button';
-  @Input() hidden: boolean = false;
+  @Input() hidden = false;
+  @Input() routeByPath!: string;
+
+  constructor(private router: Router){}
 }
