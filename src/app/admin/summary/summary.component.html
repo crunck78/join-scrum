@@ -1,6 +1,6 @@
 <!-- <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title> -->
-<div class="summary-counts">
-    <app-card *ngIf="summary?.tasksInBacklog" class="counter-wrapper">
+<div class="summary-counts" *ngIf="!summaryEmpty">
+    <app-card *ngIf="summary?.tasksInBacklog?.count" class="counter-wrapper">
         <p title class="counter">{{summary?.tasksInBacklog?.count}}</p>
         <p subtitle class="counter">{{ summary && summary.tasksInBacklog.count > 1 ? 'Tasks' :
             'Task'}}<br>in Backlog</p>
@@ -29,6 +29,14 @@
     </div>
 </div>
 
+<!-- <ng-template #emptySummary>
+    <div class="summary-counts">
+        <app-card class="greeting-wrapper">
+            <p title>There is not much going on here.</p>
+        </app-card>
+    </div>
+</ng-template> -->
+
 <div class="summary-counts">
     <app-card class="greeting-wrapper">
         <p title>
@@ -36,7 +44,15 @@
             <span *ngIf="profile; else anonymous">{{profile.name || profile.email || 'Guest'}}</span>
             <ng-template #anonymous>Guest</ng-template>
         </p>
-        <p *ngIf="!summary" subtitle> Nothing to show </p>
+
+        <div subtitle *ngIf="summaryEmpty">
+            <p>Nothing much going on here.</p>
+            <p>Try out adding some tasks.</p>
+        </div>
+
+        <div footer>
+            <app-router-link [basePath]="'/'" [routeByPath]="'add-task'"></app-router-link>
+        </div>
     </app-card>
 
     <div class="tasks-by-category">

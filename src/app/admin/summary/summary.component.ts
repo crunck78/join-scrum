@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { ScrumProfileService } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
-import { ScrumSummaryService } from 'src/app/scrum-api/scrum-summary/scrum-summary.service';
 import { SummaryResponse } from 'src/app/shared/models/summary.model';
 import { UserResponse } from 'src/app/shared/models/user.model';
-import { BreakpointsService } from 'src/app/shared/shared-services/breakpoints/breakpoints.service';
 import { SummaryModule } from './summary.module';
 import { SummaryService } from './summary.service';
-import { take } from 'rxjs';
 
 @Component({
   selector: 'app-summary',
@@ -19,6 +15,10 @@ import { take } from 'rxjs';
 export class SummaryComponent {
 
   constructor(private summaryService: SummaryService) { }
+
+  get summaryEmpty(): boolean{
+    return this.summaryService.summaryEmpty;
+  }
 
   get summary(): SummaryResponse | null {
     return this.summaryService.summary;

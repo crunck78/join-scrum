@@ -23,4 +23,13 @@ export class SummaryService {
     this.scrumProfile.getProfile$().pipe(take(1))
       .subscribe((profile) => this.profile = profile);
   }
+
+  get summaryEmpty(){
+    if(!this.summary)
+        return true;
+    return (this.summary.tasksByCategory.length == 0 &&
+      this.summary.tasksByPriority.length == 0 &&
+      this.summary.tasksInLists.length == 0 &&
+      this.summary.tasksInBacklog.count == 0);
+  }
 }
