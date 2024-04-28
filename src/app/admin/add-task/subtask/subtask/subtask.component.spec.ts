@@ -7,6 +7,10 @@ import { ContentEditableComponent } from 'src/app/shared/shared-components/conte
 describe('SubtaskComponent', () => {
   let component: SubtaskComponent;
   let fixture: ComponentFixture<SubtaskComponent>;
+  let subtask = {
+    title: "Some Title",
+    done: false
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -17,6 +21,7 @@ describe('SubtaskComponent', () => {
 
     fixture = TestBed.createComponent(SubtaskComponent);
     component = fixture.componentInstance;
+    component.subtask = subtask;
     fixture.detectChanges();
   });
 

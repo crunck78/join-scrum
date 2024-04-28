@@ -10,6 +10,7 @@ describe('LoginInterceptorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        LoginInterceptor,
         importProvidersFrom(HttpClientModule),
       ]
     });

@@ -54,7 +54,6 @@ export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*
     ReactiveFormsModule,
     RouterLink,
     MaterialModule,
-    FormFieldComponent,
     HasErrorPipe,
     MessageErrorPipe,
     SanitizeHtmlPipe,

@@ -15,7 +15,7 @@ describe('AddContactComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         importProvidersFrom(BrowserAnimationsModule, HttpClientModule, MaterialModule),
-        { provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: {} }
+        { provide: MatDialogRef, useValue: {} }
       ]
     })
       .compileComponents();

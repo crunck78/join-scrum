@@ -3,11 +3,11 @@
 
     <input *ngIf="inputType === 'input' && type !== 'tel'" [required]="required" maxlength="100"
         minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
-        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
+        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher"/>
 
     <input (input)="handleInputPhoneNumber($any($event))" *ngIf="inputType === 'input' && type === 'tel'" [required]="required" maxlength="100"
         minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
-        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
+        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher"/>
 
     <textarea (blur)="$any($event.target).style.height = '100px'" (focus)="$any($event.target).style.height = '300px'" *ngIf="inputType === 'text-area'" [required]="required" maxlength="500"
         minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
@@ -24,7 +24,7 @@
     <div class="input-color" *ngIf="inputType === 'color'">
         <input (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
             [ngxMatColorPicker]="picker" [formControl]="$any(control)" [disabled]="false"
-            [errorStateMatcher]="customMatcher">
+            [errorStateMatcher]="customMatcher"/>
         <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
         <ngx-mat-color-picker #picker [touchUi]="false" [color]="control.value"></ngx-mat-color-picker>
     </div>
@@ -32,7 +32,7 @@
 
     <input [min]="today" *ngIf="inputType === 'date'" [formControl]="$any(control)" [errorStateMatcher]="customMatcher"
         (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
-        [matDatepicker]="picker">
+        [matDatepicker]="picker"/>
     <mat-datepicker-toggle (click)="resetErrorState()" *ngIf="inputType === 'date'" matIconSuffix
         [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker [hidden]="inputType !== 'date'" #picker></mat-datepicker>

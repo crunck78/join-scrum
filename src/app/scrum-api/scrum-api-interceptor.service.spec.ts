@@ -6,7 +6,11 @@ describe('ScrumApiInterceptorService', () => {
   let service: ScrumApiInterceptor;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        ScrumApiInterceptor
+      ]
+    });
     service = TestBed.inject(ScrumApiInterceptor);
   });
 
