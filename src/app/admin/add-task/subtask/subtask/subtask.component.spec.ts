@@ -7,7 +7,7 @@ import { ContentEditableComponent } from 'src/app/shared/shared-components/conte
 describe('SubtaskComponent', () => {
   let component: SubtaskComponent;
   let fixture: ComponentFixture<SubtaskComponent>;
-  let subtask = {
+  const subtask = {
     title: "Some Title",
     done: false
   }

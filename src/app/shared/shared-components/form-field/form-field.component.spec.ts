@@ -10,9 +10,9 @@ describe('FormFieldComponent', () => {
   let component: FormFieldComponent;
   let fixture: ComponentFixture<FormFieldComponent>;
 
-  let formControl = new FormControl('Test');
-  let inputType : InputType = 'input';
-  let type : FieldType = 'text';
+  const formControl = new FormControl('Test');
+  const inputType : InputType = 'input';
+  const type : FieldType = 'text';
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

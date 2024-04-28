@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileImageCropperComponent } from './image-cropper.component';
-import { ImageCropperComponent, ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { importProvidersFrom } from '@angular/core';
 import { MaterialModule } from '../../modules/material/material.module';
 

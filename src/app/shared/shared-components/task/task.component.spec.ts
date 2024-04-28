@@ -6,7 +6,7 @@ import { TaskResponse } from '../../models/task.model';
 describe('TaskComponent', () => {
   let component: TaskComponent;
   let fixture: ComponentFixture<TaskComponent>;
-  let task = {
+  const task = {
     id: 1,
     title: "Some Task",
     description: "Some Description",

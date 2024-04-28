@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ErrorCatchingInterceptor } from './error-catching-interceptor.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from '../shared/routes';
 import { importProvidersFrom } from '@angular/core';
