@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskComponent } from './add-task.component';
+import { importProvidersFrom } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
@@ -8,7 +12,9 @@ describe('AddTaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddTaskComponent ]
+      providers: [
+        importProvidersFrom(BrowserAnimationsModule, HttpClientModule, MaterialModule)
+      ]
     })
     .compileComponents();
 

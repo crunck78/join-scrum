@@ -7,9 +7,7 @@ describe('TaskComponent', () => {
   let fixture: ComponentFixture<TaskComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ TaskComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(TaskComponent);

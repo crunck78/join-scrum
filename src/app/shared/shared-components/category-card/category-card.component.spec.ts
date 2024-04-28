@@ -7,9 +7,7 @@ describe('CategoryCardComponent', () => {
   let fixture: ComponentFixture<CategoryCardComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ CategoryCardComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(CategoryCardComponent);

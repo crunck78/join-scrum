@@ -8,7 +8,7 @@
             [labelName]="'Name'"></app-form-field>
 
         <app-form-field [errors]="[{name: 'required', htmlMessage: 'Board is <strong>required</strong>'}]"
-            [suffixIcon]="'add'" [options]="boards$ | async | options : 'name' : 'id': this.getBoardOptionHTML"
+            [suffixIcon]="'add'" [options]="$any(boards$ | async) | options : 'name' : 'id': this.getBoardOptionHTML"
             [required]="true" [inputType]="'select'" [labelName]="'Select a board'"
             [control]="$any(addListForm.get('board'))">
         </app-form-field>

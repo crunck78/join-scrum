@@ -21,7 +21,7 @@ export class ScrumResetPasswordService {
   constructor(private http: HttpClient) {}
 
   resetPassword(credentials: ResetPasswordCredentials) {
-    return this.http.post<any>(this.resetPasswordEndpoint, credentials).pipe(
+    return this.http.post(this.resetPasswordEndpoint, credentials).pipe(
       map(()=> true),
       catchError(() => of(false))
     );

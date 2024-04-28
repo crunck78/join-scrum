@@ -37,6 +37,7 @@ export class ScrumProfileService {
   }
 
   editProfile$(profile: Partial<UserRequest>, profileId: number): Observable<UserResponse | null> {
+    console.log(profileId);
     const options = { headers: this.scrumApi.headersTokenAuthorization };
     const editProfile = User.createRepresentation(profile);
     return this.http.patch<UserResponseAPI>(this.profileEndpoint, editProfile, options)

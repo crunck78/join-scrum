@@ -1,8 +1,8 @@
-import { AtozPipe } from './atoz.pipe';
+import { AtoZPipe } from './atoz.pipe';
 
 describe('AtozPipe', () => {
   it('create an instance', () => {
-    const pipe = new AtozPipe();
+    const pipe = new AtoZPipe();
     expect(pipe).toBeTruthy();
   });
 });

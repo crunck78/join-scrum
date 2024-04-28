@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
+import { importProvidersFrom } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+import { provideRouter } from '@angular/router';
+import { routes } from 'src/app/shared/routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -8,7 +14,10 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RegisterComponent ]
+      providers: [
+        importProvidersFrom(BrowserAnimationsModule, HttpClientModule, MaterialModule),
+        provideRouter(routes)
+      ]
     })
     .compileComponents();
 

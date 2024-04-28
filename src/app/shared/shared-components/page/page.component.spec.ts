@@ -7,9 +7,7 @@ describe('PageComponent', () => {
   let fixture: ComponentFixture<PageComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ PageComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(PageComponent);

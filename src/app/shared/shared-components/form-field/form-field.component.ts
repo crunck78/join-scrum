@@ -16,6 +16,7 @@ import { PageTitleComponent } from '../page-title/page-title.component';
 /** Error when invalid control is dirty, touched, or submitted. */
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    console.log(form);
     return !!(control && control.invalid && control.touched);
   }
 }
@@ -26,10 +27,14 @@ export interface ValidatorError {
   htmlMessage?: string
 }
 
-export interface Option {
-  valueOnSelect: any,
-  displayValue: any,
-  value: any,
+export type OptionType = {
+  [k: string] : object | string | number
+}
+
+export interface Option<OptionType> {
+  valueOnSelect: keyof OptionType,
+  displayValue: keyof OptionType,
+  value: OptionType,
   html?: string
 }
 
@@ -70,7 +75,7 @@ export class FormFieldComponent {
   @Input() errors!: ValidatorError[];
   @Input() minLength!: number;
   @Input() required = true;
-  @Input() options!: Option[] | null | undefined;
+  @Input() options!: Option<OptionType>[] | null | undefined;
   @Input() actionName!: string;
   @Input() suffixIcon!: string;
   @Input() multiple = false;

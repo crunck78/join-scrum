@@ -8,7 +8,7 @@ import {
   Observable, Subject, take
 } from 'rxjs';
 import {
-  AddTaskModule, Priority, PriorityType, TaskFormGroup, TaskMode
+  AddTaskModule, PriorityType, TaskFormGroup, TaskMode
 } from './add-task.module';
 import { AddTaskService } from './add-task.service';
 import { CategoryResponse } from 'src/app/shared/models/category.model';
@@ -19,6 +19,7 @@ import { AddCategoryComponent } from 'src/app/shared/shared-components/dialogs/a
 import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 import { MatSnackBarDismiss } from '@angular/material/snack-bar';
+import { OptionType } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
   selector: 'app-add-task',
@@ -146,19 +147,19 @@ export class AddTaskComponent implements OnChanges {
     this.contacts$ = this.addTaskService.contacts$;
   }
 
-  getCategoryOptionHTML(option: CategoryResponse) {
+  getCategoryOptionHTML(option: OptionType) {
     return `
     <span class="category-option">
-      <span  class="category-color" style="background-color: ${option.color}"></span>
-      <span class="category-name">${option.name}</span>
+      <span  class="category-color" style="background-color: ${option['color']}"></span>
+      <span class="category-name">${option['name']}</span>
     </span>`;
   }
 
-  getPriorityOptionHTML(option: Priority) {
+  getPriorityOptionHTML(option: OptionType) {
     return `
     <span class="priority-option">
-      <span class="priority-option">${option.name?.toUpperCase()}</span>
-      <img class="priority-icon" src="assets/${option.name?.toLowerCase()}.svg" alt="Priority Icon">
+      <span class="priority-option">${(option['name'] as string)?.toUpperCase()}</span>
+      <img class="priority-icon" src="assets/${(option['name'] as string)?.toLowerCase()}.svg" alt="Priority Icon">
     </span>
     `;
   }

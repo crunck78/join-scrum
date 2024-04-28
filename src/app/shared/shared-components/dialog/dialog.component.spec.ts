@@ -7,9 +7,7 @@ describe('DialogComponent', () => {
   let fixture: ComponentFixture<DialogComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ DialogComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(DialogComponent);

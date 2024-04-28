@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Option } from './../../shared-components/form-field/form-field.component';
+import { Option, OptionType } from './../../shared-components/form-field/form-field.component';
 
-type HtmlFunction = (item: any) => string;
+type HtmlFunction = (item: OptionType) => string;
 
 @Pipe({
   name: 'options',
@@ -9,14 +9,14 @@ type HtmlFunction = (item: any) => string;
 })
 export class OptionsPipe implements PipeTransform {
 
-  transform(optionValues: any[] | null, displayValue: any, valueOnSelect: any, htmlFn?: HtmlFunction): Option[] | null | undefined {
+  transform(optionValues: OptionType[] | null, displayValue: keyof OptionType, valueOnSelect: keyof OptionType, htmlFn?: HtmlFunction): Option<OptionType>[] | null | undefined {
     return optionValues?.map((o) => {
       return {
         value: o,
         displayValue: o[displayValue],
         valueOnSelect: o[valueOnSelect],
         html: htmlFn ? htmlFn(o) : ''
-      } as Option
+      } as Option<OptionType>
     });
   }
 

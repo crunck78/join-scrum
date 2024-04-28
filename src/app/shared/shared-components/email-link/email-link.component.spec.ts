@@ -7,9 +7,7 @@ describe('EmailLinkComponent', () => {
   let fixture: ComponentFixture<EmailLinkComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ EmailLinkComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(EmailLinkComponent);

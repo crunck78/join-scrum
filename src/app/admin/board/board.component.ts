@@ -103,6 +103,7 @@ export class BoardComponent {
   }
 
   handleEditedTask(editedTask?: TaskResponse) {
+    if(editedTask) console.log(editedTask);
     this.updateBoard();
   }
 

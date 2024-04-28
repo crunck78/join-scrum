@@ -17,7 +17,7 @@
     <mat-select [multiple]="multiple" *ngIf="inputType === 'select'" [required]="required" (focus)="resetErrorState()"
         [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
         <mat-option [value]="option.valueOnSelect" *ngFor="let option of options">
-            <div [innerHTML]="(option.html || option.displayValue) | sanitizeHtml"></div>
+            <div [innerHTML]="(option.html || $any(option.displayValue)) | sanitizeHtml"></div>
         </mat-option>
     </mat-select>
 

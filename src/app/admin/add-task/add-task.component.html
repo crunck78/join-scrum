@@ -9,13 +9,13 @@
 
             <app-form-field [errors]="[
             {name: 'required', htmlMessage: 'Category is <strong>required</strong>'}]" [suffixIcon]="'add'" (action)="
-                addCategory()" [options]="categories$ | async | options : 'name' : 'id': this.getCategoryOptionHTML"
+                addCategory()" [options]="$any(categories$ | async) | options : 'name' : 'id': this.getCategoryOptionHTML"
                 [required]="true" [inputType]="'select'" [labelName]="'Select a category'"
                 [control]="$any(addTaskForm.get('category'))">
             </app-form-field>
 
             <app-form-field [multiple]="true" [suffixIcon]="'add'" (action)="addContact()"
-                [options]="contacts$ | async | options : 'name' : 'id'" [required]="false" [inputType]="'select'"
+                [options]="$any(contacts$ | async) | options : 'name' : 'id'" [required]="false" [inputType]="'select'"
                 [labelName]="'Select assignees'" [control]="$any(addTaskForm.get('assignees'))">
             </app-form-field>
 

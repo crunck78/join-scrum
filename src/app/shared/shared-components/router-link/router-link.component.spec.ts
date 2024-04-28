@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterLinkComponent } from './router-link.component';
+import { importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from '../../routes';
 
 describe('RouterLinkComponent', () => {
   let component: RouterLinkComponent;
@@ -8,7 +11,9 @@ describe('RouterLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RouterLinkComponent ]
+      providers: [
+        provideRouter(routes),
+      ]
     })
     .compileComponents();
 

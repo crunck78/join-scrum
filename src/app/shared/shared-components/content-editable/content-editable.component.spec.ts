@@ -7,9 +7,7 @@ describe('ContentEditableComponent', () => {
   let fixture: ComponentFixture<ContentEditableComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ ContentEditableComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(ContentEditableComponent);

@@ -1,7 +1,7 @@
 import { Component, ElementRef, Optional, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ImageCroppedEvent, ImageCropperComponent, ImageCropperModule, LoadedImage } from 'ngx-image-cropper';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Dimensions, ImageCroppedEvent, ImageCropperComponent, ImageCropperModule, LoadedImage } from 'ngx-image-cropper';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from '../../modules/material/material.module';
@@ -28,8 +28,8 @@ export class ProfileImageCropperComponent {
   response!: string;
   fileToChange !: File;
   fileToUpload !: File | Blob | string | undefined | null;
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
+  imageChangedEvent !: Event;
+  croppedImage: SafeUrl = '';
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -48,16 +48,16 @@ export class ProfileImageCropperComponent {
     this.uploader.response.subscribe(res => this.response = res);
   }
 
-  fileOverBase(e: any): void {
+  fileOverBase(e: boolean): void {
+    console.log(typeof e)
     this.hasBaseDropZoneOver = e;
-    console.log(this.hasBaseDropZoneOver);
   }
 
   fileDropBase(event: File[]) {
     this.fileToChange = event[0];
   }
 
-  fileChangeEvent(event: any): void {
+  fileChangeEvent(event: Event): void {
     this.imageChangedEvent = event;
   }
 
@@ -79,11 +79,12 @@ export class ProfileImageCropperComponent {
   }
 
   imageLoaded(image: LoadedImage) {
+    console.log(image);
     this.imageCropper.hidden = false;
   }
 
-  cropperReady() {
-
+  cropperReady(dimensions: Dimensions) {
+    console.log(dimensions);
   }
 
   loadImageFailed() {

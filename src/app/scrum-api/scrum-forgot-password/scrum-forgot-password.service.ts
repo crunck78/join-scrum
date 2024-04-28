@@ -25,7 +25,7 @@ export class ScrumForgotPasswordService {
     private feedbackService: FeedbackService) { }
 
   sendMail(credentials: ForgotPasswordCredentials) {
-    return this.http.post<any>(this.forgotPasswordEndpoint + `?email=${credentials.email}`, credentials)
+    return this.http.post(this.forgotPasswordEndpoint + `?email=${credentials.email}`, credentials)
     .pipe(
       map(() => true),
       catchError(() => of(false))

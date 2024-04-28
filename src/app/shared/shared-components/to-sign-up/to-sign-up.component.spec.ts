@@ -7,9 +7,7 @@ describe('ToSignUpComponent', () => {
   let fixture: ComponentFixture<ToSignUpComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ ToSignUpComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(ToSignUpComponent);

@@ -7,9 +7,7 @@ describe('NavigationComponent', () => {
   let fixture: ComponentFixture<NavigationComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ NavigationComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(NavigationComponent);

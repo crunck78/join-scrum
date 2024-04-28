@@ -10,7 +10,7 @@ import { ListRequest } from 'src/app/shared/models/list.model';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 import { OptionsPipe } from 'src/app/shared/pipes/options/options.pipe';
 import { DialogComponent } from '../../dialog/dialog.component';
-import { FormFieldComponent } from '../../form-field/form-field.component';
+import { FormFieldComponent, OptionType } from '../../form-field/form-field.component';
 import { LogoComponent } from '../../logo/logo.component';
 
 
@@ -57,10 +57,10 @@ export class AddListComponent {
     }
   }
 
-  getBoardOptionHTML(option: BoardResponse) {
+  getBoardOptionHTML(option: OptionType) {
     return `
     <span class="priority-option">
-      <span class="priority-option">${option.id} ${option.title?.toUpperCase()}</span>
+      <span class="priority-option">${option['id']} ${(option['title'] as string)?.toUpperCase()}</span>
     </span>
     `;
   }

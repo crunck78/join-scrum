@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-
-import { LogInGuard } from './log-in.guard';
+import { CanActivateFn } from '@angular/router';
+import { canActivate } from './log-in.guard';
 
 describe('LogInGuard', () => {
-  let guard: LogInGuard;
+  let guard: CanActivateFn;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(LogInGuard);
+    guard = canActivate
   });
 
   it('should be created', () => {

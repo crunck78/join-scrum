@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubtaskComponent } from './subtask.component';
+import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+import { ContentEditableComponent } from 'src/app/shared/shared-components/content-editable/content-editable.component';
 
 describe('SubtaskComponent', () => {
   let component: SubtaskComponent;
@@ -8,7 +10,8 @@ describe('SubtaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubtaskComponent ]
+      declarations: [ SubtaskComponent ],
+      imports: [MaterialModule, ContentEditableComponent]
     })
     .compileComponents();
 

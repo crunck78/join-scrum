@@ -7,9 +7,7 @@ describe('LegalNoticeComponent', () => {
   let fixture: ComponentFixture<LegalNoticeComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ LegalNoticeComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(LegalNoticeComponent);
