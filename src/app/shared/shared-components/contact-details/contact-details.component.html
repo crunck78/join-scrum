@@ -21,11 +21,17 @@
 <ng-container>
     <div class="contact-information">
         <h2>Contact Information</h2>
-        <p><b>Name</b></p>
-        <div>{{contact?.name}}</div>
-        <p><b>Email</b></p>
-        <app-email-link [email]="contact?.email"></app-email-link>
-        <p><b>Phone </b></p>
-        <a>{{contact?.phoneNumber}}</a>
+        <ng-container *ngIf="contact?.name">
+            <p><b>Name</b></p>
+            <div>{{contact?.name}}</div>
+        </ng-container>
+        <ng-container *ngIf="contact?.email">
+            <p><b>Email</b></p>
+            <app-email-link [email]="contact?.email"></app-email-link>
+        </ng-container>
+        <ng-container *ngIf="contact?.phoneNumber">
+            <p><b>Phone </b></p>
+            <a>{{contact?.phoneNumber}}</a>
+        </ng-container>
     </div>
 </ng-container>

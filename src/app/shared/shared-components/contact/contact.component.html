@@ -1,7 +1,15 @@
 <button *ngIf="!selected" mat-stroked-button>
-    <app-contact-card [contact]="contact" subtitle></app-contact-card>
+    <app-contact-card [contact]="contact" subtitle>
+        <!-- <span *ngIf="contact.name && !contact.email">{{contact.name}}</span> -->
+        <a href="tel:{{contact.phoneNumber}}"
+            *ngIf="contact.phoneNumber && !contact.email && !contact.name">{{contact.phoneNumber}}</a>
+    </app-contact-card>
 </button>
 
 <button *ngIf="selected" mat-raised-button color="primary">
-    <app-contact-card [contact]="contact" subtitle></app-contact-card>
+    <app-contact-card [contact]="contact" subtitle>
+        <!-- <span *ngIf="contact.name && !contact.email">{{contact.name}}</span> -->
+        <a href="tel:{{contact.phoneNumber}}"
+            *ngIf="contact.phoneNumber && !contact.email && !contact.name">{{contact.phoneNumber}}</a>
+    </app-contact-card>
 </button>

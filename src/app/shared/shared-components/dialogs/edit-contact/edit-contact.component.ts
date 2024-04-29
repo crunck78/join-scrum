@@ -9,6 +9,7 @@ import { DialogComponent } from '../../dialog/dialog.component';
 import { FormFieldComponent } from '../../form-field/form-field.component';
 import { LogoComponent } from '../../logo/logo.component';
 import { take } from 'rxjs';
+import { requireAtLeastOne } from 'src/app/shared/utils/custom-validators';
 @Component({
   selector: 'app-edit-contact',
   templateUrl: './edit-contact.component.html',
@@ -25,10 +26,10 @@ import { take } from 'rxjs';
 })
 export class EditContactComponent {
   editContactForm = new FormGroup({
-    name: new FormControl('', Validators.compose([Validators.required])),
-    email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    phoneNumber: new FormControl('', Validators.compose([Validators.required])),
-  });
+    name: new FormControl(''),
+    email: new FormControl('', Validators.compose([Validators.email])),
+    phoneNumber: new FormControl(''),
+  }, { validators: requireAtLeastOne(['name', 'email', 'phoneNumber']) });
 
   contactToEdit!: number;
 

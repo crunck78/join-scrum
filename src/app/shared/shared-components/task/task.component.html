@@ -27,12 +27,14 @@
     <div *ngIf="task.assignees.length > 0" class="task-assignees">
         <ng-container *ngFor="let assignee of task.assignees; let i = index;">
             <ng-container *ngIf="task.assignees.length > 3; else second">
-                <app-contact-initials *ngIf="i < 2" [contactName]="assignee.name"></app-contact-initials>
+                <app-contact-initials *ngIf="i < 2" [contactPhone]="assignee?.phoneNumber"
+                    [contactEmail]="assignee?.email" [contactName]="assignee.name"></app-contact-initials>
                 <app-contact-initials *ngIf="i === 3"
                     [contactName]="'+ '+(task.assignees.length - 2).toFixed()"></app-contact-initials>
             </ng-container>
             <ng-template #second>
-                <app-contact-initials [contactName]="assignee.name"></app-contact-initials>
+                <app-contact-initials [contactPhone]="assignee.phoneNumber" [contactEmail]="assignee.email"
+                    [contactName]="assignee.name"></app-contact-initials>
             </ng-template>
         </ng-container>
     </div>

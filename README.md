@@ -27,3 +27,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## Todo
+
+- Contacts Edit make at least one field required and fix backend for duplicate emails or phoneNumbers for one user.
+- Contact Initials update to show something if contact does not have a name or an email.

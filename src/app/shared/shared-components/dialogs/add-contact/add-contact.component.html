@@ -3,7 +3,7 @@
 
     <form class="main-content" [formGroup]="addContactForm">
 
-        <app-form-field
+        <app-form-field [required]="false"
             [autocomplete]="'contact-name'" [type]="'text'" [inputType]="'input'" [suffixPath]="'assets/person.svg'"
             [control]="$any(addContactForm.get('name'))" [labelName]="'Name'"></app-form-field>
 
