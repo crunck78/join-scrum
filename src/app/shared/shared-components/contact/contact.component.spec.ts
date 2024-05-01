@@ -8,7 +8,7 @@ import { ContactResponse } from '../../models/contact.model';
 describe('ContactComponent', () => {
   let component: ContactComponent;
   let fixture: ComponentFixture<ContactComponent>;
-  let contact = {
+  const contact = {
     name: "MyContact",
     email: "mycontact@mail.com",
     phoneNumber: "000000"
