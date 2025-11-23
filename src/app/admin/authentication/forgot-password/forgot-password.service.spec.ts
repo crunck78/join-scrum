@@ -1,23 +1,20 @@
-import { TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+import { MaterialModule } from "src/app/shared/modules/material/material.module";
+import { ForgotPasswordService } from "./forgot-password.service";
 
-import { ForgotPasswordService } from './forgot-password.service';
-import { importProvidersFrom } from '@angular/core';
-import {} from '@angular/common/http';
-import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+describe("ForgotPasswordService", () => {
+	let service: ForgotPasswordService;
 
-describe('ForgotPasswordService', () => {
-  let service: ForgotPasswordService;
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [importProvidersFrom(HttpClientModule, MaterialModule)],
+		});
+		service = TestBed.inject(ForgotPasswordService);
+	});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(HttpClientModule, MaterialModule)
-      ]
-    });
-    service = TestBed.inject(ForgotPasswordService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

@@ -1,21 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { EmailLinkComponent } from './email-link.component';
+import { EmailLinkComponent } from "./email-link.component";
 
-describe('EmailLinkComponent', () => {
-  let component: EmailLinkComponent;
-  let fixture: ComponentFixture<EmailLinkComponent>;
+describe("EmailLinkComponent", () => {
+	let component: EmailLinkComponent;
+	let fixture: ComponentFixture<EmailLinkComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({})
-    .compileComponents();
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({}).compileComponents();
 
-    fixture = TestBed.createComponent(EmailLinkComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+		fixture = TestBed.createComponent(EmailLinkComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

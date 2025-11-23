@@ -1,21 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { LogoComponent } from './logo.component';
+import { LogoComponent } from "./logo.component";
 
-describe('LogoComponent', () => {
-  let component: LogoComponent;
-  let fixture: ComponentFixture<LogoComponent>;
+describe("LogoComponent", () => {
+	let component: LogoComponent;
+	let fixture: ComponentFixture<LogoComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({})
-    .compileComponents();
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({}).compileComponents();
 
-    fixture = TestBed.createComponent(LogoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+		fixture = TestBed.createComponent(LogoComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

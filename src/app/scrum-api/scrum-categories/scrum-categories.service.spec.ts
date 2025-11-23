@@ -1,22 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+import { ScrumCategoriesService } from "./scrum-categories.service";
 
-import { ScrumCategoriesService } from './scrum-categories.service';
-import { importProvidersFrom } from '@angular/core';
-import {} from '@angular/common/http';
+describe("ScrumCategoriesService", () => {
+	let service: ScrumCategoriesService;
 
-describe('ScrumCategoriesService', () => {
-  let service: ScrumCategoriesService;
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [importProvidersFrom(HttpClientModule)],
+		});
+		service = TestBed.inject(ScrumCategoriesService);
+	});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(HttpClientModule)
-      ]
-    });
-    service = TestBed.inject(ScrumCategoriesService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

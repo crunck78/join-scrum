@@ -1,37 +1,37 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { importProvidersFrom } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormControl } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from "../../modules/material/material.module";
+import {
+	FieldType,
+	FormFieldComponent,
+	InputType,
+} from "./form-field.component";
 
-import { FieldType, FormFieldComponent, InputType } from './form-field.component';
-import { importProvidersFrom } from '@angular/core';
-import { MaterialModule } from '../../modules/material/material.module';
-import { FormControl } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+describe("FormFieldComponent", () => {
+	let component: FormFieldComponent;
+	let fixture: ComponentFixture<FormFieldComponent>;
 
-describe('FormFieldComponent', () => {
-  let component: FormFieldComponent;
-  let fixture: ComponentFixture<FormFieldComponent>;
+	const formControl = new FormControl("Test");
+	const inputType: InputType = "input";
+	const type: FieldType = "text";
 
-  const formControl = new FormControl('Test');
-  const inputType : InputType = 'input';
-  const type : FieldType = 'text';
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			imports: [MaterialModule],
+			providers: [importProvidersFrom(BrowserAnimationsModule, MaterialModule)],
+		}).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MaterialModule],
-      providers: [
-        importProvidersFrom( BrowserAnimationsModule, MaterialModule)
-      ]
-    })
-    .compileComponents();
+		fixture = TestBed.createComponent(FormFieldComponent);
+		component = fixture.componentInstance;
+		component.control = formControl;
+		component.inputType = inputType;
+		component.type = type;
+		fixture.detectChanges();
+	});
 
-    fixture = TestBed.createComponent(FormFieldComponent);
-    component = fixture.componentInstance;
-    component.control = formControl;
-    component.inputType = inputType;
-    component.type = type;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

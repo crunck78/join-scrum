@@ -1,22 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+import { ResetPasswordService } from "./reset-password.service";
 
-import { ResetPasswordService } from './reset-password.service';
-import { importProvidersFrom } from '@angular/core';
-import {} from '@angular/common/http';
+describe("ResetPasswordService", () => {
+	let service: ResetPasswordService;
 
-describe('ResetPasswordService', () => {
-  let service: ResetPasswordService;
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [importProvidersFrom(HttpClientModule)],
+		});
+		service = TestBed.inject(ResetPasswordService);
+	});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(HttpClientModule)
-      ]
-    });
-    service = TestBed.inject(ResetPasswordService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

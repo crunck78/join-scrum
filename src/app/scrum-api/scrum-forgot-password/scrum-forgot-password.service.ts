@@ -1,34 +1,39 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ScrumApiService } from '../scrum-api.service';
-import { SCRUM_API_ENDPOINT } from '../scrum-api-interceptor.service';
-import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import { ScrumApiService } from "../scrum-api.service";
+import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
-export const FORGOT_PASSWORD_ENDPOINT = SCRUM_API_ENDPOINT + '/api/user/password_reset/';
+export const FORGOT_PASSWORD_ENDPOINT =
+	SCRUM_API_ENDPOINT + "/api/user/password_reset/";
 
 export interface ForgotPasswordCredentials {
-  email: string
+	email: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: "root",
 })
 export class ScrumForgotPasswordService {
+	forgotPasswordEndpoint = FORGOT_PASSWORD_ENDPOINT;
 
-  forgotPasswordEndpoint = FORGOT_PASSWORD_ENDPOINT;
+	constructor(
+		private http: HttpClient,
+		private scrumApi: ScrumApiService,
+		private feedbackService: FeedbackService,
+	) {}
 
-  constructor(
-    private http: HttpClient,
-    private scrumApi: ScrumApiService,
-    private feedbackService: FeedbackService) { }
-
-  sendMail(credentials: ForgotPasswordCredentials) {
-    return this.http.post(this.forgotPasswordEndpoint + `?email=${credentials.email}`, credentials)
-    .pipe(
-      map(() => true),
-      catchError(() => of(false))
-    );
-  }
+	sendMail(credentials: ForgotPasswordCredentials) {
+		return this.http
+			.post(
+				this.forgotPasswordEndpoint + `?email=${credentials.email}`,
+				credentials,
+			)
+			.pipe(
+				map(() => true),
+				catchError(() => of(false)),
+			);
+	}
 }

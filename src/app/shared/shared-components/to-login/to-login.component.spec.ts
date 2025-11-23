@@ -1,30 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { importProvidersFrom } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { provideRouter } from "@angular/router";
+import { routes } from "../../routes";
+import { ToLoginComponent } from "./to-login.component";
 
-import { ToLoginComponent } from './to-login.component';
-import { provideRouter } from '@angular/router';
-import { routes } from '../../routes';
-import { importProvidersFrom } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+describe("ToLoginComponent", () => {
+	let component: ToLoginComponent;
+	let fixture: ComponentFixture<ToLoginComponent>;
 
-describe('ToLoginComponent', () => {
-  let component: ToLoginComponent;
-  let fixture: ComponentFixture<ToLoginComponent>;
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			providers: [
+				importProvidersFrom(BrowserAnimationsModule),
+				provideRouter(routes),
+			],
+		}).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        provideRouter(routes)
-      ]
-    })
-    .compileComponents();
+		fixture = TestBed.createComponent(ToLoginComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-    fixture = TestBed.createComponent(ToLoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

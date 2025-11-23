@@ -1,22 +1,16 @@
-
-import { Component, Input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { ContactResponse } from '../../models/contact.model';
-import { CardComponent } from '../card/card.component';
-import { ContactCardComponent } from '../contact-card/contact-card.component';
+import { Component, Input } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { ContactResponse } from "../../models/contact.model";
+import { CardComponent } from "../card/card.component";
+import { ContactCardComponent } from "../contact-card/contact-card.component";
 
 @Component({
-    selector: 'app-contact',
-    templateUrl: './contact.component.html',
-    styleUrls: ['./contact.component.scss'],
-    imports: [
-    CardComponent,
-    MatButtonModule,
-    ContactCardComponent
-]
+	selector: "app-contact",
+	templateUrl: "./contact.component.html",
+	styleUrls: ["./contact.component.scss"],
+	imports: [CardComponent, MatButtonModule, ContactCardComponent],
 })
 export class ContactComponent {
-
-    @Input() contact!: ContactResponse;
-    @Input() selected!: boolean;
+	@Input() contact!: ContactResponse;
+	@Input() selected!: boolean;
 }

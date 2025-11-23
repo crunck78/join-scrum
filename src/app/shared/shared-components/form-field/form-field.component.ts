@@ -1,102 +1,112 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroupDirective, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { RouterLink } from '@angular/router';
-import { ColorPickerDirective } from 'ngx-color-picker';
-import { MaterialModule } from '../../modules/material/material.module';
-import { SanitizeHtmlPipe } from '../../pipes/sanitize-html/sanitize-html.pipe';
-import { CardComponent } from '../card/card.component';
-import { PageTitleComponent } from '../page-title/page-title.component';
-import { HasErrorPipe } from './has-error.pipe';
-import { MessageErrorPipe } from './message-error.pipe';
-
-
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+	AbstractControl,
+	FormControl,
+	FormGroupDirective,
+	NgForm,
+	ReactiveFormsModule,
+} from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material/core";
+import { RouterLink } from "@angular/router";
+import { ColorPickerDirective } from "ngx-color-picker";
+import { MaterialModule } from "../../modules/material/material.module";
+import { SanitizeHtmlPipe } from "../../pipes/sanitize-html/sanitize-html.pipe";
+import { CardComponent } from "../card/card.component";
+import { PageTitleComponent } from "../page-title/page-title.component";
+import { HasErrorPipe } from "./has-error.pipe";
+import { MessageErrorPipe } from "./message-error.pipe";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    console.log(form);
-    return !!(control && control.invalid && control.touched);
-  }
+	isErrorState(
+		control: FormControl | null,
+		form: FormGroupDirective | NgForm | null,
+	): boolean {
+		console.log(form);
+		return !!(control && control.invalid && control.touched);
+	}
 }
 
 export interface ValidatorError {
-  name: string,
-  message?: string,
-  htmlMessage?: string
+	name: string;
+	message?: string;
+	htmlMessage?: string;
 }
 
 export type OptionType = {
-  [k: string] : object | string | number
-}
+	[k: string]: object | string | number;
+};
 
 export interface Option<OptionType> {
-  valueOnSelect: keyof OptionType,
-  displayValue: keyof OptionType,
-  value: OptionType,
-  html?: string
+	valueOnSelect: keyof OptionType;
+	displayValue: keyof OptionType;
+	value: OptionType;
+	html?: string;
 }
 
-export declare type InputType = 'input' | 'text-area' | 'select' | 'date' | 'color';
-export declare type FieldType = 'text' | 'email' | 'password' | 'tel' | 'color';
+export declare type InputType =
+	| "input"
+	| "text-area"
+	| "select"
+	| "date"
+	| "color";
+export declare type FieldType = "text" | "email" | "password" | "tel" | "color";
 // eslint-disable-next-line
-export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const EMAIL_REGEX =
+	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
-    selector: 'app-form-field',
-    templateUrl: './form-field.component.html',
-    styleUrls: ['./form-field.component.scss'],
-    imports: [
-    CardComponent,
-    PageTitleComponent,
-    ReactiveFormsModule,
-    RouterLink,
-    MaterialModule,
-    HasErrorPipe,
-    MessageErrorPipe,
-    SanitizeHtmlPipe,
-    ColorPickerDirective
-],
-    providers: []
+	selector: "app-form-field",
+	templateUrl: "./form-field.component.html",
+	styleUrls: ["./form-field.component.scss"],
+	imports: [
+		CardComponent,
+		PageTitleComponent,
+		ReactiveFormsModule,
+		RouterLink,
+		MaterialModule,
+		HasErrorPipe,
+		MessageErrorPipe,
+		SanitizeHtmlPipe,
+		ColorPickerDirective,
+	],
+	providers: [],
 })
 export class FormFieldComponent {
+	@Input() control!: FormControl | AbstractControl;
+	@Input() labelName!: string;
+	@Input() suffixPath!: string;
+	@Input() inputType!: InputType;
+	@Input() type!: FieldType;
+	@Input() autocomplete!: string;
+	@Input() errors!: ValidatorError[];
+	@Input() minLength!: number;
+	@Input() required = true;
+	@Input() options!: Option<OptionType>[] | null | undefined;
+	@Input() actionName!: string;
+	@Input() suffixIcon!: string;
+	@Input() multiple = false;
+	@Output() action = new EventEmitter<void>();
+	today = new Date();
 
-  @Input() control!: FormControl | AbstractControl;
-  @Input() labelName!: string;
-  @Input() suffixPath!: string;
-  @Input() inputType!: InputType;
-  @Input() type!: FieldType;
-  @Input() autocomplete!: string;
-  @Input() errors!: ValidatorError[];
-  @Input() minLength!: number;
-  @Input() required = true;
-  @Input() options!: Option<OptionType>[] | null | undefined;
-  @Input() actionName!: string;
-  @Input() suffixIcon!: string;
-  @Input() multiple = false;
-  @Output() action = new EventEmitter<void>();
-  today = new Date();
+	customMatcher = new CustomErrorStateMatcher();
 
-  customMatcher = new CustomErrorStateMatcher();
+	resetErrorState() {
+		if (this.control?.touched) this.control?.markAsUntouched();
+	}
 
-  resetErrorState() {
-    if (this.control?.touched)
-      this.control?.markAsUntouched();
-  }
+	handleInputPhoneNumber(event: InputEvent) {
+		const regexDisallowedChars = /[^0-9+]|(?!^)\+/;
+		const inputField = event.target as HTMLInputElement;
+		const inputFieldValue = inputField.value;
 
-  handleInputPhoneNumber(event: InputEvent) {
-    const regexDisallowedChars = /[^0-9+]|(?!^)\+/;
-    const inputField = event.target as HTMLInputElement;
-    const inputFieldValue = inputField.value;
+		// Removed disallowed characters
+		const sanitizedValue = inputFieldValue.replace(regexDisallowedChars, "");
 
-    // Removed disallowed characters
-    const sanitizedValue = inputFieldValue.replace(regexDisallowedChars, '');
+		// Update the FormControl value with the sanitized value
+		this.control.setValue(sanitizedValue);
 
-    // Update the FormControl value with the sanitized value
-    this.control.setValue(sanitizedValue);
-
-    // Stop the default input event
-    event.preventDefault();
-  }
-
+		// Stop the default input event
+		event.preventDefault();
+	}
 }

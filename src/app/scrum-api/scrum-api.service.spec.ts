@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ScrumApiService } from './scrum-api.service';
+import { ScrumApiService } from "./scrum-api.service";
 
-describe('ScrumApiService', () => {
-  let service: ScrumApiService;
+describe("ScrumApiService", () => {
+	let service: ScrumApiService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ScrumApiService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+		service = TestBed.inject(ScrumApiService);
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

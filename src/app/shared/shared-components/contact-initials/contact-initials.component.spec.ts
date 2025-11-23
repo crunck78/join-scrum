@@ -1,21 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ContactInitialsComponent } from './contact-initials.component';
+import { ContactInitialsComponent } from "./contact-initials.component";
 
-describe('ContactInitialsComponent', () => {
-  let component: ContactInitialsComponent;
-  let fixture: ComponentFixture<ContactInitialsComponent>;
+describe("ContactInitialsComponent", () => {
+	let component: ContactInitialsComponent;
+	let fixture: ComponentFixture<ContactInitialsComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({})
-    .compileComponents();
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({}).compileComponents();
 
-    fixture = TestBed.createComponent(ContactInitialsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+		fixture = TestBed.createComponent(ContactInitialsComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

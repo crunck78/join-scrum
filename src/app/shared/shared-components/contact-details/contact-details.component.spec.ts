@@ -1,27 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { importProvidersFrom } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MaterialModule } from "../../modules/material/material.module";
+import { ContactDetailsComponent } from "./contact-details.component";
 
-import { ContactDetailsComponent } from './contact-details.component';
-import { importProvidersFrom } from '@angular/core';
-import { MaterialModule } from '../../modules/material/material.module';
+describe("ContactDetailsComponent", () => {
+	let component: ContactDetailsComponent;
+	let fixture: ComponentFixture<ContactDetailsComponent>;
 
-describe('ContactDetailsComponent', () => {
-  let component: ContactDetailsComponent;
-  let fixture: ComponentFixture<ContactDetailsComponent>;
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			providers: [importProvidersFrom(MaterialModule)],
+		}).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(MaterialModule)
-      ]
-    })
-    .compileComponents();
+		fixture = TestBed.createComponent(ContactDetailsComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-    fixture = TestBed.createComponent(ContactDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

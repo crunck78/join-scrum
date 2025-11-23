@@ -1,15 +1,12 @@
-
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
-import { PageComponent } from '../shared/shared-components/page/page.component';
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { HeaderComponent } from "../header/header.component";
+import { PageComponent } from "../shared/shared-components/page/page.component";
 
 @Component({
-    selector: 'app-main',
-    templateUrl: './main.component.html',
-    styleUrls: ['./main.component.scss'],
-    imports: [RouterOutlet, HeaderComponent, PageComponent]
+	selector: "app-main",
+	templateUrl: "./main.component.html",
+	styleUrls: ["./main.component.scss"],
+	imports: [RouterOutlet, HeaderComponent, PageComponent],
 })
-export class MainComponent {
-
-}
+export class MainComponent {}

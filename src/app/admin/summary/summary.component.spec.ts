@@ -1,30 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
+import { routes } from "src/app/shared/routes";
+import { SummaryComponent } from "./summary.component";
 
-import { SummaryComponent } from './summary.component';
-import { importProvidersFrom } from '@angular/core';
-import {} from '@angular/common/http';
-import { provideRouter } from '@angular/router';
-import { routes } from 'src/app/shared/routes';
+describe("SummaryComponent", () => {
+	let component: SummaryComponent;
+	let fixture: ComponentFixture<SummaryComponent>;
 
-describe('SummaryComponent', () => {
-  let component: SummaryComponent;
-  let fixture: ComponentFixture<SummaryComponent>;
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			providers: [importProvidersFrom(HttpClientModule), provideRouter(routes)],
+		}).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(HttpClientModule),
-        provideRouter(routes)
-      ]
-    })
-    .compileComponents();
+		fixture = TestBed.createComponent(SummaryComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-    fixture = TestBed.createComponent(SummaryComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

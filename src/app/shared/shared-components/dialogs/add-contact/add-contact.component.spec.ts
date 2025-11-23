@@ -1,31 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialogRef } from "@angular/material/dialog";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from "src/app/shared/modules/material/material.module";
+import { AddContactComponent } from "./add-contact.component";
 
-import { AddContactComponent } from './add-contact.component';
-import { importProvidersFrom } from '@angular/core';
-import { MaterialModule } from 'src/app/shared/modules/material/material.module';
-import { MatDialogRef } from '@angular/material/dialog';
-import {} from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+describe("AddContactComponent", () => {
+	let component: AddContactComponent;
+	let fixture: ComponentFixture<AddContactComponent>;
 
-describe('AddContactComponent', () => {
-  let component: AddContactComponent;
-  let fixture: ComponentFixture<AddContactComponent>;
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			providers: [
+				importProvidersFrom(
+					BrowserAnimationsModule,
+					HttpClientModule,
+					MaterialModule,
+				),
+				{ provide: MatDialogRef, useValue: {} },
+			],
+		}).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule, HttpClientModule, MaterialModule),
-        { provide: MatDialogRef, useValue: {} }
-      ]
-    })
-      .compileComponents();
+		fixture = TestBed.createComponent(AddContactComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-    fixture = TestBed.createComponent(AddContactComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

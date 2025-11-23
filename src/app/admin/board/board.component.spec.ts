@@ -1,28 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MaterialModule } from "src/app/shared/modules/material/material.module";
+import { BoardComponent } from "./board.component";
 
-import { BoardComponent } from './board.component';
-import { importProvidersFrom } from '@angular/core';
-import {} from '@angular/common/http';
-import { MaterialModule } from 'src/app/shared/modules/material/material.module';
+describe("BoardComponent", () => {
+	let component: BoardComponent;
+	let fixture: ComponentFixture<BoardComponent>;
 
-describe('BoardComponent', () => {
-  let component: BoardComponent;
-  let fixture: ComponentFixture<BoardComponent>;
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			providers: [importProvidersFrom(HttpClientModule, MaterialModule)],
+		}).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(HttpClientModule, MaterialModule)
-      ]
-    })
-    .compileComponents();
+		fixture = TestBed.createComponent(BoardComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-    fixture = TestBed.createComponent(BoardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

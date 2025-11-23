@@ -1,17 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../shared/modules/material/material.module';
-import { PageTitleComponent } from '../shared/shared-components/page-title/page-title.component';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { MaterialModule } from "../shared/modules/material/material.module";
+import { PageTitleComponent } from "../shared/shared-components/page-title/page-title.component";
 
-const imports = [
-  CommonModule,
-  MaterialModule,
-  PageTitleComponent
-]
+const imports = [CommonModule, MaterialModule, PageTitleComponent];
 
 @NgModule({
-  declarations: [],
-  imports: [...imports],
-  exports: [...imports]
+	declarations: [],
+	imports: [...imports],
+	exports: [...imports],
 })
-export class HeaderModule { }
+export class HeaderModule {}

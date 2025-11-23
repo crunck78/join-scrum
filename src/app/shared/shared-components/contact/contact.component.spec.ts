@@ -1,34 +1,30 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ContactResponse } from "../../models/contact.model";
+import { ContactComponent } from "./contact.component";
 
-import { ContactComponent } from './contact.component';
-import { importProvidersFrom } from '@angular/core';
-import {} from '@angular/common/http';
-import { ContactResponse } from '../../models/contact.model';
+describe("ContactComponent", () => {
+	let component: ContactComponent;
+	let fixture: ComponentFixture<ContactComponent>;
+	const contact = {
+		name: "MyContact",
+		email: "mycontact@mail.com",
+		phoneNumber: "000000",
+	} as ContactResponse;
 
-describe('ContactComponent', () => {
-  let component: ContactComponent;
-  let fixture: ComponentFixture<ContactComponent>;
-  const contact = {
-    name: "MyContact",
-    email: "mycontact@mail.com",
-    phoneNumber: "000000"
-  } as ContactResponse;
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			providers: [importProvidersFrom(HttpClientModule)],
+		}).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(HttpClientModule)
-      ]
-    })
-    .compileComponents();
+		fixture = TestBed.createComponent(ContactComponent);
+		component = fixture.componentInstance;
+		component.contact = contact;
+		fixture.detectChanges();
+	});
 
-    fixture = TestBed.createComponent(ContactComponent);
-    component = fixture.componentInstance;
-    component.contact = contact;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

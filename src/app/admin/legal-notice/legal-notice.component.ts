@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
-import { CardComponent } from 'src/app/shared/shared-components/card/card.component';
+import { Component } from "@angular/core";
+import { CardComponent } from "src/app/shared/shared-components/card/card.component";
 
 @Component({
-    selector: 'app-legal-notice',
-    templateUrl: './legal-notice.component.html',
-    styleUrls: ['./legal-notice.component.scss'],
-    imports: [CardComponent]
+	selector: "app-legal-notice",
+	templateUrl: "./legal-notice.component.html",
+	styleUrls: ["./legal-notice.component.scss"],
+	imports: [CardComponent],
 })
-export class LegalNoticeComponent {
-
-}
+export class LegalNoticeComponent {}

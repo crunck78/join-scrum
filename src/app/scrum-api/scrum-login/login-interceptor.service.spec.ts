@@ -1,23 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import {} from "@angular/common/http";
+import { importProvidersFrom } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+import { LoginInterceptor } from "./login-interceptor.service";
 
-import { LoginInterceptor } from './login-interceptor.service';
-import { importProvidersFrom } from '@angular/core';
-import {} from '@angular/common/http';
+describe("LoginInterceptorService", () => {
+	let service: LoginInterceptor;
 
-describe('LoginInterceptorService', () => {
-  let service: LoginInterceptor;
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [LoginInterceptor, importProvidersFrom(HttpClientModule)],
+		});
+		service = TestBed.inject(LoginInterceptor);
+	});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        LoginInterceptor,
-        importProvidersFrom(HttpClientModule),
-      ]
-    });
-    service = TestBed.inject(LoginInterceptor);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

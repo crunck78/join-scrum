@@ -1,13 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
-import { CategoryResponse } from '../../models/category.model';
+import { CategoryResponse } from "../../models/category.model";
 
 @Component({
-    selector: 'app-category-card',
-    imports: [],
-    templateUrl: './category-card.component.html',
-    styleUrls: ['./category-card.component.scss']
+	selector: "app-category-card",
+	imports: [],
+	templateUrl: "./category-card.component.html",
+	styleUrls: ["./category-card.component.scss"],
 })
 export class CategoryCardComponent {
-  @Input() category !: Partial<CategoryResponse> | null;
+	@Input() category!: Partial<CategoryResponse> | null;
 }

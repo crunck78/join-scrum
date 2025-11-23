@@ -1,27 +1,26 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Subject } from 'rxjs';
-import { SubtaskRequest } from 'src/app/shared/models/subtask.model';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Subject } from "rxjs";
+import { SubtaskRequest } from "src/app/shared/models/subtask.model";
 
 @Component({
-    selector: 'app-subtask',
-    templateUrl: './subtask.component.html',
-    styleUrls: ['./subtask.component.scss'],
-    standalone: false
+	selector: "app-subtask",
+	templateUrl: "./subtask.component.html",
+	styleUrls: ["./subtask.component.scss"],
+	standalone: false,
 })
 export class SubtaskComponent {
+	changingSubtaskTitle$ = new Subject<number | string>();
 
-  changingSubtaskTitle$ = new Subject<number | string>();
+	@Input() subtask!: SubtaskRequest;
+	@Input() subtaskId!: number | string;
 
-  @Input() subtask !: SubtaskRequest;
-  @Input() subtaskId !: number | string;
+	@Output() removeTask$ = new EventEmitter<SubtaskRequest>();
 
-  @Output() removeTask$ = new EventEmitter<SubtaskRequest>();
+	updateSubtaskCheck(checked: boolean) {
+		this.subtask.done = checked;
+	}
 
-  updateSubtaskCheck(checked: boolean) {
-    this.subtask.done = checked;
-  }
-
-  editSubtask() {
-    this.changingSubtaskTitle$.next(this.subtaskId);
-  }
+	editSubtask() {
+		this.changingSubtaskTitle$.next(this.subtaskId);
+	}
 }

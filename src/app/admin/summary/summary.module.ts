@@ -6,16 +6,16 @@ import { PageTitleComponent } from "src/app/shared/shared-components/page-title/
 import { RouterLinkComponent } from "src/app/shared/shared-components/router-link/router-link.component";
 
 const imports = [
-    CommonModule,
-    CardComponent,
-    PageTitleComponent,
-    CategoryCardComponent,
-    RouterLinkComponent
+	CommonModule,
+	CardComponent,
+	PageTitleComponent,
+	CategoryCardComponent,
+	RouterLinkComponent,
 ];
 
 @NgModule({
-    declarations: [],
-    imports: [...imports],
-    exports: [...imports]
+	declarations: [],
+	imports: [...imports],
+	exports: [...imports],
 })
-export class SummaryModule { }
+export class SummaryModule {}
