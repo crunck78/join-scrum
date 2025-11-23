@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { take } from "rxjs";
 import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
@@ -21,15 +21,13 @@ export interface SignupCredentials {
 	providedIn: "root",
 })
 export class ScrumSignupService {
+	private http = inject(HttpClient);
+	private scrumProfile = inject(ScrumProfileService);
+	private router = inject(Router);
+	private feedback = inject(FeedbackService);
+
 	signupCredentials!: SignupCredentials;
 	signupEndPoint = SIGNUP_ENDPOINT;
-
-	constructor(
-		private http: HttpClient,
-		private scrumProfile: ScrumProfileService,
-		private router: Router,
-		private feedback: FeedbackService,
-	) {}
 
 	signup(credentials: SignupCredentials) {
 		this.http

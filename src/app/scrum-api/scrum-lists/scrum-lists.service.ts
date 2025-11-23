@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { catchError, map, type Observable, of } from "rxjs";
+import { Injectable, inject } from "@angular/core";
+import { catchError, map, of, type Observable } from "rxjs";
 import {
 	List,
 	type ListRequest,
@@ -16,11 +16,10 @@ export const LISTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/list/lists/`;
 	providedIn: "root",
 })
 export class ScrumListsService {
+	private http = inject(HttpClient);
+	private scrumApi = inject(ScrumApiService);
+
 	listsEndpoint = LISTS_ENDPOINT;
-	constructor(
-		private http: HttpClient,
-		private scrumApi: ScrumApiService,
-	) {}
 
 	deleteList$(id: number): Observable<number | null> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ScrumBoardsService } from "src/app/scrum-api/scrum-boards/scrum-boards.service";
 import { ScrumListsService } from "src/app/scrum-api/scrum-lists/scrum-lists.service";
@@ -10,14 +10,12 @@ import { FeedbackService } from "src/app/shared/shared-services/feedback/feedbac
 	providedIn: "root",
 })
 export class BoardService {
-	constructor(
-		public scrumTasks: ScrumTasksService,
-		public dialog: MatDialog,
-		public scrumBoards: ScrumBoardsService,
-		public breakPoints: BreakpointsService,
-		public scrumList: ScrumListsService,
-		public feedbackService: FeedbackService,
-	) {}
+	scrumTasks = inject(ScrumTasksService);
+	dialog = inject(MatDialog);
+	scrumBoards = inject(ScrumBoardsService);
+	breakPoints = inject(BreakpointsService);
+	scrumList = inject(ScrumListsService);
+	feedbackService = inject(FeedbackService);
 
 	get boards$() {
 		return this.scrumBoards.getBoards$();

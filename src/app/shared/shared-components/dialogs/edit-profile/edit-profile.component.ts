@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
 	FormControl,
 	FormGroup,
@@ -27,10 +27,8 @@ import { LogoComponent } from "../../logo/logo.component";
 	styleUrls: ["./edit-profile.component.scss"],
 })
 export class EditProfileComponent {
-	constructor(
-		private scrumProfile: ScrumProfileService,
-		private dialogRef: MatDialogRef<EditProfileComponent>,
-	) {}
+	private scrumProfile = inject(ScrumProfileService);
+	private dialogRef = inject<MatDialogRef<EditProfileComponent>>(MatDialogRef);
 
 	editProfileForm = new FormGroup({
 		name: new FormControl("", Validators.compose([Validators.required])),

@@ -2,7 +2,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
-	Inject,
+	inject,
 	type OnInit,
 } from "@angular/core";
 
@@ -29,6 +29,11 @@ export interface AddTaskDialogData {
 	imports: [DialogComponent, AddTaskComponent, MaterialModule],
 })
 export class AddTaskDialogComponent implements OnInit {
+	data = inject<AddTaskDialogData>(MAT_DIALOG_DATA);
+	private dialogRef =
+		inject<MatDialogRef<AddTaskDialogComponent>>(MatDialogRef);
+	private cdr = inject(ChangeDetectorRef);
+
 	task!: TaskResponse;
 	mode: TaskMode = "add";
 	formStatus!: FormControlStatus;
@@ -36,11 +41,6 @@ export class AddTaskDialogComponent implements OnInit {
 	deleteTask = new EventEmitter();
 	submitTaskForm = new EventEmitter();
 	predefinedTaskRequest!: Partial<TaskRequest>;
-	constructor(
-		@Inject(MAT_DIALOG_DATA) public data: AddTaskDialogData,
-		private dialogRef: MatDialogRef<AddTaskDialogComponent>,
-		private cdr: ChangeDetectorRef,
-	) {}
 
 	ngOnInit(): void {
 		this.task = this.data?.task;

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { catchError, map, type Observable, of } from "rxjs";
+import { Injectable, inject } from "@angular/core";
+import { catchError, map, of, type Observable } from "rxjs";
 import {
 	Board,
 	type BoardRequest,
@@ -16,11 +16,10 @@ export const BOARDS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/board/boards/`;
 	providedIn: "root",
 })
 export class ScrumBoardsService {
+	private http = inject(HttpClient);
+	private scrumApi = inject(ScrumApiService);
+
 	boardsEndpoint = BOARDS_ENDPOINT;
-	constructor(
-		private http: HttpClient,
-		private scrumApi: ScrumApiService,
-	) {}
 
 	getBoards$(): Observable<BoardResponse[]> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };

@@ -1,4 +1,4 @@
-import { Component, type ElementRef, ViewChild } from "@angular/core";
+import { Component, type ElementRef, inject, ViewChild } from "@angular/core";
 
 import { type Observable, take } from "rxjs";
 import type { ContactResponse } from "src/app/shared/models/contact.model";
@@ -12,12 +12,14 @@ import { ContactsService } from "./contacts.service";
 	imports: [ContactsModule],
 })
 export class ContactsComponent {
+	private contactsService = inject(ContactsService);
+
 	@ViewChild("contacts-list") contactsList!: ElementRef<HTMLElement>;
 
 	contacts$!: Observable<ContactResponse[] | undefined>;
 	selectedContact!: ContactResponse | null;
 
-	constructor(private contactsService: ContactsService) {
+	constructor() {
 		this.updateContacts();
 	}
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialog } from "@angular/material/dialog";
 import type { ContactResponse } from "../../models/contact.model";
@@ -14,9 +14,10 @@ import { EmailLinkComponent } from "../email-link/email-link.component";
 	imports: [ContactCardComponent, MatButtonModule, EmailLinkComponent],
 })
 export class ContactDetailsComponent {
+	private dialog = inject(MatDialog);
+
 	@Input() contact!: ContactResponse | null;
 	@Output() contactChange = new EventEmitter<ContactResponse>();
-	constructor(private dialog: MatDialog) {}
 
 	editContact() {
 		const dialogRef = this.dialog.open(EditContactComponent);

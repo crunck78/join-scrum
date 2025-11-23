@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import {
 	MatSnackBar,
 	type MatSnackBarConfig,
@@ -10,7 +10,7 @@ export const DURATION_SNACK_BAR = 3000;
 	providedIn: "root",
 })
 export class FeedbackService {
-	constructor(private _snackBar: MatSnackBar) {}
+	private _snackBar = inject(MatSnackBar);
 
 	openSnackBar(
 		message = "This is a Feedback Message",

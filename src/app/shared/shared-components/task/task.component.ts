@@ -2,6 +2,7 @@ import {
 	Component,
 	EventEmitter,
 	HostListener,
+	inject,
 	Input,
 	Output,
 } from "@angular/core";
@@ -25,10 +26,10 @@ import { AddTaskDialogComponent } from "../dialogs/add-task-dialog/add-task-dial
 	],
 })
 export class TaskComponent {
+	private dialog = inject(MatDialog);
+
 	@Input() task!: TaskResponse;
 	@Output() taskChange = new EventEmitter<TaskResponse>();
-
-	constructor(private dialog: MatDialog) {}
 
 	get doneSubtasksLength() {
 		return this.task.subtasks.filter((s) => s.done).length;

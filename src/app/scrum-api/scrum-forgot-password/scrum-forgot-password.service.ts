@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
@@ -14,9 +14,9 @@ export interface ForgotPasswordCredentials {
 	providedIn: "root",
 })
 export class ScrumForgotPasswordService {
-	forgotPasswordEndpoint = FORGOT_PASSWORD_ENDPOINT;
+	private http = inject(HttpClient);
 
-	constructor(private http: HttpClient) {}
+	forgotPasswordEndpoint = FORGOT_PASSWORD_ENDPOINT;
 
 	sendMail(credentials: ForgotPasswordCredentials) {
 		return this.http

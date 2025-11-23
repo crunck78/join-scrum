@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import type { SummaryResponse } from "src/app/shared/models/summary.model";
 import type { UserResponse } from "src/app/shared/models/user.model";
 import { SummaryModule } from "./summary.module";
@@ -12,7 +12,7 @@ import { SummaryService } from "./summary.service";
 	providers: [SummaryService],
 })
 export class SummaryComponent {
-	constructor(private summaryService: SummaryService) {}
+	private summaryService = inject(SummaryService);
 
 	get summaryEmpty(): boolean {
 		return this.summaryService.summaryEmpty;

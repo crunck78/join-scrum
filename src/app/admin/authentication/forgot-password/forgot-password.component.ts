@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { take } from "rxjs";
 import type { ForgotPasswordCredentials } from "src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service";
@@ -12,6 +12,8 @@ import { ForgotPasswordService } from "./forgot-password.service";
 	imports: [ForgotPasswordModule],
 })
 export class ForgotPasswordComponent {
+	private forgotPasswordService = inject(ForgotPasswordService);
+
 	forgotPasswordForm = new FormGroup({
 		email: new FormControl(
 			"",
@@ -19,7 +21,7 @@ export class ForgotPasswordComponent {
 		),
 	});
 
-	constructor(private forgotPasswordService: ForgotPasswordService) {
+	constructor() {
 		this.forgotPasswordForm.disable();
 	}
 

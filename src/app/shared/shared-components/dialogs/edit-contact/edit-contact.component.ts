@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
 	FormControl,
 	FormGroup,
@@ -27,6 +27,9 @@ import { LogoComponent } from "../../logo/logo.component";
 	],
 })
 export class EditContactComponent {
+	dialogRef = inject<MatDialogRef<EditContactComponent>>(MatDialogRef);
+	private scrumContacts = inject(ScrumContactsService);
+
 	editContactForm = new FormGroup(
 		{
 			name: new FormControl(""),
@@ -37,11 +40,6 @@ export class EditContactComponent {
 	);
 
 	contactToEdit!: number;
-
-	constructor(
-		public dialogRef: MatDialogRef<EditContactComponent>,
-		private scrumContacts: ScrumContactsService,
-	) {}
 
 	editContact() {
 		if (this.editContactForm.valid) {

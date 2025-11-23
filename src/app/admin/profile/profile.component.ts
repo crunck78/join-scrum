@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { take } from "rxjs";
 import { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
@@ -22,12 +22,13 @@ import { ProfileImageCropperComponent } from "src/app/shared/shared-components/i
 	],
 })
 export class ProfileComponent {
+	private scrumProfile = inject(ScrumProfileService);
+	private dialog = inject(MatDialog);
+	private scrumApi = inject(ScrumApiService);
+
 	profile!: UserResponse | null;
-	constructor(
-		private scrumProfile: ScrumProfileService,
-		private dialog: MatDialog,
-		private scrumApi: ScrumApiService,
-	) {
+
+	constructor() {
 		this.updateProfile();
 	}
 

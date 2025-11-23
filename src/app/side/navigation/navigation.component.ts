@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Router, Routes } from "@angular/router";
 import { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
 import { RouterLinkComponent } from "src/app/shared/shared-components/router-link/router-link.component";
@@ -10,10 +10,8 @@ import { RouterLinkComponent } from "src/app/shared/shared-components/router-lin
 	imports: [RouterLinkComponent],
 })
 export class NavigationComponent {
-	constructor(
-		private router: Router,
-		private scrumApi: ScrumApiService,
-	) {}
+	private router = inject(Router);
+	private scrumApi = inject(ScrumApiService);
 
 	get isLoggedIn(): boolean {
 		return this.scrumApi.isLoggedIn();

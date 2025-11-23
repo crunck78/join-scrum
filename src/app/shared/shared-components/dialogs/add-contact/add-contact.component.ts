@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
 	FormControl,
 	FormGroup,
@@ -28,6 +28,9 @@ import { LogoComponent } from "../../logo/logo.component";
 	],
 })
 export class AddContactComponent {
+	dialogRef = inject<MatDialogRef<AddContactComponent>>(MatDialogRef);
+	private scrumContacts = inject(ScrumContactsService);
+
 	addContactForm = new FormGroup(
 		{
 			name: new FormControl(""),
@@ -36,11 +39,6 @@ export class AddContactComponent {
 		},
 		{ validators: requireAtLeastOne(["name", "email", "phoneNumber"]) },
 	);
-
-	constructor(
-		public dialogRef: MatDialogRef<AddContactComponent>,
-		private scrumContacts: ScrumContactsService,
-	) {}
 
 	addContact() {
 		if (this.addContactForm.valid) {

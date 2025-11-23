@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { type Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import {
@@ -17,11 +17,10 @@ export const TASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/task/tasks/`;
 	providedIn: "root",
 })
 export class ScrumTasksService {
+	private http = inject(HttpClient);
+	private scrumApi = inject(ScrumApiService);
+
 	tasksEndpoint = TASKS_ENDPOINT;
-	constructor(
-		private http: HttpClient,
-		private scrumApi: ScrumApiService,
-	) {}
 
 	getTasks$(): Observable<TaskResponse[]> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };

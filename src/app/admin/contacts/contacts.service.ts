@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ScrumContactsService } from "src/app/scrum-api/scrum-contacts/scrum-contacts.service";
 import { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
@@ -7,11 +7,9 @@ import { BreakpointsService } from "src/app/shared/shared-services/breakpoints/b
 	providedIn: "root",
 })
 export class ContactsService {
-	constructor(
-		public scrumContacts: ScrumContactsService,
-		public dialog: MatDialog,
-		public breakPoints: BreakpointsService,
-	) {}
+	scrumContacts = inject(ScrumContactsService);
+	dialog = inject(MatDialog);
+	breakPoints = inject(BreakpointsService);
 
 	get contacts$() {
 		return this.scrumContacts.getContacts$();

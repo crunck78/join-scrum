@@ -1,15 +1,16 @@
 import {
 	Component,
 	Input,
+	inject,
 	type OnChanges,
 	type SimpleChanges,
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import {
-	type Route,
 	Router,
 	RouterLinkActive,
 	RouterModule,
+	type Route,
 } from "@angular/router";
 
 export declare type LinkType =
@@ -28,6 +29,8 @@ export declare type LinkType =
 	imports: [MatButtonModule, RouterModule, RouterLinkActive],
 })
 export class RouterLinkComponent implements OnChanges {
+	private router = inject(Router);
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes["routeByPath"]) {
 			this.route = this.router.config.find((r) => r.path === this.routeByPath);
@@ -39,6 +42,4 @@ export class RouterLinkComponent implements OnChanges {
 	@Input() linkType: LinkType = "mat-raised-button";
 	@Input() hidden = false;
 	@Input() routeByPath!: string;
-
-	constructor(private router: Router) {}
 }

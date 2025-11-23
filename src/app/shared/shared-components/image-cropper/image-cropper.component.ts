@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { Component, type ElementRef, Optional, ViewChild } from "@angular/core";
-import type { MatDialogRef } from "@angular/material/dialog";
+import { Component, type ElementRef, inject, ViewChild } from "@angular/core";
+import { MatDialogRef } from "@angular/material/dialog";
 import { DomSanitizer, type SafeUrl } from "@angular/platform-browser";
 import {
 	FileUploader,
@@ -29,6 +29,14 @@ const URL = PROFILE_IMAGE_ENDPOINT;
 	styleUrls: ["./image-cropper.component.scss"],
 })
 export class ProfileImageCropperComponent {
+	private sanitizer = inject(DomSanitizer);
+	private scrumApi = inject(ScrumApiService);
+	private feedbackService = inject(FeedbackService);
+	private dialogRef = inject<MatDialogRef<ImageCropperComponent>>(
+		MatDialogRef,
+		{ optional: true },
+	);
+
 	@ViewChild("inputImage") inputImage!: ElementRef<HTMLInputElement>;
 	@ViewChild("imageCropper") imageCropper!: ImageCropperComponent;
 
@@ -40,12 +48,7 @@ export class ProfileImageCropperComponent {
 	imageChangedEvent!: Event;
 	croppedImage: SafeUrl = "";
 
-	constructor(
-		private sanitizer: DomSanitizer,
-		private scrumApi: ScrumApiService,
-		private feedbackService: FeedbackService,
-		@Optional() private dialogRef?: MatDialogRef<ImageCropperComponent>,
-	) {
+	constructor() {
 		this.uploader = new FileUploader({
 			url: URL,
 			authToken: `Token ${this.scrumApi.token}`,

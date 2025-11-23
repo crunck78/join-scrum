@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { take } from "rxjs";
@@ -14,12 +14,13 @@ import { ResetPasswordService } from "./reset-password.service";
 	imports: [ResetPasswordModule],
 })
 export class ResetPasswordComponent {
+	private resetPasswordService = inject(ResetPasswordService);
+	private route = inject(ActivatedRoute);
+	private feedbackService = inject(FeedbackService);
+
 	token!: string;
-	constructor(
-		private resetPasswordService: ResetPasswordService,
-		private route: ActivatedRoute,
-		private feedbackService: FeedbackService,
-	) {
+
+	constructor() {
 		this.route.queryParams
 			.pipe(take(1))
 			.subscribe((params) => (this.token = params["token"]));

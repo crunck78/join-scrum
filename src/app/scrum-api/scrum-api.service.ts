@@ -1,5 +1,5 @@
 import { HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 
@@ -11,6 +11,8 @@ export interface ApiToken {
 	providedIn: "root",
 })
 export class ScrumApiService {
+	private router = inject(Router);
+
 	token!: string;
 	apiToken$!: BehaviorSubject<ApiToken>;
 
@@ -59,7 +61,7 @@ export class ScrumApiService {
 		}
 	}
 
-	constructor(private router: Router) {
+	constructor() {
 		const init = this.rememberMe ? this.localToken : "";
 		this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
 	}

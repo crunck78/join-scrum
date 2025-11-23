@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { catchError, map, of, tap } from "rxjs";
 import { type ApiToken, ScrumApiService } from "../scrum-api.service";
 import {
@@ -21,14 +21,12 @@ export interface LoginResponse {
 	providedIn: "root",
 })
 export class ScrumLoginService {
+	private http = inject(HttpClient);
+	private scrumApi = inject(ScrumApiService);
+
 	loginCredentials!: LoginCredentials;
 	loginEndpoint = LOGIN_ENDPOINT;
 	guestLoginEndpoint = GUEST_LOGIN_ENDPOINT;
-
-	constructor(
-		private http: HttpClient,
-		private scrumApi: ScrumApiService,
-	) {}
 
 	guestLogin() {
 		return this.http.post<ApiToken>(this.guestLoginEndpoint, {}).pipe(

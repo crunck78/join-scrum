@@ -3,7 +3,7 @@ import {
 	CdkDropList,
 	type DropListOrientation,
 } from "@angular/cdk/drag-drop";
-import { Component, type QueryList, ViewChildren } from "@angular/core";
+import { Component, inject, type QueryList, ViewChildren } from "@angular/core";
 
 import { firstValueFrom, type Observable, Subject, take } from "rxjs";
 import type { BoardResponse } from "src/app/shared/models/board.model";
@@ -25,6 +25,8 @@ export declare type ListDirection = -1 | 1;
 	imports: [BoardModule],
 })
 export class BoardComponent {
+	private boardService = inject(BoardService);
+
 	draggingDisabled = true;
 	orientation: DropListOrientation = "vertical";
 	backlog: TaskResponse[] = [];
@@ -48,7 +50,7 @@ export class BoardComponent {
 		return this.boardService.breakPoints.matchesWebBreakpoint$;
 	}
 
-	constructor(private boardService: BoardService) {
+	constructor() {
 		this.boards$ = this.boardService.boards$;
 		this.backlog$ = this.boardService.backlog$;
 		this.updateBoard();

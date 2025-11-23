@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 @Component({
@@ -8,7 +8,7 @@ import { Title } from "@angular/platform-browser";
 	standalone: true,
 })
 export class PageTitleComponent {
-	constructor(private titleService: Title) {}
+	private titleService = inject(Title);
 
 	get title() {
 		return this.titleService.getTitle();

@@ -1,6 +1,7 @@
 import {
 	Component,
 	EventEmitter,
+	inject,
 	Input,
 	type OnChanges,
 	Output,
@@ -45,6 +46,9 @@ import { AddTaskService } from "./add-task.service";
 	providers: [AddTaskService],
 })
 export class AddTaskComponent implements OnChanges {
+	private addTaskService = inject(AddTaskService);
+	private feedback = inject(FeedbackService);
+
 	/**
 	 * Empty Valid Form Group Initial Values
 	 * Ca be used for instance to clear the Form Group or validate Partials given Form Group Values
@@ -105,10 +109,7 @@ export class AddTaskComponent implements OnChanges {
 	@Output() addedTask$ = new EventEmitter<TaskResponse | null>();
 	@Output() deletedTaskId$ = new EventEmitter<number | null>();
 
-	constructor(
-		private addTaskService: AddTaskService,
-		private feedback: FeedbackService,
-	) {
+	constructor() {
 		this.updateCategories();
 		this.updateContacts();
 		this.updateSubtasks();

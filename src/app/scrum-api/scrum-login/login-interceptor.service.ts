@@ -5,7 +5,7 @@ import {
 	type HttpRequest,
 	HttpResponse,
 } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { filter, type Observable, tap } from "rxjs";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 import { ScrumApiService } from "../scrum-api.service";
@@ -15,7 +15,7 @@ export const GUEST_LOGIN_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/user/create-guest
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
-	constructor(private scrumApi: ScrumApiService) {}
+	private scrumApi = inject(ScrumApiService);
 
 	intercept(
 		httpRequest: HttpRequest<any>,

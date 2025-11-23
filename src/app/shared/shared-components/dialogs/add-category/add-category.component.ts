@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
 	FormControl,
 	FormGroup,
@@ -25,15 +25,13 @@ import { FormFieldComponent } from "../../form-field/form-field.component";
 	],
 })
 export class AddCategoryComponent {
+	dialogRef = inject<MatDialogRef<AddCategoryComponent>>(MatDialogRef);
+	private scrumCategories = inject(ScrumCategoriesService);
+
 	addCategoryForm = new FormGroup({
 		name: new FormControl("", Validators.compose([Validators.required])),
 		color: new FormControl("", Validators.compose([Validators.required])),
 	});
-
-	constructor(
-		public dialogRef: MatDialogRef<AddCategoryComponent>,
-		private scrumCategories: ScrumCategoriesService,
-	) {}
 
 	addCategory() {
 		if (this.addCategoryForm.valid) {

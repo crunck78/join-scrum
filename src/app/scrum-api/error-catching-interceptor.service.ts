@@ -4,9 +4,9 @@ import type {
 	HttpHandler,
 	HttpRequest,
 } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { catchError, type Observable, throwError } from "rxjs";
+import { catchError, throwError, type Observable } from "rxjs";
 import {
 	DURATION_SNACK_BAR,
 	FeedbackService,
@@ -15,11 +15,9 @@ import { ScrumApiService } from "./scrum-api.service";
 
 @Injectable()
 export class ErrorCatchingInterceptor {
-	constructor(
-		private feedback: FeedbackService,
-		private scrumApi: ScrumApiService,
-		private router: Router,
-	) {}
+	private feedback = inject(FeedbackService);
+	private scrumApi = inject(ScrumApiService);
+	private router = inject(Router);
 
 	intercept(
 		httpRequest: HttpRequest<any>,

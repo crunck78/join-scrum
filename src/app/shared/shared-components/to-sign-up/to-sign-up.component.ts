@@ -1,10 +1,16 @@
-import { Component, Input, type OnDestroy, type OnInit } from "@angular/core";
+import {
+	Component,
+	Input,
+	inject,
+	type OnDestroy,
+	type OnInit,
+} from "@angular/core";
 
 import {
 	NavigationEnd,
 	NavigationStart,
-	type Route,
 	Router,
+	type Route,
 } from "@angular/router";
 import type { Subscription } from "rxjs";
 import { RouterLinkComponent } from "../router-link/router-link.component";
@@ -16,11 +22,13 @@ import { RouterLinkComponent } from "../router-link/router-link.component";
 	styleUrls: ["./to-sign-up.component.scss"],
 })
 export class ToSignUpComponent implements OnInit, OnDestroy {
+	private router = inject(Router);
+
 	@Input() hideOnSameRoute = false;
 	subscriptionRouterEvents!: Subscription;
 	signUpRoute!: Route;
-	isSignUpRoute = false; // New property to track if current route is signUpRoute
-	constructor(private router: Router) {}
+	isSignUpRoute = false;
+
 	ngOnInit(): void {
 		this.signUpRoute = this.router.config
 			.find((r) => r.path === "auth")

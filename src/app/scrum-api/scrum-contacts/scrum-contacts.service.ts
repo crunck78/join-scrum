@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { catchError, map, type Observable, of } from "rxjs";
+import { Injectable, inject } from "@angular/core";
+import { catchError, map, of, type Observable } from "rxjs";
 import {
 	Contact,
 	type ContactRequest,
@@ -16,11 +16,10 @@ export const CONTACTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/contact/contacts/`;
 	providedIn: "root",
 })
 export class ScrumContactsService {
+	private http = inject(HttpClient);
+	private scrumApi = inject(ScrumApiService);
+
 	contactsEndpoint = CONTACTS_ENDPOINT;
-	constructor(
-		private http: HttpClient,
-		private scrumApi: ScrumApiService,
-	) {}
 
 	getContacts$(): Observable<ContactResponse[]> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };

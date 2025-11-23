@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
@@ -14,6 +14,10 @@ import { LogInService } from "./log-in.service";
 	imports: [LogInModule],
 })
 export class LogInComponent {
+	private loginService = inject(LogInService);
+	private route = inject(ActivatedRoute);
+	private router = inject(Router);
+
 	loginForm = new FormGroup({
 		email: new FormControl(
 			"",
@@ -27,11 +31,7 @@ export class LogInComponent {
 	rememberMe = new FormControl(this.loginService.scrumApi.rememberMe);
 	returnUrl!: string;
 
-	constructor(
-		private loginService: LogInService,
-		private route: ActivatedRoute,
-		private router: Router,
-	) {
+	constructor() {
 		this.route.queryParams
 			.pipe(take(1))
 			.subscribe((params) => (this.returnUrl = params["returnUrl"] || ""));

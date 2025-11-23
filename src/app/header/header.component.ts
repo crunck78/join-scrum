@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import type { ViewState } from "../app.component";
 import { HeaderModule } from "./header.module";
 import { HeaderService } from "./header.service";
@@ -10,7 +10,7 @@ import { HeaderService } from "./header.service";
 	imports: [HeaderModule],
 })
 export class HeaderComponent {
-	constructor(private headerService: HeaderService) {}
+	private headerService = inject(HeaderService);
 
 	@Input() toggleHeaderView!: ViewState;
 	@Output() toggleDrawer = new EventEmitter();

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { take } from "rxjs";
 import { ScrumProfileService } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
 import { ScrumSummaryService } from "src/app/scrum-api/scrum-summary/scrum-summary.service";
@@ -10,14 +10,14 @@ import { BreakpointsService } from "src/app/shared/shared-services/breakpoints/b
 	providedIn: "any",
 })
 export class SummaryService {
+	breakPoints = inject(BreakpointsService);
+	private scrumSummary = inject(ScrumSummaryService);
+	private scrumProfile = inject(ScrumProfileService);
+
 	summary!: SummaryResponse | null;
 	profile!: UserResponse | null;
 
-	constructor(
-		public breakPoints: BreakpointsService,
-		private scrumSummary: ScrumSummaryService,
-		private scrumProfile: ScrumProfileService,
-	) {
+	constructor() {
 		this.scrumSummary
 			.getSummary$()
 			.pipe(take(1))

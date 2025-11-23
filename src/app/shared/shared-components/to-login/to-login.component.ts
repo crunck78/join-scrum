@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { type Route, Router } from "@angular/router";
 import { MaterialModule } from "../../modules/material/material.module";
 import { RouterLinkComponent } from "../router-link/router-link.component";
@@ -10,8 +10,11 @@ import { RouterLinkComponent } from "../router-link/router-link.component";
 	styleUrls: ["./to-login.component.scss"],
 })
 export class ToLoginComponent {
+	private router = inject(Router);
+
 	logInRoute: Route;
-	constructor(private router: Router) {
+
+	constructor() {
 		this.logInRoute = this.router.config
 			.find((r) => r.path === "auth")
 			?.children?.find((r) => r.path === "log-in") as Route;

@@ -1,4 +1,4 @@
-import { Directive } from "@angular/core";
+import { Directive, inject } from "@angular/core";
 import { BreakpointsService } from "./../../shared-services/breakpoints/breakpoints.service";
 
 @Directive({
@@ -6,7 +6,7 @@ import { BreakpointsService } from "./../../shared-services/breakpoints/breakpoi
 	standalone: true,
 })
 export class BreakpointsDirective {
-	constructor(private breakpoints: BreakpointsService) {}
+	private breakpoints = inject(BreakpointsService);
 
 	get matchWebBreakpoint$() {
 		return this.breakpoints.matchesWebBreakpoint$;

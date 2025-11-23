@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { RouterOutlet } from "@angular/router";
 import { map } from "rxjs";
@@ -25,10 +25,10 @@ import { ToSignUpComponent } from "src/app/shared/shared-components/to-sign-up/t
 	],
 })
 export class AuthenticationComponent {
-	constructor(
-		private breakpointObserver: BreakpointObserver,
-		private dialog: MatDialog,
-	) {
+	private breakpointObserver = inject(BreakpointObserver);
+	private dialog = inject(MatDialog);
+
+	constructor() {
 		this.dialog.open(AnnouncementComponent, { disableClose: true });
 	}
 	mobile$ = this.breakpointObserver

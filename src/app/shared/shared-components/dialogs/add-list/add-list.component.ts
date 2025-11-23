@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
 	FormControl,
 	FormGroup,
@@ -36,6 +36,10 @@ import { LogoComponent } from "../../logo/logo.component";
 	],
 })
 export class AddListComponent {
+	dialogRef = inject<MatDialogRef<AddListComponent>>(MatDialogRef);
+	private scrumList = inject(ScrumListsService);
+	private scrumBoard = inject(ScrumBoardsService);
+
 	boards$: Observable<BoardResponse[]>;
 
 	addListForm = new FormGroup({
@@ -43,11 +47,7 @@ export class AddListComponent {
 		board: new FormControl(null, Validators.compose([Validators.required])),
 	});
 
-	constructor(
-		public dialogRef: MatDialogRef<AddListComponent>,
-		private scrumList: ScrumListsService,
-		private scrumBoard: ScrumBoardsService,
-	) {
+	constructor() {
 		this.boards$ = this.scrumBoard.getBoards$();
 	}
 

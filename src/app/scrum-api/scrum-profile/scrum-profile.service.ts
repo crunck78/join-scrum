@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { catchError, map, type Observable, of } from "rxjs";
+import { Injectable, inject } from "@angular/core";
+import { catchError, map, of, type Observable } from "rxjs";
 import {
 	User,
 	type UserRequest,
@@ -26,13 +26,11 @@ export interface Profile {
 	providedIn: "root",
 })
 export class ScrumProfileService {
+	private http = inject(HttpClient);
+	private scrumApi = inject(ScrumApiService);
+
 	profileEndpoint = PROFILE_ENDPOINT;
 	profile!: Profile;
-
-	constructor(
-		private http: HttpClient,
-		private scrumApi: ScrumApiService,
-	) {}
 
 	getProfile$(): Observable<UserResponse | null> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };

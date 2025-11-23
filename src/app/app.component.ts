@@ -1,4 +1,4 @@
-import { Component, type OnDestroy, type OnInit } from "@angular/core";
+import { Component, inject, type OnDestroy, type OnInit } from "@angular/core";
 import type { MatDrawerMode } from "@angular/material/sidenav";
 import { map, type Subscription } from "rxjs";
 import { openCloseAnimationHeader } from "./app.animations";
@@ -16,6 +16,9 @@ export declare type ViewState = "open" | "closed";
 	animations: [openCloseAnimationHeader],
 })
 export class AppComponent implements OnInit, OnDestroy {
+	private scrumApi = inject(ScrumApiService);
+	private breakpoints = inject(BreakpointsService);
+
 	title = "join";
 	web$ = this.breakpoints.matchesWebBreakpoint$.pipe(
 		map((matches) => (matches ? "side" : ("over" as MatDrawerMode))),
@@ -34,11 +37,6 @@ export class AppComponent implements OnInit, OnDestroy {
 			? "translate(45, 50) rotate(180, 6.99996, 8)"
 			: "translate(45, 45) ";
 	}
-
-	constructor(
-		private scrumApi: ScrumApiService,
-		private breakpoints: BreakpointsService,
-	) {}
 
 	ngOnInit(): void {
 		this.onNextTokenSub$ = this.scrumApi.apiToken$.subscribe((apiToken) =>

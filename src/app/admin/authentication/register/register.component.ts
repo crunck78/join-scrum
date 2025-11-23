@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import type { SignupCredentials } from "src/app/scrum-api/scrum-signup/scrum-signup.service";
 import { EMAIL_REGEX } from "src/app/shared/shared-components/form-field/form-field.component";
@@ -12,6 +12,8 @@ import { RegisterService } from "./register.service";
 	imports: [RegisterModule],
 })
 export class RegisterComponent {
+	private registerService = inject(RegisterService);
+
 	signupForm = new FormGroup({
 		name: new FormControl("", Validators.compose([Validators.required])),
 		email: new FormControl(
@@ -24,7 +26,7 @@ export class RegisterComponent {
 		password: new FormControl("", Validators.compose([Validators.required])),
 	});
 
-	constructor(private registerService: RegisterService) {
+	constructor() {
 		this.signupForm.disable();
 	}
 
