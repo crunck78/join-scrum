@@ -27,6 +27,7 @@
 
     .new-contact {
         margin-left: auto;
+        /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
         &::ng-deep .mdc-button__label {
             display: flex;
             align-items: center;
@@ -37,6 +38,7 @@
 
     .delete-contact {
         margin-left: auto;
+        /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
         &::ng-deep .mdc-button__label {
             display: flex;
             align-items: center;

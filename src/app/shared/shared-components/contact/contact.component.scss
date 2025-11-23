@@ -10,6 +10,7 @@ button{
     padding: 15px 25px;
     overflow: hidden;
 
+    /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
     &::ng-deep .mdc-button__label{
         width: 100%;
     }
