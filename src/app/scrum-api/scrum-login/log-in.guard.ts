@@ -7,7 +7,7 @@ import {
 } from "@angular/router";
 import { ScrumApiService } from "../scrum-api.service";
 
-export const canActivate: CanActivateFn = (
+export const loginGuard: CanActivateFn = (
 	_route: ActivatedRouteSnapshot,
 	state: RouterStateSnapshot,
 ) => {

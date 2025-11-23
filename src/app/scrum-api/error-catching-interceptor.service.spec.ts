@@ -1,8 +1,8 @@
 import { importProvidersFrom } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { provideRouter } from "@angular/router";
+import { ROUTES } from "src/app/app.routes";
 import { MaterialModule } from "../shared/modules/material/material.module";
-import { routes } from "../shared/routes";
 import { ErrorCatchingInterceptor } from "./error-catching-interceptor.service";
 
 describe("ErrorCatchingInterceptorService", () => {
@@ -12,7 +12,7 @@ describe("ErrorCatchingInterceptorService", () => {
 		TestBed.configureTestingModule({
 			providers: [
 				ErrorCatchingInterceptor,
-				provideRouter(routes),
+				provideRouter(ROUTES),
 				importProvidersFrom(MaterialModule),
 			],
 		});

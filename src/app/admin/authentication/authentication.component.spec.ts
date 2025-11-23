@@ -1,6 +1,6 @@
 import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { provideRouter } from "@angular/router";
-import { routes } from "src/app/shared/routes";
+import { ROUTES } from "src/app/app.routes";
 import { AuthenticationComponent } from "./authentication.component";
 
 describe("AuthenticationComponent", () => {
@@ -9,7 +9,7 @@ describe("AuthenticationComponent", () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			providers: [provideRouter(routes)],
+			providers: [provideRouter(ROUTES)],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(AuthenticationComponent);

@@ -1,22 +1,5 @@
-import { HttpClientModule } from "@angular/common/http";
-import { importProvidersFrom, provideZoneChangeDetection } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { provideRouter } from "@angular/router";
 import { AppComponent } from "./app/app.component";
-import { interceptorProviders } from "./app/interceptor-providers";
-import { MaterialModule } from "./app/shared/modules/material/material.module";
-import { routes } from "./app/shared/routes";
+import { appConfig } from "./app/app.config";
 
-bootstrapApplication(AppComponent, {
-	providers: [
-		provideZoneChangeDetection(),
-		importProvidersFrom([
-			HttpClientModule,
-			BrowserAnimationsModule,
-			MaterialModule,
-		]),
-		provideRouter(routes),
-		interceptorProviders,
-	],
-});
+bootstrapApplication(AppComponent, appConfig);

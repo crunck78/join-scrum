@@ -3,8 +3,8 @@ import { importProvidersFrom } from "@angular/core";
 import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { provideRouter } from "@angular/router";
+import { ROUTES } from "src/app/app.routes";
 import { MaterialModule } from "src/app/shared/modules/material/material.module";
-import { routes } from "src/app/shared/routes";
 import { RegisterComponent } from "./register.component";
 
 describe("RegisterComponent", () => {
@@ -19,7 +19,7 @@ describe("RegisterComponent", () => {
 					HttpClientModule,
 					MaterialModule,
 				),
-				provideRouter(routes),
+				provideRouter(ROUTES),
 			],
 		}).compileComponents();
 

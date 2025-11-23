@@ -1,6 +1,6 @@
 import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { provideRouter } from "@angular/router";
-import { routes } from "../../routes";
+import { ROUTES } from "src/app/app.routes";
 import { ToSignUpComponent } from "./to-sign-up.component";
 
 describe("ToSignUpComponent", () => {
@@ -9,7 +9,7 @@ describe("ToSignUpComponent", () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			providers: [provideRouter(routes)],
+			providers: [provideRouter(ROUTES)],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ToSignUpComponent);
