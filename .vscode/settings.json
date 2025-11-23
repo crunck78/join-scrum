@@ -1,7 +1,7 @@
 {
 	"css.validate": false,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.stylelint": "exlicit"
+		"source.fixAll.stylelint": "explicit"
 	},
 	"less.validate": false,
 	"scss.validate": false,

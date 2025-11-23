@@ -1,28 +1,28 @@
 .cropped-image {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 100%;
-    border: 2px solid black;
+	width: 60px;
+	height: 60px;
+	object-fit: cover;
+	border-radius: 100%;
+	border: 2px solid black;
 }
 
 .image-cropper {
-    box-sizing: border-box;
-    max-width: 600px;
+	box-sizing: border-box;
+	max-width: 600px;
 }
 
 .drop-zone {
-    border: dotted 3px lightgray;
-    height: 40vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 16px;
+	border: dotted 3px lightgray;
+	height: 40vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 16px;
 }
 
 .nv-file-over {
-    border: dotted 3px red;
+	border: dotted 3px red;
 }
 
 /* Default class applied to drop zones on over */

@@ -1,12 +1,12 @@
 :host{
-    a {
-        display: flex;
-        color: #CDCDCD;
-        justify-content: flex-start;
+	a {
+		display: flex;
+		color: #CDCDCD;
+		justify-content: flex-start;
 
-        &.active-link{
-            color: white;
-            background-color: #091931;
-        }
-    }
+		&.active-link{
+			color: white;
+			background-color: #091931;
+		}
+	}
 }

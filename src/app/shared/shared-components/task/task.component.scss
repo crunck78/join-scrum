@@ -1,46 +1,46 @@
 :host {
-    display: block;
-    position: relative;
-    margin: 16px 0;
-    cursor: pointer;
+	display: block;
+	position: relative;
+	margin: 16px 0;
+	cursor: pointer;
 }
 
 .task-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .subtasks-preview {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
 
-    .subtasks-progress-bar {
-        flex: 1;
-        height: 8px;
-        background: #F4F4F4;
-        border-radius: 2px;
-    }
+	.subtasks-progress-bar {
+		flex: 1;
+		height: 8px;
+		background: #F4F4F4;
+		border-radius: 2px;
+	}
 }
 
 .task-footer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 32px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 32px;
 }
 
 .task-assignees{
-    display: inline-flex;
-    align-items: center;
-    overflow-x: hidden;
+	display: inline-flex;
+	align-items: center;
+	overflow-x: hidden;
 
-    app-contact-initials:not(:first-child){
-        margin-left: -16px;
-    }
+	app-contact-initials:not(:first-child){
+		margin-left: -16px;
+	}
 }
 
 .priority-icon{
-    margin-left: auto;
+	margin-left: auto;
 }

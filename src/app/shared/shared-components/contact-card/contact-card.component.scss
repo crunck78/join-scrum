@@ -1,12 +1,12 @@
 :host{
-    display: flex;
-    align-items: center;
-    gap: 35px;
-    @media(max-width: 800px){
-        gap: 12px;
-    }
+	display: flex;
+	align-items: center;
+	gap: 35px;
+	@media(max-width: 800px){
+		gap: 12px;
+	}
 }
 
 .text-left{
-    text-align: left;
+	text-align: left;
 }

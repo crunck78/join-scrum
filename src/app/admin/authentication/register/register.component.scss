@@ -1,36 +1,36 @@
 :host{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 500px;
-    app-card{
-        width: 100%;
-    }
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	max-width: 500px;
+	app-card{
+		width: 100%;
+	}
 }
 
 mat-expansion-panel{
-    margin-bottom: 16px;
+	margin-bottom: 16px;
 }
 
 .footer {
-    width: 100%;
-    box-sizing: border-box;
-    display: grid;
-    gap: 35px;
-    padding: 16px;
+	width: 100%;
+	box-sizing: border-box;
+	display: grid;
+	gap: 35px;
+	padding: 16px;
 
-    .simple-grid {
-        display: flex;
-        justify-content: space-between;
+	.simple-grid {
+		display: flex;
+		justify-content: space-between;
 
-        button,
-        a {
-            width: fit-content;
-            margin-top: auto;
-        }
-    }
+		button,
+		a {
+			width: fit-content;
+			margin-top: auto;
+		}
+	}
 }
 
 .main-content{
-    margin-top: 35px;
+	margin-top: 35px;
 }

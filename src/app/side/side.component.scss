@@ -1,26 +1,26 @@
 :host {
-    display: block;
-    width: 232px;
-    height: 100%;
+	display: block;
+	width: 232px;
+	height: 100%;
 
-    mat-toolbar {
-        height: 100%;
-        padding-top: 66px;
-        padding-bottom: 66px;
+	mat-toolbar {
+		height: 100%;
+		padding-top: 66px;
+		padding-bottom: 66px;
 
-        gap: 66px;
+		gap: 66px;
 
-        mat-toolbar-row {
-            height: unset;
+		mat-toolbar-row {
+			height: unset;
 
-            &.logo {
-                justify-content: center;
-            }
+			&.logo {
+				justify-content: center;
+			}
 
-            &.navigation{
-                flex: 1;
-            }
+			&.navigation{
+				flex: 1;
+			}
 
-        }
-    }
+		}
+	}
 }

@@ -1,66 +1,66 @@
 :host {
-    display: flex;
-    padding: 16px 0;
-    height: 100%;
-    box-sizing: border-box;
+	display: flex;
+	padding: 16px 0;
+	height: 100%;
+	box-sizing: border-box;
 
-    app-card {
-        display: block;
-        height: 100%;
-        width: 100%;
-    }
+	app-card {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
 }
 
 .new-list {
-    margin-left: auto;
+	margin-left: auto;
 
-    /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
-    &::ng-deep .mdc-button__label {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-    }
+	/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
+	&::ng-deep .mdc-button__label {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 6px;
+	}
 }
 
 .board-lists {
-    display: flex;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 100%;
+	display: flex;
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	height: 100%;
 }
 
 .board-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .example-handle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #ccc;
-    cursor: move;
-    width: 24px;
-    height: 24px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #ccc;
+	cursor: move;
+	width: 24px;
+	height: 24px;
 }
 
 .no-tasks {
-    width: 100%;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px dashed var(--icon, #A8A8A8);
-    background: #E7E7E7;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
-    color: var(--icon, #A8A8A8);
-    /* Version 2/body */
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%;
-    /* 19.2px */
+	width: 100%;
+	min-height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px dashed var(--icon, #A8A8A8);
+	background: #E7E7E7;
+	box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+	color: var(--icon, #A8A8A8);
+	/* Version 2/body */
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%;
+	/* 19.2px */
 }

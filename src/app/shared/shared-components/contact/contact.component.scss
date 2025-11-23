@@ -1,17 +1,17 @@
 :host{
-    display: inline-block;
-    background: rgb(231, 231, 231);
+	display: inline-block;
+	background: rgb(231, 231, 231);
 }
 
 button{
-    height: auto !important;
-    width: 100%;
-    justify-content: flex-start;
-    padding: 15px 25px;
-    overflow: hidden;
+	height: auto !important;
+	width: 100%;
+	justify-content: flex-start;
+	padding: 15px 25px;
+	overflow: hidden;
 
-    /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
-    &::ng-deep .mdc-button__label{
-        width: 100%;
-    }
+	/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
+	&::ng-deep .mdc-button__label{
+		width: 100%;
+	}
 }

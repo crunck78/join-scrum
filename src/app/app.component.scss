@@ -1,21 +1,21 @@
 :host {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 
-    mat-drawer-container {
-        width: 100%;
-        height: 100%;
+	mat-drawer-container {
+		width: 100%;
+		height: 100%;
 
-        mat-drawer-content {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-    }
+		mat-drawer-content {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
+	}
 }
 
 .opener {
-    position: absolute;
-    transform: translateY(-50%) translateX(-50%);
-    cursor: pointer;
+	position: absolute;
+	transform: translateY(-50%) translateX(-50%);
+	cursor: pointer;
 }
