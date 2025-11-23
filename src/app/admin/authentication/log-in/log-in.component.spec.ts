@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogInComponent } from './log-in.component';
 import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 import { provideRouter } from '@angular/router';
 import { routes } from 'src/app/shared/routes';

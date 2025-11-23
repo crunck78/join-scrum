@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ResetPasswordService } from './reset-password.service';
 import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 
 describe('ResetPasswordService', () => {
   let service: ResetPasswordService;

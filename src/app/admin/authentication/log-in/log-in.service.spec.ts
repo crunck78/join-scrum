@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LogInService } from './log-in.service';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 

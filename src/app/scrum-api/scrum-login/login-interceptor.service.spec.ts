@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { LoginInterceptor } from './login-interceptor.service';
 import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 
 describe('LoginInterceptorService', () => {
   let service: LoginInterceptor;

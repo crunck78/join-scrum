@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResetPasswordComponent } from './reset-password.component';
 import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from 'src/app/shared/routes';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
