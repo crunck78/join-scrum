@@ -1,5 +1,5 @@
 import {} from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideRouter } from '@angular/router';
@@ -11,7 +11,7 @@ import { MaterialModule } from './app/shared/modules/material/material.module';
 bootstrapApplication(AppComponent,
     {
         providers: [
-            importProvidersFrom(
+            provideZoneChangeDetection(),importProvidersFrom(
                 [
                     HttpClientModule,
                     BrowserAnimationsModule,
