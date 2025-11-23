@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskResponse } from '../../models/task.model';
 import { MaterialModule } from '../../modules/material/material.module';
 import { ProgressLinearGradientPipe } from '../../pipes/progress-linear-gradient/progress-linear-gradient.pipe';
+import { CategoryCardComponent } from '../category-card/category-card.component';
 import { ContactInitialsComponent } from '../contact-initials/contact-initials.component';
 import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dialog.component';
-import { CategoryCardComponent } from '../category-card/category-card.component';
 
 @Component({
     selector: 'app-task',
@@ -31,8 +31,8 @@ export class TaskComponent {
     return this.task.subtasks.filter(s => s.done).length;
   }
 
-  @HostListener('click', ['$event'])
-  onClick() {
+  @HostListener('click', ['$event.target'])
+  onClick(event: EventTarget | null) {
     this.editTask();
   }
 
