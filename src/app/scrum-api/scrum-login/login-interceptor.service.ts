@@ -7,12 +7,11 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { filter, type Observable, tap } from "rxjs";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
 export const LOGIN_ENDPOINT = SCRUM_API_ENDPOINT + "/api/user/token/";
-export const GUEST_LOGIN_ENDPOINT =
-	SCRUM_API_ENDPOINT + "/api/user/create-guest/";
+export const GUEST_LOGIN_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/user/create-guest/`;
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
@@ -27,8 +26,8 @@ export class LoginInterceptor implements HttpInterceptor {
 			tap((event: HttpResponse<any>) => {
 				if (
 					this.scrumApi.rememberMe &&
-					(httpRequest.url == LOGIN_ENDPOINT ||
-						httpRequest.url == GUEST_LOGIN_ENDPOINT)
+					(httpRequest.url === LOGIN_ENDPOINT ||
+						httpRequest.url === GUEST_LOGIN_ENDPOINT)
 				)
 					this.scrumApi.localToken = event.body.token;
 				return event;

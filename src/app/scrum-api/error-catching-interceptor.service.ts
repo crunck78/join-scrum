@@ -27,7 +27,7 @@ export class ErrorCatchingInterceptor {
 	): Observable<HttpEvent<any>> {
 		return next.handle(httpRequest).pipe(
 			catchError((errorResponse: any) => {
-				if (errorResponse.status == 401) {
+				if (errorResponse.status === 401) {
 					this.router.navigate(["/auth/log-in"]);
 					this.scrumApi.apiToken$.next({ token: "" });
 				}
@@ -82,17 +82,17 @@ export class ErrorCatchingInterceptor {
 	}
 
 	private _isUnknownError(errorResponse: HttpErrorResponse) {
-		return errorResponse.status == 0;
+		return errorResponse.status === 0;
 	}
 
 	private _getErrorMessage(errorResponse: HttpErrorResponse) {
 		if (
-			errorResponse.statusText != "" &&
-			errorResponse.statusText.toLowerCase() != "ok"
+			errorResponse.statusText !== "" &&
+			errorResponse.statusText.toLowerCase() !== "ok"
 		)
 			return errorResponse.statusText;
-		if (errorResponse.message != "") return errorResponse.message;
-		if (typeof errorResponse.error === "string" && errorResponse.error != "")
+		if (errorResponse.message !== "") return errorResponse.message;
+		if (typeof errorResponse.error === "string" && errorResponse.error !== "")
 			return errorResponse.error;
 
 		return "Something went wrong!";

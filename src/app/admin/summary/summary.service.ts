@@ -31,10 +31,10 @@ export class SummaryService {
 	get summaryEmpty() {
 		if (!this.summary) return true;
 		return (
-			this.summary.tasksByCategory.length == 0 &&
-			this.summary.tasksByPriority.length == 0 &&
-			this.summary.tasksInLists.length == 0 &&
-			this.summary.tasksInBacklog.count == 0
+			this.summary.tasksByCategory.length === 0 &&
+			this.summary.tasksByPriority.length === 0 &&
+			this.summary.tasksInLists.length === 0 &&
+			this.summary.tasksInBacklog.count === 0
 		);
 	}
 }

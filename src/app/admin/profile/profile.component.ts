@@ -28,7 +28,7 @@ export class ProfileComponent {
 		private scrumProfile: ScrumProfileService,
 		private dialog: MatDialog,
 		private scrumApi: ScrumApiService,
-		private feedbackService: FeedbackService,
+		private _feedbackService: FeedbackService,
 	) {
 		this.updateProfile();
 	}

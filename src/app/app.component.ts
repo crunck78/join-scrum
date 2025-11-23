@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	get arrowTransformation() {
-		return this.toggleViewHeader == "closed"
+		return this.toggleViewHeader === "closed"
 			? "translate(45, 50) rotate(180, 6.99996, 8)"
 			: "translate(45, 45) ";
 	}
@@ -52,12 +52,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	toggleHeader(event: Event) {
 		event.preventDefault();
-		if (this.toggleViewHeader == "open") {
+		if (this.toggleViewHeader === "open") {
 			this.toggleViewHeader = "closed";
 			return;
 		}
 
-		if (this.toggleViewHeader == "closed") {
+		if (this.toggleViewHeader === "closed") {
 			this.toggleViewHeader = "open";
 			return;
 		}

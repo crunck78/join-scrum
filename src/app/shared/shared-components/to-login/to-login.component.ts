@@ -13,7 +13,7 @@ export class ToLoginComponent {
 	logInRoute: Route;
 	constructor(private router: Router) {
 		this.logInRoute = this.router.config
-			.find((r) => r.path == "auth")
-			?.children?.find((r) => r.path == "log-in") as Route;
+			.find((r) => r.path === "auth")
+			?.children?.find((r) => r.path === "log-in") as Route;
 	}
 }

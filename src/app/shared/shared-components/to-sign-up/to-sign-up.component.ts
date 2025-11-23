@@ -23,8 +23,8 @@ export class ToSignUpComponent implements OnInit, OnDestroy {
 	constructor(private router: Router) {}
 	ngOnInit(): void {
 		this.signUpRoute = this.router.config
-			.find((r) => r.path == "auth")
-			?.children?.find((r) => r.path == "sign-up") as Route;
+			.find((r) => r.path === "auth")
+			?.children?.find((r) => r.path === "sign-up") as Route;
 		this.isSignUpRoute = this.router.url.includes(this.signUpRoute.path || "");
 
 		this.subscriptionRouterEvents = this.router.events.subscribe((event) => {

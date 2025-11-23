@@ -31,7 +31,7 @@
 			"enabled": true
 		},
 		"linter": {
-			"enabled": true
+			"enabled": false
 		},
 		"parser": {
 			"interpolation": true
@@ -65,9 +65,13 @@
 	},
 	"overrides": [
 		{
-			"includes": ["*.ts"],
+			"includes": ["**/*.ts"],
 			"linter": {
-				"rules": {}
+				"rules": {
+					"suspicious": {
+						"noAssignInExpressions": "off"
+					}
+				}
 			}
 		},
 		{

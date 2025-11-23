@@ -48,9 +48,9 @@ export class AddTaskDialogComponent implements OnInit {
   }
 
   get title() {
-    if (this.mode == 'add')
+    if (this.mode === 'add')
       return 'Add Task';
-    if (this.mode == 'edit')
+    if (this.mode === 'edit')
       return 'Edit Task';
     return '';
   }

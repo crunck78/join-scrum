@@ -235,7 +235,7 @@ export class AddTaskComponent implements OnChanges {
 	removeSubtask(subtaskToRemove: SubtaskRequest) {
 		const subtasks = this.addTaskForm.get("subtasks")?.value;
 		const patchedSubtasks = subtasks?.filter(
-			(st) => st != subtaskToRemove,
+			(st) => st !== subtaskToRemove,
 		) as SubtaskRequest[];
 		this.addTaskForm.get("subtasks")?.patchValue(patchedSubtasks);
 	}
@@ -250,8 +250,8 @@ export class AddTaskComponent implements OnChanges {
 	}
 
 	saveTask() {
-		if (this.mode == "add") this.addTask();
-		if (this.mode == "edit") this.editTask();
+		if (this.mode === "add") this.addTask();
+		if (this.mode === "edit") this.editTask();
 	}
 
 	addTask() {
@@ -285,7 +285,7 @@ export class AddTaskComponent implements OnChanges {
 	}
 
 	deleteTask() {
-		if (this.mode != "edit") return;
+		if (this.mode !== "edit") return;
 		this.addTaskService.scrumTask
 			.deleteTask$(this.task.id)
 			.pipe(take(1))
@@ -299,4 +299,4 @@ export class AddTaskComponent implements OnChanges {
 		this.addSubtaskForm.reset();
 	}
 }
-export { TaskMode, PriorityType };
+export { PriorityType, TaskMode };
