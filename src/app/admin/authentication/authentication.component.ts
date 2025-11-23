@@ -1,7 +1,7 @@
-import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { type BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import type { MatDialog } from "@angular/material/dialog";
 import { RouterOutlet } from "@angular/router";
 import { map } from "rxjs";
 import { AnnouncementComponent } from "src/app/shared/shared-components/dialogs/announcement/announcement.component";

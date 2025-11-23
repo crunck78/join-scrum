@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { ViewState } from "../app.component";
+import type { ViewState } from "../app.component";
 import { HeaderModule } from "./header.module";
-import { HeaderService } from "./header.service";
+import type { HeaderService } from "./header.service";
 
 @Component({
 	selector: "app-header",

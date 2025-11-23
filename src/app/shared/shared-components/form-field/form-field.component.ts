@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import {
-	AbstractControl,
-	FormControl,
-	FormGroupDirective,
-	NgForm,
+	type AbstractControl,
+	type FormControl,
+	type FormGroupDirective,
+	type NgForm,
 	ReactiveFormsModule,
 } from "@angular/forms";
-import { ErrorStateMatcher } from "@angular/material/core";
+import type { ErrorStateMatcher } from "@angular/material/core";
 import { RouterLink } from "@angular/router";
 import { ColorPickerDirective } from "ngx-color-picker";
 import { MaterialModule } from "../../modules/material/material.module";
@@ -53,7 +53,7 @@ export declare type InputType =
 export declare type FieldType = "text" | "email" | "password" | "tel" | "color";
 // eslint-disable-next-line
 export const EMAIL_REGEX =
-	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
 	selector: "app-form-field",

@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { FormControl, ValidationErrors } from "@angular/forms";
+import { Pipe, type PipeTransform } from "@angular/core";
+import type { FormControl, ValidationErrors } from "@angular/forms";
 
 @Pipe({
 	name: "messageError",

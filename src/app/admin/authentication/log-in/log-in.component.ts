@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import type { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
-import { LoginCredentials } from "src/app/scrum-api/scrum-login/scrum-login.service";
+import type { LoginCredentials } from "src/app/scrum-api/scrum-login/scrum-login.service";
 import { EMAIL_REGEX } from "src/app/shared/shared-components/form-field/form-field.component";
 import { LogInModule } from "./log-in.module";
-import { LogInService } from "./log-in.service";
+import type { LogInService } from "./log-in.service";
 
 @Component({
 	selector: "app-log-in",

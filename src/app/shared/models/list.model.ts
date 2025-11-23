@@ -1,4 +1,4 @@
-import { Task, TaskResponse, TaskResponseAPI } from "./task.model";
+import { Task, type TaskResponse, type TaskResponseAPI } from "./task.model";
 
 export interface ListResponseAPI {
 	id: number;

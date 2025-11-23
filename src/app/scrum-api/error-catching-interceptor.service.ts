@@ -1,17 +1,17 @@
-import {
+import type {
 	HttpErrorResponse,
 	HttpEvent,
 	HttpHandler,
 	HttpRequest,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { catchError, Observable, throwError } from "rxjs";
+import type { Router } from "@angular/router";
+import { catchError, type Observable, throwError } from "rxjs";
 import {
 	DURATION_SNACK_BAR,
-	FeedbackService,
+	type FeedbackService,
 } from "../shared/shared-services/feedback/feedback.service";
-import { ScrumApiService } from "./scrum-api.service";
+import type { ScrumApiService } from "./scrum-api.service";
 
 @Injectable()
 export class ErrorCatchingInterceptor {
@@ -46,8 +46,7 @@ export class ErrorCatchingInterceptor {
 			errors.push(this._getErrorMessage(errorResponse));
 		else if (this._isBadRequest(errorResponse)) {
 			for (const key in errorResponse.error) {
-				if (!Object.prototype.hasOwnProperty.call(errorResponse.error, key))
-					continue;
+				if (!Object.hasOwn(errorResponse.error, key)) continue;
 
 				const errorContent = errorResponse.error[key];
 				if (Array.isArray(errorContent)) {

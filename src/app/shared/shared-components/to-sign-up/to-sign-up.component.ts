@@ -1,7 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, type OnDestroy, type OnInit } from "@angular/core";
 
-import { NavigationEnd, NavigationStart, Route, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import {
+	NavigationEnd,
+	NavigationStart,
+	type Route,
+	type Router,
+} from "@angular/router";
+import type { Subscription } from "rxjs";
 import { RouterLinkComponent } from "../router-link/router-link.component";
 
 @Component({

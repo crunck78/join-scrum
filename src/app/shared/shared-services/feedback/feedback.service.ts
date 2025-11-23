@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core";
-import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
+import type {
+	MatSnackBar,
+	MatSnackBarConfig,
+} from "@angular/material/snack-bar";
 
 export const DURATION_SNACK_BAR = 3000;
 

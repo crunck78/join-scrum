@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { SignupCredentials } from "src/app/scrum-api/scrum-signup/scrum-signup.service";
+import type { SignupCredentials } from "src/app/scrum-api/scrum-signup/scrum-signup.service";
 import { EMAIL_REGEX } from "src/app/shared/shared-components/form-field/form-field.component";
 import { RegisterModule } from "./register.module";
-import { RegisterService } from "./register.service";
+import type { RegisterService } from "./register.service";
 
 @Component({
 	selector: "app-register",

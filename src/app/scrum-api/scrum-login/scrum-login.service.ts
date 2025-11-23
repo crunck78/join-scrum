@@ -1,8 +1,8 @@
-import { HttpClient } from "@angular/common/http";
+import type { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map, of, tap } from "rxjs";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
-import { ApiToken, ScrumApiService } from "../scrum-api.service";
+import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import type { ApiToken, ScrumApiService } from "../scrum-api.service";
 import {
 	GUEST_LOGIN_ENDPOINT,
 	LOGIN_ENDPOINT,

@@ -1,37 +1,64 @@
 <app-contact-card [showName]="false" [size]="'42px'" [contact]="contact">
-  <button mat-button color="primary" (click)="addToTask()">
-    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.5 1V16" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" />
-      <path d="M16 8.64148L1 8.64148" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" />
-    </svg>
-    Add task
-  </button>
-  <button mat-button (click)="editContact()">
-    <svg width="17" height="17" viewBox="0 0 21 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M2.87121 22.0156L7.69054 24.9405L20.3337 4.10842C20.6203 3.63628 20.4698 3.02125 19.9977 2.73471L16.8881 0.847482C16.4159 0.56094 15.8009 0.711391 15.5144 1.18353L2.87121 22.0156Z"
-        fill="#2A3647" />
-        <path d="M2.28614 22.9794L7.10547 25.9043L2.37685 28.1892L2.28614 22.9794Z" fill="#2A3647" />
-      </svg>
+	<button mat-button color="primary" (click)="addToTask()">
+		<svg
+			width="17"
+			height="17"
+			viewBox="0 0 17 17"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M8.5 1V16"
+				stroke="#29ABE2"
+				stroke-width="2"
+				stroke-linecap="round"
+			/>
+			<path
+				d="M16 8.64148L1 8.64148"
+				stroke="#29ABE2"
+				stroke-width="2"
+				stroke-linecap="round"
+			/>
+		</svg>
+		Add task
+	</button>
+	<button mat-button (click)="editContact()">
+		<svg
+			width="17"
+			height="17"
+			viewBox="0 0 21 30"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M2.87121 22.0156L7.69054 24.9405L20.3337 4.10842C20.6203 3.63628 20.4698 3.02125 19.9977 2.73471L16.8881 0.847482C16.4159 0.56094 15.8009 0.711391 15.5144 1.18353L2.87121 22.0156Z"
+				fill="#2A3647"
+			/>
+			<path
+				d="M2.28614 22.9794L7.10547 25.9043L2.37685 28.1892L2.28614 22.9794Z"
+				fill="#2A3647"
+			/>
+		</svg>
+		Edit Contact
+	</button>
+</app-contact-card>
 
-      Edit Contact
-    </button>
-  </app-contact-card>
-
-  <ng-container>
-    <div class="contact-information">
-      <h2>Contact Information</h2>
-      @if (contact?.name) {
-        <p><b>Name</b></p>
-        <div>{{contact?.name}}</div>
-      }
-      @if (contact?.email) {
-        <p><b>Email</b></p>
-        <app-email-link [email]="contact?.email"></app-email-link>
-      }
-      @if (contact?.phoneNumber) {
-        <p><b>Phone </b></p>
-        <a>{{contact?.phoneNumber}}</a>
-      }
-    </div>
-  </ng-container>
+<ng-container>
+	<div class="contact-information">
+		<h2>Contact Information</h2>
+		@if (contact?.name) {
+		<p>
+			<b>Name</b>
+		</p>
+		<div>{{contact?.name}}</div>} @if (contact?.email) {
+		<p>
+			<b>Email</b>
+		</p>
+		<app-email-link [email]="contact?.email"></app-email-link>} @if
+		(contact?.phoneNumber) {
+		<p>
+			<b>Phone </b>
+		</p>
+		<a>{{contact?.phoneNumber}}</a>}
+	</div>
+</ng-container>

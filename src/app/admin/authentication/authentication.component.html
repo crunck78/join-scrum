@@ -1,11 +1,9 @@
 @if ((mobile$ | async) === false) {
-  <div class="header">
-    <app-logo [light]="true"></app-logo>
-    <app-to-sign-up></app-to-sign-up>
-  </div>
+<div class="header">
+	<app-logo [light]="true"></app-logo>
+	<app-to-sign-up></app-to-sign-up>
+</div>
 }
 
 <router-outlet></router-outlet>
-@if ((mobile$ | async)) {
-  <app-to-sign-up></app-to-sign-up>
-}
+@if ((mobile$ | async)) {<app-to-sign-up></app-to-sign-up>}

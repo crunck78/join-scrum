@@ -1,6 +1,16 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import {
+	Component,
+	Input,
+	type OnChanges,
+	type SimpleChanges,
+} from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
-import { Route, Router, RouterLinkActive, RouterModule } from "@angular/router";
+import {
+	type Route,
+	type Router,
+	RouterLinkActive,
+	RouterModule,
+} from "@angular/router";
 
 export declare type LinkType =
 	| "mat-raised-button"

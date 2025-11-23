@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
+import type { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
-import { ScrumApiService } from "../scrum-api.service";
+import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const FORGOT_PASSWORD_ENDPOINT =

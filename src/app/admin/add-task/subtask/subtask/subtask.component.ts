@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Subject } from "rxjs";
-import { SubtaskRequest } from "src/app/shared/models/subtask.model";
+import type { SubtaskRequest } from "src/app/shared/models/subtask.model";
 
 @Component({
 	selector: "app-subtask",

@@ -1,6 +1,6 @@
 import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import type { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 
 export interface ApiToken {

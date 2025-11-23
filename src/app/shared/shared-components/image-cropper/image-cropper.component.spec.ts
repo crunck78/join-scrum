@@ -1,5 +1,5 @@
 import { importProvidersFrom } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { ImageCropperModule } from "ngx-image-cropper";
 import { MaterialModule } from "../../modules/material/material.module";
 import { ProfileImageCropperComponent } from "./image-cropper.component";

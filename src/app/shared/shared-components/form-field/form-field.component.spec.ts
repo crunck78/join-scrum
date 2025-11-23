@@ -1,12 +1,12 @@
 import { importProvidersFrom } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormControl } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "../../modules/material/material.module";
 import {
-	FieldType,
+	type FieldType,
 	FormFieldComponent,
-	InputType,
+	type InputType,
 } from "./form-field.component";
 
 describe("FormFieldComponent", () => {

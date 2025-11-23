@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { take } from "rxjs";
-import { ForgotPasswordCredentials } from "src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service";
+import type { ForgotPasswordCredentials } from "src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service";
 import { ForgotPasswordModule } from "./forgot-password.module";
-import { ForgotPasswordService } from "./forgot-password.service";
+import type { ForgotPasswordService } from "./forgot-password.service";
 
 @Component({
 	selector: "app-forgot-password",

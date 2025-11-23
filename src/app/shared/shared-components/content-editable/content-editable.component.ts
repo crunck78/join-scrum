@@ -1,7 +1,7 @@
 import {
-	AfterViewInit,
+	type AfterViewInit,
 	Component,
-	ElementRef,
+	type ElementRef,
 	EventEmitter,
 	Input,
 	Output,
@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 
 import { FormsModule } from "@angular/forms";
-import { Subject } from "rxjs";
+import type { Subject } from "rxjs";
 
 @Component({
 	selector: "app-content-editable",

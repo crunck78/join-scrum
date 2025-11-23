@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ScrumForgotPasswordService } from "src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service";
-import { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import type { ScrumForgotPasswordService } from "src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service";
+import type { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
+import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 
 @Injectable({
 	providedIn: "root",

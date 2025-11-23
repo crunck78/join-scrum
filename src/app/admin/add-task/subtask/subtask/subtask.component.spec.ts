@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { MaterialModule } from "src/app/shared/modules/material/material.module";
 import { ContentEditableComponent } from "src/app/shared/shared-components/content-editable/content-editable.component";
 import { SubtaskComponent } from "./subtask.component";

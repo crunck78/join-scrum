@@ -1,7 +1,7 @@
 import {} from "@angular/common/http";
 import { importProvidersFrom } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ContactResponse } from "../../models/contact.model";
+import { type ComponentFixture, TestBed } from "@angular/core/testing";
+import type { ContactResponse } from "../../models/contact.model";
 import { ContactComponent } from "./contact.component";
 
 describe("ContactComponent", () => {

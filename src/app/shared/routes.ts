@@ -1,4 +1,4 @@
-import { Routes } from "@angular/router";
+import type { Routes } from "@angular/router";
 import { AddTaskComponent } from "../admin/add-task/add-task.component";
 import { AuthenticationComponent } from "../admin/authentication/authentication.component";
 import { ForgotPasswordComponent } from "../admin/authentication/forgot-password/forgot-password.component";

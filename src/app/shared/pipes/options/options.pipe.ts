@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import {
+import { Pipe, type PipeTransform } from "@angular/core";
+import type {
 	Option,
 	OptionType,
 } from "./../../shared-components/form-field/form-field.component";

@@ -1,9 +1,9 @@
 import { inject } from "@angular/core";
 import {
-	ActivatedRouteSnapshot,
-	CanActivateFn,
+	type ActivatedRouteSnapshot,
+	type CanActivateFn,
 	Router,
-	RouterStateSnapshot,
+	type RouterStateSnapshot,
 } from "@angular/router";
 import { ScrumApiService } from "../scrum-api.service";
 

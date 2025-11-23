@@ -1,17 +1,20 @@
 import {
-	CdkDragDrop,
+	type CdkDragDrop,
 	CdkDropList,
-	DropListOrientation,
+	type DropListOrientation,
 } from "@angular/cdk/drag-drop";
-import { Component, QueryList, ViewChildren } from "@angular/core";
+import { Component, type QueryList, ViewChildren } from "@angular/core";
 
-import { firstValueFrom, Observable, Subject, take } from "rxjs";
-import { BoardResponse } from "src/app/shared/models/board.model";
-import { ListResponse } from "src/app/shared/models/list.model";
-import { TaskRequest, TaskResponse } from "src/app/shared/models/task.model";
+import { firstValueFrom, type Observable, Subject, take } from "rxjs";
+import type { BoardResponse } from "src/app/shared/models/board.model";
+import type { ListResponse } from "src/app/shared/models/list.model";
+import type {
+	TaskRequest,
+	TaskResponse,
+} from "src/app/shared/models/task.model";
 import { AddListComponent } from "src/app/shared/shared-components/dialogs/add-list/add-list.component";
 import { BoardModule } from "./board.module";
-import { BoardService } from "./board.service";
+import type { BoardService } from "./board.service";
 
 export declare type ListDirection = -1 | 1;
 

@@ -1,6 +1,6 @@
 import {} from "@angular/common/http";
 import { importProvidersFrom } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { EditProfileComponent } from "./edit-profile.component";

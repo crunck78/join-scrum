@@ -1,4 +1,4 @@
-import { List, ListResponse, ListResponseAPI } from "./list.model";
+import { List, type ListResponse, type ListResponseAPI } from "./list.model";
 
 export interface BoardResponse {
 	title: string;

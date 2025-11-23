@@ -5,10 +5,10 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import type { MatDialogRef } from "@angular/material/dialog";
 import { take } from "rxjs";
-import { ScrumProfileService } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
-import { UserRequest } from "src/app/shared/models/user.model";
+import type { ScrumProfileService } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
+import type { UserRequest } from "src/app/shared/models/user.model";
 import { MaterialModule } from "src/app/shared/modules/material/material.module";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";

@@ -1,35 +1,51 @@
 <app-card>
-  <app-page-title title >
-    @if (mobile$ | async) {
-      <app-logo after [light]="true"></app-logo>
-    }
-  </app-page-title>
+	<app-page-title title>
+		@if (mobile$ | async) {<app-logo after [light]="true"></app-logo>}
+	</app-page-title>
 
-  <form class="main-content" [formGroup]="loginForm">
+	<form class="main-content" [formGroup]="loginForm">
+		<app-form-field
+			[errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
+            {name: 'pattern', htmlMessage: 'Please enter a valid email address'}]"
+			[autocomplete]="'login-email'"
+			[type]="'email'"
+			[inputType]="'input'"
+			[suffixPath]="'assets/mail.svg'"
+			[control]="$any(loginForm.get('email'))"
+			[labelName]="'Email'"
+		></app-form-field>
 
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
-            {name: 'pattern', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'login-email'"
-    [type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
-  [control]="$any(loginForm.get('email'))" [labelName]="'Email'"></app-form-field>
+		<app-form-field
+			[errors]="[{name: 'required', htmlMessage: 'Password is <strong>required</strong>'}]"
+			[autocomplete]="'login-password'"
+			[type]="'password'"
+			[inputType]="'input'"
+			[suffixPath]="'assets/password.svg'"
+			[control]="$any(loginForm.get('password'))"
+			[labelName]="'Password'"
+		></app-form-field>
+	</form>
 
-  <app-form-field [errors]="[{name: 'required', htmlMessage: 'Password is <strong>required</strong>'}]"
-  [autocomplete]="'login-password'" [type]="'password'" [inputType]="'input'"
-  [suffixPath]="'assets/password.svg'" [control]="$any(loginForm.get('password'))"
-[labelName]="'Password'"></app-form-field>
-</form>
+	<div class="footer" footer>
+		<div class="simple-grid">
+			<mat-checkbox [formControl]="rememberMe">Remember me</mat-checkbox>
+			<a color="primary" mat-stroked-button routerLink="/auth/forgot-password"
+				>Forgot my password</a
+			>
+		</div>
 
-<div class="footer" footer>
-
-  <div class="simple-grid">
-    <mat-checkbox [formControl]="rememberMe">Remember me</mat-checkbox>
-    <a color="primary" mat-stroked-button routerLink='/auth/forgot-password'>Forgot my password</a>
-  </div>
-
-  <div class="simple-grid">
-    <button [disabled]="loginForm.invalid" (click)="login()" mat-raised-button color="primary">Login</button>
-    <button mat-stroked-button color="primary" (click)="guestLogin()">Guest Login</button>
-  </div>
-
-</div>
-
+		<div class="simple-grid">
+			<button
+				[disabled]="loginForm.invalid"
+				(click)="login()"
+				mat-raised-button
+				color="primary"
+			>
+				Login
+			</button>
+			<button mat-stroked-button color="primary" (click)="guestLogin()">
+				Guest Login
+			</button>
+		</div>
+	</div>
 </app-card>

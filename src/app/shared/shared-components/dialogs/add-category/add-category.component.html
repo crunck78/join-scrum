@@ -1,22 +1,38 @@
 <app-dialog [title]="'Add Category'">
-    <ng-container side></ng-container>
-    <form class="main-content" [formGroup]="addCategoryForm">
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'}]"
-            [autocomplete]="'category-name'" [type]="'text'" [inputType]="'input'"
-            [control]="$any(addCategoryForm.get('name'))" [labelName]="'Name'"></app-form-field>
+	<ng-container side></ng-container>
+	<form class="main-content" [formGroup]="addCategoryForm">
+		<app-form-field
+			[errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'}]"
+			[autocomplete]="'category-name'"
+			[type]="'text'"
+			[inputType]="'input'"
+			[control]="$any(addCategoryForm.get('name'))"
+			[labelName]="'Name'"
+		></app-form-field>
 
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Color is <strong>required</strong>'}]"
-            [autocomplete]="'category-color'" [type]="'color'" [inputType]="'input'"
-            [control]="$any(addCategoryForm.get('color'))" [labelName]="'Color'"></app-form-field>
+		<app-form-field
+			[errors]="[{name: 'required', htmlMessage: 'Color is <strong>required</strong>'}]"
+			[autocomplete]="'category-color'"
+			[type]="'color'"
+			[inputType]="'input'"
+			[control]="$any(addCategoryForm.get('color'))"
+			[labelName]="'Color'"
+		></app-form-field>
 
-        <!-- <app-form-field [errors]="[{name: 'required', htmlMessage: 'Color is <strong>required</strong>'}]"
+		<!-- <app-form-field [errors]="[{name: 'required', htmlMessage: 'Color is <strong>required</strong>'}]"
             [autocomplete]="'category-color'" [type]="'color'" [inputType]="'color'"
             [control]="$any(addCategoryForm.get('color'))" [labelName]="'Color'"></app-form-field> -->
-    </form>
+	</form>
 
-    <ng-container actions>
-        <button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
-        <button (click)="addCategory()" [disabled]="addCategoryForm.invalid" mat-raised-button color="primary">Create
-            Category</button>
-    </ng-container>
+	<ng-container actions>
+		<button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
+		<button
+			(click)="addCategory()"
+			[disabled]="addCategoryForm.invalid"
+			mat-raised-button
+			color="primary"
+		>
+			Create Category
+		</button>
+	</ng-container>
 </app-dialog>

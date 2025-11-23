@@ -5,8 +5,8 @@ import {
 	Input,
 	Output,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { TaskResponse } from "../../models/task.model";
+import type { MatDialog } from "@angular/material/dialog";
+import type { TaskResponse } from "../../models/task.model";
 import { MaterialModule } from "../../modules/material/material.module";
 import { ProgressLinearGradientPipe } from "../../pipes/progress-linear-gradient/progress-linear-gradient.pipe";
 import { CategoryCardComponent } from "../category-card/category-card.component";

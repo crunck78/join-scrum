@@ -1,16 +1,20 @@
-import { PriorityType } from "src/app/admin/add-task/add-task.module";
+import type { PriorityType } from "src/app/admin/add-task/add-task.module";
 import {
 	Category,
-	CategoryResponse,
-	CategoryResponseAPI,
+	type CategoryResponse,
+	type CategoryResponseAPI,
 } from "./category.model";
-import { Contact, ContactResponse, ContactResponseAPI } from "./contact.model";
+import {
+	Contact,
+	type ContactResponse,
+	type ContactResponseAPI,
+} from "./contact.model";
 import {
 	Subtask,
-	SubtaskRequest,
-	SubtaskRequestAPI,
-	SubtaskResponse,
-	SubtaskResponseAPI,
+	type SubtaskRequest,
+	type SubtaskRequestAPI,
+	type SubtaskResponse,
+	type SubtaskResponseAPI,
 } from "./subtask.model";
 
 /**

@@ -1,9 +1,15 @@
-<div [style.fontSize]="size" [style.borderColor]="borderColor" [style.backgroundColor]="backgroundColor" class="host-container">
-  @if (imgSrc) {
-    <img class="person-img" [src]="imgSrc || 'assets/person.svg'" alt="person image">
-  } @else {
-    <!-- {{contactName.substr(substrBegin, substrEnd)}} -->
-    {{contactInitials}}
-  }
-
+<div
+	[style.fontSize]="size"
+	[style.borderColor]="borderColor"
+	[style.backgroundColor]="backgroundColor"
+	class="host-container"
+>
+	@if (imgSrc) {
+	<img
+		class="person-img"
+		[src]="imgSrc || 'assets/person.svg'"
+		alt="person image"
+	>
+	} @else {<!-- {{contactName.substr(substrBegin, substrEnd)}} -->
+	{{contactInitials}}}
 </div>

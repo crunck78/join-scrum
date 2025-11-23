@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { TaskResponse } from "../../models/task.model";
+import { type ComponentFixture, TestBed } from "@angular/core/testing";
+import type { TaskResponse } from "../../models/task.model";
 import { TaskComponent } from "./task.component";
 
 describe("TaskComponent", () => {

@@ -1,20 +1,82 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.7/schema.json",
-	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-	"files": { "includes": ["**", "!!**/dist"] },
-	"formatter": { "enabled": true, "indentStyle": "tab" },
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		},
+		"enabled": true
+	},
+	"css": {
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": true
+		},
+		"parser": {
+			"cssModules": true
+		}
+	},
+	"files": {
+		"includes": ["**", "!!**/dist"]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"html": {
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": true
+		},
+		"parser": {
+			"interpolation": true
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		},
+		"linter": {
+			"enabled": true
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": true
+		},
+		"parser": {
+			"allowComments": true
+		}
+	},
 	"linter": {
 		"enabled": true,
-		"rules": { "recommended": false },
-		"includes": ["**", "projects/**/*"]
+		"includes": ["**", "projects/**/*"],
+		"rules": {
+			"recommended": true
+		}
 	},
-	"javascript": { "formatter": { "quoteStyle": "double" } },
 	"overrides": [
-		{ "includes": ["*.ts"], "linter": { "rules": {} } },
-		{ "includes": ["*.html"] }
+		{
+			"includes": ["*.ts"],
+			"linter": {
+				"rules": {}
+			}
+		},
+		{
+			"includes": ["*.html"]
+		}
 	],
-	"assist": {
+	"vcs": {
+		"clientKind": "git",
 		"enabled": true,
-		"actions": { "source": { "organizeImports": "on" } }
+		"useIgnoreFile": true
 	}
 }

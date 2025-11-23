@@ -1,13 +1,13 @@
-import { HttpClient } from "@angular/common/http";
+import type { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, Observable, of } from "rxjs";
+import { catchError, map, type Observable, of } from "rxjs";
 import {
 	Board,
-	BoardRequest,
-	BoardResponse,
-	BoardResponseAPI,
+	type BoardRequest,
+	type BoardResponse,
+	type BoardResponseAPI,
 } from "src/app/shared/models/board.model";
-import { ScrumApiService } from "../scrum-api.service";
+import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const BOARDS_ENDPOINT = SCRUM_API_ENDPOINT + "/api/board/boards/";

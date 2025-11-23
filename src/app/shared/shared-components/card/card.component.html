@@ -1,22 +1,22 @@
 <mat-card>
-    <mat-card-header>
-        <ng-content select="[card-avatar]"></ng-content>
-        <mat-card-title>
-            <ng-content select="[title]"></ng-content>
-        </mat-card-title>
+	<mat-card-header>
+		<ng-content select="[card-avatar]"></ng-content>
+		<mat-card-title>
+			<ng-content select="[title]"></ng-content>
+		</mat-card-title>
 
-        <mat-card-subtitle>
-            <ng-content select="[subtitle]"></ng-content>
-        </mat-card-subtitle>
-    </mat-card-header>
+		<mat-card-subtitle>
+			<ng-content select="[subtitle]"></ng-content>
+		</mat-card-subtitle>
+	</mat-card-header>
 
-    <ng-content select="[card-img]"></ng-content>
+	<ng-content select="[card-img]"></ng-content>
 
-    <mat-card-content>
-        <ng-content></ng-content>
-    </mat-card-content>
+	<mat-card-content>
+		<ng-content></ng-content>
+	</mat-card-content>
 
-    <mat-card-footer>
-        <ng-content select="[footer]"></ng-content>
-    </mat-card-footer>
+	<mat-card-footer>
+		<ng-content select="[footer]"></ng-content>
+	</mat-card-footer>
 </mat-card>

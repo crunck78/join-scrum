@@ -2,37 +2,37 @@ import {
 	Component,
 	EventEmitter,
 	Input,
-	OnChanges,
+	type OnChanges,
 	Output,
-	SimpleChanges,
+	type SimpleChanges,
 } from "@angular/core";
 import {
 	FormControl,
-	FormControlStatus,
+	type FormControlStatus,
 	FormGroup,
 	Validators,
 } from "@angular/forms";
-import { MatSnackBarDismiss } from "@angular/material/snack-bar";
-import { Observable, Subject, take } from "rxjs";
-import { CategoryResponse } from "src/app/shared/models/category.model";
-import { ContactResponse } from "src/app/shared/models/contact.model";
-import {
+import type { MatSnackBarDismiss } from "@angular/material/snack-bar";
+import { type Observable, Subject, take } from "rxjs";
+import type { CategoryResponse } from "src/app/shared/models/category.model";
+import type { ContactResponse } from "src/app/shared/models/contact.model";
+import type {
 	SubtaskRequest,
 	SubtaskResponse,
 } from "src/app/shared/models/subtask.model";
 import {
 	Task,
-	TaskRequest,
-	TaskResponse,
+	type TaskRequest,
+	type TaskResponse,
 } from "src/app/shared/models/task.model";
 import { AddCategoryComponent } from "src/app/shared/shared-components/dialogs/add-category/add-category.component";
 import { AddContactComponent } from "src/app/shared/shared-components/dialogs/add-contact/add-contact.component";
-import { OptionType } from "src/app/shared/shared-components/form-field/form-field.component";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import type { OptionType } from "src/app/shared/shared-components/form-field/form-field.component";
+import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 import {
 	AddTaskModule,
 	PriorityType,
-	TaskFormGroup,
+	type TaskFormGroup,
 	TaskMode,
 } from "./add-task.module";
 import { AddTaskService } from "./add-task.service";

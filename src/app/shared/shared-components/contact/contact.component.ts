@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
-import { ContactResponse } from "../../models/contact.model";
+import type { ContactResponse } from "../../models/contact.model";
 import { CardComponent } from "../card/card.component";
 import { ContactCardComponent } from "../contact-card/contact-card.component";
 

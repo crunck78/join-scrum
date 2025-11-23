@@ -1,12 +1,12 @@
-import { HttpClient } from "@angular/common/http";
+import type { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, Observable, of } from "rxjs";
+import { catchError, map, type Observable, of } from "rxjs";
 import {
 	Summary,
-	SummaryResponse,
-	SummaryResponseAPI,
+	type SummaryResponse,
+	type SummaryResponseAPI,
 } from "src/app/shared/models/summary.model";
-import { ScrumApiService } from "../scrum-api.service";
+import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const SUMMARY_ENDPOINT = SCRUM_API_ENDPOINT + "/api/summary/";

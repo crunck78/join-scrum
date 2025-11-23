@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, EventEmitter, Inject, OnInit } from '@angular/core';
+import { type ChangeDetectorRef, Component, EventEmitter, Inject, type OnInit } from '@angular/core';
 
-import { FormControlStatus } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import type { FormControlStatus } from '@angular/forms';
+import { MAT_DIALOG_DATA, type MatDialogRef } from '@angular/material/dialog';
 import { AddTaskComponent } from 'src/app/admin/add-task/add-task.component';
-import { TaskMode } from 'src/app/admin/add-task/add-task.module';
-import { TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
+import type { TaskMode } from 'src/app/admin/add-task/add-task.module';
+import type { TaskRequest, TaskResponse } from 'src/app/shared/models/task.model';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 import { DialogComponent } from '../../dialog/dialog.component';
 

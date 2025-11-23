@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 
-import { CategoryResponse } from "../../models/category.model";
+import type { CategoryResponse } from "../../models/category.model";
 
 @Component({
 	selector: "app-category-card",

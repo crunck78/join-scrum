@@ -1,6 +1,6 @@
 import {} from "@angular/common/http";
 import { importProvidersFrom } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { type ComponentFixture, TestBed } from "@angular/core/testing";
 import { provideRouter } from "@angular/router";
 import { routes } from "src/app/shared/routes";
 import { SummaryComponent } from "./summary.component";

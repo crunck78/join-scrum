@@ -1,6 +1,6 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { ValidatorError } from "./form-field.component";
+import { Pipe, type PipeTransform } from "@angular/core";
+import type { FormControl } from "@angular/forms";
+import type { ValidatorError } from "./form-field.component";
 
 @Pipe({
 	name: "hasError",

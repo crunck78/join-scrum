@@ -1,22 +1,22 @@
-<div [style.display]="toggleHeaderView === 'closed' ? 'none' : 'flex'" class="header">
-  <!-- TODO: For the header to hide with the toggle function the header must get display: none toggle -->
-  <div style="display: flex; align-items: center; gap: 12px;">
-    <button (click)="toggleDrawer.emit()" mat-icon-button color="accent">
-      <mat-icon>menu</mat-icon>
-    </button>
+<div
+	[style.display]="toggleHeaderView === 'closed' ? 'none' : 'flex'"
+	class="header"
+>
+	<!-- TODO: For the header to hide with the toggle function the header must get display: none toggle -->
+	<div style="display: flex; align-items: center; gap: 12px;">
+		<button (click)="toggleDrawer.emit()" mat-icon-button color="accent">
+			<mat-icon>menu</mat-icon>
+		</button>
 
-    <app-page-title class="mat-mdc-card-title"></app-page-title>
-  </div>
-  @if (matchWebBreakpoint$ | async) {
-    <button mat-raised-button color="primary" (click)="logout()">
-      Log Out
-    </button>
-  } @else {
-    <button mat-icon-button color="primary" (click)="logout()">
-      <mat-icon>logout</mat-icon>
-    </button>
-  }
-
+		<app-page-title class="mat-mdc-card-title"></app-page-title>
+	</div>
+	@if (matchWebBreakpoint$ | async) {
+	<button mat-raised-button color="primary" (click)="logout()">Log Out</button>}
+	@else {
+	<button mat-icon-button color="primary" (click)="logout()">
+		<mat-icon>logout</mat-icon>
+	</button>
+	}
 </div>
 
 <ng-content select="[animation]"></ng-content>

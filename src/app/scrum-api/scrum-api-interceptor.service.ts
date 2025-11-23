@@ -1,11 +1,11 @@
 import {
-	HttpEvent,
-	HttpHandler,
-	HttpRequest,
+	type HttpEvent,
+	type HttpHandler,
+	type HttpRequest,
 	HttpResponse,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { filter, Observable, tap } from "rxjs";
+import { filter, type Observable, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 
 export const SCRUM_API_ENDPOINT = environment.apiEndpoint;

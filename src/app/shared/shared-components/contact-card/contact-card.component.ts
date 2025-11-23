@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { ContactResponse } from "../../models/contact.model";
+import type { ContactResponse } from "../../models/contact.model";
 import { ContactInitialsComponent } from "../contact-initials/contact-initials.component";
 import { EmailLinkComponent } from "../email-link/email-link.component";
 

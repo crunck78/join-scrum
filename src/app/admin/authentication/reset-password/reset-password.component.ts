@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import type { ActivatedRoute } from "@angular/router";
 import { take } from "rxjs";
-import { ResetPasswordCredentials } from "src/app/scrum-api/scrum-reset-password/scrum-reset-password.service";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import type { ResetPasswordCredentials } from "src/app/scrum-api/scrum-reset-password/scrum-reset-password.service";
+import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 import { ResetPasswordModule } from "./reset-password.module";
-import { ResetPasswordService } from "./reset-password.service";
+import type { ResetPasswordService } from "./reset-password.service";
 
 @Component({
 	selector: "app-reset-password",

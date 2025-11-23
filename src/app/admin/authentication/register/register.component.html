@@ -1,11 +1,10 @@
 <app-card>
-  <app-page-title title>
-    <app-to-login before></app-to-login>
-  </app-page-title>
+	<app-page-title title>
+		<app-to-login before></app-to-login>
+	</app-page-title>
 
-  <form class="main-content" [formGroup]="signupForm">
-
-    <!-- <mat-expansion-panel>
+	<form class="main-content" [formGroup]="signupForm">
+		<!-- <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-description>
         Name requirements
@@ -17,17 +16,29 @@
 
   </mat-expansion-panel> -->
 
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'},
-            {name: 'email', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'signup-name'"
-  [type]="'text'" [inputType]="'input'" [suffixPath]="'assets/person.svg'"
-[control]="$any(signupForm.get('name'))" [labelName]="'Name'"></app-form-field>
+		<app-form-field
+			[errors]="[{name: 'required', htmlMessage: 'Name is <strong>required</strong>'},
+            {name: 'email', htmlMessage: 'Please enter a valid email address'}]"
+			[autocomplete]="'signup-name'"
+			[type]="'text'"
+			[inputType]="'input'"
+			[suffixPath]="'assets/person.svg'"
+			[control]="$any(signupForm.get('name'))"
+			[labelName]="'Name'"
+		></app-form-field>
 
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
-                {name: 'pattern', htmlMessage: 'Please enter a valid email address'}]" [autocomplete]="'signup-email'"
-[type]="'email'" [inputType]="'input'" [suffixPath]="'assets/mail.svg'"
-[control]="$any(signupForm.get('email'))" [labelName]="'Email'"></app-form-field>
+		<app-form-field
+			[errors]="[{name: 'required', htmlMessage: 'Email is <strong>required</strong>'},
+                {name: 'pattern', htmlMessage: 'Please enter a valid email address'}]"
+			[autocomplete]="'signup-email'"
+			[type]="'email'"
+			[inputType]="'input'"
+			[suffixPath]="'assets/mail.svg'"
+			[control]="$any(signupForm.get('email'))"
+			[labelName]="'Email'"
+		></app-form-field>
 
-<!-- <mat-expansion-panel>
+		<!-- <mat-expansion-panel>
 <mat-expansion-panel-header>
   <mat-panel-description>
     Password requirements
@@ -38,24 +49,30 @@
 
 </mat-expansion-panel> -->
 
-        <app-form-field [errors]="[{name: 'required', htmlMessage: 'Password is <strong>required</strong>'},
+		<app-form-field
+			[errors]="[{name: 'required', htmlMessage: 'Password is <strong>required</strong>'},
             {name: 'minlength', htmlMessage: 'Password is <strong>to short</strong>'}]"
-            [autocomplete]="'signup-password'" [type]="'password'" [inputType]="'input'"
-[suffixPath]="'assets/password.svg'" [control]="$any(signupForm.get('password'))" [labelName]="'Password'"
-[minLength]="8"></app-form-field>
-</form>
+			[autocomplete]="'signup-password'"
+			[type]="'password'"
+			[inputType]="'input'"
+			[suffixPath]="'assets/password.svg'"
+			[control]="$any(signupForm.get('password'))"
+			[labelName]="'Password'"
+			[minLength]="8"
+		></app-form-field>
+	</form>
 
-<div class="footer" footer>
-
-  <div class="simple-grid">
-    <button [disabled]="signupForm.invalid" (click)="signUp()" mat-raised-button color="primary">Sign
-    Up</button>
-
-    @if (mobile$ | async) {
-      <app-logo after [light]="true"></app-logo>
-    }
-  </div>
-
-</div>
-
+	<div class="footer" footer>
+		<div class="simple-grid">
+			<button
+				[disabled]="signupForm.invalid"
+				(click)="signUp()"
+				mat-raised-button
+				color="primary"
+			>
+				Sign Up
+			</button>
+			@if (mobile$ | async) {<app-logo after [light]="true"></app-logo>}
+		</div>
+	</div>
 </app-card>

@@ -1,13 +1,13 @@
 import {
-	HttpEvent,
-	HttpHandler,
-	HttpInterceptor,
-	HttpRequest,
+	type HttpEvent,
+	type HttpHandler,
+	type HttpInterceptor,
+	type HttpRequest,
 	HttpResponse,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { filter, Observable, tap } from "rxjs";
-import { ScrumApiService } from "../scrum-api.service";
+import { filter, type Observable, tap } from "rxjs";
+import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const LOGIN_ENDPOINT = SCRUM_API_ENDPOINT + "/api/user/token/";

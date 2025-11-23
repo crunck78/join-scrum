@@ -1,8 +1,7 @@
 @if (!isSignUpRoute) {
-  <div class="to-register">
-    <span class="mdc-form-field">Not a Join user?</span>
-    @if (signUpRoute) {
-      <app-router-link [route]="signUpRoute" basePath="/auth"></app-router-link>
-    }
-  </div>
+<div class="to-register">
+	<span class="mdc-form-field">Not a Join user?</span>
+	@if (signUpRoute) {
+	<app-router-link [route]="signUpRoute" basePath="/auth"></app-router-link>}
+</div>
 }
