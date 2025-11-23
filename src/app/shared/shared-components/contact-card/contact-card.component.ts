@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { EmailLinkComponent } from '../email-link/email-link.component';
 import { ContactResponse } from '../../models/contact.model';
 import { ContactInitialsComponent } from '../contact-initials/contact-initials.component';
@@ -9,10 +9,9 @@ import { ContactInitialsComponent } from '../contact-initials/contact-initials.c
     templateUrl: './contact-card.component.html',
     styleUrls: ['./contact-card.component.scss'],
     imports: [
-        ContactInitialsComponent,
-        CommonModule,
-        EmailLinkComponent
-    ]
+    ContactInitialsComponent,
+    EmailLinkComponent
+]
 })
 export class ContactCardComponent {
   @Input() contact!: ContactResponse | null;

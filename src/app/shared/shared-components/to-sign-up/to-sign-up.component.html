@@ -1,6 +1,8 @@
-<div *ngIf="!isSignUpRoute" class="to-register">
+@if (!isSignUpRoute) {
+  <div class="to-register">
     <span class="mdc-form-field">Not a Join user?</span>
-    <ng-container *ngIf="signUpRoute">
-        <app-router-link [route]="signUpRoute" basePath="/auth"></app-router-link>
-    </ng-container>
-</div>
+    @if (signUpRoute) {
+      <app-router-link [route]="signUpRoute" basePath="/auth"></app-router-link>
+    }
+  </div>
+}

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MaterialModule } from '../../modules/material/material.module';
 import { RouterLinkComponent } from '../router-link/router-link.component';
 import { Route, Router } from '@angular/router';
 
 @Component({
     selector: 'app-to-login',
-    imports: [CommonModule, MaterialModule, RouterLinkComponent],
+    imports: [MaterialModule, RouterLinkComponent],
     templateUrl: './to-login.component.html',
     styleUrls: ['./to-login.component.scss']
 })

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,11 +14,10 @@ import { EmailLinkComponent } from '../email-link/email-link.component';
     templateUrl: './contact-details.component.html',
     styleUrls: ['./contact-details.component.scss'],
     imports: [
-        CommonModule,
-        ContactCardComponent,
-        MatButtonModule,
-        EmailLinkComponent,
-    ]
+    ContactCardComponent,
+    MatButtonModule,
+    EmailLinkComponent
+]
 })
 export class ContactDetailsComponent {
   @Input() contact!: ContactResponse | null;

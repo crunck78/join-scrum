@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ContactResponse } from '../../models/contact.model';
@@ -10,11 +10,10 @@ import { ContactCardComponent } from '../contact-card/contact-card.component';
     templateUrl: './contact.component.html',
     styleUrls: ['./contact.component.scss'],
     imports: [
-        CommonModule,
-        CardComponent,
-        MatButtonModule,
-        ContactCardComponent,
-    ]
+    CardComponent,
+    MatButtonModule,
+    ContactCardComponent
+]
 })
 export class ContactComponent {
 

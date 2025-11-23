@@ -1,9 +1,13 @@
 <app-contact-initials [size]="size" [contactPhone]="contact?.phoneNumber" [contactEmail]="contact?.email"
-    [contactName]="contact?.name"></app-contact-initials>
+[contactName]="contact?.name"></app-contact-initials>
 <div class="text-left">
-    <div *ngIf="showName" [style.fontSize]="size">{{contact?.name}}</div>
-    <app-email-link *ngIf="!content.children.length" [email]="contact?.email"></app-email-link>
-    <div #content>
-        <ng-content></ng-content>
-    </div>
+  @if (showName) {
+    <div [style.fontSize]="size">{{contact?.name}}</div>
+  }
+  @if (!content.children.length) {
+    <app-email-link [email]="contact?.email"></app-email-link>
+  }
+  <div #content>
+    <ng-content></ng-content>
+  </div>
 </div>

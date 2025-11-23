@@ -1,49 +1,73 @@
 <mat-form-field appearance="outline">
-    <mat-label *ngIf="labelName">{{labelName}}</mat-label>
+  @if (labelName) {
+    <mat-label>{{labelName}}</mat-label>
+  }
 
-    <input *ngIf="inputType === 'input' && type !== 'tel'" [required]="required" maxlength="100"
-        minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
-        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher"/>
+  @if (inputType === 'input' && type !== 'tel') {
+    <input [required]="required" maxlength="100"
+      minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
+      [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher"/>
+  }
 
-    <input (input)="handleInputPhoneNumber($any($event))" *ngIf="inputType === 'input' && type === 'tel'" [required]="required" maxlength="100"
-        minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
-        [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher"/>
+  @if (inputType === 'input' && type === 'tel') {
+    <input (input)="handleInputPhoneNumber($any($event))" [required]="required" maxlength="100"
+      minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
+      [attr.type]="type || 'text'" matInput [formControl]="$any(control)" [errorStateMatcher]="customMatcher"/>
+  }
 
-    <textarea (blur)="$any($event.target).style.height = '100px'" (focus)="$any($event.target).style.height = '300px'" *ngIf="inputType === 'text-area'" [required]="required" maxlength="500"
-        minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
-        [attr.type]="type || 'text'" matInput [formControl]="$any(control)"
-        [errorStateMatcher]="customMatcher"></textarea>
+  @if (inputType === 'text-area') {
+    <textarea (blur)="$any($event.target).style.height = '100px'" (focus)="$any($event.target).style.height = '300px'" [required]="required" maxlength="500"
+      minlength="{{minLength || 0}}" (focus)="resetErrorState()" [autocomplete]="autocomplete"
+      [attr.type]="type || 'text'" matInput [formControl]="$any(control)"
+    [errorStateMatcher]="customMatcher"></textarea>
+  }
 
-    <mat-select [multiple]="multiple" *ngIf="inputType === 'select'" [required]="required" (focus)="resetErrorState()"
-        [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
-        <mat-option [value]="option.valueOnSelect" *ngFor="let option of options">
-            <div [innerHTML]="(option.html || $any(option.displayValue)) | sanitizeHtml"></div>
+  @if (inputType === 'select') {
+    <mat-select [multiple]="multiple" [required]="required" (focus)="resetErrorState()"
+      [formControl]="$any(control)" [errorStateMatcher]="customMatcher">
+      @for (option of options; track option) {
+        <mat-option [value]="option.valueOnSelect">
+          <div [innerHTML]="(option.html || $any(option.displayValue)) | sanitizeHtml"></div>
         </mat-option>
+      }
     </mat-select>
+  }
 
-    <div class="input-color" *ngIf="inputType === 'color'">
-        <input (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
-            [ngxMatColorPicker]="picker" [formControl]="$any(control)" [disabled]="false"
-            [errorStateMatcher]="customMatcher"/>
+  @if (inputType === 'color') {
+    <div class="input-color">
+      <input (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
+        [ngxMatColorPicker]="picker" [formControl]="$any(control)" [disabled]="false"
+        [errorStateMatcher]="customMatcher"/>
         <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
         <ngx-mat-color-picker #picker [touchUi]="false" [color]="control.value"></ngx-mat-color-picker>
-    </div>
+      </div>
+    }
 
 
-    <input [min]="today" *ngIf="inputType === 'date'" [formControl]="$any(control)" [errorStateMatcher]="customMatcher"
+    @if (inputType === 'date') {
+      <input [min]="today" [formControl]="$any(control)" [errorStateMatcher]="customMatcher"
         (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
         [matDatepicker]="picker"/>
-    <mat-datepicker-toggle (click)="resetErrorState()" *ngIf="inputType === 'date'" matIconSuffix
-        [for]="picker"></mat-datepicker-toggle>
+    }
+    @if (inputType === 'date') {
+      <mat-datepicker-toggle (click)="resetErrorState()" matIconSuffix
+      [for]="picker"></mat-datepicker-toggle>
+    }
     <mat-datepicker [hidden]="inputType !== 'date'" #picker></mat-datepicker>
 
 
-    <img *ngIf="suffixPath" matTextSuffix src="{{suffixPath}}" alt="">
+    @if (suffixPath) {
+      <img matTextSuffix src="{{suffixPath}}" alt="">
+    }
 
-    <button matSuffix (click)="$event.stopPropagation(); action.emit()" *ngIf="suffixIcon" mat-icon-button>
+    @if (suffixIcon) {
+      <button matSuffix (click)="$event.stopPropagation(); action.emit()" mat-icon-button>
         <mat-icon>{{suffixIcon}}</mat-icon>
-    </button>
+      </button>
+    }
 
-    <mat-error *ngIf="errors && errors.length > 0 && $any(control) | hasError : errors"
-        [innerHTML]="$any(control) | messageError: errors"></mat-error>
-</mat-form-field>
+    @if (errors && errors.length > 0 && $any(control) | hasError : errors) {
+      <mat-error
+      [innerHTML]="$any(control) | messageError: errors"></mat-error>
+    }
+  </mat-form-field>

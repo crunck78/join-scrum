@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroupDirective, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -48,16 +48,16 @@ export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*
     templateUrl: './form-field.component.html',
     styleUrls: ['./form-field.component.scss'],
     imports: [
-        CommonModule,
-        CardComponent, PageTitleComponent,
-        ReactiveFormsModule,
-        RouterLink,
-        MaterialModule,
-        HasErrorPipe,
-        MessageErrorPipe,
-        SanitizeHtmlPipe,
-        NgxMatColorPickerModule,
-    ],
+    CardComponent,
+    PageTitleComponent,
+    ReactiveFormsModule,
+    RouterLink,
+    MaterialModule,
+    HasErrorPipe,
+    MessageErrorPipe,
+    SanitizeHtmlPipe,
+    NgxMatColorPickerModule
+],
     providers: [
         { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
     ]

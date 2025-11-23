@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DialogComponent } from '../../dialog/dialog.component';
 import { LogoComponent } from '../../logo/logo.component';
 import { FormFieldComponent } from '../../form-field/form-field.component';
@@ -13,13 +13,12 @@ import { take } from 'rxjs';
 @Component({
     selector: 'app-edit-profile',
     imports: [
-        CommonModule,
-        DialogComponent,
-        LogoComponent,
-        MaterialModule,
-        FormFieldComponent,
-        ReactiveFormsModule
-    ],
+    DialogComponent,
+    LogoComponent,
+    MaterialModule,
+    FormFieldComponent,
+    ReactiveFormsModule
+],
     templateUrl: './edit-profile.component.html',
     styleUrls: ['./edit-profile.component.scss']
 })

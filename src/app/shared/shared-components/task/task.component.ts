@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskResponse } from '../../models/task.model';
@@ -13,12 +13,11 @@ import { CategoryCardComponent } from '../category-card/category-card.component'
     templateUrl: './task.component.html',
     styleUrls: ['./task.component.scss'],
     imports: [
-        CommonModule,
-        ContactInitialsComponent,
-        MaterialModule,
-        ProgressLinearGradientPipe,
-        CategoryCardComponent
-    ]
+    ContactInitialsComponent,
+    MaterialModule,
+    ProgressLinearGradientPipe,
+    CategoryCardComponent
+]
 })
 export class TaskComponent {
   @Input() task!: TaskResponse;

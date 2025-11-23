@@ -1,12 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NavigationEnd, NavigationStart, Route, Router } from '@angular/router';
 import { RouterLinkComponent } from '../router-link/router-link.component';
 import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-to-sign-up',
-    imports: [CommonModule, RouterLinkComponent],
+    imports: [RouterLinkComponent],
     templateUrl: './to-sign-up.component.html',
     styleUrls: ['./to-sign-up.component.scss']
 })

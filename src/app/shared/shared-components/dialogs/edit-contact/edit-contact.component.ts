@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,13 +15,12 @@ import { requireAtLeastOne } from 'src/app/shared/utils/custom-validators';
     templateUrl: './edit-contact.component.html',
     styleUrls: ['./edit-contact.component.scss'],
     imports: [
-        CommonModule,
-        DialogComponent,
-        LogoComponent,
-        MaterialModule,
-        FormFieldComponent,
-        ReactiveFormsModule,
-    ]
+    DialogComponent,
+    LogoComponent,
+    MaterialModule,
+    FormFieldComponent,
+    ReactiveFormsModule
+]
 })
 export class EditContactComponent {
   editContactForm = new FormGroup({

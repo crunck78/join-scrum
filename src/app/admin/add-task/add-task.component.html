@@ -1,62 +1,70 @@
 <app-card>
 
-    <form class="main-content" [formGroup]="addTaskForm">
-        <div class="form-field-group">
+  <form class="main-content" [formGroup]="addTaskForm">
+    <div class="form-field-group">
             <app-form-field [errors]="[
                 {name: 'required', htmlMessage: 'Title is <strong>required</strong>'}
             ]" [autocomplete]="'task-title'" [type]="'text'" [inputType]="'input'" [labelName]="'Enter a Title'"
-                [control]="$any(addTaskForm.get('title'))"></app-form-field>
+      [control]="$any(addTaskForm.get('title'))"></app-form-field>
 
             <app-form-field [errors]="[
             {name: 'required', htmlMessage: 'Category is <strong>required</strong>'}]" [suffixIcon]="'add'" (action)="
                 addCategory()" [options]="$any(categories$ | async) | options : 'name' : 'id': this.getCategoryOptionHTML"
-                [required]="true" [inputType]="'select'" [labelName]="'Select a category'"
-                [control]="$any(addTaskForm.get('category'))">
-            </app-form-field>
+        [required]="true" [inputType]="'select'" [labelName]="'Select a category'"
+        [control]="$any(addTaskForm.get('category'))">
+      </app-form-field>
 
-            <app-form-field [multiple]="true" [suffixIcon]="'add'" (action)="addContact()"
-                [options]="$any(contacts$ | async) | options : 'name' : 'id'" [required]="false" [inputType]="'select'"
-                [labelName]="'Select assignees'" [control]="$any(addTaskForm.get('assignees'))">
-            </app-form-field>
+      <app-form-field [multiple]="true" [suffixIcon]="'add'" (action)="addContact()"
+        [options]="$any(contacts$ | async) | options : 'name' : 'id'" [required]="false" [inputType]="'select'"
+        [labelName]="'Select assignees'" [control]="$any(addTaskForm.get('assignees'))">
+      </app-form-field>
 
-            <app-form-field [required]="false" [autocomplete]="'task-description'" [type]="'text'"
-                [inputType]="'text-area'" [labelName]="'Enter a Description'"
-                [control]="$any(addTaskForm.get('description'))"></app-form-field>
-        </div>
+      <app-form-field [required]="false" [autocomplete]="'task-description'" [type]="'text'"
+        [inputType]="'text-area'" [labelName]="'Enter a Description'"
+      [control]="$any(addTaskForm.get('description'))"></app-form-field>
+    </div>
 
-        <mat-divider [vertical]="true"></mat-divider>
+    <mat-divider [vertical]="true"></mat-divider>
 
-        <div class="form-field-group">
+    <div class="form-field-group">
             <app-form-field [errors]="[
                 {name: 'required', htmlMessage: 'Date is <strong>required</strong>'}
             ]" [autocomplete]="'date-title'" [inputType]="'date'" [labelName]="'dd/mm/yyyy'"
-                [control]="$any(addTaskForm.get('dueDate'))"></app-form-field>
+      [control]="$any(addTaskForm.get('dueDate'))"></app-form-field>
 
-            <app-form-field [errors]="[{name: 'required', htmlMessage: 'Priority is <strong>required</strong>'}]"
-                [options]="[{name: 'Low'}, {name: 'Medium'}, {name: 'Urgent'}] | options : 'name' : 'name': this.getPriorityOptionHTML"
-                [required]="true" [inputType]="'select'" [labelName]="'Select a priority'"
-                [control]="$any(addTaskForm.get('priority'))">
-            </app-form-field>
+      <app-form-field [errors]="[{name: 'required', htmlMessage: 'Priority is <strong>required</strong>'}]"
+      [options]="[{name: 'Low'}, {name: 'Medium'}, {name: 'Urgent'}] | options : 'name' : 'name': this.getPriorityOptionHTML"
+      [required]="true" [inputType]="'select'" [labelName]="'Select a priority'"
+      [control]="$any(addTaskForm.get('priority'))">
+    </app-form-field>
 
-            <app-form-field [required]="false" [suffixIcon]="'add'" (action)="addSubtask()"
-                [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
-                [control]="addSubtaskForm"></app-form-field>
+    <app-form-field [required]="false" [suffixIcon]="'add'" (action)="addSubtask()"
+      [autocomplete]="'task-subtask'" [type]="'text'" [inputType]="'input'" [labelName]="'Add new subtask'"
+    [control]="addSubtaskForm"></app-form-field>
 
-            <div class="subtasks-list">
-                <app-subtask class="subtask" (removeTask$)="removeSubtask($event)" [subtaskId]="i" [subtask]="subtask"
-                    *ngFor="let subtask of addTaskForm.get('subtasks')?.value; let i = index"></app-subtask>
-            </div>
-        </div>
-
-    </form>
-
-    <div *ngIf="!hideFooter" class="footer" footer>
-        <div class="simple-grid">
-            <button (click)="resetAddTask()" mat-stroked-button color="primary">Clear</button>
-            <button [disabled]="addTaskForm.invalid" (click)="saveTask()" mat-raised-button color="primary">
-                <span *ngIf="mode === 'add'">Create Task</span>
-                <span *ngIf="mode === 'edit'">Save Task</span>
-            </button>
-        </div>
+    <div class="subtasks-list">
+      @for (subtask of addTaskForm.get('subtasks')?.value; track subtask; let i = $index) {
+        <app-subtask class="subtask" (removeTask$)="removeSubtask($event)" [subtaskId]="i" [subtask]="subtask"
+        ></app-subtask>
+      }
     </div>
+  </div>
+
+</form>
+
+@if (!hideFooter) {
+  <div class="footer" footer>
+    <div class="simple-grid">
+      <button (click)="resetAddTask()" mat-stroked-button color="primary">Clear</button>
+      <button [disabled]="addTaskForm.invalid" (click)="saveTask()" mat-raised-button color="primary">
+        @if (mode === 'add') {
+          <span>Create Task</span>
+        }
+        @if (mode === 'edit') {
+          <span>Save Task</span>
+        }
+      </button>
+    </div>
+  </div>
+}
 </app-card>

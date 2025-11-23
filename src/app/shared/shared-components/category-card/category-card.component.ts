@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { CategoryResponse } from '../../models/category.model';
 
 @Component({
     selector: 'app-category-card',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './category-card.component.html',
     styleUrls: ['./category-card.component.scss']
 })

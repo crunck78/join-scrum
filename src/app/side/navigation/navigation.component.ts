@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
@@ -9,9 +9,8 @@ import { RouterLinkComponent } from 'src/app/shared/shared-components/router-lin
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
     imports: [
-        CommonModule,
-        RouterLinkComponent
-    ]
+    RouterLinkComponent
+]
 })
 export class NavigationComponent {
 

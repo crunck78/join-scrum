@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Route, Router, RouterLinkActive, RouterModule } from '@angular/router';
@@ -10,11 +10,10 @@ export declare type LinkType = 'mat-raised-button' | 'mat-fab' | 'mat-flat-butto
     templateUrl: './router-link.component.html',
     styleUrls: ['./router-link.component.scss'],
     imports: [
-        CommonModule,
-        MatButtonModule,
-        RouterModule,
-        RouterLinkActive
-    ]
+    MatButtonModule,
+    RouterModule,
+    RouterLinkActive
+]
 })
 export class RouterLinkComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatDialogModule } from '@angular/material/dialog';
 import { LogoComponent } from '../logo/logo.component';
 @Component({
@@ -7,10 +7,9 @@ import { LogoComponent } from '../logo/logo.component';
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
     imports: [
-        LogoComponent,
-        CommonModule,
-        MatDialogModule
-    ]
+    LogoComponent,
+    MatDialogModule
+]
 })
 export class DialogComponent {
 

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormControlStatus } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AddTaskComponent } from 'src/app/admin/add-task/add-task.component';
@@ -18,11 +18,10 @@ export interface AddTaskDialogData {
     templateUrl: './add-task-dialog.component.html',
     styleUrls: ['./add-task-dialog.component.scss'],
     imports: [
-        CommonModule,
-        DialogComponent,
-        AddTaskComponent,
-        MaterialModule
-    ]
+    DialogComponent,
+    AddTaskComponent,
+    MaterialModule
+]
 })
 export class AddTaskDialogComponent implements OnInit {
   task!: TaskResponse;

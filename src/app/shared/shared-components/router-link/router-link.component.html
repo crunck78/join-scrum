@@ -1,7 +1,11 @@
-<a [hidden]="hidden" *ngIf="linkType === 'mat-raised-button'" mat-raised-button color="primary" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+@if (linkType === 'mat-raised-button') {
+  <a [hidden]="hidden" mat-raised-button color="primary" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
     [routerLink]="basePath ? [basePath, route?.path] : [route?.path]">
-    <div *ngIf="!content.children.length">{{ route?.title }}</div>
+    @if (!content.children.length) {
+      <div>{{ route?.title }}</div>
+    }
     <div #content>
-        <ng-content></ng-content>
+      <ng-content></ng-content>
     </div>
-</a>
+  </a>
+}
