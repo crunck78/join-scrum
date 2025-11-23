@@ -9,7 +9,7 @@ import type {
 	ScrumProfileService,
 } from "../scrum-profile/scrum-profile.service";
 
-export const SIGNUP_ENDPOINT = SCRUM_API_ENDPOINT + "/api/user/create/";
+export const SIGNUP_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/user/create/`;
 
 export interface SignupCredentials {
 	name?: string;

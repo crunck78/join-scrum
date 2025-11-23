@@ -1,7 +1,6 @@
 import type { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map, of, tap } from "rxjs";
-import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 import type { ApiToken, ScrumApiService } from "../scrum-api.service";
 import {
 	GUEST_LOGIN_ENDPOINT,
@@ -29,7 +28,6 @@ export class ScrumLoginService {
 	constructor(
 		private http: HttpClient,
 		private scrumApi: ScrumApiService,
-		private feedback: FeedbackService,
 	) {}
 
 	guestLogin() {

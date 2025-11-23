@@ -8,10 +8,10 @@ import {
 	type TaskResponse,
 	type TaskResponseAPI,
 } from "src/app/shared/models/task.model";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
-export const TASKS_ENDPOINT = SCRUM_API_ENDPOINT + "/api/task/tasks/";
+export const TASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/task/tasks/`;
 
 @Injectable({
 	providedIn: "root",
@@ -35,7 +35,7 @@ export class ScrumTasksService {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		return this.http
 			.get<TaskResponseAPI[]>(
-				this.tasksEndpoint + "?list_is_null=true",
+				`${this.tasksEndpoint}?list_is_null=true`,
 				options,
 			)
 			.pipe(
@@ -58,7 +58,7 @@ export class ScrumTasksService {
 	deleteTask$(taskId: number): Observable<number | null> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		return this.http
-			.delete<number | null>(this.tasksEndpoint + taskId + `/`, options)
+			.delete<number | null>(`${this.tasksEndpoint + taskId}/`, options)
 			.pipe(
 				map((value) => value || null),
 				catchError(() => of(null)),

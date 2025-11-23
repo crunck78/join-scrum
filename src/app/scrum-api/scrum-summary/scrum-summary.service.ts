@@ -6,10 +6,10 @@ import {
 	type SummaryResponse,
 	type SummaryResponseAPI,
 } from "src/app/shared/models/summary.model";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
-export const SUMMARY_ENDPOINT = SCRUM_API_ENDPOINT + "/api/summary/";
+export const SUMMARY_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/summary/`;
 
 @Injectable({
 	providedIn: "root",

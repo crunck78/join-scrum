@@ -7,10 +7,10 @@ import {
 	type BoardResponse,
 	type BoardResponseAPI,
 } from "src/app/shared/models/board.model";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
-export const BOARDS_ENDPOINT = SCRUM_API_ENDPOINT + "/api/board/boards/";
+export const BOARDS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/board/boards/`;
 
 @Injectable({
 	providedIn: "root",
@@ -44,7 +44,7 @@ export class ScrumBoardsService {
 	getBoardById$(id: string): Observable<BoardResponse | null> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		return this.http
-			.get<BoardResponseAPI>(this.boardsEndpoint + id + "/", options)
+			.get<BoardResponseAPI>(`${this.boardsEndpoint + id}/`, options)
 			.pipe(
 				map((board) => (board ? Board.createInternalValue(board) : null)),
 				catchError(() => of(null)),

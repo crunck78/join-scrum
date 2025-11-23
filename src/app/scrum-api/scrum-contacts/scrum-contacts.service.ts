@@ -7,10 +7,10 @@ import {
 	type ContactResponse,
 	type ContactResponseAPI,
 } from "src/app/shared/models/contact.model";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
-export const CONTACTS_ENDPOINT = SCRUM_API_ENDPOINT + "/api/contact/contacts/";
+export const CONTACTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/contact/contacts/`;
 
 @Injectable({
 	providedIn: "root",

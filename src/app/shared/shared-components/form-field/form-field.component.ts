@@ -23,7 +23,7 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
 		form: FormGroupDirective | NgForm | null,
 	): boolean {
 		console.log(form);
-		return !!(control && control.invalid && control.touched);
+		return !!(control?.invalid && control.touched);
 	}
 }
 

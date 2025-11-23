@@ -7,11 +7,10 @@ import {
 	type CategoryResponse,
 	type CategoryResponseAPI,
 } from "src/app/shared/models/category.model";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
-export const CATEGORIES_ENDPOINT =
-	SCRUM_API_ENDPOINT + "/api/category/categories/";
+export const CATEGORIES_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/category/categories/`;
 
 @Injectable({
 	providedIn: "root",

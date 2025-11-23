@@ -35,7 +35,7 @@ export class TaskComponent {
 	}
 
 	@HostListener("click", ["$event.target"])
-	onClick(event: EventTarget | null) {
+	onClick(_event: EventTarget | null) {
 		this.editTask();
 	}
 

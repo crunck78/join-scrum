@@ -8,7 +8,7 @@ import {
 import { ScrumApiService } from "../scrum-api.service";
 
 export const canActivate: CanActivateFn = (
-	route: ActivatedRouteSnapshot,
+	_route: ActivatedRouteSnapshot,
 	state: RouterStateSnapshot,
 ) => {
 	const router = inject(Router);

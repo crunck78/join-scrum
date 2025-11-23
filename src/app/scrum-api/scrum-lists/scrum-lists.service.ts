@@ -7,10 +7,10 @@ import {
 	type ListResponse,
 	type ListResponseAPI,
 } from "src/app/shared/models/list.model";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
-export const LISTS_ENDPOINT = SCRUM_API_ENDPOINT + "/api/list/lists/";
+export const LISTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/list/lists/`;
 
 @Injectable({
 	providedIn: "root",
@@ -54,7 +54,7 @@ export class ScrumListsService {
 	getListById$(id: string): Observable<ListResponse | null> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		return this.http
-			.get<ListResponseAPI>(this.listsEndpoint + id + "/", options)
+			.get<ListResponseAPI>(`${this.listsEndpoint + id}/`, options)
 			.pipe(
 				map((list) => (list ? List.createInternalValue(list) : null)),
 				catchError(() => of(null)),

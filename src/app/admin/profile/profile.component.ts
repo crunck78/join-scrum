@@ -9,7 +9,6 @@ import { CardComponent } from "src/app/shared/shared-components/card/card.compon
 import { ContactInitialsComponent } from "src/app/shared/shared-components/contact-initials/contact-initials.component";
 import { EditProfileComponent } from "src/app/shared/shared-components/dialogs/edit-profile/edit-profile.component";
 import { ProfileImageCropperComponent } from "src/app/shared/shared-components/image-cropper/image-cropper.component";
-import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 
 @Component({
 	selector: "app-profile",
@@ -28,7 +27,6 @@ export class ProfileComponent {
 		private scrumProfile: ScrumProfileService,
 		private dialog: MatDialog,
 		private scrumApi: ScrumApiService,
-		private _feedbackService: FeedbackService,
 	) {
 		this.updateProfile();
 	}

@@ -8,10 +8,10 @@ import {
 	type SubtaskResponse,
 	type SubtaskResponseAPI,
 } from "src/app/shared/models/subtask.model";
-import type { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
+import type { ScrumApiService } from "../scrum-api.service";
 
-export const SUBTASKS_ENDPOINT = SCRUM_API_ENDPOINT + "api/subtask/subtasks/";
+export const SUBTASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}api/subtask/subtasks/`;
 
 @Injectable({
 	providedIn: "root",

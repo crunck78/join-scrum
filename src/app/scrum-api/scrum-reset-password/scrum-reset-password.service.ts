@@ -4,8 +4,7 @@ import { of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
-export const RESET_PASSWORD_ENDPOINT =
-	SCRUM_API_ENDPOINT + "/api/user/password_reset/confirm/";
+export const RESET_PASSWORD_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/user/password_reset/confirm/`;
 
 export interface ResetPasswordCredentials {
 	password: string;

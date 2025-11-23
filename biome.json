@@ -68,6 +68,10 @@
 			"includes": ["**/*.ts"],
 			"linter": {
 				"rules": {
+					"complexity": {
+						"noStaticOnlyClass": "off",
+						"useLiteralKeys": "off"
+					},
 					"suspicious": {
 						"noAssignInExpressions": "off"
 					}
