@@ -28,7 +28,7 @@ import {
 import { AddCategoryComponent } from "src/app/shared/shared-components/dialogs/add-category/add-category.component";
 import { AddContactComponent } from "src/app/shared/shared-components/dialogs/add-contact/add-contact.component";
 import type { OptionType } from "src/app/shared/shared-components/form-field/form-field.component";
-import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 import {
 	AddTaskModule,
 	PriorityType,

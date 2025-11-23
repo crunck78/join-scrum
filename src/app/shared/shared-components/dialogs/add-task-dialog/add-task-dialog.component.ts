@@ -1,5 +1,5 @@
 import {
-	type ChangeDetectorRef,
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	Inject,
@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 
 import type { FormControlStatus } from "@angular/forms";
-import { MAT_DIALOG_DATA, type MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AddTaskComponent } from "src/app/admin/add-task/add-task.component";
 import type { TaskMode } from "src/app/admin/add-task/add-task.module";
 import type {

@@ -5,9 +5,9 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import type { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef } from "@angular/material/dialog";
 import { take } from "rxjs";
-import type { ScrumCategoriesService } from "src/app/scrum-api/scrum-categories/scrum-categories.service";
+import { ScrumCategoriesService } from "src/app/scrum-api/scrum-categories/scrum-categories.service";
 import type { CategoryRequest } from "src/app/shared/models/category.model";
 import { MaterialModule } from "src/app/shared/modules/material/material.module";
 import { DialogComponent } from "../../dialog/dialog.component";

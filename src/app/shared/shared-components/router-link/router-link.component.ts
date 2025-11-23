@@ -7,7 +7,7 @@ import {
 import { MatButtonModule } from "@angular/material/button";
 import {
 	type Route,
-	type Router,
+	Router,
 	RouterLinkActive,
 	RouterModule,
 } from "@angular/router";

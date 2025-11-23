@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import type { MatDialog } from "@angular/material/dialog";
-import type { ScrumBoardsService } from "src/app/scrum-api/scrum-boards/scrum-boards.service";
-import type { ScrumListsService } from "src/app/scrum-api/scrum-lists/scrum-lists.service";
-import type { ScrumTasksService } from "src/app/scrum-api/scrum-tasks/scrum-tasks.service";
-import type { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
-import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ScrumBoardsService } from "src/app/scrum-api/scrum-boards/scrum-boards.service";
+import { ScrumListsService } from "src/app/scrum-api/scrum-lists/scrum-lists.service";
+import { ScrumTasksService } from "src/app/scrum-api/scrum-tasks/scrum-tasks.service";
+import { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
+import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 
 @Injectable({
 	providedIn: "root",

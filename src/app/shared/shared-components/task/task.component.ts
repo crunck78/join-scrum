@@ -5,7 +5,7 @@ import {
 	Input,
 	Output,
 } from "@angular/core";
-import type { MatDialog } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import type { TaskResponse } from "../../models/task.model";
 import { MaterialModule } from "../../modules/material/material.module";
 import { ProgressLinearGradientPipe } from "../../pipes/progress-linear-gradient/progress-linear-gradient.pipe";

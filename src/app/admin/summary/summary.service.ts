@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { take } from "rxjs";
-import type { ScrumProfileService } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
-import type { ScrumSummaryService } from "src/app/scrum-api/scrum-summary/scrum-summary.service";
+import { ScrumProfileService } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
+import { ScrumSummaryService } from "src/app/scrum-api/scrum-summary/scrum-summary.service";
 import type { SummaryResponse } from "src/app/shared/models/summary.model";
 import type { UserResponse } from "src/app/shared/models/user.model";
-import type { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
+import { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
 
 @Injectable({
 	providedIn: "any",

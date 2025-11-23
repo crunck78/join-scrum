@@ -6,10 +6,10 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import type { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef } from "@angular/material/dialog";
 import { type Observable, take } from "rxjs";
-import type { ScrumBoardsService } from "src/app/scrum-api/scrum-boards/scrum-boards.service";
-import type { ScrumListsService } from "src/app/scrum-api/scrum-lists/scrum-lists.service";
+import { ScrumBoardsService } from "src/app/scrum-api/scrum-boards/scrum-boards.service";
+import { ScrumListsService } from "src/app/scrum-api/scrum-lists/scrum-lists.service";
 import type { BoardResponse } from "src/app/shared/models/board.model";
 import type { ListRequest } from "src/app/shared/models/list.model";
 import { MaterialModule } from "src/app/shared/modules/material/material.module";

@@ -1,4 +1,4 @@
-import type { HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { type Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -9,7 +9,7 @@ import {
 	type SubtaskResponseAPI,
 } from "src/app/shared/models/subtask.model";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-import type { ScrumApiService } from "../scrum-api.service";
+import { ScrumApiService } from "../scrum-api.service";
 
 export const SUBTASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}api/subtask/subtasks/`;
 

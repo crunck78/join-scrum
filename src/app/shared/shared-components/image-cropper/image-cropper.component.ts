@@ -1,17 +1,17 @@
 import { CommonModule } from "@angular/common";
 import { Component, type ElementRef, Optional, ViewChild } from "@angular/core";
 import type { MatDialogRef } from "@angular/material/dialog";
-import type { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { DomSanitizer, type SafeUrl } from "@angular/platform-browser";
 import {
 	FileUploader,
 	type FileUploaderOptions,
 	FileUploadModule,
 } from "ng2-file-upload";
 import { ImageCropperComponent } from "ngx-smart-cropper";
-import type { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
+import { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
 import { PROFILE_IMAGE_ENDPOINT } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
 import { MaterialModule } from "../../modules/material/material.module";
-import type { FeedbackService } from "../../shared-services/feedback/feedback.service";
+import { FeedbackService } from "../../shared-services/feedback/feedback.service";
 import { DialogComponent } from "../dialog/dialog.component";
 
 const URL = PROFILE_IMAGE_ENDPOINT;

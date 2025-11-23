@@ -8,7 +8,7 @@ import {
 import { Injectable } from "@angular/core";
 import { filter, type Observable, tap } from "rxjs";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-import type { ScrumApiService } from "../scrum-api.service";
+import { ScrumApiService } from "../scrum-api.service";
 
 export const LOGIN_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/user/token/`;
 export const GUEST_LOGIN_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/user/create-guest/`;

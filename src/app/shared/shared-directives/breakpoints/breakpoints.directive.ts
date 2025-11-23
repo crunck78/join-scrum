@@ -1,5 +1,5 @@
 import { Directive } from "@angular/core";
-import type { BreakpointsService } from "./../../shared-services/breakpoints/breakpoints.service";
+import { BreakpointsService } from "./../../shared-services/breakpoints/breakpoints.service";
 
 @Directive({
 	selector: "[appBreakpoints]",

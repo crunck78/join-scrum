@@ -75,6 +75,9 @@
 						"noStaticOnlyClass": "off",
 						"useLiteralKeys": "off"
 					},
+					"style": {
+						"useImportType": "off"
+					},
 					"suspicious": {
 						"noAssignInExpressions": "off"
 					}

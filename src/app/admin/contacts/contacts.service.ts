@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import type { MatDialog } from "@angular/material/dialog";
-import type { ScrumContactsService } from "src/app/scrum-api/scrum-contacts/scrum-contacts.service";
-import type { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ScrumContactsService } from "src/app/scrum-api/scrum-contacts/scrum-contacts.service";
+import { BreakpointsService } from "src/app/shared/shared-services/breakpoints/breakpoints.service";
 
 @Injectable({
 	providedIn: "root",

@@ -1,7 +1,7 @@
-import type { HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map, of, tap } from "rxjs";
-import type { ApiToken, ScrumApiService } from "../scrum-api.service";
+import { type ApiToken, ScrumApiService } from "../scrum-api.service";
 import {
 	GUEST_LOGIN_ENDPOINT,
 	LOGIN_ENDPOINT,

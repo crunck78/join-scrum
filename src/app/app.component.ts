@@ -3,8 +3,8 @@ import type { MatDrawerMode } from "@angular/material/sidenav";
 import { map, type Subscription } from "rxjs";
 import { openCloseAnimationHeader } from "./app.animations";
 import { AppModule } from "./app.module";
-import type { ApiToken, ScrumApiService } from "./scrum-api/scrum-api.service";
-import type { BreakpointsService } from "./shared/shared-services/breakpoints/breakpoints.service";
+import { type ApiToken, ScrumApiService } from "./scrum-api/scrum-api.service";
+import { BreakpointsService } from "./shared/shared-services/breakpoints/breakpoints.service";
 
 export declare type ViewState = "open" | "closed";
 

@@ -1,4 +1,4 @@
-import { type BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Injectable } from "@angular/core";
 import { map, type Observable } from "rxjs";
 

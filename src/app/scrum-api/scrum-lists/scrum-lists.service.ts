@@ -1,4 +1,4 @@
-import type { HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map, type Observable, of } from "rxjs";
 import {
@@ -8,7 +8,7 @@ import {
 	type ListResponseAPI,
 } from "src/app/shared/models/list.model";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-import type { ScrumApiService } from "../scrum-api.service";
+import { ScrumApiService } from "../scrum-api.service";
 
 export const LISTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/list/lists/`;
 

@@ -1,11 +1,11 @@
-import type { HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import type { Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { take } from "rxjs";
-import type { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-import type {
-	Profile,
+import {
+	type Profile,
 	ScrumProfileService,
 } from "../scrum-profile/scrum-profile.service";
 

@@ -1,5 +1,5 @@
 import { Pipe, type PipeTransform } from "@angular/core";
-import type { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { DomSanitizer, type SafeHtml } from "@angular/platform-browser";
 
 @Pipe({
 	name: "sanitizeHtml",

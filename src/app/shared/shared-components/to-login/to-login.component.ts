@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import type { Route, Router } from "@angular/router";
+import { type Route, Router } from "@angular/router";
 import { MaterialModule } from "../../modules/material/material.module";
 import { RouterLinkComponent } from "../router-link/router-link.component";
 

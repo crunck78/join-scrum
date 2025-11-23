@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import type { Router, Routes } from "@angular/router";
-import type { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
+import { Router, Routes } from "@angular/router";
+import { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
 import { RouterLinkComponent } from "src/app/shared/shared-components/router-link/router-link.component";
 
 @Component({

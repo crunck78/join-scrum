@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import type { ScrumResetPasswordService } from "src/app/scrum-api/scrum-reset-password/scrum-reset-password.service";
+import { ScrumResetPasswordService } from "src/app/scrum-api/scrum-reset-password/scrum-reset-password.service";
 
 @Injectable({
 	providedIn: "root",

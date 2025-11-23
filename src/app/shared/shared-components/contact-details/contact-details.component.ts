@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
-import type { MatDialog } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import type { ContactResponse } from "../../models/contact.model";
 import { ContactCardComponent } from "../contact-card/contact-card.component";
 import { AddTaskDialogComponent } from "../dialogs/add-task-dialog/add-task-dialog.component";

@@ -5,13 +5,13 @@ import type {
 	HttpRequest,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import type { Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { catchError, type Observable, throwError } from "rxjs";
 import {
 	DURATION_SNACK_BAR,
-	type FeedbackService,
+	FeedbackService,
 } from "../shared/shared-services/feedback/feedback.service";
-import type { ScrumApiService } from "./scrum-api.service";
+import { ScrumApiService } from "./scrum-api.service";
 
 @Injectable()
 export class ErrorCatchingInterceptor {

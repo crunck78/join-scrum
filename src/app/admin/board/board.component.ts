@@ -14,7 +14,7 @@ import type {
 } from "src/app/shared/models/task.model";
 import { AddListComponent } from "src/app/shared/shared-components/dialogs/add-list/add-list.component";
 import { BoardModule } from "./board.module";
-import type { BoardService } from "./board.service";
+import { BoardService } from "./board.service";
 
 export declare type ListDirection = -1 | 1;
 
