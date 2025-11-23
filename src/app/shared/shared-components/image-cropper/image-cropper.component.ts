@@ -1,20 +1,20 @@
-import { Component, ElementRef, Optional, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Dimensions, ImageCroppedEvent, ImageCropperComponent, ImageCropperModule, LoadedImage } from 'ngx-image-cropper';
-import { DialogComponent } from '../dialog/dialog.component';
+import { Component, ElementRef, Optional, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MaterialModule } from '../../modules/material/material.module';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileUploadModule, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
-import { PROFILE_IMAGE_ENDPOINT } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
+import { ImageCropperComponent } from 'ngx-smart-cropper';
 import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
+import { PROFILE_IMAGE_ENDPOINT } from 'src/app/scrum-api/scrum-profile/scrum-profile.service';
+import { MaterialModule } from '../../modules/material/material.module';
 import { FeedbackService } from '../../shared-services/feedback/feedback.service';
+import { DialogComponent } from '../dialog/dialog.component';
 
 const URL = PROFILE_IMAGE_ENDPOINT;
 
 @Component({
     selector: 'app-image-cropper',
-    imports: [CommonModule, ImageCropperModule, DialogComponent, MaterialModule, FileUploadModule],
+    imports: [CommonModule, ImageCropperComponent, DialogComponent, MaterialModule, FileUploadModule],
     templateUrl: './image-cropper.component.html',
     styleUrls: ['./image-cropper.component.scss']
 })
@@ -60,7 +60,38 @@ export class ProfileImageCropperComponent {
     this.imageChangedEvent = event;
   }
 
-  imageCropped(event: ImageCroppedEvent) {
+  imageSource: string | null = null;
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = (e: any) => (this.imageSource = e.target.result);
+    reader.readAsDataURL(file);
+  }
+
+  imageCropped(event: string) {
+    // Convert Base64 string to a Blob
+    const base64ToBlob = (base64: string, contentType: string = '', sliceSize: number = 512): Blob => {
+      const byteCharacters = atob(base64.split(',')[1]);
+      const byteArrays = [];
+
+      for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+      }
+
+      return new Blob(byteArrays, { type: contentType });
+    };
+    // Convert the Base64 string to a Blob
+    const blob = base64ToBlob(event, 'image/png');
     // Convert the blob to a file
     const blobToFile = (blob: Blob, name: string): File => {
       const file = new File([blob], name, { type: blob.type });
@@ -68,22 +99,13 @@ export class ProfileImageCropperComponent {
     };
 
     // Create a file from the cropped image blob
-    const croppedFile = blobToFile(event.blob as Blob, "profile.png"); // You can dynamically generate or allow the user to input a filename
+    const croppedFile = blobToFile(blob, "profile.png"); // You can dynamically generate or allow the user to input a filename
     // Instead of directly manipulating the queue
     this.uploader.clearQueue();
     this.uploader.addToQueue([croppedFile]);
     // this.uploader.queue = [fileItem];
-    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl as string);
+    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event);
     // event.blob can be used to upload the cropped image
-  }
-
-  imageLoaded(image: LoadedImage) {
-    console.log(image);
-    this.imageCropper.hidden = false;
-  }
-
-  cropperReady(dimensions: Dimensions) {
-    console.log(dimensions);
   }
 
   loadImageFailed() {

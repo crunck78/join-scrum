@@ -1,6 +1,6 @@
 <app-dialog [title]="'Update Profile Image'">
   <input [hidden]="true" #inputImage title="File input" type="file"
-    (change)="fileChangeEvent($event)" />
+    (change)="onFileChange($event)" />
     @if (croppedImage) {
       <img titleContentLeft class="cropped-image" alt="Cropped image" [src]="croppedImage" />
     }
@@ -19,10 +19,20 @@
       </div>
     }
 
-    <image-cropper [hidden]="uploader.queue.length === 0" #imageCropper [imageFile]="fileToChange" class="image-cropper" [roundCropper]="true"
-      [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" format="png"
-      (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady($event)"
-    (loadImageFailed)="loadImageFailed()"></image-cropper>
+    <ngx-smart-cropper
+      [imageType]="'jpeg'"
+      [aspectRatio]="1"
+      [cropX]="50"
+      [cropY]="50"
+      [cropWidth]="250"
+      [cropHeight]="250"
+      [theme]="'mixed'"
+      (imageCroppedEvent)="imageCropped($event)"
+      #imageCropper
+      [hidden]="uploader.queue.length === 0"
+      class="image-cropper"
+      [imageSource]="imageSource"
+    ></ngx-smart-cropper>
 
 
     <ng-container actions>
