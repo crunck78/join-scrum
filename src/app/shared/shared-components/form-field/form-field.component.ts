@@ -1,15 +1,14 @@
-
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroupDirective, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { HasErrorPipe } from './has-error.pipe';
-import { MessageErrorPipe } from './message-error.pipe';
+import { RouterLink } from '@angular/router';
+import { ColorPickerDirective } from 'ngx-color-picker';
 import { MaterialModule } from '../../modules/material/material.module';
 import { SanitizeHtmlPipe } from '../../pipes/sanitize-html/sanitize-html.pipe';
 import { CardComponent } from '../card/card.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
+import { HasErrorPipe } from './has-error.pipe';
+import { MessageErrorPipe } from './message-error.pipe';
 
 
 
@@ -56,11 +55,9 @@ export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*
     HasErrorPipe,
     MessageErrorPipe,
     SanitizeHtmlPipe,
-    NgxMatColorPickerModule
+    ColorPickerDirective
 ],
-    providers: [
-        { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
-    ]
+    providers: []
 })
 export class FormFieldComponent {
 

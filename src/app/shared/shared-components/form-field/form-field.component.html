@@ -36,10 +36,8 @@
   @if (inputType === 'color') {
     <div class="input-color">
       <input (focus)="resetErrorState()" [autocomplete]="autocomplete" [required]="required" matInput
-        [ngxMatColorPicker]="picker" [formControl]="$any(control)" [disabled]="false"
+        [(colorPicker)]="control.value" [style.background]="control.value" [formControl]="$any(control)" [disabled]="false"
         [errorStateMatcher]="customMatcher"/>
-        <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-        <ngx-mat-color-picker #picker [touchUi]="false" [color]="control.value"></ngx-mat-color-picker>
       </div>
     }
 
