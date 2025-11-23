@@ -9,13 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'],
-  standalone: true,
-  imports: [
-    LogInModule
-  ]
+    selector: 'app-log-in',
+    templateUrl: './log-in.component.html',
+    styleUrls: ['./log-in.component.scss'],
+    imports: [
+        LogInModule
+    ]
 })
 export class LogInComponent {
 

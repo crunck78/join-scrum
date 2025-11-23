@@ -6,13 +6,12 @@ import { SignupCredentials } from 'src/app/scrum-api/scrum-signup/scrum-signup.s
 import { EMAIL_REGEX } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  standalone: true,
-  imports: [
-    RegisterModule
-  ]
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    imports: [
+        RegisterModule
+    ]
 })
 export class RegisterComponent {
 

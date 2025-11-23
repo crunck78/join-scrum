@@ -10,16 +10,15 @@ import { EmailLinkComponent } from '../email-link/email-link.component';
 
 
 @Component({
-  selector: 'app-contact-details',
-  templateUrl: './contact-details.component.html',
-  styleUrls: ['./contact-details.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    ContactCardComponent,
-    MatButtonModule,
-    EmailLinkComponent,
-  ]
+    selector: 'app-contact-details',
+    templateUrl: './contact-details.component.html',
+    styleUrls: ['./contact-details.component.scss'],
+    imports: [
+        CommonModule,
+        ContactCardComponent,
+        MatButtonModule,
+        EmailLinkComponent,
+    ]
 })
 export class ContactDetailsComponent {
   @Input() contact!: ContactResponse | null;

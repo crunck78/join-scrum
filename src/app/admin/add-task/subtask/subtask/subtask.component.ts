@@ -3,9 +3,10 @@ import { Subject } from 'rxjs';
 import { SubtaskRequest } from 'src/app/shared/models/subtask.model';
 
 @Component({
-  selector: 'app-subtask',
-  templateUrl: './subtask.component.html',
-  styleUrls: ['./subtask.component.scss']
+    selector: 'app-subtask',
+    templateUrl: './subtask.component.html',
+    styleUrls: ['./subtask.component.scss'],
+    standalone: false
 })
 export class SubtaskComponent {
 

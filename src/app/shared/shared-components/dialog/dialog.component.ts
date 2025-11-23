@@ -3,15 +3,14 @@ import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LogoComponent } from '../logo/logo.component';
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
-  standalone: true,
-  imports: [
-    LogoComponent,
-    CommonModule,
-    MatDialogModule
-  ]
+    selector: 'app-dialog',
+    templateUrl: './dialog.component.html',
+    styleUrls: ['./dialog.component.scss'],
+    imports: [
+        LogoComponent,
+        CommonModule,
+        MatDialogModule
+    ]
 })
 export class DialogComponent {
 

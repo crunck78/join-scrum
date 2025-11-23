@@ -11,17 +11,17 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-edit-profile',
-  standalone: true,
-  imports: [
-    CommonModule,
-    DialogComponent,
-    LogoComponent,
-    MaterialModule,
-    FormFieldComponent,
-    ReactiveFormsModule],
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.scss']
+    selector: 'app-edit-profile',
+    imports: [
+        CommonModule,
+        DialogComponent,
+        LogoComponent,
+        MaterialModule,
+        FormFieldComponent,
+        ReactiveFormsModule
+    ],
+    templateUrl: './edit-profile.component.html',
+    styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent {
 

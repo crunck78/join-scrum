@@ -10,16 +10,15 @@ import { take } from 'rxjs';
 
 
 @Component({
-  selector: 'app-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.scss'],
-  standalone: true,
-  imports: [
-    DialogComponent,
-    ReactiveFormsModule,
-    FormFieldComponent,
-    MaterialModule
-  ]
+    selector: 'app-add-category',
+    templateUrl: './add-category.component.html',
+    styleUrls: ['./add-category.component.scss'],
+    imports: [
+        DialogComponent,
+        ReactiveFormsModule,
+        FormFieldComponent,
+        MaterialModule
+    ]
 })
 export class AddCategoryComponent {
   addCategoryForm = new FormGroup({

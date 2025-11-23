@@ -5,14 +5,13 @@ import { ScrumApiService } from 'src/app/scrum-api/scrum-api.service';
 import { RouterLinkComponent } from 'src/app/shared/shared-components/router-link/router-link.component';
 
 @Component({
-  selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterLinkComponent
-  ]
+    selector: 'app-navigation',
+    templateUrl: './navigation.component.html',
+    styleUrls: ['./navigation.component.scss'],
+    imports: [
+        CommonModule,
+        RouterLinkComponent
+    ]
 })
 export class NavigationComponent {
 

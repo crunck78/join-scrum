@@ -12,19 +12,18 @@ import { AnnouncementComponent } from 'src/app/shared/shared-components/dialogs/
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-authentication',
-  templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.scss'],
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    LogoComponent,
-    PageComponent,
-    RouterLinkComponent,
-    CommonModule,
-    ToSignUpComponent,
-    AnnouncementComponent
-  ]
+    selector: 'app-authentication',
+    templateUrl: './authentication.component.html',
+    styleUrls: ['./authentication.component.scss'],
+    imports: [
+        RouterOutlet,
+        LogoComponent,
+        PageComponent,
+        RouterLinkComponent,
+        CommonModule,
+        ToSignUpComponent,
+        AnnouncementComponent
+    ]
 })
 export class AuthenticationComponent {
   constructor(

@@ -5,15 +5,14 @@ import { ContactResponse } from '../../models/contact.model';
 import { ContactInitialsComponent } from '../contact-initials/contact-initials.component';
 
 @Component({
-  selector: 'app-contact-card',
-  templateUrl: './contact-card.component.html',
-  styleUrls: ['./contact-card.component.scss'],
-  standalone: true,
-  imports: [
-    ContactInitialsComponent,
-    CommonModule,
-    EmailLinkComponent
-  ]
+    selector: 'app-contact-card',
+    templateUrl: './contact-card.component.html',
+    styleUrls: ['./contact-card.component.scss'],
+    imports: [
+        ContactInitialsComponent,
+        CommonModule,
+        EmailLinkComponent
+    ]
 })
 export class ContactCardComponent {
   @Input() contact!: ContactResponse | null;

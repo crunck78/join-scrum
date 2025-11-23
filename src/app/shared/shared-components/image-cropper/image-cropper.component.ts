@@ -13,11 +13,10 @@ import { FeedbackService } from '../../shared-services/feedback/feedback.service
 const URL = PROFILE_IMAGE_ENDPOINT;
 
 @Component({
-  selector: 'app-image-cropper',
-  standalone: true,
-  imports: [CommonModule, ImageCropperModule, DialogComponent, MaterialModule, FileUploadModule],
-  templateUrl: './image-cropper.component.html',
-  styleUrls: ['./image-cropper.component.scss']
+    selector: 'app-image-cropper',
+    imports: [CommonModule, ImageCropperModule, DialogComponent, MaterialModule, FileUploadModule],
+    templateUrl: './image-cropper.component.html',
+    styleUrls: ['./image-cropper.component.scss']
 })
 export class ProfileImageCropperComponent {
   @ViewChild('inputImage') inputImage!: ElementRef<HTMLInputElement>;

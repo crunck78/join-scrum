@@ -11,12 +11,11 @@ export declare type ViewState = 'open' | 'closed';
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [AppModule],
-  animations: [openCloseAnimationHeader]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [AppModule],
+    animations: [openCloseAnimationHeader]
 })
 export class AppComponent implements OnInit , OnDestroy{
   title = 'join';

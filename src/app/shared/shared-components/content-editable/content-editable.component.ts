@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-content-editable',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './content-editable.component.html',
-  styleUrls: ['./content-editable.component.scss']
+    selector: 'app-content-editable',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './content-editable.component.html',
+    styleUrls: ['./content-editable.component.scss']
 })
 export class ContentEditableComponent implements AfterViewInit {
 

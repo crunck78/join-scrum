@@ -5,11 +5,10 @@ import { RouterLinkComponent } from '../router-link/router-link.component';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-to-sign-up',
-  standalone: true,
-  imports: [CommonModule, RouterLinkComponent],
-  templateUrl: './to-sign-up.component.html',
-  styleUrls: ['./to-sign-up.component.scss']
+    selector: 'app-to-sign-up',
+    imports: [CommonModule, RouterLinkComponent],
+    templateUrl: './to-sign-up.component.html',
+    styleUrls: ['./to-sign-up.component.scss']
 })
 export class ToSignUpComponent implements OnInit, OnDestroy {
   @Input() hideOnSameRoute = false;

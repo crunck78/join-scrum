@@ -6,16 +6,15 @@ import { Route, Router, RouterLinkActive, RouterModule } from '@angular/router';
 export declare type LinkType = 'mat-raised-button' | 'mat-fab' | 'mat-flat-button' | 'mat-icon-button' | 'mat-mini-fab' | 'mat-button' | 'mat-stroked-button';
 
 @Component({
-  selector: 'app-router-link',
-  templateUrl: './router-link.component.html',
-  styleUrls: ['./router-link.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    RouterModule,
-    RouterLinkActive
-  ]
+    selector: 'app-router-link',
+    templateUrl: './router-link.component.html',
+    styleUrls: ['./router-link.component.scss'],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        RouterModule,
+        RouterLinkActive
+    ]
 })
 export class RouterLinkComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {

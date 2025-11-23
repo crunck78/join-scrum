@@ -9,13 +9,12 @@ import { take } from 'rxjs';
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss'],
-  standalone: true,
-  imports: [
-    ResetPasswordModule
-  ]
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.scss'],
+    imports: [
+        ResetPasswordModule
+    ]
 })
 export class ResetPasswordComponent {
   token!: string;

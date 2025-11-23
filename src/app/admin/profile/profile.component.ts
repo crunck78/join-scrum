@@ -12,16 +12,15 @@ import { ProfileImageCropperComponent } from 'src/app/shared/shared-components/i
 import { FeedbackService } from 'src/app/shared/shared-services/feedback/feedback.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  standalone: true,
-  styleUrls: ['./profile.component.scss'],
-  imports: [
-    CardComponent,
-    MaterialModule,
-    ContactInitialsComponent,
-    ProfileImageCropperComponent
-  ]
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+    imports: [
+        CardComponent,
+        MaterialModule,
+        ContactInitialsComponent,
+        ProfileImageCropperComponent
+    ]
 })
 export class ProfileComponent {
 

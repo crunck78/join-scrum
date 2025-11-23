@@ -12,17 +12,16 @@ import { requireAtLeastOne } from 'src/app/shared/utils/custom-validators';
 
 
 @Component({
-  selector: 'app-add-contact',
-  templateUrl: './add-contact.component.html',
-  styleUrls: ['./add-contact.component.scss'],
-  standalone: true,
-  imports: [
-    DialogComponent,
-    ReactiveFormsModule,
-    FormFieldComponent,
-    LogoComponent,
-    MaterialModule
-  ]
+    selector: 'app-add-contact',
+    templateUrl: './add-contact.component.html',
+    styleUrls: ['./add-contact.component.scss'],
+    imports: [
+        DialogComponent,
+        ReactiveFormsModule,
+        FormFieldComponent,
+        LogoComponent,
+        MaterialModule
+    ]
 })
 export class AddContactComponent {
 

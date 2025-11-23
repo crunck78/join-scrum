@@ -5,12 +5,11 @@ import { SummaryModule } from './summary.module';
 import { SummaryService } from './summary.service';
 
 @Component({
-  selector: 'app-summary',
-  templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss'],
-  standalone: true,
-  imports: [SummaryModule],
-  providers: [SummaryService]
+    selector: 'app-summary',
+    templateUrl: './summary.component.html',
+    styleUrls: ['./summary.component.scss'],
+    imports: [SummaryModule],
+    providers: [SummaryService]
 })
 export class SummaryComponent {
 

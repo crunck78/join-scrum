@@ -7,11 +7,10 @@ import { ContactsService } from './contacts.service';
 import { ContactResponse } from 'src/app/shared/models/contact.model';
 import { AddContactComponent } from 'src/app/shared/shared-components/dialogs/add-contact/add-contact.component';
 @Component({
-  selector: 'app-contacts',
-  templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.scss'],
-  standalone: true,
-  imports: [ContactsModule]
+    selector: 'app-contacts',
+    templateUrl: './contacts.component.html',
+    styleUrls: ['./contacts.component.scss'],
+    imports: [ContactsModule]
 })
 export class ContactsComponent {
 

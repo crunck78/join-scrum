@@ -9,17 +9,16 @@ import { AddTaskDialogComponent } from '../dialogs/add-task-dialog/add-task-dial
 import { CategoryCardComponent } from '../category-card/category-card.component';
 
 @Component({
-  selector: 'app-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    ContactInitialsComponent,
-    MaterialModule,
-    ProgressLinearGradientPipe,
-    CategoryCardComponent
-  ]
+    selector: 'app-task',
+    templateUrl: './task.component.html',
+    styleUrls: ['./task.component.scss'],
+    imports: [
+        CommonModule,
+        ContactInitialsComponent,
+        MaterialModule,
+        ProgressLinearGradientPipe,
+        CategoryCardComponent
+    ]
 })
 export class TaskComponent {
   @Input() task!: TaskResponse;

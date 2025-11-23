@@ -14,16 +14,15 @@ export interface AddTaskDialogData {
 }
 
 @Component({
-  selector: 'app-add-task-dialog',
-  templateUrl: './add-task-dialog.component.html',
-  styleUrls: ['./add-task-dialog.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    DialogComponent,
-    AddTaskComponent,
-    MaterialModule
-  ]
+    selector: 'app-add-task-dialog',
+    templateUrl: './add-task-dialog.component.html',
+    styleUrls: ['./add-task-dialog.component.scss'],
+    imports: [
+        CommonModule,
+        DialogComponent,
+        AddTaskComponent,
+        MaterialModule
+    ]
 })
 export class AddTaskDialogComponent implements OnInit {
   task!: TaskResponse;

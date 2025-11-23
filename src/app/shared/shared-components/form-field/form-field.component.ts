@@ -44,24 +44,23 @@ export declare type FieldType = 'text' | 'email' | 'password' | 'tel' | 'color';
 export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
-  selector: 'app-form-field',
-  templateUrl: './form-field.component.html',
-  styleUrls: ['./form-field.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    CardComponent, PageTitleComponent,
-    ReactiveFormsModule,
-    RouterLink,
-    MaterialModule,
-    HasErrorPipe,
-    MessageErrorPipe,
-    SanitizeHtmlPipe,
-    NgxMatColorPickerModule,
-  ],
-  providers: [
-    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
-  ],
+    selector: 'app-form-field',
+    templateUrl: './form-field.component.html',
+    styleUrls: ['./form-field.component.scss'],
+    imports: [
+        CommonModule,
+        CardComponent, PageTitleComponent,
+        ReactiveFormsModule,
+        RouterLink,
+        MaterialModule,
+        HasErrorPipe,
+        MessageErrorPipe,
+        SanitizeHtmlPipe,
+        NgxMatColorPickerModule,
+    ],
+    providers: [
+        { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
+    ]
 })
 export class FormFieldComponent {
 

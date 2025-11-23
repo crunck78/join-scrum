@@ -5,11 +5,10 @@ import { RouterLinkComponent } from '../router-link/router-link.component';
 import { Route, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-to-login',
-  standalone: true,
-  imports: [CommonModule, MaterialModule, RouterLinkComponent],
-  templateUrl: './to-login.component.html',
-  styleUrls: ['./to-login.component.scss']
+    selector: 'app-to-login',
+    imports: [CommonModule, MaterialModule, RouterLinkComponent],
+    templateUrl: './to-login.component.html',
+    styleUrls: ['./to-login.component.scss']
 })
 export class ToLoginComponent {
   logInRoute: Route;

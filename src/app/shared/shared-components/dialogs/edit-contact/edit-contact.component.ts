@@ -11,18 +11,17 @@ import { LogoComponent } from '../../logo/logo.component';
 import { take } from 'rxjs';
 import { requireAtLeastOne } from 'src/app/shared/utils/custom-validators';
 @Component({
-  selector: 'app-edit-contact',
-  templateUrl: './edit-contact.component.html',
-  styleUrls: ['./edit-contact.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    DialogComponent,
-    LogoComponent,
-    MaterialModule,
-    FormFieldComponent,
-    ReactiveFormsModule,
-  ]
+    selector: 'app-edit-contact',
+    templateUrl: './edit-contact.component.html',
+    styleUrls: ['./edit-contact.component.scss'],
+    imports: [
+        CommonModule,
+        DialogComponent,
+        LogoComponent,
+        MaterialModule,
+        FormFieldComponent,
+        ReactiveFormsModule,
+    ]
 })
 export class EditContactComponent {
   editContactForm = new FormGroup({

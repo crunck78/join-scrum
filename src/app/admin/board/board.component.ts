@@ -15,11 +15,10 @@ import { AddListComponent } from 'src/app/shared/shared-components/dialogs/add-l
 export declare type ListDirection = -1 | 1;
 
 @Component({
-  selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
-  standalone: true,
-  imports: [BoardModule]
+    selector: 'app-board',
+    templateUrl: './board.component.html',
+    styleUrls: ['./board.component.scss'],
+    imports: [BoardModule]
 })
 export class BoardComponent {
   draggingDisabled = true;

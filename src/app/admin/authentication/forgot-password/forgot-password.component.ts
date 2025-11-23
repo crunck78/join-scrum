@@ -7,13 +7,12 @@ import { ForgotPasswordCredentials } from 'src/app/scrum-api/scrum-forgot-passwo
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss'],
-  standalone: true,
-  imports: [
-    ForgotPasswordModule
-  ]
+    selector: 'app-forgot-password',
+    templateUrl: './forgot-password.component.html',
+    styleUrls: ['./forgot-password.component.scss'],
+    imports: [
+        ForgotPasswordModule
+    ]
 })
 export class ForgotPasswordComponent {
 

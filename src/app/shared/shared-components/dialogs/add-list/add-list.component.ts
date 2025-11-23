@@ -15,19 +15,18 @@ import { LogoComponent } from '../../logo/logo.component';
 
 
 @Component({
-  selector: 'app-add-list',
-  templateUrl: './add-list.component.html',
-  styleUrls: ['./add-list.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    DialogComponent,
-    LogoComponent,
-    MaterialModule,
-    FormFieldComponent,
-    ReactiveFormsModule,
-    OptionsPipe,
-  ]
+    selector: 'app-add-list',
+    templateUrl: './add-list.component.html',
+    styleUrls: ['./add-list.component.scss'],
+    imports: [
+        CommonModule,
+        DialogComponent,
+        LogoComponent,
+        MaterialModule,
+        FormFieldComponent,
+        ReactiveFormsModule,
+        OptionsPipe,
+    ]
 })
 export class AddListComponent {
 

@@ -22,12 +22,11 @@ import { MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { OptionType } from 'src/app/shared/shared-components/form-field/form-field.component';
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss'],
-  standalone: true,
-  imports: [AddTaskModule],
-  providers: [AddTaskService]
+    selector: 'app-add-task',
+    templateUrl: './add-task.component.html',
+    styleUrls: ['./add-task.component.scss'],
+    imports: [AddTaskModule],
+    providers: [AddTaskService]
 })
 export class AddTaskComponent implements OnChanges {
 

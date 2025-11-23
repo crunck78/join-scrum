@@ -5,11 +5,10 @@ import { ViewState } from '../app.component';
 
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  standalone: true,
-  imports: [HeaderModule]
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    imports: [HeaderModule]
 })
 export class HeaderComponent {
   constructor(private headerService: HeaderService) { }
