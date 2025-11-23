@@ -2,7 +2,7 @@
 body {
     margin: 0;
     height: 100vh;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
 }
 
 .category-option {
@@ -97,10 +97,6 @@ body {
 .mat-mdc-card-header-text{
     width: 100%;
 }
-
-// .mdc-dialog .mdc-dialog__content{
-//     padding: unset !important;
-// }
 
 .cdk-overlay-pane{
     max-width: 90vw !important;

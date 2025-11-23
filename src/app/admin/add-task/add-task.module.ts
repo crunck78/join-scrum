@@ -39,11 +39,12 @@ const imports = [
 	MaterialModule,
 	FormsModule,
 	ContentEditableComponent,
+	SubtaskComponent,
 ];
 
 @NgModule({
-	declarations: [SubtaskComponent],
+	declarations: [],
 	imports: [imports],
-	exports: [...imports, SubtaskComponent],
+	exports: [...imports],
 })
 export class AddTaskModule {}

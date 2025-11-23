@@ -8,22 +8,12 @@
 		},
 		"enabled": true
 	},
-	"css": {
-		"formatter": {
-			"enabled": true
-		},
-		"linter": {
-			"enabled": true
-		},
-		"parser": {
-			"cssModules": true
-		}
-	},
 	"files": {
 		"includes": ["**", "!!**/dist"]
 	},
 	"formatter": {
 		"enabled": true,
+		"formatWithErrors": true,
 		"indentStyle": "tab"
 	},
 	"html": {

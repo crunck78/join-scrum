@@ -7,10 +7,10 @@ import {
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import {
+	type Route,
 	Router,
 	RouterLinkActive,
 	RouterModule,
-	type Route,
 } from "@angular/router";
 
 export declare type LinkType =

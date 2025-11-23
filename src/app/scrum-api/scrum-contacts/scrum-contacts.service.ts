@@ -1,14 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { catchError, map, of, type Observable } from "rxjs";
+import { catchError, map, type Observable, of } from "rxjs";
 import {
 	Contact,
 	type ContactRequest,
 	type ContactResponse,
 	type ContactResponseAPI,
 } from "src/app/shared/models/contact.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 import { ScrumApiService } from "../scrum-api.service";
+import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const CONTACTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/contact/contacts/`;
 

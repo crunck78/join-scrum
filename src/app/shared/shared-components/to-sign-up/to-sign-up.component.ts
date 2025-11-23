@@ -9,8 +9,8 @@ import {
 import {
 	NavigationEnd,
 	NavigationStart,
-	Router,
 	type Route,
+	Router,
 } from "@angular/router";
 import type { Subscription } from "rxjs";
 import { RouterLinkComponent } from "../router-link/router-link.component";

@@ -6,7 +6,6 @@ import type { SubtaskRequest } from "src/app/shared/models/subtask.model";
 	selector: "app-subtask",
 	templateUrl: "./subtask.component.html",
 	styleUrls: ["./subtask.component.scss"],
-	standalone: false,
 })
 export class SubtaskComponent {
 	changingSubtaskTitle$ = new Subject<number | string>();

@@ -8,8 +8,8 @@ import {
 	type SubtaskResponse,
 	type SubtaskResponseAPI,
 } from "src/app/shared/models/subtask.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 import { ScrumApiService } from "../scrum-api.service";
+import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const SUBTASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}api/subtask/subtasks/`;
 

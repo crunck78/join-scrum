@@ -1,8 +1,8 @@
 import {
 	Component,
 	EventEmitter,
-	inject,
 	Input,
+	inject,
 	type OnChanges,
 	Output,
 	type SimpleChanges,

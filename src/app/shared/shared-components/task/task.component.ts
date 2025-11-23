@@ -2,8 +2,8 @@ import {
 	Component,
 	EventEmitter,
 	HostListener,
-	inject,
 	Input,
+	inject,
 	Output,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
@@ -35,11 +35,7 @@ export class TaskComponent {
 		return this.task.subtasks.filter((s) => s.done).length;
 	}
 
-	@HostListener("click", ["$event.target"])
-	onClick(_event: EventTarget | null) {
-		this.editTask();
-	}
-
+	@HostListener("click")
 	editTask() {
 		const dialogRef = this.dialog.open(AddTaskDialogComponent, {
 			data: { task: this.task, mode: "edit" },

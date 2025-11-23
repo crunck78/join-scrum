@@ -8,8 +8,8 @@ import {
 	type TaskResponse,
 	type TaskResponseAPI,
 } from "src/app/shared/models/task.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 import { ScrumApiService } from "../scrum-api.service";
+import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const TASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/task/tasks/`;
 
