@@ -5,7 +5,6 @@ import type { SubtaskRequest } from "src/app/shared/models/subtask.model";
 import { MaterialModule } from "src/app/shared/modules/material/material.module";
 import { OptionsPipe } from "src/app/shared/pipes/options/options.pipe";
 import { CardComponent } from "src/app/shared/shared-components/card/card.component";
-import { ContentEditableComponent } from "src/app/shared/shared-components/content-editable/content-editable.component";
 import { FormFieldComponent } from "src/app/shared/shared-components/form-field/form-field.component";
 import { PageTitleComponent } from "src/app/shared/shared-components/page-title/page-title.component";
 import { SubtaskComponent } from "./subtask/subtask/subtask.component";
@@ -38,7 +37,6 @@ const imports = [
 	PageTitleComponent,
 	MaterialModule,
 	FormsModule,
-	ContentEditableComponent,
 	SubtaskComponent,
 ];
 

@@ -19,7 +19,6 @@ import {
 	FormFieldComponent,
 	type OptionType,
 } from "../../form-field/form-field.component";
-import { LogoComponent } from "../../logo/logo.component";
 
 @Component({
 	selector: "app-add-list",
@@ -28,7 +27,6 @@ import { LogoComponent } from "../../logo/logo.component";
 	imports: [
 		CommonModule,
 		DialogComponent,
-		LogoComponent,
 		MaterialModule,
 		FormFieldComponent,
 		ReactiveFormsModule,

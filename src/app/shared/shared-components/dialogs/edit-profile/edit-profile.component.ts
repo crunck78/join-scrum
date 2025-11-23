@@ -12,13 +12,11 @@ import type { UserRequest } from "src/app/shared/models/user.model";
 import { MaterialModule } from "src/app/shared/modules/material/material.module";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";
-import { LogoComponent } from "../../logo/logo.component";
 
 @Component({
 	selector: "app-edit-profile",
 	imports: [
 		DialogComponent,
-		LogoComponent,
 		MaterialModule,
 		FormFieldComponent,
 		ReactiveFormsModule,

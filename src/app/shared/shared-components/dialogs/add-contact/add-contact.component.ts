@@ -13,7 +13,6 @@ import { MaterialModule } from "src/app/shared/modules/material/material.module"
 import { requireAtLeastOne } from "src/app/shared/utils/custom-validators";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";
-import { LogoComponent } from "../../logo/logo.component";
 
 @Component({
 	selector: "app-add-contact",
@@ -23,7 +22,6 @@ import { LogoComponent } from "../../logo/logo.component";
 		DialogComponent,
 		ReactiveFormsModule,
 		FormFieldComponent,
-		LogoComponent,
 		MaterialModule,
 	],
 })

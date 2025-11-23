@@ -14,12 +14,7 @@ import { ProfileImageCropperComponent } from "src/app/shared/shared-components/i
 	selector: "app-profile",
 	templateUrl: "./profile.component.html",
 	styleUrls: ["./profile.component.scss"],
-	imports: [
-		CardComponent,
-		MaterialModule,
-		ContactInitialsComponent,
-		ProfileImageCropperComponent,
-	],
+	imports: [CardComponent, MaterialModule, ContactInitialsComponent],
 })
 export class ProfileComponent {
 	private scrumProfile = inject(ScrumProfileService);

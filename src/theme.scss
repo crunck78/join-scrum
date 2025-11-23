@@ -187,7 +187,7 @@ $mat-primary: (
 	contrast : (
 		main: $light-primary-text,
 		lighter: $dark-primary-text,
-		darker: $light-primary-ext,
+		darker: $light-primary-text,
 	)
 );
 $theme-primary: mat.m2-define-palette($mat-primary, main, lighter, darker);

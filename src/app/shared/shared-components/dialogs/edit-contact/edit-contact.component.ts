@@ -13,14 +13,12 @@ import { MaterialModule } from "src/app/shared/modules/material/material.module"
 import { requireAtLeastOne } from "src/app/shared/utils/custom-validators";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";
-import { LogoComponent } from "../../logo/logo.component";
 @Component({
 	selector: "app-edit-contact",
 	templateUrl: "./edit-contact.component.html",
 	styleUrls: ["./edit-contact.component.scss"],
 	imports: [
 		DialogComponent,
-		LogoComponent,
 		MaterialModule,
 		FormFieldComponent,
 		ReactiveFormsModule,
