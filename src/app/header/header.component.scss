@@ -1,12 +1,35 @@
 :host{
-	z-index: 999;
+	.header{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 999;
+
+		.header-view{
+			display: flex;
+			justify-content: space-between;
+			background-color: white;
+			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+			padding: 16px;
+			align-items: center;
+		}
+
+		.opener {
+			position: absolute;
+			transform: translateY(-50%) translateX(-50%);
+			cursor: pointer;
+			z-index: 999;
+		}
+	}
 }
 
-.header{
-	display: flex;
-	justify-content: space-between;
-	background-color: white;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-	padding: 16px;
-	align-items: center;
+.open {
+	transform: translateY(0);
+	transition-duration: 300ms;
+}
+
+.closed {
+	transform: translateY(-100%);
+	transition-duration: 300ms;
 }
