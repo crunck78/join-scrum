@@ -51,7 +51,7 @@ export class AddTaskComponent implements OnChanges {
 
 	/**
 	 * Empty Valid Form Group Initial Values
-	 * Ca be used for instance to clear the Form Group or validate Partials given Form Group Values
+	 * Can be used for instance to clear the Form Group or validate Partials given Form Group Values
 	 */
 	readonly InitTask = {
 		title: "",

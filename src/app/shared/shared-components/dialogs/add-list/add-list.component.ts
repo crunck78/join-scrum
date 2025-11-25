@@ -51,8 +51,6 @@ export class AddListComponent {
 
 	addList() {
 		if (this.addListForm.valid) {
-			console.log("Adding List");
-
 			this.scrumList
 				.addList$(this.addListForm.value as Partial<ListRequest>)
 				.pipe(take(1))

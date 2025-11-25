@@ -21,11 +21,9 @@ export class AppComponent implements OnInit, OnDestroy {
 	);
 	onNextTokenSub$!: Subscription;
 
-	get isLoggedIn$() {
-		return this.scrumApi.apiToken$.pipe(
-			map((apiToken: ApiToken) => !!apiToken.token),
-		);
-	}
+	isLoggedIn$ = this.scrumApi.apiToken$.pipe(
+		map((apiToken: ApiToken) => !!apiToken.token),
+	);
 
 	ngOnInit(): void {
 		this.onNextTokenSub$ = this.scrumApi.apiToken$.subscribe((apiToken) =>

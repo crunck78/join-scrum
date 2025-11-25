@@ -10,6 +10,5 @@ export class MessageErrorPipe implements PipeTransform {
 	transform(control: FormControl, errors: ValidationErrors[]): string {
 		const foundErrors = errors?.filter((err) => control.hasError(err["name"]));
 		return foundErrors.map((fe) => fe["htmlMessage"]).join("<br>");
-		//return foundError ? foundError['htmlMessage'] : "No defined Error Message";
 	}
 }

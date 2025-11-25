@@ -103,8 +103,8 @@ export class BoardComponent {
 			.subscribe((board) => (this.board = board));
 	}
 
-	handleEditedTask(editedTask?: TaskResponse) {
-		if (editedTask) console.log(editedTask);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	handleEditedTask(_editedTask?: TaskResponse) {
 		this.updateBoard();
 	}
 

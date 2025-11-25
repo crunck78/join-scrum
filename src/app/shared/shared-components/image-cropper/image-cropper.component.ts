@@ -14,8 +14,6 @@ import { MaterialModule } from "../../modules/material/material.module";
 import { FeedbackService } from "../../shared-services/feedback/feedback.service";
 import { DialogComponent } from "../dialog/dialog.component";
 
-const URL = PROFILE_IMAGE_ENDPOINT;
-
 @Component({
 	selector: "app-image-cropper",
 	imports: [
@@ -50,7 +48,7 @@ export class ProfileImageCropperComponent {
 
 	constructor() {
 		this.uploader = new FileUploader({
-			url: URL,
+			url: PROFILE_IMAGE_ENDPOINT,
 			authToken: `Token ${this.scrumApi.token}`,
 			disableMultipart: false, // Enable multipart
 			itemAlias: "image", // This should match the name expected on the server side
@@ -61,7 +59,6 @@ export class ProfileImageCropperComponent {
 	}
 
 	fileOverBase(e: boolean): void {
-		console.log(typeof e);
 		this.hasBaseDropZoneOver = e;
 	}
 

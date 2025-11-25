@@ -1,7 +1,10 @@
 {
 	"css.validate": false,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.stylelint": "explicit"
+		"source.fixAll.biome": "explicit",
+		"source.fixAll.eslint": "never",
+		"source.fixAll.stylelint": "explicit",
+		"source.fixAll.ts": "never"
 	},
 	"less.validate": false,
 	"scss.validate": false,

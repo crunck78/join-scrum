@@ -38,7 +38,7 @@ export class RouterLinkComponent implements OnChanges {
 	}
 
 	@Input() route!: Route | undefined;
-	@Input() basePath?: string = ""; // New Input for base path
+	@Input() basePath?: string = "";
 	@Input() linkType: LinkType = "mat-raised-button";
 	@Input() hidden = false;
 	@Input() routeByPath!: string;

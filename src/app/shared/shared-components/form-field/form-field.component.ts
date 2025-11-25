@@ -17,9 +17,9 @@ import { MessageErrorPipe } from "./message-error.pipe";
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
 	isErrorState(
 		control: FormControl | null,
-		form: FormGroupDirective | NgForm | null,
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		_form: FormGroupDirective | NgForm | null,
 	): boolean {
-		console.log(form);
 		return !!(control?.invalid && control.touched);
 	}
 }
@@ -33,14 +33,12 @@ export interface ValidatorError {
 export type OptionType = {
 	[k: string]: object | string | number;
 };
-
 export interface Option<OptionType> {
 	valueOnSelect: keyof OptionType;
 	displayValue: keyof OptionType;
 	value: OptionType;
 	html?: string;
 }
-
 export declare type InputType =
 	| "input"
 	| "text-area"
@@ -48,7 +46,6 @@ export declare type InputType =
 	| "date"
 	| "color";
 export declare type FieldType = "text" | "email" | "password" | "tel" | "color";
-// eslint-disable-next-line
 export const EMAIL_REGEX =
 	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 

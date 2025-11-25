@@ -1,3 +1,3 @@
 @for (route of routes; track route) { @if (!(isLoggedIn && route.path ===
-'auth')) {<!-- Then check if it should be rendered --> @if (route.title) {
-<app-router-link mat-button [route]="route"></app-router-link>} } }
+'auth') && route.title) {
+<app-router-link mat-button [route]="route"></app-router-link>} }
