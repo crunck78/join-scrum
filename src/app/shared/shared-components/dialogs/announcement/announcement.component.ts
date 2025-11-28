@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
+import { MaterialModule } from "../../../modules/material/material.module";
 import { DialogComponent } from "../../dialog/dialog.component";
 
 @Component({
@@ -8,4 +8,4 @@ import { DialogComponent } from "../../dialog/dialog.component";
 	styleUrls: ["./announcement.component.scss"],
 	imports: [DialogComponent, MaterialModule],
 })
-export class AnnouncementComponent {}
+export class AnnouncementComponent { }

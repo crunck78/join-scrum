@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CardComponent } from "src/app/shared/shared-components/card/card.component";
+import { CardComponent } from "../../shared/shared-components/card/card.component";
 
 @Component({
 	selector: "app-legal-notice",
@@ -7,4 +7,4 @@ import { CardComponent } from "src/app/shared/shared-components/card/card.compon
 	styleUrls: ["./legal-notice.component.scss"],
 	imports: [CardComponent],
 })
-export class LegalNoticeComponent {}
+export class LegalNoticeComponent { }

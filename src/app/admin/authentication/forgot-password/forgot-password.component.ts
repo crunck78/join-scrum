@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { take } from "rxjs";
-import type { ForgotPasswordCredentials } from "src/app/scrum-api/scrum-forgot-password/scrum-forgot-password.service";
+import { ForgotPasswordCredentials } from "../../../scrum-api/scrum-forgot-password/scrum-forgot-password.service";
 import { ForgotPasswordModule } from "./forgot-password.module";
 import { ForgotPasswordService } from "./forgot-password.service";
 

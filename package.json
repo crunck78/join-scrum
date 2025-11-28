@@ -18,9 +18,6 @@
 		"zone.js": "~0.16.0"
 	},
 	"devDependencies": {
-		"@analogjs/platform": "^2.1.1",
-		"@analogjs/vite-plugin-angular": "^2.1.1",
-		"@analogjs/vitest-angular": "^2.1.1",
 		"@angular-eslint/builder": "^21.0.0",
 		"@angular-eslint/eslint-plugin": "^21.0.0",
 		"@angular-eslint/eslint-plugin-template": "^21.0.0",
@@ -30,11 +27,9 @@
 		"@angular/cli": "~21.0.0",
 		"@angular/compiler-cli": "^21.0.0",
 		"@biomejs/biome": "2.3.7",
-		"@nx/devkit": "^22.1.2",
 		"@stylistic/stylelint-plugin": "^4.0.0",
 		"@testing-library/angular": "^18.1.1",
 		"@testing-library/dom": "^10.0.0",
-		"@types/jasmine": "~5.1.13",
 		"@types/uuid": "^10.0.0",
 		"@typescript-eslint/eslint-plugin": "^8.47.0",
 		"@typescript-eslint/parser": "^8.47.0",
@@ -42,7 +37,6 @@
 		"@vitest/coverage-v8": "^4.0.0",
 		"@vitest/ui": "^4.0.0",
 		"eslint": "^9.39.1",
-		"jasmine-core": "~5.12.1",
 		"jsdom": "^27.2.0",
 		"npm": "^11.6.4",
 		"playwright": "^1.57.0",
@@ -53,7 +47,7 @@
 		"stylelint-scss": "^6.12.1",
 		"typescript": "~5.9.3",
 		"vite": "^7.0.0",
-		"vite-tsconfig-paths": "^4.2.0",
+		"vite-tsconfig-paths": "^4.3.2",
 		"vitest": "^4.0.14"
 	},
 	"name": "join",

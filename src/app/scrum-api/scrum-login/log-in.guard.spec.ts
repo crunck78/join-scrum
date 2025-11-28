@@ -1,13 +1,13 @@
 import { TestBed } from "@angular/core/testing";
 import type { CanActivateFn } from "@angular/router";
-import { canActivate } from "./log-in.guard";
+import { loginGuard } from "./log-in.guard";
 
 describe("LogInGuard", () => {
 	let guard: CanActivateFn;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({});
-		guard = canActivate;
+		guard = loginGuard;
 	});
 
 	it("should be created", () => {

@@ -7,10 +7,10 @@ import {
 } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { take } from "rxjs";
-import { ScrumContactsService } from "src/app/scrum-api/scrum-contacts/scrum-contacts.service";
-import type { ContactRequest } from "src/app/shared/models/contact.model";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
-import { requireAtLeastOne } from "src/app/shared/utils/custom-validators";
+import { ScrumContactsService } from "../../../../scrum-api/scrum-contacts/scrum-contacts.service";
+import { ContactRequest } from "../../../models/contact.model";
+import { MaterialModule } from "../../../modules/material/material.module";
+import { requireAtLeastOne } from "../../../utils/custom-validators";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";
 @Component({

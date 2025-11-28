@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { take } from "rxjs";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import { FeedbackService } from "../../shared/shared-services/feedback/feedback.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 import {
 	type Profile,

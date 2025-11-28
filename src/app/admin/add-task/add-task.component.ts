@@ -15,21 +15,21 @@ import {
 } from "@angular/forms";
 import type { MatSnackBarDismiss } from "@angular/material/snack-bar";
 import { type Observable, Subject, take } from "rxjs";
-import type { CategoryResponse } from "src/app/shared/models/category.model";
-import type { ContactResponse } from "src/app/shared/models/contact.model";
-import type {
+import { CategoryResponse } from "../../shared/models/category.model";
+import { ContactResponse } from "../../shared/models/contact.model";
+import {
 	SubtaskRequest,
 	SubtaskResponse,
-} from "src/app/shared/models/subtask.model";
+} from "../../shared/models/subtask.model";
 import {
 	Task,
-	type TaskRequest,
-	type TaskResponse,
-} from "src/app/shared/models/task.model";
-import { AddCategoryComponent } from "src/app/shared/shared-components/dialogs/add-category/add-category.component";
-import { AddContactComponent } from "src/app/shared/shared-components/dialogs/add-contact/add-contact.component";
-import type { OptionType } from "src/app/shared/shared-components/form-field/form-field.component";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+	TaskRequest,
+	TaskResponse,
+} from "../../shared/models/task.model";
+import { AddCategoryComponent } from "../../shared/shared-components/dialogs/add-category/add-category.component";
+import { AddContactComponent } from "../../shared/shared-components/dialogs/add-contact/add-contact.component";
+import { OptionType } from "../../shared/shared-components/form-field/form-field.component";
+import { FeedbackService } from "../../shared/shared-services/feedback/feedback.service";
 import {
 	AddTaskModule,
 	PriorityType,

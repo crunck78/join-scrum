@@ -2,8 +2,8 @@ import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { take } from "rxjs";
-import { ResetPasswordCredentials } from "src/app/scrum-api/scrum-reset-password/scrum-reset-password.service";
-import { FeedbackService } from "src/app/shared/shared-services/feedback/feedback.service";
+import { ResetPasswordCredentials } from "../../../scrum-api/scrum-reset-password/scrum-reset-password.service";
+import { FeedbackService } from "../../../shared/shared-services/feedback/feedback.service";
 import { ResetPasswordModule } from "./reset-password.module";
 import { ResetPasswordService } from "./reset-password.service";
 

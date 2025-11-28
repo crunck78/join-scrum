@@ -1,4 +1,4 @@
-import type { PriorityType } from "src/app/admin/add-task/add-task.module";
+import { PriorityType } from "../../admin/add-task/add-task.module";
 import {
 	Category,
 	type CategoryResponse,

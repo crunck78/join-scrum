@@ -1,8 +1,8 @@
 import { Component, type ElementRef, inject, ViewChild } from "@angular/core";
 
 import { type Observable, take } from "rxjs";
-import type { ContactResponse } from "src/app/shared/models/contact.model";
-import { AddContactComponent } from "src/app/shared/shared-components/dialogs/add-contact/add-contact.component";
+import { ContactResponse } from "../../shared/models/contact.model";
+import { AddContactComponent } from "../../shared/shared-components/dialogs/add-contact/add-contact.component";
 import { ContactsModule } from "./contacts.module";
 import { ContactsService } from "./contacts.service";
 @Component({

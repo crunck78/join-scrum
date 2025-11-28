@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import type { SignupCredentials } from "src/app/scrum-api/scrum-signup/scrum-signup.service";
-import { EMAIL_REGEX } from "src/app/shared/shared-components/form-field/form-field.component";
+import { SignupCredentials } from "../../../scrum-api/scrum-signup/scrum-signup.service";
+import { EMAIL_REGEX } from "../../../shared/shared-components/form-field/form-field.component";
 import { RegisterModule } from "./register.module";
 import { RegisterService } from "./register.service";
 

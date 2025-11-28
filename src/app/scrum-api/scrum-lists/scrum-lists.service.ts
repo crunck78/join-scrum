@@ -3,10 +3,10 @@ import { Injectable, inject } from "@angular/core";
 import { catchError, map, type Observable, of } from "rxjs";
 import {
 	List,
-	type ListRequest,
-	type ListResponse,
-	type ListResponseAPI,
-} from "src/app/shared/models/list.model";
+	ListRequest,
+	ListResponse,
+	ListResponseAPI,
+} from "../../shared/models/list.model";
 import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 

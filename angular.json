@@ -79,7 +79,10 @@
 					"defaultConfiguration": "development"
 				},
 				"test": {
-					"builder": "@analogjs/vitest-angular:test"
+					"builder": "@angular/build:unit-test",
+					"options": {
+						"browsers": ["chromium"]
+					}
 				}
 			},
 			"prefix": "app",

@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
-import type { SummaryResponse } from "src/app/shared/models/summary.model";
-import type { UserResponse } from "src/app/shared/models/user.model";
+import { SummaryResponse } from "../../shared/models/summary.model";
+import { UserResponse } from "../../shared/models/user.model";
 import { SummaryModule } from "./summary.module";
 import { SummaryService } from "./summary.service";
 

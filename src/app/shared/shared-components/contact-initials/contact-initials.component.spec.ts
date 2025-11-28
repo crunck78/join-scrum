@@ -1,20 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { render } from "@testing-library/angular";
 import { ContactInitialsComponent } from "./contact-initials.component";
 
 describe("ContactInitialsComponent", () => {
-	let component: ContactInitialsComponent;
-	let fixture: ComponentFixture<ContactInitialsComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(ContactInitialsComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({}).compileComponents();
-
-		fixture = TestBed.createComponent(ContactInitialsComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

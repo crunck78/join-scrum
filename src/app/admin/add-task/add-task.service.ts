@@ -1,10 +1,10 @@
 import { Injectable, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { ScrumCategoriesService } from "src/app/scrum-api/scrum-categories/scrum-categories.service";
-import { ScrumContactsService } from "src/app/scrum-api/scrum-contacts/scrum-contacts.service";
-import { ScrumSubtasksService } from "src/app/scrum-api/scrum-subtasks/scrum-subtasks.service";
-import { ScrumTasksService } from "src/app/scrum-api/scrum-tasks/scrum-tasks.service";
+import { ScrumCategoriesService } from "../../scrum-api/scrum-categories/scrum-categories.service";
+import { ScrumContactsService } from "../../scrum-api/scrum-contacts/scrum-contacts.service";
+import { ScrumSubtasksService } from "../../scrum-api/scrum-subtasks/scrum-subtasks.service";
+import { ScrumTasksService } from "../../scrum-api/scrum-tasks/scrum-tasks.service";
 
 @Injectable({
 	providedIn: "any",

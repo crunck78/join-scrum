@@ -1,20 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { render } from "@testing-library/angular";
 import { DialogComponent } from "./dialog.component";
 
 describe("DialogComponent", () => {
-	let component: DialogComponent;
-	let fixture: ComponentFixture<DialogComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(DialogComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({}).compileComponents();
-
-		fixture = TestBed.createComponent(DialogComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

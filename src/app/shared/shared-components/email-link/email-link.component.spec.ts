@@ -1,20 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { render } from "@testing-library/angular";
 import { EmailLinkComponent } from "./email-link.component";
 
 describe("EmailLinkComponent", () => {
-	let component: EmailLinkComponent;
-	let fixture: ComponentFixture<EmailLinkComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(EmailLinkComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({}).compileComponents();
-
-		fixture = TestBed.createComponent(EmailLinkComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

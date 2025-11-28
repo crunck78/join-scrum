@@ -1,20 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { render } from "@testing-library/angular";
 import { LegalNoticeComponent } from "./legal-notice.component";
 
 describe("LegalNoticeComponent", () => {
-	let component: LegalNoticeComponent;
-	let fixture: ComponentFixture<LegalNoticeComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(LegalNoticeComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({}).compileComponents();
-
-		fixture = TestBed.createComponent(LegalNoticeComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

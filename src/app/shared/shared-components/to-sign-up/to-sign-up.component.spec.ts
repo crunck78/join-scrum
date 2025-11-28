@@ -1,23 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-import { provideRouter } from "@angular/router";
-import { ROUTES } from "src/app/app.routes";
+import { render } from "@testing-library/angular";
 import { ToSignUpComponent } from "./to-sign-up.component";
 
 describe("ToSignUpComponent", () => {
-	let component: ToSignUpComponent;
-	let fixture: ComponentFixture<ToSignUpComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(ToSignUpComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			providers: [provideRouter(ROUTES)],
-		}).compileComponents();
-
-		fixture = TestBed.createComponent(ToSignUpComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

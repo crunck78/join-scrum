@@ -8,12 +8,12 @@ import {
 } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { type Observable, take } from "rxjs";
-import { ScrumBoardsService } from "src/app/scrum-api/scrum-boards/scrum-boards.service";
-import { ScrumListsService } from "src/app/scrum-api/scrum-lists/scrum-lists.service";
-import type { BoardResponse } from "src/app/shared/models/board.model";
-import type { ListRequest } from "src/app/shared/models/list.model";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
-import { OptionsPipe } from "src/app/shared/pipes/options/options.pipe";
+import { ScrumBoardsService } from "../../../../scrum-api/scrum-boards/scrum-boards.service";
+import { ScrumListsService } from "../../../../scrum-api/scrum-lists/scrum-lists.service";
+import { BoardResponse } from "../../../models/board.model";
+import { ListRequest } from "../../../models/list.model";
+import { MaterialModule } from "../../../modules/material/material.module";
+import { OptionsPipe } from "../../../pipes/options/options.pipe";
 import { DialogComponent } from "../../dialog/dialog.component";
 import {
 	FormFieldComponent,

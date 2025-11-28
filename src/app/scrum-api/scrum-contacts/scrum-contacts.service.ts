@@ -3,10 +3,10 @@ import { Injectable, inject } from "@angular/core";
 import { catchError, map, type Observable, of } from "rxjs";
 import {
 	Contact,
-	type ContactRequest,
-	type ContactResponse,
-	type ContactResponseAPI,
-} from "src/app/shared/models/contact.model";
+	ContactRequest,
+	ContactResponse,
+	ContactResponseAPI,
+} from "../../shared/models/contact.model";
 import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 

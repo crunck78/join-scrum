@@ -4,15 +4,11 @@ import {
 	type DropListOrientation,
 } from "@angular/cdk/drag-drop";
 import { Component, inject, type QueryList, ViewChildren } from "@angular/core";
-
 import { firstValueFrom, type Observable, Subject, take } from "rxjs";
-import type { BoardResponse } from "src/app/shared/models/board.model";
-import type { ListResponse } from "src/app/shared/models/list.model";
-import type {
-	TaskRequest,
-	TaskResponse,
-} from "src/app/shared/models/task.model";
-import { AddListComponent } from "src/app/shared/shared-components/dialogs/add-list/add-list.component";
+import { BoardResponse } from "../../shared/models/board.model";
+import { ListResponse } from "../../shared/models/list.model";
+import { TaskRequest, TaskResponse } from "../../shared/models/task.model";
+import { AddListComponent } from "../../shared/shared-components/dialogs/add-list/add-list.component";
 import { BoardModule } from "./board.module";
 import { BoardService } from "./board.service";
 

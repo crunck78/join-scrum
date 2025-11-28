@@ -1,8 +1,9 @@
 import { MessageErrorPipe } from "./message-error.pipe";
 
 describe("MessageErrorPipe", () => {
+	const pipe = new MessageErrorPipe();
 	it("create an instance", () => {
-		const pipe = new MessageErrorPipe();
+
 		expect(pipe).toBeTruthy();
 	});
 });

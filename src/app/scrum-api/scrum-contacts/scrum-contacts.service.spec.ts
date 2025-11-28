@@ -1,5 +1,3 @@
-import { HttpClientModule } from "@angular/common/http";
-import { importProvidersFrom } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { ScrumContactsService } from "./scrum-contacts.service";
 
@@ -8,7 +6,7 @@ describe("ScrumContactsService", () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [importProvidersFrom(HttpClientModule)],
+			providers: [ScrumContactsService],
 		});
 		service = TestBed.inject(ScrumContactsService);
 	});

@@ -1,14 +1,14 @@
 import { Component, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { take } from "rxjs";
-import { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
-import { ScrumProfileService } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
-import type { UserResponse } from "src/app/shared/models/user.model";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
-import { CardComponent } from "src/app/shared/shared-components/card/card.component";
-import { ContactInitialsComponent } from "src/app/shared/shared-components/contact-initials/contact-initials.component";
-import { EditProfileComponent } from "src/app/shared/shared-components/dialogs/edit-profile/edit-profile.component";
-import { ProfileImageCropperComponent } from "src/app/shared/shared-components/image-cropper/image-cropper.component";
+import { ScrumApiService } from "../../scrum-api/scrum-api.service";
+import { ScrumProfileService } from "../../scrum-api/scrum-profile/scrum-profile.service";
+import { UserResponse } from "../../shared/models/user.model";
+import { MaterialModule } from "../../shared/modules/material/material.module";
+import { CardComponent } from "../../shared/shared-components/card/card.component";
+import { ContactInitialsComponent } from "../../shared/shared-components/contact-initials/contact-initials.component";
+import { EditProfileComponent } from "../../shared/shared-components/dialogs/edit-profile/edit-profile.component";
+import { ProfileImageCropperComponent } from "../../shared/shared-components/image-cropper/image-cropper.component";
 
 @Component({
 	selector: "app-profile",

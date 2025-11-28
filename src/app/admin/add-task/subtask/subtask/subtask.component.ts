@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Subject } from "rxjs";
-import type { SubtaskRequest } from "src/app/shared/models/subtask.model";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
-import { ContentEditableComponent } from "src/app/shared/shared-components/content-editable/content-editable.component";
-
+import { SubtaskRequest } from "../../../../shared/models/subtask.model";
+import { MaterialModule } from "../../../../shared/modules/material/material.module";
+import { ContentEditableComponent } from "../../../../shared/shared-components/content-editable/content-editable.component";
 @Component({
 	selector: "app-subtask",
 	templateUrl: "./subtask.component.html",

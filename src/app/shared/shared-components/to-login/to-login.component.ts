@@ -12,11 +12,11 @@ import { RouterLinkComponent } from "../router-link/router-link.component";
 export class ToLoginComponent {
 	private router = inject(Router);
 
-	logInRoute: Route;
+	logInRoute: Route | undefined;
 
 	constructor() {
 		this.logInRoute = this.router.config
 			.find((r) => r.path === "auth")
-			?.children?.find((r) => r.path === "log-in") as Route;
+			?.children?.find((r) => r.path === "log-in");
 	}
 }

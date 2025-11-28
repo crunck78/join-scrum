@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { Router, type Routes } from "@angular/router";
-import { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
-import { RouterLinkComponent } from "src/app/shared/shared-components/router-link/router-link.component";
+import { ScrumApiService } from "../../scrum-api/scrum-api.service";
+import { RouterLinkComponent } from "../../shared/shared-components/router-link/router-link.component";
 
 @Component({
 	selector: "app-navigation",

@@ -3,10 +3,10 @@ import { Injectable, inject } from "@angular/core";
 import { catchError, map, type Observable, of } from "rxjs";
 import {
 	Board,
-	type BoardRequest,
-	type BoardResponse,
-	type BoardResponseAPI,
-} from "src/app/shared/models/board.model";
+	BoardRequest,
+	BoardResponse,
+	BoardResponseAPI,
+} from "../../shared/models/board.model";
 import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 

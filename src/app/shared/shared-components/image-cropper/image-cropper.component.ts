@@ -4,12 +4,11 @@ import { MatDialogRef } from "@angular/material/dialog";
 import { DomSanitizer, type SafeUrl } from "@angular/platform-browser";
 import {
 	FileUploader,
-	type FileUploaderOptions,
-	FileUploadModule,
+	FileUploadModule
 } from "ng2-file-upload";
 import { ImageCropperComponent } from "ngx-smart-cropper";
-import { ScrumApiService } from "src/app/scrum-api/scrum-api.service";
-import { PROFILE_IMAGE_ENDPOINT } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
+import { ScrumApiService } from "../../../scrum-api/scrum-api.service";
+import { PROFILE_IMAGE_ENDPOINT } from "../../../scrum-api/scrum-profile/scrum-profile.service";
 import { MaterialModule } from "../../modules/material/material.module";
 import { FeedbackService } from "../../shared-services/feedback/feedback.service";
 import { DialogComponent } from "../dialog/dialog.component";
@@ -38,7 +37,7 @@ export class ProfileImageCropperComponent {
 	@ViewChild("inputImage") inputImage!: ElementRef<HTMLInputElement>;
 	@ViewChild("imageCropper") imageCropper!: ImageCropperComponent;
 
-	uploader!: FileUploader;
+	uploader: FileUploader;
 	hasBaseDropZoneOver!: boolean;
 	response!: string;
 	fileToChange!: File;
@@ -52,7 +51,7 @@ export class ProfileImageCropperComponent {
 			authToken: `Token ${this.scrumApi.token}`,
 			disableMultipart: false, // Enable multipart
 			itemAlias: "image", // This should match the name expected on the server side
-		} as FileUploaderOptions);
+		});
 		this.hasBaseDropZoneOver = false;
 		this.response = "";
 		this.uploader.response.subscribe((res) => (this.response = res));

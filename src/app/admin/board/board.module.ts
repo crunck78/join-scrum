@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
-import { CardComponent } from "src/app/shared/shared-components/card/card.component";
-import { ContentEditableComponent } from "src/app/shared/shared-components/content-editable/content-editable.component";
-import { PageTitleComponent } from "src/app/shared/shared-components/page-title/page-title.component";
-import { TaskComponent } from "src/app/shared/shared-components/task/task.component";
+import { MaterialModule } from "../../shared/modules/material/material.module";
+import { CardComponent } from "../../shared/shared-components/card/card.component";
+import { ContentEditableComponent } from "../../shared/shared-components/content-editable/content-editable.component";
+import { PageTitleComponent } from "../../shared/shared-components/page-title/page-title.component";
+import { TaskComponent } from "../../shared/shared-components/task/task.component";
 
 const imports = [
 	CommonModule,
@@ -20,4 +20,4 @@ const imports = [
 	imports: [...imports],
 	exports: [...imports],
 })
-export class BoardModule {}
+export class BoardModule { }

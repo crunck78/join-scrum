@@ -4,10 +4,10 @@ import { type Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import {
 	Subtask,
-	type SubtaskRequest,
-	type SubtaskResponse,
-	type SubtaskResponseAPI,
-} from "src/app/shared/models/subtask.model";
+	SubtaskRequest,
+	SubtaskResponse,
+	SubtaskResponseAPI,
+} from "../../shared/models/subtask.model";
 import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 

@@ -3,9 +3,9 @@ import { Injectable, inject } from "@angular/core";
 import { catchError, map, type Observable, of } from "rxjs";
 import {
 	Summary,
-	type SummaryResponse,
-	type SummaryResponseAPI,
-} from "src/app/shared/models/summary.model";
+	SummaryResponse,
+	SummaryResponseAPI,
+} from "../../shared/models/summary.model";
 import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 

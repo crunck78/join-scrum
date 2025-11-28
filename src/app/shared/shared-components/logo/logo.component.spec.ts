@@ -1,20 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { render } from "@testing-library/angular";
 import { LogoComponent } from "./logo.component";
 
 describe("LogoComponent", () => {
-	let component: LogoComponent;
-	let fixture: ComponentFixture<LogoComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(LogoComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({}).compileComponents();
-
-		fixture = TestBed.createComponent(LogoComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

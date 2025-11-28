@@ -7,9 +7,9 @@ import {
 } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { take } from "rxjs";
-import { ScrumProfileService } from "src/app/scrum-api/scrum-profile/scrum-profile.service";
-import type { UserRequest } from "src/app/shared/models/user.model";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
+import { ScrumProfileService } from "../../../../scrum-api/scrum-profile/scrum-profile.service";
+import { UserRequest } from "../../../models/user.model";
+import { MaterialModule } from "../../../modules/material/material.module";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";
 

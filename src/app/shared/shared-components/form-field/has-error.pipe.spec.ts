@@ -1,8 +1,9 @@
 import { HasErrorPipe } from "./has-error.pipe";
 
 describe("HasErrorPipe", () => {
+	const pipe = new HasErrorPipe();
 	it("create an instance", () => {
-		const pipe = new HasErrorPipe();
+
 		expect(pipe).toBeTruthy();
 	});
 });

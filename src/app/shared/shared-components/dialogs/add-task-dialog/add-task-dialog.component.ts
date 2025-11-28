@@ -5,16 +5,12 @@ import {
 	inject,
 	type OnInit,
 } from "@angular/core";
-
 import type { FormControlStatus } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AddTaskComponent } from "src/app/admin/add-task/add-task.component";
-import type { TaskMode } from "src/app/admin/add-task/add-task.module";
-import type {
-	TaskRequest,
-	TaskResponse,
-} from "src/app/shared/models/task.model";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
+import { AddTaskComponent } from "../../../../admin/add-task/add-task.component";
+import { TaskMode } from "../../../../admin/add-task/add-task.module";
+import { TaskRequest, TaskResponse } from "../../../models/task.model";
+import { MaterialModule } from "../../../modules/material/material.module";
 import { DialogComponent } from "../../dialog/dialog.component";
 
 export interface AddTaskDialogData {

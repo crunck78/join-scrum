@@ -1,5 +1,3 @@
-import { HttpClientModule } from "@angular/common/http";
-import { importProvidersFrom } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { LoginInterceptor } from "./login-interceptor.service";
 
@@ -8,7 +6,7 @@ describe("LoginInterceptorService", () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [LoginInterceptor, importProvidersFrom(HttpClientModule)],
+			providers: [LoginInterceptor],
 		});
 		service = TestBed.inject(LoginInterceptor);
 	});

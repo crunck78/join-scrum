@@ -1,7 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
-import { importProvidersFrom } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
 import { ContactsService } from "./contacts.service";
 
 describe("ContactsService", () => {
@@ -9,7 +6,7 @@ describe("ContactsService", () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [importProvidersFrom(HttpClientModule, MaterialModule)],
+			providers: [ContactsService],
 		});
 		service = TestBed.inject(ContactsService);
 	});

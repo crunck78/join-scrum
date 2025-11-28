@@ -1,20 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { render } from "@testing-library/angular";
 import { ContentEditableComponent } from "./content-editable.component";
 
 describe("ContentEditableComponent", () => {
-	let component: ContentEditableComponent;
-	let fixture: ComponentFixture<ContentEditableComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(ContentEditableComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({}).compileComponents();
-
-		fixture = TestBed.createComponent(ContentEditableComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

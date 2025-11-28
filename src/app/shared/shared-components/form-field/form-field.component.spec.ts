@@ -1,37 +1,10 @@
-import { importProvidersFrom } from "@angular/core";
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormControl } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MaterialModule } from "../../modules/material/material.module";
-import {
-	type FieldType,
-	FormFieldComponent,
-	type InputType,
-} from "./form-field.component";
+import { render } from "@testing-library/angular";
+import { FormFieldComponent } from "./form-field.component";
 
 describe("FormFieldComponent", () => {
-	let component: FormFieldComponent;
-	let fixture: ComponentFixture<FormFieldComponent>;
+	it("should create", async () => {
+		const { fixture } = await render(FormFieldComponent, {});
 
-	const formControl = new FormControl("Test");
-	const inputType: InputType = "input";
-	const type: FieldType = "text";
-
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MaterialModule],
-			providers: [importProvidersFrom(BrowserAnimationsModule, MaterialModule)],
-		}).compileComponents();
-
-		fixture = TestBed.createComponent(FormFieldComponent);
-		component = fixture.componentInstance;
-		component.control = formControl;
-		component.inputType = inputType;
-		component.type = type;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

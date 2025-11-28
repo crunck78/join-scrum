@@ -1,25 +1,10 @@
-import { importProvidersFrom } from "@angular/core";
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-import { ImageCropperModule } from "ngx-image-cropper";
-import { MaterialModule } from "../../modules/material/material.module";
+import { render } from "@testing-library/angular";
 import { ProfileImageCropperComponent } from "./image-cropper.component";
 
-describe("ImageCropperComponent", () => {
-	let component: ProfileImageCropperComponent;
-	let fixture: ComponentFixture<ProfileImageCropperComponent>;
+describe("ProfileImageCropperComponent", () => {
+	it("should create", async () => {
+		const { fixture } = await render(ProfileImageCropperComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ImageCropperModule],
-			providers: [importProvidersFrom(MaterialModule)],
-		}).compileComponents();
-
-		fixture = TestBed.createComponent(ProfileImageCropperComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

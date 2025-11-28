@@ -4,9 +4,9 @@ import { Component, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { RouterOutlet } from "@angular/router";
 import { map } from "rxjs";
-import { AnnouncementComponent } from "src/app/shared/shared-components/dialogs/announcement/announcement.component";
-import { LogoComponent } from "src/app/shared/shared-components/logo/logo.component";
-import { ToSignUpComponent } from "src/app/shared/shared-components/to-sign-up/to-sign-up.component";
+import { AnnouncementComponent } from "../../shared/shared-components/dialogs/announcement/announcement.component";
+import { LogoComponent } from "../../shared/shared-components/logo/logo.component";
+import { ToSignUpComponent } from "../../shared/shared-components/to-sign-up/to-sign-up.component";
 
 @Component({
 	selector: "app-authentication",

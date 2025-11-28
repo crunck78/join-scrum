@@ -1,34 +1,10 @@
-import { type ComponentFixture, TestBed } from "@angular/core/testing";
-import type { TaskResponse } from "../../models/task.model";
+import { render } from "@testing-library/angular";
 import { TaskComponent } from "./task.component";
 
 describe("TaskComponent", () => {
-	let component: TaskComponent;
-	let fixture: ComponentFixture<TaskComponent>;
-	const task = {
-		id: 1,
-		title: "Some Task",
-		description: "Some Description",
-		category: null,
-		assignees: [],
-		dueDate: new Date(),
-		priority: "Low",
-		subtasks: [],
-		createdAt: new Date(),
-		updatedAt: new Date(),
-		position: 1,
-	} as TaskResponse;
+	it("should create", async () => {
+		const { fixture } = await render(TaskComponent, {});
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({}).compileComponents();
-
-		fixture = TestBed.createComponent(TaskComponent);
-		component = fixture.componentInstance;
-		component.task = task;
-		fixture.detectChanges();
-	});
-
-	it("should create", () => {
-		expect(component).toBeTruthy();
+		expect(fixture.componentInstance).toBeTruthy();
 	});
 });

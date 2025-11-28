@@ -1,7 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
-import { importProvidersFrom } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
-import { MaterialModule } from "src/app/shared/modules/material/material.module";
 import { AddTaskService } from "./add-task.service";
 
 describe("AddTaskService", () => {
@@ -9,7 +6,7 @@ describe("AddTaskService", () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [importProvidersFrom(HttpClientModule, MaterialModule)],
+			providers: [AddTaskService],
 		});
 		service = TestBed.inject(AddTaskService);
 	});
