@@ -2,10 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, type ElementRef, inject, ViewChild } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { DomSanitizer, type SafeUrl } from "@angular/platform-browser";
-import {
-	FileUploader,
-	FileUploadModule
-} from "ng2-file-upload";
+import { FileUploader, FileUploadModule } from "ng2-file-upload";
 import { ImageCropperComponent } from "ngx-smart-cropper";
 import { ScrumApiService } from "../../../scrum-api/scrum-api.service";
 import { PROFILE_IMAGE_ENDPOINT } from "../../../scrum-api/scrum-profile/scrum-profile.service";

@@ -1,3 +1,5 @@
+import "zone.js/testing";
+// zone testing has to be first
 import { getTestBed } from "@angular/core/testing";
 import {
 	BrowserTestingModule,

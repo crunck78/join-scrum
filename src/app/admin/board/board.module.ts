@@ -20,4 +20,4 @@ const imports = [
 	imports: [...imports],
 	exports: [...imports],
 })
-export class BoardModule { }
+export class BoardModule {}

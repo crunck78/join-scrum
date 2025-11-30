@@ -18,4 +18,4 @@ const imports = [
 	imports: [...imports],
 	exports: [...imports],
 })
-export class SummaryModule { }
+export class SummaryModule {}

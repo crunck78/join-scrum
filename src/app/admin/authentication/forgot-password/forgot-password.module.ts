@@ -26,4 +26,4 @@ const imports = [
 	imports: [...imports],
 	exports: [...imports],
 })
-export class ForgotPasswordModule { }
+export class ForgotPasswordModule {}

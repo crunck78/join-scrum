@@ -1,4 +1,5 @@
 import { render } from "@testing-library/angular";
+import { describe, expect, it } from "vitest";
 import { DialogComponent } from "./dialog.component";
 
 describe("DialogComponent", () => {

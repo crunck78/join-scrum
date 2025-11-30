@@ -24,4 +24,4 @@ const imports = [
 	imports: [...imports],
 	exports: [...imports],
 })
-export class LogInModule { }
+export class LogInModule {}

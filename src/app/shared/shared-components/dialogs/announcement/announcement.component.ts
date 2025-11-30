@@ -8,4 +8,4 @@ import { DialogComponent } from "../../dialog/dialog.component";
 	styleUrls: ["./announcement.component.scss"],
 	imports: [DialogComponent, MaterialModule],
 })
-export class AnnouncementComponent { }
+export class AnnouncementComponent {}

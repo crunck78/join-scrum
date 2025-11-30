@@ -26,4 +26,4 @@ const imports = [
 	imports: [...imports],
 	exports: [...imports],
 })
-export class RegisterModule { }
+export class RegisterModule {}

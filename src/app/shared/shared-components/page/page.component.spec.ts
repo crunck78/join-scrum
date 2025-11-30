@@ -1,4 +1,5 @@
 import { render } from "@testing-library/angular";
+import { describe, expect, it } from "vitest";
 import { PageComponent } from "./page.component";
 
 describe("PageComponent", () => {

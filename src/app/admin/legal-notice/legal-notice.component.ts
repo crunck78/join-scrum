@@ -7,4 +7,4 @@ import { CardComponent } from "../../shared/shared-components/card/card.componen
 	styleUrls: ["./legal-notice.component.scss"],
 	imports: [CardComponent],
 })
-export class LegalNoticeComponent { }
+export class LegalNoticeComponent {}

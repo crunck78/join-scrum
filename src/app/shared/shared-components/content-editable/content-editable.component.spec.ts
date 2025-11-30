@@ -1,4 +1,5 @@
 import { render } from "@testing-library/angular";
+import { describe, expect, it } from "vitest";
 import { ContentEditableComponent } from "./content-editable.component";
 
 describe("ContentEditableComponent", () => {
