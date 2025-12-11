@@ -1,11 +1,18 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NavigationComponent } from "./navigation.component";
 
-describe("Navigation", () => {
-	it("should create", async () => {
-		const { fixture } = await render(NavigationComponent, {});
+describe("NavigationComponent", () => {
+	let component: NavigationComponent;
+	let fixture: ComponentFixture<NavigationComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({ imports: [NavigationComponent] });
+		fixture = TestBed.createComponent(NavigationComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

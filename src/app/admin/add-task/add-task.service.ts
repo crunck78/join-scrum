@@ -5,6 +5,7 @@ import { ScrumCategoriesService } from "../../scrum-api/scrum-categories/scrum-c
 import { ScrumContactsService } from "../../scrum-api/scrum-contacts/scrum-contacts.service";
 import { ScrumSubtasksService } from "../../scrum-api/scrum-subtasks/scrum-subtasks.service";
 import { ScrumTasksService } from "../../scrum-api/scrum-tasks/scrum-tasks.service";
+import { FeedbackService } from "../../shared/shared-services/feedback/feedback.service";
 
 @Injectable({
 	providedIn: "any",
@@ -16,6 +17,7 @@ export class AddTaskService {
 	scrumSubtasks = inject(ScrumSubtasksService);
 	scrumTask = inject(ScrumTasksService);
 	router = inject(Router);
+	feedback = inject(FeedbackService);
 
 	get categories$() {
 		return this.scrumCategory.getCategories$();

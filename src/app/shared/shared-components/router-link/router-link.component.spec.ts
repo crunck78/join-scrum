@@ -1,11 +1,27 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
 import { RouterLinkComponent } from "./router-link.component";
 
 describe("RouterLinkComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(RouterLinkComponent, {});
+	let component: RouterLinkComponent;
+	let fixture: ComponentFixture<RouterLinkComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [RouterLinkComponent],
+			providers: [
+				{
+					provide: ActivatedRoute,
+					useValue: {},
+				},
+			],
+		});
+		fixture = TestBed.createComponent(RouterLinkComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

@@ -1,11 +1,27 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
 import { SummaryComponent } from "./summary.component";
 
 describe("SummaryComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(SummaryComponent, {});
+	let component: SummaryComponent;
+	let fixture: ComponentFixture<SummaryComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [SummaryComponent],
+			providers: [
+				{
+					provide: ActivatedRoute,
+					useValue: {},
+				},
+			],
+		});
+		fixture = TestBed.createComponent(SummaryComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

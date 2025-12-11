@@ -9,6 +9,5 @@
 	"less.validate": false,
 	"scss.validate": false,
 	"stylelint.validate": ["css", "scss"],
-	"typescript.preferences.importModuleSpecifier": "relative",
-	"typescript.preferences.importModuleSpecifierPreference": "relative"
+	"typescript.preferences.importModuleSpecifier": "relative"
 }

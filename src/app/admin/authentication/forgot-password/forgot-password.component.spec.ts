@@ -1,11 +1,27 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
 import { ForgotPasswordComponent } from "./forgot-password.component";
 
 describe("ForgotPasswordComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(ForgotPasswordComponent, {});
+	let component: ForgotPasswordComponent;
+	let fixture: ComponentFixture<ForgotPasswordComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [ForgotPasswordComponent],
+			providers: [
+				{
+					provide: ActivatedRoute,
+					useValue: {},
+				},
+			],
+		});
+		fixture = TestBed.createComponent(ForgotPasswordComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

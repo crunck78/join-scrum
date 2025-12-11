@@ -1,11 +1,18 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ContactInitialsComponent } from "./contact-initials.component";
 
 describe("ContactInitialsComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(ContactInitialsComponent, {});
+	let component: ContactInitialsComponent;
+	let fixture: ComponentFixture<ContactInitialsComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({ imports: [ContactInitialsComponent] });
+		fixture = TestBed.createComponent(ContactInitialsComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

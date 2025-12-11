@@ -1,11 +1,27 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
 import { RegisterComponent } from "./register.component";
 
 describe("RegisterComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(RegisterComponent, {});
+	let component: RegisterComponent;
+	let fixture: ComponentFixture<RegisterComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [RegisterComponent],
+			providers: [
+				{
+					provide: ActivatedRoute,
+					useValue: {},
+				},
+			],
+		});
+		fixture = TestBed.createComponent(RegisterComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

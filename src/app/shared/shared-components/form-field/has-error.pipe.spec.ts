@@ -1,4 +1,3 @@
-import { describe, expect, it } from "vitest";
 import { HasErrorPipe } from "./has-error.pipe";
 
 describe("HasErrorPipe", () => {

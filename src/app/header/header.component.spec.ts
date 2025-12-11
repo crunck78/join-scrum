@@ -1,6 +1,5 @@
-import { render } from "@testing-library/angular";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BehaviorSubject } from "rxjs";
-import { describe, expect, it, vi } from "vitest";
 import { HeaderComponent } from "./header.component";
 import { HeaderService } from "./header.service";
 
@@ -13,14 +12,25 @@ class HeaderServiceStub {
 }
 
 describe("HeaderComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(HeaderComponent);
+	let component: HeaderComponent;
+	let fixture: ComponentFixture<HeaderComponent>;
+	const headerServiceStub = new HeaderServiceStub();
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [HeaderComponent],
+			providers: [{ provide: HeaderService, useValue: headerServiceStub }],
+		});
+		fixture = TestBed.createComponent(HeaderComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
 	});
 
-	it("should toggle headerState when toggleHeader is invoked", async () => {
-		const { fixture } = await render(HeaderComponent);
+	it("should create", () => {
+		expect(component).toBeDefined();
+	});
+
+	it("should toggle headerState when toggleHeader is invoked", () => {
 		expect(fixture.componentInstance.headerState$.value).toBe("closed");
 
 		fixture.componentInstance.toggleHeader(new Event("click"));
@@ -30,12 +40,7 @@ describe("HeaderComponent", () => {
 		expect(fixture.componentInstance.headerState$.value).toBe("closed");
 	});
 
-	it("should call HeaderService.logout when the logout button is clicked", async () => {
-		const headerServiceStub = new HeaderServiceStub();
-		const { fixture } = await render(HeaderComponent, {
-			providers: [{ provide: HeaderService, useValue: headerServiceStub }],
-		});
-
+	it("should call HeaderService.logout when the logout button is clicked", () => {
 		const logoutWebButton: HTMLButtonElement =
 			fixture.nativeElement.querySelector('button[color="primary"]');
 		logoutWebButton.click();
@@ -50,12 +55,7 @@ describe("HeaderComponent", () => {
 		expect(headerServiceStub.logout).toHaveBeenCalledTimes(2);
 	});
 
-	it("should emit toggleDrawer when the menu button is clicked", async () => {
-		const headerServiceStub = new HeaderServiceStub();
-		const { fixture } = await render(HeaderComponent, {
-			providers: [{ provide: HeaderService, useValue: headerServiceStub }],
-		});
-
+	it("should emit toggleDrawer when the menu button is clicked", () => {
 		let emissionCount = 0;
 		const sub = fixture.componentInstance.toggleDrawer.subscribe(() => {
 			emissionCount += 1;

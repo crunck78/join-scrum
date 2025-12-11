@@ -1,11 +1,18 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MainComponent } from "./main.component";
 
 describe("MainComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(MainComponent, {});
+	let component: MainComponent;
+	let fixture: ComponentFixture<MainComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({ imports: [MainComponent] });
+		fixture = TestBed.createComponent(MainComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

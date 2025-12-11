@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { DomSanitizer } from "@angular/platform-browser";
-import { beforeEach, describe, expect, it } from "vitest";
+
 import { SanitizeHtmlPipe } from "./sanitize-html.pipe";
 
 // TODO: XSS check

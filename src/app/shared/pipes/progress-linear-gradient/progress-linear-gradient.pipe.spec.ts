@@ -1,4 +1,3 @@
-import { describe, expect, it } from "vitest";
 import { ProgressLinearGradientPipe } from "./progress-linear-gradient.pipe";
 
 describe("ProgressLinearGradientPipe", () => {

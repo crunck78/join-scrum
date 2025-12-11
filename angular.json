@@ -1,7 +1,10 @@
 {
 	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
 	"cli": {
-		"schematicCollections": ["@angular-eslint/schematics"]
+		"packageManager": "npm",
+		"schematicCollections": [
+			"@angular-eslint/schematics"
+		]
 	},
 	"newProjectRoot": "projects",
 	"projects": {
@@ -40,16 +43,22 @@
 					},
 					"defaultConfiguration": "production",
 					"options": {
-						"assets": ["src/favicon.ico", "src/assets", "src/.htaccess"],
+						"assets": [
+							"src/favicon.ico",
+							"src/assets",
+							"src/.htaccess"
+						],
 						"browser": "src/main.ts",
 						"index": "src/index.html",
 						"inlineStyleLanguage": "scss",
 						"outputPath": {
 							"base": "dist/join"
 						},
-						"polyfills": ["zone.js"],
 						"scripts": [],
-						"styles": ["src/theme.scss", "src/styles.scss"],
+						"styles": [
+							"src/theme.scss",
+							"src/styles.scss"
+						],
 						"tsConfig": "tsconfig.app.json"
 					}
 				},
@@ -62,7 +71,10 @@
 				"lint": {
 					"builder": "@angular-eslint/builder:lint",
 					"options": {
-						"lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+						"lintFilePatterns": [
+							"src/**/*.ts",
+							"src/**/*.html"
+						]
 					}
 				},
 				"serve": {
@@ -79,10 +91,7 @@
 					"defaultConfiguration": "development"
 				},
 				"test": {
-					"builder": "@angular/build:unit-test",
-					"options": {
-						"browsers": ["chromium"]
-					}
+					"builder": "@angular/build:unit-test"
 				}
 			},
 			"prefix": "app",

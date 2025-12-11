@@ -1,11 +1,18 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { PageComponent } from "./page.component";
 
 describe("PageComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(PageComponent, {});
+	let component: PageComponent;
+	let fixture: ComponentFixture<PageComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({ imports: [PageComponent] });
+		fixture = TestBed.createComponent(PageComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

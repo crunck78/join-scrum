@@ -1,14 +1,27 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatDialogRef } from "@angular/material/dialog";
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
 import { EditContactComponent } from "./edit-contact.component";
 
 describe("EditContactComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(EditContactComponent, {
-			providers: [{ provide: MatDialogRef, useValue: {} }],
-		});
+	let component: EditContactComponent;
+	let fixture: ComponentFixture<EditContactComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [EditContactComponent],
+			providers: [
+				{
+					provide: MatDialogRef,
+					useValue: {},
+				},
+			],
+		});
+		fixture = TestBed.createComponent(EditContactComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

@@ -29,7 +29,6 @@ import {
 import { AddCategoryComponent } from "../../shared/shared-components/dialogs/add-category/add-category.component";
 import { AddContactComponent } from "../../shared/shared-components/dialogs/add-contact/add-contact.component";
 import { OptionType } from "../../shared/shared-components/form-field/form-field.component";
-import { FeedbackService } from "../../shared/shared-services/feedback/feedback.service";
 import {
 	AddTaskModule,
 	PriorityType,
@@ -47,7 +46,6 @@ import { AddTaskService } from "./add-task.service";
 })
 export class AddTaskComponent implements OnChanges {
 	private addTaskService = inject(AddTaskService);
-	private feedback = inject(FeedbackService);
 
 	/**
 	 * Empty Valid Form Group Initial Values
@@ -95,7 +93,7 @@ export class AddTaskComponent implements OnChanges {
 	subtasks$!: Observable<SubtaskResponse[]>;
 	changingSubtaskTitle$ = new Subject<number | string>();
 
-	@Input() showPageTitle = true;
+	@Input() showPageTitle = true; // TODO: can not find usage references
 	@Input() task!: TaskResponse;
 	@Input() mode: TaskMode = "add";
 	@Input() hideFooter = false;
@@ -263,7 +261,7 @@ export class AddTaskComponent implements OnChanges {
 			.subscribe((newTask) => {
 				if (!newTask) return;
 				this.addedTask$.emit(newTask);
-				const feedbackRef = this.feedback.openSnackBar(
+				const feedbackRef = this.addTaskService.feedback.openSnackBar(
 					"Task Created!",
 					"To Board",
 				);
@@ -300,4 +298,3 @@ export class AddTaskComponent implements OnChanges {
 		this.addSubtaskForm.reset();
 	}
 }
-export { PriorityType, TaskMode };

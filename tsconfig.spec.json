@@ -2,9 +2,8 @@
 {
 	"compilerOptions": {
 		"outDir": "./out-tsc/spec",
-		"types": ["@vitest/browser-playwright", "vitest/globals"]
+		"types": ["vitest/globals"]
 	},
 	"extends": "./tsconfig.json",
-	"files": ["src/test-setup.ts"],
-	"include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+	"include": ["src/**/*.d.ts", "src/**/*.spec.ts"]
 }

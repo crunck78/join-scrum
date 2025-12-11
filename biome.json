@@ -78,14 +78,14 @@
 			"includes": ["*.html"]
 		},
 		{
-			"assist": {
-				"actions": {
-					"source": {
-						"organizeImports": "off"
+			"includes": ["src/**/*.spec.ts"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noDuplicateTestHooks": "off"
 					}
 				}
-			},
-			"includes": ["**/test-setup.ts"]
+			}
 		}
 	],
 	"vcs": {

@@ -1,11 +1,18 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DialogComponent } from "./dialog.component";
 
 describe("DialogComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(DialogComponent, {});
+	let component: DialogComponent;
+	let fixture: ComponentFixture<DialogComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({ imports: [DialogComponent] });
+		fixture = TestBed.createComponent(DialogComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

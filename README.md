@@ -61,7 +61,17 @@ ng lint \
 > First time installation run: `npx playwright install`
 
 ```bash
-ng test  # to run angular unit tests
+ng test \
+--watch=false \
+--debug=true \
+--coverage=true
+```
+
+```powershell
+ng test `
+ --watch=false `
+ --debug=true `
+ --coverage=true
 ```
 
 ---

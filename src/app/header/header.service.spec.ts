@@ -1,5 +1,4 @@
 import { TestBed } from "@angular/core/testing";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ScrumApiService } from "../scrum-api/scrum-api.service";
 import { HeaderService } from "./header.service";
 

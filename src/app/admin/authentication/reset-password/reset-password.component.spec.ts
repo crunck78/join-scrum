@@ -1,11 +1,28 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
+import { of } from "rxjs";
 import { ResetPasswordComponent } from "./reset-password.component";
 
 describe("ResetPasswordComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(ResetPasswordComponent, {});
+	let component: ResetPasswordComponent;
+	let fixture: ComponentFixture<ResetPasswordComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [ResetPasswordComponent],
+			providers: [
+				{
+					provide: ActivatedRoute,
+					useValue: { queryParams: of({ token: "test token" }) },
+				},
+			],
+		});
+		fixture = TestBed.createComponent(ResetPasswordComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

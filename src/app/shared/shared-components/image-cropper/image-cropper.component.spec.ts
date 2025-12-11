@@ -1,10 +1,18 @@
-import { render } from "@testing-library/angular";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ProfileImageCropperComponent } from "./image-cropper.component";
 
 describe("ProfileImageCropperComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(ProfileImageCropperComponent, {});
+	let component: ProfileImageCropperComponent;
+	let fixture: ComponentFixture<ProfileImageCropperComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({ imports: [ProfileImageCropperComponent] });
+		fixture = TestBed.createComponent(ProfileImageCropperComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });

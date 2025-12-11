@@ -1,11 +1,18 @@
-import { render } from "@testing-library/angular";
-import { describe, expect, it } from "vitest";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ContactCardComponent } from "./contact-card.component";
 
 describe("ContactCardComponent", () => {
-	it("should create", async () => {
-		const { fixture } = await render(ContactCardComponent, {});
+	let component: ContactCardComponent;
+	let fixture: ComponentFixture<ContactCardComponent>;
 
-		expect(fixture.componentInstance).toBeTruthy();
+	beforeEach(() => {
+		TestBed.configureTestingModule({ imports: [ContactCardComponent] });
+		fixture = TestBed.createComponent(ContactCardComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it("should create", () => {
+		expect(component).toBeDefined();
 	});
 });
