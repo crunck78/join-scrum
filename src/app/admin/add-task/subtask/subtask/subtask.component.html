@@ -1,5 +1,6 @@
 @if(subtask) {
 <mat-checkbox
+	aria-label="Subtask Checkbox"
 	#subtaskCheck
 	(change)="updateSubtaskCheck($event.checked)"
 	[checked]="subtask.done"
@@ -20,7 +21,7 @@
 	</button>
 
 	<button
-		(click)="removeTask$.emit(subtask)"
+		(click)="removeSubtask$.emit(subtask)"
 		mat-icon-button
 		aria-label="Remove Subtask"
 	>

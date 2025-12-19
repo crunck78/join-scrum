@@ -1,6 +1,5 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { SignupCredentials } from "../../../scrum-api/scrum-signup/scrum-signup.service";
 import { EMAIL_REGEX } from "../../../shared/shared-components/form-field/form-field.component";
 import { RegisterModule } from "./register.module";
 import { RegisterService } from "./register.service";
@@ -15,15 +14,18 @@ export class RegisterComponent {
 	private registerService = inject(RegisterService);
 
 	signupForm = new FormGroup({
-		name: new FormControl("", Validators.compose([Validators.required])),
-		email: new FormControl(
-			"",
-			Validators.compose([
-				Validators.required,
-				Validators.pattern(EMAIL_REGEX),
-			]),
-		),
-		password: new FormControl("", Validators.compose([Validators.required])),
+		name: new FormControl("", {
+			nonNullable: true,
+			validators: [Validators.required],
+		}),
+		email: new FormControl("", {
+			nonNullable: true,
+			validators: [Validators.required, Validators.pattern(EMAIL_REGEX)],
+		}),
+		password: new FormControl("", {
+			nonNullable: true,
+			validators: [Validators.required],
+		}),
 	});
 
 	constructor() {
@@ -31,14 +33,12 @@ export class RegisterComponent {
 	}
 
 	get mobile$() {
-		return this.registerService.breakPoints.mobile$;
+		return this.registerService.mobile$;
 	}
 
 	signUp() {
 		if (this.signupForm.valid) {
-			this.registerService.scrumSignup.signup(
-				this.signupForm.value as SignupCredentials,
-			);
+			this.registerService.signUp(this.signupForm.getRawValue());
 		}
 	}
 }

@@ -1,0 +1,21 @@
+import { playwright } from "@vitest/browser-playwright";
+import { defineConfig } from "vitest/config";
+export default defineConfig({
+	test: {
+		globals: true,
+		environment: "jsdom",
+		// setupFiles: ["src/test-setup.ts"],
+		reporters: ["default"],
+		coverage: {
+			provider: "v8",
+			enabled: true,
+			reporter: ["text", "json", "html", "default"],
+		},
+		browser: {
+			provider: playwright(),
+			enabled: true,
+			// at least one instance is required
+			instances: [{ browser: "chromium" }],
+		},
+	},
+});

@@ -1,13 +1,30 @@
 {
 	"configurations": [
+		// {
+		// 	"name": "Attach to Angular test runner",
+		// 	"outFiles": ["${workspaceFolder}/**/*.js"],
+		// 	"port": 9229,
+		// 	"request": "attach",
+		// 	"resolveSourceMapLocations": ["**"],
+		// 	"restart": false,
+		// 	"timeout": 60000,
+		// 	"type": "node"
+		// },
 		{
-			"name": "Attach to Angular test runner",
-			"outFiles": ["${workspaceFolder}/**/*.js"],
-			"port": 9229,
-			"request": "attach",
-			"restart": false,
-			"skipFiles": ["<node_internals>/**"],
-			"timeout": 60000,
+			"console": "integratedTerminal",
+			"cwd": "${workspaceFolder}",
+			"internalConsoleOptions": "neverOpen",
+			"name": "Launch ng test (Angular CLI)",
+			// "outFiles": ["${workspaceFolder}/**/*.js"],
+			"request": "launch",
+			"resolveSourceMapLocations": ["**"],
+			"runtimeArgs": [
+				"--inspect-brk",
+				"${workspaceFolder}/node_modules/@angular/cli/bin/ng",
+				"test"
+			],
+			"runtimeExecutable": "node",
+			// "skipFiles": [""],
 			"type": "node"
 		}
 	],

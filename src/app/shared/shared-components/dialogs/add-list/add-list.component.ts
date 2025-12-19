@@ -11,7 +11,7 @@ import { type Observable, take } from "rxjs";
 import { ScrumBoardsService } from "../../../../scrum-api/scrum-boards/scrum-boards.service";
 import { ScrumListsService } from "../../../../scrum-api/scrum-lists/scrum-lists.service";
 import { BoardResponse } from "../../../models/board.model";
-import { ListRequest } from "../../../models/list.model";
+import { ListRequest, ListResponse } from "../../../models/list.model";
 import { MaterialModule } from "../../../modules/material/material.module";
 import { OptionsPipe } from "../../../pipes/options/options.pipe";
 import { DialogComponent } from "../../dialog/dialog.component";
@@ -34,7 +34,8 @@ import {
 	],
 })
 export class AddListComponent {
-	dialogRef = inject<MatDialogRef<AddListComponent>>(MatDialogRef);
+	dialogRef =
+		inject<MatDialogRef<AddListComponent, ListResponse>>(MatDialogRef);
 	private scrumList = inject(ScrumListsService);
 	private scrumBoard = inject(ScrumBoardsService);
 

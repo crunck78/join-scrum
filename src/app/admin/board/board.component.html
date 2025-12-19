@@ -1,5 +1,4 @@
 <app-card>
-	<!-- <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title> -->
 	@if(board) {
 	<div cdkDropListGroup class="board-lists" cdkScrollable>
 		<div class="drag-drop-container">
@@ -142,6 +141,7 @@
 		class="new-list"
 		mat-raised-button
 		color="primary"
+		aria-label="Add Board"
 	>
 		<span>Create Board</span>
 		<img src="assets/plus.svg" alt="">
@@ -153,6 +153,7 @@
 		footer
 		mat-raised-button
 		color="primary"
+		aria-label="Add List"
 	>
 		<span>New List</span>
 		<img src="assets/plus.svg" alt="">

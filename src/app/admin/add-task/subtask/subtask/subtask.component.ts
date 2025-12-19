@@ -15,7 +15,7 @@ export class SubtaskComponent {
 	@Input() subtask!: SubtaskRequest;
 	@Input() subtaskId!: number | string;
 
-	@Output() removeTask$ = new EventEmitter<SubtaskRequest>();
+	@Output() removeSubtask$ = new EventEmitter<SubtaskRequest>();
 
 	updateSubtaskCheck(checked: boolean) {
 		this.subtask.done = checked;

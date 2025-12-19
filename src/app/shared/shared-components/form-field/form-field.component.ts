@@ -78,6 +78,7 @@ export class FormFieldComponent {
 	@Input() suffixIcon!: string;
 	@Input() multiple = false;
 	@Output() action = new EventEmitter<void>();
+	@Input() actionLabel!: string;
 	today = new Date();
 
 	customMatcher = new CustomErrorStateMatcher();

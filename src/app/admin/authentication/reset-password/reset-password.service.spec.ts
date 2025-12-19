@@ -1,4 +1,5 @@
 import { TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
 import { ResetPasswordService } from "./reset-password.service";
 
 describe("ResetPasswordService", () => {
@@ -6,7 +7,7 @@ describe("ResetPasswordService", () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [ResetPasswordService],
+			providers: [ResetPasswordService, provideRouter([])],
 		});
 		service = TestBed.inject(ResetPasswordService);
 	});

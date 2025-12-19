@@ -4,7 +4,7 @@ import {
 } from "@angular/common/http";
 import {
 	type ApplicationConfig,
-	provideZoneChangeDetection,
+	provideZonelessChangeDetection,
 } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { INTERCEPTOR } from "./app.interceptors";
@@ -13,7 +13,7 @@ import { ROUTES } from "./app.routes";
 export const appConfig: ApplicationConfig = {
 	providers: [
 		provideHttpClient(withInterceptorsFromDi()),
-		provideZoneChangeDetection(),
+		provideZonelessChangeDetection(),
 		provideRouter(ROUTES),
 		INTERCEPTOR,
 	],

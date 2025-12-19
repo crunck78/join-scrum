@@ -3,12 +3,17 @@ import {
 	CdkDropList,
 	type DropListOrientation,
 } from "@angular/cdk/drag-drop";
-import { Component, inject, type QueryList, ViewChildren } from "@angular/core";
-import { firstValueFrom, type Observable, Subject, take } from "rxjs";
+import {
+	Component,
+	inject,
+	OnInit,
+	type QueryList,
+	ViewChildren,
+} from "@angular/core";
+import { firstValueFrom } from "rxjs";
 import { BoardResponse } from "../../shared/models/board.model";
 import { ListResponse } from "../../shared/models/list.model";
 import { TaskRequest, TaskResponse } from "../../shared/models/task.model";
-import { AddListComponent } from "../../shared/shared-components/dialogs/add-list/add-list.component";
 import { BoardModule } from "./board.module";
 import { BoardService } from "./board.service";
 
@@ -20,41 +25,33 @@ export declare type ListDirection = -1 | 1;
 	styleUrls: ["./board.component.scss"],
 	imports: [BoardModule],
 })
-export class BoardComponent {
+export class BoardComponent implements OnInit {
 	private boardService = inject(BoardService);
-
-	draggingDisabled = true;
 	orientation: DropListOrientation = "vertical";
-	backlog: TaskResponse[] = [];
-	boards$: Observable<BoardResponse[]>;
-
 	@ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 
-	changingListName$: Subject<boolean> = new Subject();
-	backlog$!: Observable<TaskResponse[]>;
-	private _board!: BoardResponse | null;
-
-	set board(board: BoardResponse | null) {
-		this._board = board;
-	}
-
-	get board(): BoardResponse | null {
-		return this._board;
-	}
-
 	get matchWebBreakpoint$() {
-		return this.boardService.breakPoints.matchesWebBreakpoint$;
+		return this.boardService.matchWebBreakpoint$;
 	}
 
-	constructor() {
-		this.boards$ = this.boardService.boards$;
-		this.backlog$ = this.boardService.backlog$;
-		this.updateBoard();
+	board: BoardResponse | null = null;
+	backlog: TaskResponse[] = [];
+
+	ngOnInit() {
+		this.refreshBoard();
 	}
 
-	private updateBoard() {
-		this.backlog$.pipe(take(1)).subscribe((values) => (this.backlog = values));
-		this.boards$.pipe(take(1)).subscribe((boards) => (this.board = boards[0]));
+	refreshBoard() {
+		this.boardService.board$.subscribe((board) => (this.board = board));
+		this.boardService.backlog$.subscribe((backlog) => (this.backlog = backlog));
+	}
+
+	/**
+	 * Change to a more complex form, for now new user should only have one board
+	 */
+	addBoard() {
+		if (this.board) return;
+		this.boardService.addBoard$().subscribe((board) => (this.board = board));
 	}
 
 	drop(event: CdkDragDrop<TaskResponse[]>, list?: ListResponse) {
@@ -72,81 +69,42 @@ export class BoardComponent {
 			taskRequest = { list: list?.id || null, position: swapTask?.position };
 		}
 
-		this.boardService.scrumTasks
+		this.boardService
 			.updateTask$(droppedTask["id"], taskRequest)
-			.pipe(take(1))
-			.subscribe(() => this.handleEditedTask(droppedTask));
+			.subscribe(() => this.refreshBoard());
 	}
 
 	addList() {
-		const dialogRef = this.boardService.dialog.open(AddListComponent);
-		dialogRef.afterClosed().subscribe((newList) => {
-			if (!newList) return;
-			this.boards$
-				.pipe(take(1))
-				.subscribe((boards) => (this.board = boards[0]));
+		this.boardService.addList$().subscribe((newList) => {
+			if (newList) this.refreshBoard();
 		});
-	}
-
-	/**
-	 * Change to a more complex form, for now new user should only have one board
-	 */
-	addBoard() {
-		if (this.board) return;
-		this.boardService.scrumBoards
-			.addBoard$({ title: "First Board" })
-			.pipe(take(1))
-			.subscribe((board) => (this.board = board));
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	handleEditedTask(_editedTask?: TaskResponse) {
-		this.updateBoard();
+		this.refreshBoard();
 	}
 
 	async clearBacklog() {
 		for (let index = 0; index < this.backlog.length; index++) {
 			const task = this.backlog[index];
-			await firstValueFrom(this.boardService.scrumTasks.deleteTask$(task.id));
+			await firstValueFrom(this.boardService.deleteTask$(task.id));
 		}
-		this.updateBoard();
+		this.refreshBoard();
 	}
 
 	async deleteList(listId: number) {
-		await firstValueFrom(this.boardService.scrumList.deleteList$(listId));
-		this.updateBoard();
-	}
-
-	editListTitle() {
-		this.changingListName$.next(true);
+		await firstValueFrom(this.boardService.deleteList$(listId));
+		this.refreshBoard();
 	}
 
 	updateListName(newListName: string, list: ListResponse) {
 		list.name = newListName;
-		this.boardService.scrumList
-			.updateList$(list.id, list)
-			.pipe(take(1))
-			.subscribe((listUpdate) => {
-				if (listUpdate)
-					this.boardService.feedbackService.openSnackBar("List Updated", "Ok");
-				else
-					this.boardService.feedbackService.openSnackBar(
-						"List Name Update Failed!",
-						"Try Again",
-					);
-			});
+		this.boardService.updateList(list);
 	}
 
 	setPosition(list: ListResponse, direction: ListDirection) {
 		list.position += direction;
-		this.boardService.scrumList
-			.updateList$(list.id, list)
-			.pipe(take(1))
-			.subscribe((listUpdate) => {
-				if (!listUpdate) return;
-				this.boards$
-					.pipe(take(1))
-					.subscribe((boards) => (this.board = boards[0]));
-			});
+		this.boardService.setPosition$(list).subscribe(() => this.refreshBoard());
 	}
 }

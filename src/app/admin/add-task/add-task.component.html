@@ -18,6 +18,7 @@
 				[suffixIcon]="'add'"
 				(action)="
                 addCategory()"
+				[actionLabel]="'Add Category'"
 				[options]="$any(categories$ | async) | options : 'name' : 'id': this.getCategoryOptionHTML"
 				[required]="true"
 				[inputType]="'select'"
@@ -28,6 +29,7 @@
 			<app-form-field
 				[multiple]="true"
 				[suffixIcon]="'add'"
+				[actionLabel]="'Add Contact'"
 				(action)="addContact()"
 				[options]="$any(contacts$ | async) | options : 'name' : 'id'"
 				[required]="false"
@@ -72,6 +74,7 @@
 				[required]="false"
 				[suffixIcon]="'add'"
 				(action)="addSubtask()"
+				[actionLabel]="'Add Subtask'"
 				[autocomplete]="'task-subtask'"
 				[type]="'text'"
 				[inputType]="'input'"
@@ -84,7 +87,7 @@
 				i = $index) {
 				<app-subtask
 					class="subtask"
-					(removeTask$)="removeSubtask($event)"
+					(removeSubtask$)="removeSubtask($event)"
 					[subtaskId]="i"
 					[subtask]="subtask"
 				></app-subtask>
@@ -95,13 +98,14 @@
 	@if (!hideFooter) {
 	<div class="footer" footer>
 		<div class="simple-grid">
-			<button (click)="resetAddTask()" mat-stroked-button color="primary">
+			<button aria-label="Clear Task Form" (click)="resetAddTask()" mat-stroked-button color="primary">
 				Clear
 			</button>
 			<button
 				[disabled]="addTaskForm.invalid"
 				(click)="saveTask()"
 				mat-raised-button
+				aria-label="Save Task"
 				color="primary"
 			>
 				@if (mode === 'add') {<span>Create Task</span>} @if (mode === 'edit') {

@@ -2,7 +2,7 @@ export interface CategoryResponse {
 	name: string;
 	color: string;
 	createdAt: Date;
-	updateAt: Date;
+	updateAt: Date; //TODO: change to updatedAt
 	id: number;
 }
 
@@ -10,7 +10,7 @@ export interface CategoryResponseAPI {
 	name: string;
 	color: string;
 	created_at: string;
-	update_at: string;
+	update_at: string; //TODO: change to updatedAt
 	id: number;
 }
 

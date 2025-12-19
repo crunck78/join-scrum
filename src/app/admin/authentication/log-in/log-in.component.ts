@@ -1,8 +1,5 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { take } from "rxjs";
-import { LoginCredentials } from "../../../scrum-api/scrum-login/scrum-login.service";
 import { EMAIL_REGEX } from "../../../shared/shared-components/form-field/form-field.component";
 import { LogInModule } from "./log-in.module";
 import { LogInService } from "./log-in.service";
@@ -15,54 +12,42 @@ import { LogInService } from "./log-in.service";
 })
 export class LogInComponent {
 	private loginService = inject(LogInService);
-	private route = inject(ActivatedRoute);
-	private router = inject(Router);
 
 	loginForm = new FormGroup({
-		email: new FormControl(
-			"",
-			Validators.compose([
+		email: new FormControl("", {
+			nonNullable: true,
+			validators: Validators.compose([
 				Validators.required,
 				Validators.pattern(EMAIL_REGEX),
 			]),
-		),
-		password: new FormControl("", Validators.compose([Validators.required])),
+		}),
+		password: new FormControl("", {
+			nonNullable: true,
+			validators: Validators.required,
+		}),
 	});
-	rememberMe = new FormControl(this.loginService.scrumApi.rememberMe);
-	returnUrl!: string;
+	rememberMe = new FormControl<boolean>(this.loginService.rememberMe, {
+		nonNullable: true,
+	});
 
 	constructor() {
-		this.route.queryParams
-			.pipe(take(1))
-			.subscribe((params) => (this.returnUrl = params["returnUrl"] || ""));
 		this.rememberMe.valueChanges.subscribe(
-			(value) => (this.loginService.scrumApi.rememberMe = value as boolean),
+			(value) => (this.loginService.rememberMe = value),
 		);
+		// Disable the form initially to prevent user interaction until ready
 		this.loginForm.disable();
 	}
 
 	login() {
 		if (!this.loginForm.valid) return;
-		this.loginService.scrumLogin
-			.login(this.loginForm.value as LoginCredentials)
-			.pipe(take(1))
-			.subscribe((isLogged) => {
-				if (!isLogged) return;
-				this.router.navigate([this.returnUrl]);
-			});
+		this.loginService.login(this.loginForm.getRawValue());
 	}
 
 	guestLogin() {
-		this.loginService.scrumLogin
-			.guestLogin()
-			.pipe(take(1))
-			.subscribe((isLogged) => {
-				if (!isLogged) return;
-				this.router.navigate([this.returnUrl]);
-			});
+		this.loginService.guestLogin();
 	}
 
 	get mobile$() {
-		return this.loginService.breakPoints.mobile$;
+		return this.loginService.mobile$;
 	}
 }

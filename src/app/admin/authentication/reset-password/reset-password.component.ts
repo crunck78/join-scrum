@@ -1,9 +1,5 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { take } from "rxjs";
-import { ResetPasswordCredentials } from "../../../scrum-api/scrum-reset-password/scrum-reset-password.service";
-import { FeedbackService } from "../../../shared/shared-services/feedback/feedback.service";
 import { ResetPasswordModule } from "./reset-password.module";
 import { ResetPasswordService } from "./reset-password.service";
 
@@ -15,43 +11,25 @@ import { ResetPasswordService } from "./reset-password.service";
 })
 export class ResetPasswordComponent {
 	private resetPasswordService = inject(ResetPasswordService);
-	private route = inject(ActivatedRoute);
-	private feedbackService = inject(FeedbackService);
-
-	token!: string;
-
-	constructor() {
-		this.route.queryParams
-			.pipe(take(1))
-			.subscribe((params) => (this.token = params["token"]));
-	}
 
 	resetPasswordForm = new FormGroup({
-		password: new FormControl("", Validators.compose([Validators.required])),
-		confirmedPassword: new FormControl(
-			"",
-			Validators.compose([Validators.required]),
-		),
+		password: new FormControl("", {
+			nonNullable: true,
+			validators: [Validators.required],
+		}),
+		confirmedPassword: new FormControl("", {
+			nonNullable: true,
+			validators: [Validators.required],
+		}),
 	});
 
 	resetPassword() {
 		if (!this.resetPasswordForm.valid) return;
-		const newPassword = this.resetPasswordForm.get("password") as FormControl;
-		this.resetPasswordService.scrumResetPassword
-			.resetPassword({
-				password: newPassword.value,
-				token: this.token,
-			} as ResetPasswordCredentials)
-			.pipe(take(1))
-			.subscribe((isReset) => {
-				if (isReset)
-					this.feedbackService.openSnackBar(
-						"Password Reset Successfully",
-						"Close",
-					);
-			});
+		const newPassword = this.resetPasswordForm.getRawValue().password;
+		this.resetPasswordService.resetPassword(newPassword);
 	}
 
+	// TODO: where is this been used? seems like password confirmation logic
 	matches(_left: FormControl, right: FormControl) {
 		return (left: FormControl) => {
 			right.valueChanges.subscribe(() => left.value === right);

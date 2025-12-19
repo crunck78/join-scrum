@@ -1,8 +1,8 @@
 import {
 	Component,
 	EventEmitter,
-	Input,
 	inject,
+	Input,
 	type OnChanges,
 	Output,
 	type SimpleChanges,
@@ -212,6 +212,7 @@ export class AddTaskComponent implements OnChanges {
 		this.addSubtaskForm.reset();
 	}
 
+	// TODO: is this used?
 	handleSelectSubtask(subtask: SubtaskResponse, checked: boolean) {
 		if (checked) this.pushSubtask(subtask);
 		else this.popSubtask(subtask);
@@ -224,6 +225,7 @@ export class AddTaskComponent implements OnChanges {
 		this.addTaskForm.get("subtasks")?.patchValue(currentSubtasks);
 	}
 
+	// TODO: is this used?
 	popSubtask(subtask: SubtaskRequest) {
 		const currentSubtasks = this.addTaskForm.get("subtasks")
 			?.value as SubtaskRequest[];
@@ -244,6 +246,7 @@ export class AddTaskComponent implements OnChanges {
 		this.addSubtaskForm.reset();
 	}
 
+	// TODO: is this used?
 	editSubtask(subtaskId: number | string) {
 		this.changingSubtaskTitle$.next(subtaskId);
 	}

@@ -94,6 +94,7 @@
 		matSuffix
 		(click)="$event.stopPropagation(); action.emit()"
 		mat-icon-button
+		[ariaLabel]="actionLabel || 'Suffix icon button'"
 	>
 		<mat-icon>{{suffixIcon}}</mat-icon>
 	</button>

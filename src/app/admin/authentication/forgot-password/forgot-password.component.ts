@@ -1,7 +1,5 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { take } from "rxjs";
-import { ForgotPasswordCredentials } from "../../../scrum-api/scrum-forgot-password/scrum-forgot-password.service";
 import { ForgotPasswordModule } from "./forgot-password.module";
 import { ForgotPasswordService } from "./forgot-password.service";
 
@@ -12,34 +10,27 @@ import { ForgotPasswordService } from "./forgot-password.service";
 	imports: [ForgotPasswordModule],
 })
 export class ForgotPasswordComponent {
-	private forgotPasswordService = inject(ForgotPasswordService);
+	private service = inject(ForgotPasswordService);
 
 	forgotPasswordForm = new FormGroup({
-		email: new FormControl(
-			"",
-			Validators.compose([Validators.required, Validators.email]),
-		),
+		email: new FormControl<string>("", {
+			nonNullable: true,
+			validators: [Validators.required, Validators.email],
+		}),
 	});
 
 	constructor() {
+		// This functionality is disabled for now, as only guests users can use the application.
 		this.forgotPasswordForm.disable();
 	}
 
 	get mobile$() {
-		return this.forgotPasswordService.mobile$;
+		return this.service.mobile$;
 	}
 
 	sendMail() {
-		if (this.forgotPasswordForm.valid)
-			this.forgotPasswordService.scrumForgotPassword
-				.sendMail(this.forgotPasswordForm.value as ForgotPasswordCredentials)
-				.pipe(take(1))
-				.subscribe((isSend) => {
-					if (isSend)
-						this.forgotPasswordService.feedbackService.openSnackBar(
-							"Reset Password E-mail was send!",
-							"Close",
-						);
-				});
+		if (this.forgotPasswordForm.valid) {
+			this.service.sendMail(this.forgotPasswordForm.getRawValue());
+		}
 	}
 }

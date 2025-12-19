@@ -28,7 +28,9 @@
 
 	<div class="footer" footer>
 		<div class="simple-grid">
-			<mat-checkbox [formControl]="rememberMe">Remember me</mat-checkbox>
+			<mat-checkbox aria-label="Remember me" [formControl]="rememberMe">
+				Remember me
+			</mat-checkbox>
 			<a color="primary" mat-stroked-button routerLink="/auth/forgot-password"
 				>Forgot my password</a
 			>
@@ -40,10 +42,16 @@
 				(click)="login()"
 				mat-raised-button
 				color="primary"
+				aria-label="Login"
 			>
 				Login
 			</button>
-			<button mat-stroked-button color="primary" (click)="guestLogin()">
+			<button
+				mat-stroked-button
+				color="primary"
+				(click)="guestLogin()"
+				aria-label="Guest Login"
+			>
 				Guest Login
 			</button>
 		</div>
