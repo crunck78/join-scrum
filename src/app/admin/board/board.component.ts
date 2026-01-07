@@ -75,6 +75,9 @@ export class BoardComponent implements OnInit {
 	}
 
 	addList() {
+		// TODO: this is a problem with multi boards. The new list is added by the dialog
+		// User can choose a board were to add the list. If a diff Board is selected,
+		// the new list will appear in a diff board as the one in the view.
 		this.boardService.addList$().subscribe((newList) => {
 			if (newList) this.refreshBoard();
 		});

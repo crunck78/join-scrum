@@ -4,11 +4,22 @@
 		<div class="drag-drop-container">
 			<div class="board-list-header">
 				<h3>Backlog</h3>
-				<button mat-icon-button color="accent" [matMenuTriggerFor]="menu">
+				<button
+					aria-label="Backlog Menu"
+					mat-icon-button
+					color="accent"
+					[matMenuTriggerFor]="backlogMenu"
+				>
 					<mat-icon>menu</mat-icon>
 				</button>
-				<mat-menu #menu="matMenu">
-					<button (click)="clearBacklog()" mat-menu-item>Clear Backlog</button>
+				<mat-menu #backlogMenu="matMenu">
+					<button
+						(click)="clearBacklog()"
+						mat-menu-item
+						aria-label="Clear Backlog"
+					>
+						Clear Backlog
+					</button>
 				</mat-menu>
 			</div>
 
@@ -46,93 +57,102 @@
 			</div>
 		</div>
 		@for(list of board.lists; track list; let i = $index) {
-		<ng-container>
-			<div class="drag-drop-container">
-				<div class="board-list-header">
-					<div style="display: flex; align-items: center;">
-						@if(i !== 0) {
-						<button
-							(click)="setPosition(list, -1)"
-							aria-label="Move List"
-							mat-icon-button
-							class="move-list"
-						>
-							<mat-icon>arrow_left</mat-icon>
-						</button>
-						}
 
-						<!-- Position:{{list.position}} -->
-						<h3 #listTitleElem>{{list.name}}</h3>
-						<app-content-editable
-							[contentId]="i"
-							(valueToEditChange)="updateListName($event, list)"
-							[elementViewClick]="true"
-							[valueToEdit]="list.name"
-							[elementView]="listTitleElem"
-							[elementViewDisplay]="'block'"
-						></app-content-editable>
-					</div>
-					<div style="display: flex;">
-						<button mat-icon-button color="accent" [matMenuTriggerFor]="menu">
-							<mat-icon>menu</mat-icon>
-						</button>
-						<mat-menu #menu="matMenu">
-							<button (click)="deleteList(list.id)" mat-menu-item>
-								Delete List
-							</button>
-						</mat-menu>
-						@if(i !== board.lists.length - 1) {
-						<button
-							(click)="setPosition(list, 1)"
-							aria-label="Move List"
-							mat-icon-button
-							class="move-list"
-						>
-							<mat-icon>arrow_right</mat-icon>
-						</button>
-						}
-					</div>
+		<div class="drag-drop-container">
+			<div class="board-list-header">
+				<div style="display: flex; align-items: center;">
+					@if(i !== 0) {
+					<button
+						(click)="setPosition(list, -1)"
+						aria-label="Move List"
+						mat-icon-button
+						class="move-list"
+					>
+						<mat-icon>arrow_left</mat-icon>
+					</button>
+					}
+
+					<!-- Position:{{list.position}} -->
+					<h3 #listTitleElem>{{list.name}}</h3>
+					<app-content-editable
+						[contentId]="i"
+						(valueToEditChange)="updateListName($event, list)"
+						[elementViewClick]="true"
+						[valueToEdit]="list.name"
+						[elementView]="listTitleElem"
+						[elementViewDisplay]="'block'"
+						[label]="'Edit List name'"
+					></app-content-editable>
 				</div>
-
-				<div
-					[cdkDropListOrientation]="orientation"
-					[style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'"
-					[cdkDropListAutoScrollStep]="25"
-					cdkDropList
-					[cdkDropListSortingDisabled]="false"
-					[cdkDropListData]="list.tasks"
-					class="drag-drop-list"
-					(cdkDropListDropped)="drop($event, list)"
-				>
-					@if(list.tasks && list.tasks.length) {
-					<ng-container>
-						@for(item of list.tasks; track item) {
-						<app-task
-							(taskChange)="handleEditedTask($any($event))"
-							class="drag-drop-box"
-							[task]="item"
-							cdkDrag
+				<div style="display: flex;">
+					<button
+						aria-label="List Menu"
+						mat-icon-button
+						color="accent"
+						[matMenuTriggerFor]="listMenu"
+					>
+						<mat-icon>menu</mat-icon>
+					</button>
+					<mat-menu #listMenu="matMenu">
+						<button
+							aria-label="Delete List"
+							(click)="deleteList(list.id)"
+							mat-menu-item
 						>
-							<div class="example-handle" cdkDragHandle>
-								<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-									<path
-										d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
-									></path>
-									<path d="M0 0h24v24H0z" fill="none"></path>
-								</svg>
-							</div>
-						</app-task>
-						}
-					</ng-container>
-					} @else {
-					<div class="no-tasks">
-						No tasks {{ list.name.toLowerCase().includes('in') ? '': 'in'}}
-						{{list.name}}List
-					</div>
+							Delete List
+						</button>
+					</mat-menu>
+					@if(i !== board.lists.length - 1) {
+					<button
+						(click)="setPosition(list, 1)"
+						aria-label="Move List"
+						mat-icon-button
+						class="move-list"
+					>
+						<mat-icon>arrow_right</mat-icon>
+					</button>
 					}
 				</div>
 			</div>
-		</ng-container>
+
+			<div
+				[cdkDropListOrientation]="orientation"
+				[style.background]="list.tasks && list.tasks.length ? '#E7E7E7' : 'white'"
+				[cdkDropListAutoScrollStep]="25"
+				cdkDropList
+				[cdkDropListSortingDisabled]="false"
+				[cdkDropListData]="list.tasks"
+				class="drag-drop-list"
+				(cdkDropListDropped)="drop($event, list)"
+			>
+				@if(list.tasks && list.tasks.length) {
+				<ng-container>
+					@for(item of list.tasks; track item) {
+					<app-task
+						(taskChange)="handleEditedTask($any($event))"
+						class="drag-drop-box"
+						[task]="item"
+						cdkDrag
+					>
+						<div class="example-handle" cdkDragHandle>
+							<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+								<path
+									d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+								></path>
+								<path d="M0 0h24v24H0z" fill="none"></path>
+							</svg>
+						</div>
+					</app-task>
+					}
+				</ng-container>
+				} @else {
+				<div class="no-tasks">
+					No tasks {{ list.name.toLowerCase().includes('in') ? '': 'in'}}
+					{{list.name}}List
+				</div>
+				}
+			</div>
+		</div>
 		}
 	</div>
 	} @else {

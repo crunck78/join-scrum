@@ -36,6 +36,7 @@ export class ContentEditableComponent implements AfterViewInit {
 	@Input() valueToEdit!: string;
 	@Input() changing!: Subject<number | string>;
 	@Input() elementViewClick!: boolean;
+	@Input() label!: string;
 
 	@Output() valueToEditChange = new EventEmitter<string>();
 	@ViewChild("inputEdit") inputEdit!: ElementRef<HTMLInputElement>;
