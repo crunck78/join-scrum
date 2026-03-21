@@ -4,30 +4,17 @@
     Show first letter of contact name for each first contact name that begins with different letter
     Contacts are already ordered by name from a to z
     -->
-		@for (contact of contacts$ | async; track contact; let i = $index) { @if
+		@for (contact of contacts; track contact; let i = $index) { @if
 		(contactsList | atoz : (contact.name[0] | uppercase)) {
-		<span
-			id="contact-{{contact.name[0] | uppercase}}"
-			class="atoz mat-mdc-card-subtitle"
-		>
-			{{contact.name[0] | uppercase}}</span
-		>
+		<span id="contact-{{contact.name[0] | uppercase}}" class="atoz mat-mdc-card-subtitle">
+			{{contact.name[0] | uppercase}}</span>
 		<mat-divider></mat-divider>}
-		<app-contact
-			[selected]="selectedContact === contact"
-			(click)="selectedContact = contact"
-			[contact]="contact"
-		></app-contact>
+		<app-contact [selected]="selectedContact === contact" (click)="selectedContact = contact"
+			[contact]="contact"></app-contact>
 		}
 	</div>
 
-	<button
-		(click)="addContact()"
-		class="new-contact"
-		title
-		mat-raised-button
-		color="primary"
-	>
+	<button aria-label="Add Contact" (click)="addContact()" class="new-contact" title mat-raised-button color="primary">
 		@if (matchWebBreakpoint$ | async) {<span>New contact</span>
 		}
 		<img src="assets/new_contact.svg" alt="">
@@ -35,25 +22,14 @@
 </app-card>
 @if (!!selectedContact) {
 <app-card>
-	<button
-		class="close-selected-contact"
-		mat-icon-button
-		(click)="closeSelectedContact()"
-	>
+	<button aria-label="Close selected contact" class="close-selected-contact" mat-icon-button
+		(click)="closeSelectedContact()">
 		<mat-icon>close</mat-icon>
 	</button>
-	<!-- <app-page-title *ngIf="matchWebBreakpoint$ | async" title></app-page-title> -->
-	<app-contact-details
-		(contactChange)="updateContacts()"
-		[contact]="selectedContact"
-	></app-contact-details>
-	<button
-		(click)="deleteContact(selectedContact)"
-		class="delete-contact"
-		footer
-		mat-raised-button
-		color="primary"
-	>
+
+	<app-contact-details (contactChange)="refreshContacts()" [contact]="selectedContact"></app-contact-details>
+	<button aria-label="Delete contact" (click)="deleteContact(selectedContact)" class="delete-contact" footer
+		mat-raised-button color="primary">
 		@if (matchWebBreakpoint$ | async) {<span>Delete contact</span>}<mat-icon>
 			person_remove
 		</mat-icon>

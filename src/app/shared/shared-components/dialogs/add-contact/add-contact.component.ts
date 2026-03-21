@@ -8,7 +8,7 @@ import {
 import { MatDialogRef } from "@angular/material/dialog";
 import { take } from "rxjs";
 import { ScrumContactsService } from "../../../../scrum-api/scrum-contacts/scrum-contacts.service";
-import { ContactRequest } from "../../../models/contact.model";
+import { ContactRequest, ContactResponse } from "../../../models/contact.model";
 import { MaterialModule } from "../../../modules/material/material.module";
 import { requireAtLeastOne } from "../../../utils/custom-validators";
 import { DialogComponent } from "../../dialog/dialog.component";
@@ -26,7 +26,10 @@ import { FormFieldComponent } from "../../form-field/form-field.component";
 	],
 })
 export class AddContactComponent {
-	dialogRef = inject<MatDialogRef<AddContactComponent>>(MatDialogRef);
+	dialogRef =
+		inject<MatDialogRef<AddContactComponent, ContactResponse | null>>(
+			MatDialogRef,
+		);
 	private scrumContacts = inject(ScrumContactsService);
 
 	addContactForm = new FormGroup(

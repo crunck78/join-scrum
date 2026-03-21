@@ -1,8 +1,12 @@
-import { Component, type ElementRef, inject, ViewChild } from "@angular/core";
+import {
+	Component,
+	type ElementRef,
+	inject,
+	OnInit,
+	ViewChild,
+} from "@angular/core";
 
-import { type Observable, take } from "rxjs";
 import { ContactResponse } from "../../shared/models/contact.model";
-import { AddContactComponent } from "../../shared/shared-components/dialogs/add-contact/add-contact.component";
 import { ContactsModule } from "./contacts.module";
 import { ContactsService } from "./contacts.service";
 @Component({
@@ -11,37 +15,35 @@ import { ContactsService } from "./contacts.service";
 	styleUrls: ["./contacts.component.scss"],
 	imports: [ContactsModule],
 })
-export class ContactsComponent {
+export class ContactsComponent implements OnInit {
 	private contactsService = inject(ContactsService);
 
 	@ViewChild("contacts-list") contactsList!: ElementRef<HTMLElement>;
 
-	contacts$!: Observable<ContactResponse[] | undefined>;
+	contacts: ContactResponse[] = [];
 	selectedContact!: ContactResponse | null;
 
-	constructor() {
-		this.updateContacts();
+	ngOnInit() {
+		this.refreshContacts();
 	}
 
 	get matchWebBreakpoint$() {
-		return this.contactsService.breakPoints.matchesWebBreakpoint$;
+		return this.contactsService.matchWebBreakpoint$;
+	}
+
+	refreshContacts() {
+		this.contactsService.contacts$.subscribe(
+			(contacts) => (this.contacts = contacts),
+		);
 	}
 
 	addContact() {
-		const dialogRef = this.contactsService.dialog.open(AddContactComponent);
-		dialogRef.afterClosed().subscribe((newContact) => {
+		const dialogRefAfterClosed = this.contactsService.openAddContactDialog();
+		dialogRefAfterClosed.subscribe((newContact) => {
 			if (newContact) {
-				this.updateContacts();
+				this.refreshContacts();
 			}
 		});
-	}
-
-	alreadyExists(letter: string) {
-		return document.getElementById(`contacts-${letter}`);
-	}
-
-	updateContacts() {
-		this.contacts$ = this.contactsService.contacts$;
 	}
 
 	closeSelectedContact() {
@@ -49,13 +51,12 @@ export class ContactsComponent {
 	}
 
 	deleteContact(contactToDelete: Partial<ContactResponse>) {
-		this.contactsService.scrumContacts
+		this.contactsService
 			.deleteContact$(contactToDelete)
-			.pipe(take(1))
 			.subscribe((deleted: boolean) => {
 				if (!deleted) return;
 				this.selectedContact = null;
-				this.updateContacts();
+				this.refreshContacts();
 			});
 	}
 }

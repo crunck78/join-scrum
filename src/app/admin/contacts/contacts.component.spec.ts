@@ -1,18 +1,184 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { Observable, of, tap } from "rxjs";
+import { Mock } from "vitest";
+import { ContactResponse } from "../../shared/models/contact.model";
+import { ContactDetailsComponent } from "../../shared/shared-components/contact-details/contact-details.component";
 import { ContactsComponent } from "./contacts.component";
+import { ContactsService } from "./contacts.service";
 
 describe("ContactsComponent", () => {
 	let component: ContactsComponent;
 	let fixture: ComponentFixture<ContactsComponent>;
+	let contactsService: ContactsService;
+	let getContactsServiceSpy$: Mock<() => Observable<ContactResponse[]>>;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({ imports: [ContactsComponent] });
+		TestBed.configureTestingModule({
+			imports: [ContactsComponent],
+			providers: [ContactsService],
+		});
+		contactsService = TestBed.inject(ContactsService);
+		getContactsServiceSpy$ = vi.spyOn(contactsService, "contacts$", "get");
+
 		fixture = TestBed.createComponent(ContactsComponent);
+
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it("should create", () => {
+		getContactsServiceSpy$.mockReturnValue(of([]));
+		fixture.autoDetectChanges();
+
 		expect(component).toBeDefined();
+	});
+
+	it("should show contact", () => {
+		const contact: ContactResponse = {
+			id: 1,
+			email: "John",
+			name: "Doe",
+			phoneNumber: "015777777777",
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+		getContactsServiceSpy$.mockReturnValue(of([contact]));
+		fixture.autoDetectChanges();
+
+		expect(component.contacts[0]).toEqual(contact);
+	});
+
+	it("should called addContact when action button is clicked", () => {
+		getContactsServiceSpy$.mockReturnValue(of([]));
+		const toAddContact: ContactResponse = {
+			id: 1,
+			email: "John",
+			name: "Doe",
+			phoneNumber: "015777777777",
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+
+		const addContactSpy = vi.spyOn(component, "addContact");
+		const afterAddContactServiceSpy = vi.spyOn(
+			contactsService,
+			"openAddContactDialog",
+		);
+		afterAddContactServiceSpy.mockReturnValue(
+			of(toAddContact).pipe(
+				tap({
+					next: () => {
+						getContactsServiceSpy$.mockReturnValue(of([toAddContact]));
+					},
+				}),
+			),
+		);
+
+		const addContactButton: HTMLButtonElement =
+			fixture.nativeElement.querySelector('button[aria-label="Add Contact"]');
+		addContactButton.click();
+
+		expect(afterAddContactServiceSpy).toHaveBeenCalledOnce();
+		expect(addContactSpy).toHaveBeenCalledTimes(1);
+		expect(component.contacts).toEqual([toAddContact]);
+	});
+
+	it("should set selectedContact when app-contact is clicked", () => {
+		const contact: ContactResponse = {
+			id: 1,
+			email: "John",
+			name: "Doe",
+			phoneNumber: "015777777777",
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+		getContactsServiceSpy$.mockReturnValue(of([contact]));
+		fixture.autoDetectChanges();
+
+		const appComponentEl = fixture.debugElement.query(By.css("app-contact"));
+		appComponentEl.nativeElement.click();
+
+		expect(component.selectedContact).toEqual(contact);
+	});
+
+	it("should called closeSelectedContact when action button is clicked", () => {
+		const closeSelectedContactSpy = vi.spyOn(component, "closeSelectedContact");
+		const contact: ContactResponse = {
+			id: 1,
+			email: "John",
+			name: "Doe",
+			phoneNumber: "015777777777",
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+		getContactsServiceSpy$.mockReturnValue(of([contact]));
+		component.selectedContact = contact;
+		fixture.autoDetectChanges();
+
+		const closeSelectedContactBtn: HTMLButtonElement =
+			fixture.nativeElement.querySelector(
+				'button[aria-label="Close selected contact"]',
+			);
+		closeSelectedContactBtn.click();
+		expect(closeSelectedContactSpy).toHaveBeenCalledTimes(1);
+	});
+
+	it("should called deleteContact when action button is clicked", () => {
+		const deleteContactSpy = vi.spyOn(component, "deleteContact");
+		const contact: ContactResponse = {
+			id: 1,
+			email: "John",
+			name: "Doe",
+			phoneNumber: "015777777777",
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+		getContactsServiceSpy$.mockReturnValue(of([contact]));
+		component.selectedContact = contact;
+		const deleteContactServiceSpy = vi.spyOn(contactsService, "deleteContact$");
+		deleteContactServiceSpy.mockReturnValue(
+			of(true).pipe(
+				tap({
+					next: () => {
+						getContactsServiceSpy$.mockReturnValue(of([]));
+					},
+				}),
+			),
+		);
+		fixture.autoDetectChanges();
+
+		const deleteContactBtn: HTMLButtonElement =
+			fixture.nativeElement.querySelector(
+				'button[aria-label="Delete contact"]',
+			);
+		deleteContactBtn.click();
+		expect(deleteContactSpy).toHaveBeenCalledExactlyOnceWith(contact);
+		expect(component.contacts).toEqual([]);
+	});
+
+	it("should called refreshContacts when contactChanged emits", () => {
+		const contact: ContactResponse = {
+			id: 1,
+			email: "John",
+			name: "Doe",
+			phoneNumber: "015777777777",
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+		getContactsServiceSpy$.mockReturnValue(of([contact]));
+		component.selectedContact = contact;
+		fixture.autoDetectChanges();
+
+		const refreshContactsSpy = vi.spyOn(component, "refreshContacts");
+
+		const childDebugEl = fixture.debugElement.query(
+			By.directive(ContactDetailsComponent),
+		);
+		const childInstance =
+			childDebugEl.componentInstance as ContactDetailsComponent;
+
+		childInstance.contactChange.emit();
+
+		expect(refreshContactsSpy).toHaveBeenCalledOnce();
 	});
 });

@@ -109,7 +109,7 @@ export class AddTaskComponent implements OnChanges {
 
 	constructor() {
 		this.updateCategories();
-		this.updateContacts();
+		this.refreshContacts();
 		this.updateSubtasks();
 		this.addTaskForm.statusChanges.subscribe((status: FormControlStatus) =>
 			this.formStatus$.emit(status),
@@ -177,11 +177,11 @@ export class AddTaskComponent implements OnChanges {
 	addContact() {
 		const dialogRef = this.addTaskService.dialog.open(AddContactComponent);
 		dialogRef.afterClosed().subscribe((newContact) => {
-			if (newContact) this.updateContacts();
+			if (newContact) this.refreshContacts();
 		});
 	}
 
-	updateContacts() {
+	refreshContacts() {
 		this.contacts$ = this.addTaskService.contacts$;
 	}
 
