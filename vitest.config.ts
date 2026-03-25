@@ -1,10 +1,12 @@
+import angular from "@analogjs/vite-plugin-angular";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
+
 export default defineConfig({
+	plugins: [angular()],
 	test: {
 		globals: true,
-		environment: "jsdom",
-		// setupFiles: ["src/test-setup.ts"],
+		setupFiles: ["src/test-setup.ts"],
 		reporters: ["default"],
 		coverage: {
 			provider: "v8",
