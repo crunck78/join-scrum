@@ -7,9 +7,9 @@
 	[routerLinkActiveOptions]="{exact: true}"
 	[routerLink]="basePath ? [basePath, route?.path] : [route?.path]"
 >
-	@if (!content.children.length) {<div>{{ route?.title }}</div>}
-	<div #content>
-		<ng-content></ng-content>
-	</div>
+	@if (!content.children.length) {
+	<div>{{ route?.title }}</div>
+	}
+	<div #content><ng-content></ng-content></div>
 </a>
 }

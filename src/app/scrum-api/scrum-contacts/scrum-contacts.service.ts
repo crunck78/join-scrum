@@ -1,14 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { catchError, map, of, type Observable } from "rxjs";
+import { catchError, map, type Observable, of } from "rxjs";
 import {
 	Contact,
 	ContactRequest,
 	ContactResponse,
 	ContactResponseAPI,
 } from "../../shared/models/contact.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 import { ScrumApiService } from "../scrum-api.service";
+import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const CONTACTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/contact/contacts/`;
 
@@ -68,10 +68,10 @@ export class ScrumContactsService {
 			);
 	}
 
-	deleteContact$(contact: Partial<ContactResponse>): Observable<boolean> {
+	deleteContact$(contactId: number): Observable<boolean> {
 		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		return this.http
-			.delete<number>(`${this.contactsEndpoint + contact.id}/`, options)
+			.delete<number>(`${this.contactsEndpoint + contactId}/`, options)
 			.pipe(
 				map(() => true),
 				catchError(() => of(false)), // TODO: the error is swallowed, show feedback

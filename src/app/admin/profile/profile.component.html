@@ -22,11 +22,14 @@
 				<mat-icon>change_circle</mat-icon>
 			</button>
 		</div>
-		@if (profile?.name) {<p>{{profile?.name}}</p>}
+		@if (profile?.name) {
+		<p>{{ profile?.name }}</p>
+		}
 	</div>
 
 	<div subtitle>
-		@if (profile?.email && !profile?.isGuest) {<p>Email : {{profile?.email}}</p>
+		@if (profile?.email && !profile?.isGuest) {
+		<p>Email : {{ profile?.email }}</p>
 		}
 	</div>
 

@@ -3,7 +3,7 @@
 	<app-contact-card [contact]="contact" subtitle>
 		<!-- <span *ngIf="contact.name && !contact.email">{{contact.name}}</span> -->
 		@if (contact.phoneNumber && !contact.email && !contact.name) {
-		<a href="tel:{{contact.phoneNumber}}">{{contact.phoneNumber}}</a>}
+		<a href="tel:{{contact.phoneNumber}}">{{ contact.phoneNumber }}</a>}
 	</app-contact-card>
 </button>
 } @else {
@@ -11,7 +11,7 @@
 	<app-contact-card [contact]="contact" subtitle>
 		<!-- <span *ngIf="contact.name && !contact.email">{{contact.name}}</span> -->
 		@if (contact.phoneNumber && !contact.email && !contact.name) {
-		<a href="tel:{{contact.phoneNumber}}">{{contact.phoneNumber}}</a>}
+		<a href="tel:{{contact.phoneNumber}}">{{ contact.phoneNumber }}</a>}
 	</app-contact-card>
 </button>
 } }

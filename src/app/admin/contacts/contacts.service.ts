@@ -31,7 +31,7 @@ export class ContactsService {
 		return dialogRef.afterClosed().pipe(take(1));
 	}
 
-	deleteContact$(contactToDelete: Partial<ContactResponse>) {
-		return this.scrumContacts.deleteContact$(contactToDelete).pipe(take(1));
+	deleteContact$(contactToDeleteId: number) {
+		return this.scrumContacts.deleteContact$(contactToDeleteId).pipe(take(1));
 	}
 }

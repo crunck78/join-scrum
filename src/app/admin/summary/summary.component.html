@@ -3,10 +3,10 @@
 <div class="summary-counts">
 	@if (summary?.tasksInBacklog?.count) {
 	<app-card class="counter-wrapper">
-		<p title class="counter">{{summary?.tasksInBacklog?.count}}</p>
+		<p title class="counter">{{ summary?.tasksInBacklog?.count }}</p>
 		<p subtitle class="counter">
 			{{ summary && summary.tasksInBacklog.count > 1 ? 'Tasks' :
-          'Task'}}
+          'Task' }}
 			<br>
 			in Backlog
 		</p>
@@ -18,11 +18,11 @@
 		<app-card class="counter-wrapper">
 			<p title class="counter">
 				<img src="assets/{{counter.priority | lowercase}}.svg" alt="">
-				{{counter.count}}
+				{{ counter.count }}
 			</p>
 			<p subtitle class="counter">
-				{{counter.priority}}
-				{{ counter.count > 1 ? 'Tasks' : 'Task'}}
+				{{ counter.priority }}
+				{{ counter.count > 1 ? 'Tasks' : 'Task' }}
 			</p>
 		</app-card>
 		}
@@ -30,11 +30,11 @@
 	<div class="tasks-in-lists">
 		@for (counter of summary?.tasksInLists; track counter) {
 		<app-card class="counter-wrapper">
-			<p title class="counter">{{counter.count}}</p>
+			<p title class="counter">{{ counter.count }}</p>
 			<p subtitle class="counter">
-				{{ counter.count > 1 ? 'Tasks' : 'Task'}}
+				{{ counter.count > 1 ? 'Tasks' : 'Task' }}
 				<br>
-				in {{counter.listName}}
+				in {{ counter.listName }}
 			</p>
 			<!-- <p footer>{{counter.listBoardTitle}}</p> -->
 		</app-card>
@@ -54,8 +54,8 @@
 <div class="summary-counts">
 	<app-card class="greeting-wrapper">
 		<p title>
-			<span>{{greetUser}}</span>, @if (profile) {<span
-				>{{profile.name || profile.email || 'Guest'}}</span
+			<span>{{ greetUser }}</span>, @if (profile) {<span
+				>{{ profile.name || profile.email || 'Guest' }}</span
 			>} @else { Guest }
 		</p>
 		@if (summaryEmpty) {
@@ -76,12 +76,12 @@
 	<div class="tasks-by-category">
 		@for (counter of summary?.tasksByCategory; track counter) {
 		<app-card class="counter-wrapper">
-			<p title class="counter">{{counter.count}}</p>
+			<p title class="counter">{{ counter.count }}</p>
 			<p subtitle class="counter">
 				<app-category-card
 					[category]="{name: counter.categoryName, color: counter.categoryColor}"
 				></app-category-card>
-				{{ counter.count > 1 ? 'Tasks' : 'Task'}}
+				{{ counter.count > 1 ? 'Tasks' : 'Task' }}
 			</p>
 			<!-- <p footer>{{counter.listBoardTitle}}</p> -->
 		</app-card>

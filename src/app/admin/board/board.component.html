@@ -53,7 +53,9 @@
 					</app-task>
 					}
 				</ng-container>
-				} @else {<div class="no-tasks">No tasks in Backlog</div>}
+				} @else {
+				<div class="no-tasks">No tasks in Backlog</div>
+				}
 			</div>
 		</div>
 		@for(list of board.lists; track list; let i = $index) {
@@ -73,7 +75,7 @@
 					}
 
 					<!-- Position:{{list.position}} -->
-					<h3 #listTitleElem>{{list.name}}</h3>
+					<h3 #listTitleElem>{{ list.name }}</h3>
 					<app-content-editable
 						[contentId]="i"
 						(valueToEditChange)="updateListName($event, list)"
@@ -147,8 +149,8 @@
 				</ng-container>
 				} @else {
 				<div class="no-tasks">
-					No tasks {{ list.name.toLowerCase().includes('in') ? '': 'in'}}
-					{{list.name}}List
+					No tasks {{ list.name.toLowerCase().includes('in') ? '': 'in' }}
+					{{ list.name }}List
 				</div>
 				}
 			</div>

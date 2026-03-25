@@ -50,9 +50,9 @@ export class ContactsComponent implements OnInit {
 		this.selectedContact = null;
 	}
 
-	deleteContact(contactToDelete: Partial<ContactResponse>) {
+	deleteContact(contactToDeleteId: number) {
 		this.contactsService
-			.deleteContact$(contactToDelete)
+			.deleteContact$(contactToDeleteId)
 			.subscribe((deleted: boolean) => {
 				if (!deleted) return;
 				this.selectedContact = null;

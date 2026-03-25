@@ -77,12 +77,10 @@
 		<tbody>
 			@for (item of uploader.queue; track item) {
 			<tr>
-				<td>
-					<strong>{{ item?.file?.name }}</strong>
-				</td>
+				<td><strong>{{ item?.file?.name }}</strong></td>
 				@if (uploader.options.isHTML5) {
-				<td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }}MB</td>} @if
-				(uploader.options.isHTML5) {
+				<td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }}MB</td>
+				} @if (uploader.options.isHTML5) {
 				<td>
 					<div class="progress" style="margin-bottom: 0;">
 						<div
@@ -95,17 +93,11 @@
 				}
 				<td class="text-center">
 					@if (item.isSuccess) {
-					<span
-						><i class="glyphicon glyphicon-ok"></i></span
-					>
+					<span><i class="glyphicon glyphicon-ok"></i></span>
 					} @if (item.isCancel) {
-					<span
-						><i class="glyphicon glyphicon-ban-circle"></i></span
-					>
+					<span><i class="glyphicon glyphicon-ban-circle"></i></span>
 					} @if (item.isError) {
-					<span
-						><i class="glyphicon glyphicon-remove"></i></span
-					>
+					<span><i class="glyphicon glyphicon-remove"></i></span>
 					}
 				</td>
 				<td nowrap>

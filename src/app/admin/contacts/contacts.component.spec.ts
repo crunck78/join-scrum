@@ -152,7 +152,7 @@ describe("ContactsComponent", () => {
 				'button[aria-label="Delete contact"]',
 			);
 		deleteContactBtn.click();
-		expect(deleteContactSpy).toHaveBeenCalledExactlyOnceWith(contact);
+		expect(deleteContactSpy).toHaveBeenCalledExactlyOnceWith(contact.id);
 		expect(component.contacts).toEqual([]);
 	});
 

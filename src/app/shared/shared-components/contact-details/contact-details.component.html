@@ -47,18 +47,13 @@
 	<div class="contact-information">
 		<h2>Contact Information</h2>
 		@if (contact?.name) {
-		<p>
-			<b>Name</b>
-		</p>
-		<div>{{contact?.name}}</div>} @if (contact?.email) {
-		<p>
-			<b>Email</b>
-		</p>
+		<p><b>Name</b></p>
+		<div>{{ contact?.name }}</div>
+		} @if (contact?.email) {
+		<p><b>Email</b></p>
 		<app-email-link [email]="contact?.email"></app-email-link>} @if
 		(contact?.phoneNumber) {
-		<p>
-			<b>Phone </b>
-		</p>
-		<a>{{contact?.phoneNumber}}</a>}
+		<p><b>Phone </b></p>
+		<a>{{ contact?.phoneNumber }}</a>}
 	</div>
 </ng-container>

@@ -177,7 +177,9 @@ describe("BoardService", () => {
 			const updated = createBacklog()[0];
 			updateTask$.mockReturnValue(of(updated));
 
-			const result = await firstValueFrom(service.updateTask$(1, { title: "Updated" }));
+			const result = await firstValueFrom(
+				service.updateTask$(1, { title: "Updated" }),
+			);
 
 			expect(updateTask$).toHaveBeenCalledWith(1, { title: "Updated" });
 			expect(result).toEqual(updated);
@@ -222,7 +224,10 @@ describe("BoardService", () => {
 
 			service.updateList(list);
 
-			expect(openSnackBar).toHaveBeenCalledWith("List Name Update Failed!", "Try Again");
+			expect(openSnackBar).toHaveBeenCalledWith(
+				"List Name Update Failed!",
+				"Try Again",
+			);
 		});
 	});
 
@@ -266,7 +271,10 @@ describe("BoardService", () => {
 
 			const result = await firstValueFrom(service.addList$());
 
-			expect(openSnackBar).toHaveBeenCalledWith("List Creation Failed!", "Try Again");
+			expect(openSnackBar).toHaveBeenCalledWith(
+				"List Creation Failed!",
+				"Try Again",
+			);
 			expect(result).toBeUndefined();
 		});
 	});

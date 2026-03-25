@@ -1,6 +1,6 @@
 @if(inputType) {
 <mat-form-field appearance="outline">
-	@if (labelName) {<mat-label>{{labelName}}</mat-label>} @if (inputType ===
+	@if (labelName) {<mat-label>{{ labelName }}</mat-label>} @if (inputType ===
 	'input' && type !== 'tel') {
 	<input
 		[required]="required"
@@ -96,7 +96,7 @@
 		mat-icon-button
 		[ariaLabel]="actionLabel || 'Suffix icon button'"
 	>
-		<mat-icon>{{suffixIcon}}</mat-icon>
+		<mat-icon>{{ suffixIcon }}</mat-icon>
 	</button>
 	} @if (errors && errors.length > 0 && $any(control) | hasError : errors) {
 	<mat-error [innerHTML]="$any(control) | messageError: errors"></mat-error>}

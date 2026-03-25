@@ -5,10 +5,9 @@
 	[contactName]="contact?.name"
 ></app-contact-initials>
 <div class="text-left">
-	@if (showName) {<div [style.fontSize]="size">{{contact?.name}}</div>} @if
-	(!content.children.length) {
+	@if (showName) {
+	<div [style.fontSize]="size">{{ contact?.name }}</div>
+	} @if (!content.children.length) {
 	<app-email-link [email]="contact?.email"></app-email-link>}
-	<div #content>
-		<ng-content></ng-content>
-	</div>
+	<div #content><ng-content></ng-content></div>
 </div>

@@ -2,16 +2,17 @@
 <div class="task-header">
 	<app-category-card [category]="task.category"></app-category-card>
 </div>
-<h3>{{task.title}}</h3>
+<h3>{{ task.title }}</h3>
 
-<p>{{task.description}}</p>
-@if (task.subtasks.length > 0) {<p>Subtasks</p>
+<p>{{ task.description }}</p>
+@if (task.subtasks.length > 0) {
+<p>Subtasks</p>
 <div class="subtasks-preview custom-margin-top-small">
 	<span
 		[style.background]=" doneSubtasksLength | progressLinearGradient : task.subtasks.length"
 		class="subtasks-progress-bar"
 	></span>
-	<span> {{doneSubtasksLength}}/{{task.subtasks.length}}Done </span>
+	<span> {{ doneSubtasksLength }}/{{ task.subtasks.length }}Done </span>
 </div>
 }
 
