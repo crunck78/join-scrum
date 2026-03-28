@@ -8,7 +8,7 @@ import {
 import { MatDialogRef } from "@angular/material/dialog";
 import { take } from "rxjs";
 import { ScrumProfileService } from "../../../../scrum-api/scrum-profile/scrum-profile.service";
-import { UserRequest } from "../../../models/user.model";
+import { UserRequest, UserResponse } from "../../../models/user.model";
 import { MaterialModule } from "../../../modules/material/material.module";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";
@@ -26,7 +26,10 @@ import { FormFieldComponent } from "../../form-field/form-field.component";
 })
 export class EditProfileComponent {
 	private scrumProfile = inject(ScrumProfileService);
-	private dialogRef = inject<MatDialogRef<EditProfileComponent>>(MatDialogRef);
+	private dialogRef =
+		inject<MatDialogRef<EditProfileComponent, UserResponse | null>>(
+			MatDialogRef,
+		);
 
 	editProfileForm = new FormGroup({
 		name: new FormControl("", Validators.compose([Validators.required])),

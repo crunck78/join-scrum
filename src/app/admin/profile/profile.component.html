@@ -17,7 +17,7 @@
 				(click)="changeImg()"
 				mat-mini-fab
 				color="primary"
-				aria-label="Example icon button with a change circle icon"
+				aria-label="Change profile image"
 			>
 				<mat-icon>change_circle</mat-icon>
 			</button>
@@ -34,12 +34,12 @@
 	</div>
 
 	<div class="profile-menu">
-		<button mat-icon-button color="accent" [matMenuTriggerFor]="menu">
+		<button mat-icon-button color="accent" [matMenuTriggerFor]="menu" aria-label="Profile Menu">
 			<mat-icon>menu</mat-icon>
 		</button>
 		<mat-menu #menu="matMenu">
 			<button
-				(click)="openEditProfileDialog()"
+				(click)="editProfile()"
 				aria-label="Edit Profile"
 				type="button"
 				mat-menu-item

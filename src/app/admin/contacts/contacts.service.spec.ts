@@ -87,4 +87,28 @@ describe("ContactsService", () => {
 			expect(result).toBeTruthy();
 		});
 	});
+
+	describe("openAddDialogContact", () => {
+		it("should return no contact after dialog closed", async () => {
+			dialogOpen.mockReturnValue({ afterClosed: () => of(null) });
+
+			const result = await firstValueFrom(service.openAddContactDialog());
+			expect(result).toBeNull();
+		});
+
+		it("should return new contact after dialog closed", async () => {
+			const contact: ContactResponse = {
+				id: 1,
+				createdAt: new Date(),
+				email: "contact@test.local",
+				name: "Test Contact",
+				phoneNumber: "01222222222",
+				updatedAt: new Date(),
+			};
+			dialogOpen.mockReturnValue({ afterClosed: () => of(contact) });
+
+			const result = await firstValueFrom(service.openAddContactDialog());
+			expect(result).toEqual(contact);
+		});
+	});
 });

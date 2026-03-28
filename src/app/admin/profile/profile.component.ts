@@ -1,48 +1,36 @@
-import { Component, inject } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { take } from "rxjs";
-import { ScrumApiService } from "../../scrum-api/scrum-api.service";
-import { ScrumProfileService } from "../../scrum-api/scrum-profile/scrum-profile.service";
+import { Component, inject, OnInit } from "@angular/core";
 import { UserResponse } from "../../shared/models/user.model";
-import { MaterialModule } from "../../shared/modules/material/material.module";
-import { CardComponent } from "../../shared/shared-components/card/card.component";
-import { ContactInitialsComponent } from "../../shared/shared-components/contact-initials/contact-initials.component";
-import { EditProfileComponent } from "../../shared/shared-components/dialogs/edit-profile/edit-profile.component";
-import { ProfileImageCropperComponent } from "../../shared/shared-components/image-cropper/image-cropper.component";
+import { ProfileModule } from "./profile.module";
+import { ProfileService } from "./profile.service";
 
 @Component({
 	selector: "app-profile",
 	templateUrl: "./profile.component.html",
 	styleUrls: ["./profile.component.scss"],
-	imports: [CardComponent, MaterialModule, ContactInitialsComponent],
+	imports: [ProfileModule],
 })
-export class ProfileComponent {
-	private scrumProfile = inject(ScrumProfileService);
-	private dialog = inject(MatDialog);
-	private scrumApi = inject(ScrumApiService);
+export class ProfileComponent implements OnInit {
+	private profileService = inject(ProfileService);
 
 	profile!: UserResponse | null;
 
-	constructor() {
-		this.updateProfile();
+	ngOnInit() {
+		this.refreshProfile();
 	}
 
-	updateProfile() {
-		this.scrumProfile
-			.getProfile$()
-			.pipe(take(1))
-			.subscribe((p) => (this.profile = p));
+	refreshProfile() {
+		this.profileService.profile$.subscribe((p) => (this.profile = p));
 	}
 
-	openEditProfileDialog() {
-		const dialogRef = this.dialog.open(EditProfileComponent);
-		dialogRef.componentInstance.profileToEdit = this.profile?.id ?? -1;
-		dialogRef.componentInstance.editProfileForm.patchValue(
-			this.profile as UserResponse,
+	editProfile() {
+		if (!this.profile) return;
+		const dialogRefAfterClosed = this.profileService.openEditProfileDialog(
+			this.profile,
 		);
-
-		dialogRef.afterClosed().subscribe((res) => {
-			if (res) this.profile = res;
+		dialogRefAfterClosed.subscribe((contactEdited) => {
+			if (contactEdited) {
+				this.refreshProfile();
+			}
 		});
 	}
 
@@ -51,18 +39,14 @@ export class ProfileComponent {
 	}
 
 	deleteProfile() {
-		this.scrumProfile
-			.deleteProfile$()
-			.pipe(take(1))
-			.subscribe((isDeleted) => {
-				if (isDeleted) this.scrumApi.logout();
-			});
+		this.profileService.deleteProfile();
 	}
 
 	changeImg() {
-		const dialogRef = this.dialog.open(ProfileImageCropperComponent);
-		dialogRef.afterClosed().subscribe((isChanged) => {
-			if (isChanged) this.updateProfile();
+		const dialogRefAfterClosed =
+			this.profileService.openProfileImageCropperDialog();
+		dialogRefAfterClosed.subscribe((isChanged) => {
+			if (isChanged) this.refreshProfile();
 		});
 	}
 }

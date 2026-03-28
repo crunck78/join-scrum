@@ -26,7 +26,7 @@ export class ProfileImageCropperComponent {
 	private sanitizer = inject(DomSanitizer);
 	private scrumApi = inject(ScrumApiService);
 	private feedbackService = inject(FeedbackService);
-	private dialogRef = inject<MatDialogRef<ImageCropperComponent>>(
+	private dialogRef = inject<MatDialogRef<ImageCropperComponent, boolean>>(
 		MatDialogRef,
 		{ optional: true },
 	);
