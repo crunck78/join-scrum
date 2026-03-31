@@ -1,9 +1,9 @@
 <!-- <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title> -->
-@if (!summaryEmpty) {
+@if (summary) {
 <div class="summary-counts">
-	@if (summary?.tasksInBacklog?.count) {
+	@if (summary.tasksInBacklog.count) {
 	<app-card class="counter-wrapper">
-		<p title class="counter">{{ summary?.tasksInBacklog?.count }}</p>
+		<p title class="counter">{{ summary.tasksInBacklog.count }}</p>
 		<p subtitle class="counter">
 			{{ summary && summary.tasksInBacklog.count > 1 ? 'Tasks' :
           'Task' }}
@@ -14,7 +14,7 @@
 	</app-card>
 	}
 	<div class="tasks-by-priority">
-		@for (counter of summary?.tasksByPriority; track counter) {
+		@for (counter of summary.tasksByPriority; track counter) {
 		<app-card class="counter-wrapper">
 			<p title class="counter">
 				<img src="assets/{{counter.priority | lowercase}}.svg" alt="">
@@ -28,7 +28,7 @@
 		}
 	</div>
 	<div class="tasks-in-lists">
-		@for (counter of summary?.tasksInLists; track counter) {
+		@for (counter of summary.tasksInLists; track counter) {
 		<app-card class="counter-wrapper">
 			<p title class="counter">{{ counter.count }}</p>
 			<p subtitle class="counter">
@@ -72,9 +72,9 @@
 			></app-router-link>
 		</div>
 	</app-card>
-
+	@if(summary) {
 	<div class="tasks-by-category">
-		@for (counter of summary?.tasksByCategory; track counter) {
+		@for (counter of summary.tasksByCategory; track counter) {
 		<app-card class="counter-wrapper">
 			<p title class="counter">{{ counter.count }}</p>
 			<p subtitle class="counter">
@@ -87,4 +87,5 @@
 		</app-card>
 		}
 	</div>
+	}
 </div>

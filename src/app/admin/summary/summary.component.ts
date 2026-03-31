@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { SummaryResponse } from "../../shared/models/summary.model";
 import { UserResponse } from "../../shared/models/user.model";
 import { SummaryModule } from "./summary.module";
@@ -9,37 +9,45 @@ import { SummaryService } from "./summary.service";
 	templateUrl: "./summary.component.html",
 	styleUrls: ["./summary.component.scss"],
 	imports: [SummaryModule],
-	providers: [SummaryService],
 })
-export class SummaryComponent {
+export class SummaryComponent implements OnInit {
 	private summaryService = inject(SummaryService);
 
-	get summaryEmpty(): boolean {
-		return this.summaryService.summaryEmpty;
-	}
+	summary!: SummaryResponse | null;
+	profile!: UserResponse | null;
 
-	get summary(): SummaryResponse | null {
-		return this.summaryService.summary;
-	}
+	ngOnInit() {
+		this.summaryService.summary$.subscribe(
+			(summary) => (this.summary = summary),
+		);
 
-	get profile(): UserResponse | null {
-		return this.summaryService.profile;
+		this.summaryService.profile$.subscribe(
+			(profile) => (this.profile = profile),
+		);
 	}
 
 	get matchWebBreakpoint$() {
-		return this.summaryService.breakPoints.matchesWebBreakpoint$;
+		return this.summaryService.matchWebBreakpoint$;
 	}
 
 	get greetUser(): string {
 		const hours = new Date().getHours();
-		let greeting = "Hello";
 		if (hours < 12) {
-			greeting = "Good morning";
+			return "Good morning";
 		} else if (hours < 18) {
-			greeting = "Good afternoon";
+			return "Good afternoon";
 		} else {
-			greeting = "Good evening";
+			return "Good evening";
 		}
-		return greeting;
+	}
+
+	get summaryEmpty() {
+		if (!this.summary) return true;
+		return (
+			this.summary.tasksByCategory.length === 0 &&
+			this.summary.tasksByPriority.length === 0 &&
+			this.summary.tasksInLists.length === 0 &&
+			this.summary.tasksInBacklog.count === 0
+		);
 	}
 }
