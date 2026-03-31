@@ -1,13 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { catchError, map, type Observable, of } from "rxjs";
+import { catchError, map, of, type Observable } from "rxjs";
 import {
 	Category,
 	CategoryRequest,
 	CategoryResponse,
 	CategoryResponseAPI,
 } from "../../shared/models/category.model";
-import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const CATEGORIES_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/category/categories/`;
@@ -17,29 +16,24 @@ export const CATEGORIES_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/category/categorie
 })
 export class ScrumCategoriesService {
 	private http = inject(HttpClient);
-	private scrumApi = inject(ScrumApiService);
 
 	categoriesEndpoint = CATEGORIES_ENDPOINT;
 
 	getCategories$(): Observable<CategoryResponse[]> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
-		return this.http
-			.get<CategoryResponseAPI[]>(this.categoriesEndpoint, options)
-			.pipe(
-				map((categories: CategoryResponseAPI[]) =>
-					categories.map((c) => Category.createInternalValue(c)),
-				),
-				catchError(() => of([])),
-			);
+		return this.http.get<CategoryResponseAPI[]>(this.categoriesEndpoint).pipe(
+			map((categories: CategoryResponseAPI[]) =>
+				categories.map((c) => Category.createInternalValue(c)),
+			),
+			catchError(() => of([])),
+		);
 	}
 
 	addCategory$(
 		editCategory: Partial<CategoryRequest>,
 	): Observable<CategoryResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		const newCategory = Category.createRepresentation(editCategory);
 		return this.http
-			.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory, options)
+			.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory)
 			.pipe(
 				map((category: CategoryResponseAPI | null) =>
 					category ? Category.createInternalValue(category) : null,

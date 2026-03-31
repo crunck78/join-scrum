@@ -8,7 +8,6 @@ import {
 	TaskResponse,
 	TaskResponseAPI,
 } from "../../shared/models/task.model";
-import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const TASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/task/tasks/`;
@@ -18,25 +17,19 @@ export const TASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/task/tasks/`;
 })
 export class ScrumTasksService {
 	private http = inject(HttpClient);
-	private scrumApi = inject(ScrumApiService);
 
 	tasksEndpoint = TASKS_ENDPOINT;
 
 	getTasks$(): Observable<TaskResponse[]> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
-		return this.http.get<TaskResponseAPI[]>(this.tasksEndpoint, options).pipe(
+		return this.http.get<TaskResponseAPI[]>(this.tasksEndpoint).pipe(
 			map((tasks) => tasks.map((t) => Task.createInternalValue(t))),
 			catchError(() => of([])),
 		);
 	}
 
 	getBacklog$(): Observable<TaskResponse[]> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		return this.http
-			.get<TaskResponseAPI[]>(
-				`${this.tasksEndpoint}?list_is_null=true`,
-				options,
-			)
+			.get<TaskResponseAPI[]>(`${this.tasksEndpoint}?list_is_null=true`)
 			.pipe(
 				map((tasks) => tasks.map((t) => Task.createInternalValue(t))),
 				catchError(() => of([])),
@@ -44,10 +37,9 @@ export class ScrumTasksService {
 	}
 
 	addTask$(task: Partial<TaskRequest>): Observable<TaskResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		const newTask = Task.createRepresentation(task);
 		return this.http
-			.post<TaskResponseAPI | null>(this.tasksEndpoint, newTask, options)
+			.post<TaskResponseAPI | null>(this.tasksEndpoint, newTask)
 			.pipe(
 				map((task) => (task ? Task.createInternalValue(task) : null)),
 				catchError(() => of(null)),
@@ -55,9 +47,8 @@ export class ScrumTasksService {
 	}
 
 	deleteTask$(taskId: number): Observable<number | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		return this.http
-			.delete<number | null>(`${this.tasksEndpoint + taskId}/`, options)
+			.delete<number | null>(`${this.tasksEndpoint + taskId}/`)
 			.pipe(
 				map((value) => value || null),
 				catchError(() => of(null)),
@@ -68,13 +59,11 @@ export class ScrumTasksService {
 		taskId: number,
 		taskRequest: Partial<TaskRequest>,
 	): Observable<TaskResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		const taskRequestAPI = Task.createRepresentation(taskRequest);
 		return this.http
 			.patch<TaskResponseAPI | null>(
 				`${this.tasksEndpoint}${taskId}/`,
 				taskRequestAPI,
-				options,
 			)
 			.pipe(
 				map((task) => (task ? Task.createInternalValue(task) : null)),

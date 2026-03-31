@@ -8,7 +8,6 @@ import {
 	SubtaskResponse,
 	SubtaskResponseAPI,
 } from "../../shared/models/subtask.model";
-import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const SUBTASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}api/subtask/subtasks/`;
@@ -18,27 +17,22 @@ export const SUBTASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}api/subtask/subtasks/`;
 })
 export class ScrumSubtasksService {
 	private http = inject(HttpClient);
-	private scrumApi = inject(ScrumApiService);
 
 	subtasksEndpoint = SUBTASKS_ENDPOINT;
 
 	getSubtasks$(): Observable<SubtaskResponse[]> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
-		return this.http
-			.get<SubtaskResponseAPI[]>(this.subtasksEndpoint, options)
-			.pipe(
-				map((subtasks) => subtasks.map((s) => Subtask.createInternalValue(s))),
-				catchError(() => of([])),
-			);
+		return this.http.get<SubtaskResponseAPI[]>(this.subtasksEndpoint).pipe(
+			map((subtasks) => subtasks.map((s) => Subtask.createInternalValue(s))),
+			catchError(() => of([])),
+		);
 	}
 
 	addSubtask$(
 		subtask: Partial<SubtaskRequest>,
 	): Observable<SubtaskResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		const newSubtask = Subtask.createRepresentation(subtask);
 		return this.http
-			.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask, options)
+			.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask)
 			.pipe(
 				map((subtask) =>
 					subtask ? Subtask.createInternalValue(subtask) : null,
@@ -51,13 +45,11 @@ export class ScrumSubtasksService {
 		subtaskId: number,
 		taskRequest: Partial<SubtaskRequest>,
 	): Observable<SubtaskResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		const subtaskRequestAPI = Subtask.createRepresentation(taskRequest);
 		return this.http
 			.patch<SubtaskResponseAPI | null>(
 				`${this.subtasksEndpoint}${subtaskId}/`,
 				subtaskRequestAPI,
-				options,
 			)
 			.pipe(
 				map((subtask) =>

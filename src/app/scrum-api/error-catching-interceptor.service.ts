@@ -6,7 +6,7 @@ import type {
 } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { catchError, type Observable, throwError } from "rxjs";
+import { catchError, throwError, type Observable } from "rxjs";
 import {
 	DURATION_SNACK_BAR,
 	FeedbackService,

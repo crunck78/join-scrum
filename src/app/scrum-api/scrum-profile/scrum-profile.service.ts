@@ -1,13 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { catchError, map, type Observable, of } from "rxjs";
+import { catchError, map, of, type Observable } from "rxjs";
 import {
 	User,
 	UserRequest,
 	UserResponse,
 	UserResponseAPI,
 } from "../../shared/models/user.model";
-import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const PROFILE_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/user/me/`;
@@ -27,14 +26,12 @@ export interface Profile {
 })
 export class ScrumProfileService {
 	private http = inject(HttpClient);
-	private scrumApi = inject(ScrumApiService);
 
 	profileEndpoint = PROFILE_ENDPOINT;
 	profile!: Profile;
 
 	getProfile$(): Observable<UserResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
-		return this.http.get<UserResponseAPI>(this.profileEndpoint, options).pipe(
+		return this.http.get<UserResponseAPI>(this.profileEndpoint).pipe(
 			map((profile) => (profile ? User.createInternalValue(profile) : null)),
 			catchError(() => of(null)),
 		);
@@ -45,10 +42,9 @@ export class ScrumProfileService {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		_profileId: number,
 	): Observable<UserResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
 		const editProfile = User.createRepresentation(profile);
 		return this.http
-			.patch<UserResponseAPI>(this.profileEndpoint, editProfile, options)
+			.patch<UserResponseAPI>(this.profileEndpoint, editProfile)
 			.pipe(
 				map((profile: UserResponseAPI | null) =>
 					profile ? User.createInternalValue(profile) : null,
@@ -58,8 +54,7 @@ export class ScrumProfileService {
 	}
 
 	deleteProfile$(): Observable<boolean> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
-		return this.http.delete<number | null>(this.profileEndpoint, options).pipe(
+		return this.http.delete<number | null>(this.profileEndpoint).pipe(
 			map(() => true),
 			catchError(() => of(false)),
 		);

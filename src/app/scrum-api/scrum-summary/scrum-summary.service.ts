@@ -1,12 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { catchError, map, type Observable, of } from "rxjs";
+import { catchError, map, of, type Observable } from "rxjs";
 import {
 	Summary,
 	SummaryResponse,
 	SummaryResponseAPI,
 } from "../../shared/models/summary.model";
-import { ScrumApiService } from "../scrum-api.service";
 import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
 
 export const SUMMARY_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/summary/`;
@@ -16,19 +15,13 @@ export const SUMMARY_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/summary/`;
 })
 export class ScrumSummaryService {
 	private http = inject(HttpClient);
-	private scrumApi = inject(ScrumApiService);
 
 	summaryEndpoint = SUMMARY_ENDPOINT;
 
 	getSummary$(): Observable<SummaryResponse | null> {
-		const options = { headers: this.scrumApi.headersTokenAuthorization };
-		return this.http
-			.get<SummaryResponseAPI>(this.summaryEndpoint, options)
-			.pipe(
-				map((summary) =>
-					summary ? Summary.createInternalValue(summary) : null,
-				),
-				catchError(() => of(null)),
-			);
+		return this.http.get<SummaryResponseAPI>(this.summaryEndpoint).pipe(
+			map((summary) => (summary ? Summary.createInternalValue(summary) : null)),
+			catchError(() => of(null)),
+		);
 	}
 }

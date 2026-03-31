@@ -16,6 +16,11 @@ export class ScrumApiService {
 	token!: string;
 	apiToken$!: BehaviorSubject<ApiToken>;
 
+	constructor() {
+		const init = this.rememberMe ? this.localToken : "";
+		this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
+	}
+
 	isLoggedIn(): boolean {
 		const token = this.apiToken$.getValue();
 		return token && token.token !== "";
@@ -59,11 +64,6 @@ export class ScrumApiService {
 			console.log(error);
 			return "";
 		}
-	}
-
-	constructor() {
-		const init = this.rememberMe ? this.localToken : "";
-		this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
 	}
 
 	onNextToken(apiToken: ApiToken) {
