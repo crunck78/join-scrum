@@ -24,7 +24,9 @@ describe("SummaryComponent", () => {
 		});
 		summaryService = TestBed.inject(SummaryService);
 		getSummaryServiceSpy$ = vi.spyOn(summaryService, "summary$", "get");
+		getSummaryServiceSpy$.mockReturnValue(of(null));
 		getProfileServiceSpy$ = vi.spyOn(summaryService, "profile$", "get");
+		getProfileServiceSpy$.mockReturnValue(of(null));
 
 		fixture = TestBed.createComponent(SummaryComponent);
 		component = fixture.componentInstance;
@@ -35,8 +37,6 @@ describe("SummaryComponent", () => {
 	});
 
 	it("should create", () => {
-		getSummaryServiceSpy$.mockReturnValue(of(null));
-		getProfileServiceSpy$.mockReturnValue(of(null));
 		fixture.autoDetectChanges();
 
 		expect(component).toBeDefined();
@@ -44,8 +44,6 @@ describe("SummaryComponent", () => {
 
 	describe("summary", () => {
 		it("should be null when summary$ returns null", () => {
-			getSummaryServiceSpy$.mockReturnValue(of(null));
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			expect(component.summary).toBeNull();
@@ -59,7 +57,6 @@ describe("SummaryComponent", () => {
 				tasksInBacklog: { count: 3, latestDueDate: new Date() },
 			};
 			getSummaryServiceSpy$.mockReturnValue(of(summary));
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			expect(component.summary).toEqual(summary);
@@ -68,8 +65,6 @@ describe("SummaryComponent", () => {
 
 	describe("profile", () => {
 		it("should be null when profile$ returns null", () => {
-			getSummaryServiceSpy$.mockReturnValue(of(null));
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			expect(component.profile).toBeNull();
@@ -85,7 +80,6 @@ describe("SummaryComponent", () => {
 				updatedAt: new Date(),
 				isGuest: false,
 			};
-			getSummaryServiceSpy$.mockReturnValue(of(null));
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			fixture.autoDetectChanges();
 
@@ -95,8 +89,6 @@ describe("SummaryComponent", () => {
 
 	describe("summaryEmpty", () => {
 		it("should return true when summary is null", () => {
-			getSummaryServiceSpy$.mockReturnValue(of(null));
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			expect(component.summaryEmpty).toBe(true);
@@ -111,7 +103,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 0, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			expect(component.summaryEmpty).toBe(true);
@@ -126,7 +117,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 5, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			expect(component.summaryEmpty).toBe(false);
@@ -172,7 +162,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 0, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			const subtitleEl = fixture.nativeElement.querySelector(
@@ -194,7 +183,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 0, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			const subtitleEl = fixture.nativeElement.querySelector(
@@ -223,7 +211,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 0, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			const subtitleEl = fixture.nativeElement.querySelector(
@@ -251,7 +238,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 0, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			const subtitleEl = fixture.nativeElement.querySelector(
@@ -263,7 +249,6 @@ describe("SummaryComponent", () => {
 
 	describe("greeting", () => {
 		it("should show profile name when profile has a name", () => {
-			getSummaryServiceSpy$.mockReturnValue(of(null));
 			getProfileServiceSpy$.mockReturnValue(
 				of({
 					id: 1,
@@ -284,7 +269,6 @@ describe("SummaryComponent", () => {
 		});
 
 		it("should show profile email when profile has no name", () => {
-			getSummaryServiceSpy$.mockReturnValue(of(null));
 			getProfileServiceSpy$.mockReturnValue(
 				of({
 					id: 1,
@@ -305,8 +289,6 @@ describe("SummaryComponent", () => {
 		});
 
 		it("should show 'Guest' when there is no profile", () => {
-			getSummaryServiceSpy$.mockReturnValue(of(null));
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			const titleEl = fixture.nativeElement.querySelector(
@@ -333,7 +315,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 0, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			const subtitleEl = fixture.nativeElement.querySelector(
@@ -359,7 +340,6 @@ describe("SummaryComponent", () => {
 					tasksInBacklog: { count: 0, latestDueDate: new Date() },
 				}),
 			);
-			getProfileServiceSpy$.mockReturnValue(of(null));
 			fixture.autoDetectChanges();
 
 			const subtitleEl = fixture.nativeElement.querySelector(
