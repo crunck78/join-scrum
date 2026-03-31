@@ -1,72 +1,105 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { BehaviorSubject } from "rxjs";
+import { Observable, of } from "rxjs";
+import { Mock } from "vitest";
+import { ScrumApiService } from "../scrum-api/scrum-api.service";
+import { BreakpointsService } from "../shared/shared-services/breakpoints/breakpoints.service";
 import { HeaderComponent } from "./header.component";
 import { HeaderService } from "./header.service";
-
-class HeaderServiceStub {
-	logout = vi.fn();
-	breakPoints = {
-		matchesWebBreakpoint$: new BehaviorSubject<boolean>(true),
-		mobile$: new BehaviorSubject<boolean>(false),
-	};
-}
 
 describe("HeaderComponent", () => {
 	let component: HeaderComponent;
 	let fixture: ComponentFixture<HeaderComponent>;
-	const headerServiceStub = new HeaderServiceStub();
+	let headerService: HeaderService;
+	let matchWebBreakpointSpy$: Mock<() => Observable<boolean>>;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [HeaderComponent],
-			providers: [{ provide: HeaderService, useValue: headerServiceStub }],
+			providers: [
+				HeaderService,
+				{ provide: ScrumApiService, useValue: { logout: vi.fn() } },
+				{ provide: BreakpointsService, useValue: { matchesWebBreakpoint$: of(true) } },
+			],
 		});
+		headerService = TestBed.inject(HeaderService);
+		matchWebBreakpointSpy$ = vi.spyOn(headerService, "matchWebBreakpoint$", "get");
+		matchWebBreakpointSpy$.mockReturnValue(of(true));
+
 		fixture = TestBed.createComponent(HeaderComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
 	});
 
 	it("should create", () => {
+		fixture.autoDetectChanges();
+
 		expect(component).toBeDefined();
 	});
 
-	it("should toggle headerState when toggleHeader is invoked", () => {
-		expect(fixture.componentInstance.headerState$.value).toBe("closed");
+	describe("toggleHeader", () => {
+		it("should toggle headerState from closed to open", () => {
+			fixture.autoDetectChanges();
 
-		fixture.componentInstance.toggleHeader(new Event("click"));
-		expect(fixture.componentInstance.headerState$.value).toBe("open");
+			expect(component.headerState$.value).toBe("closed");
 
-		fixture.componentInstance.toggleHeader(new Event("click"));
-		expect(fixture.componentInstance.headerState$.value).toBe("closed");
-	});
+			component.toggleHeader(new Event("click"));
 
-	it("should call HeaderService.logout when the logout button is clicked", () => {
-		const logoutWebButton: HTMLButtonElement =
-			fixture.nativeElement.querySelector('button[color="primary"]');
-		logoutWebButton.click();
-
-		headerServiceStub.breakPoints.matchesWebBreakpoint$.next(false);
-		headerServiceStub.breakPoints.mobile$.next(true);
-
-		const logoutMobileButton: HTMLButtonElement =
-			fixture.nativeElement.querySelector('button[color="primary"]');
-		logoutMobileButton.click();
-
-		expect(headerServiceStub.logout).toHaveBeenCalledTimes(2);
-	});
-
-	it("should emit toggleDrawer when the menu button is clicked", () => {
-		let emissionCount = 0;
-		const sub = fixture.componentInstance.toggleDrawer.subscribe(() => {
-			emissionCount += 1;
+			expect(component.headerState$.value).toBe("open");
 		});
 
-		const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector(
-			"button mat-icon",
-		).parentElement as HTMLButtonElement;
-		menuButton.click();
+		it("should toggle headerState back to closed", () => {
+			fixture.autoDetectChanges();
 
-		expect(emissionCount).toBe(1);
-		sub.unsubscribe();
+			component.toggleHeader(new Event("click"));
+			component.toggleHeader(new Event("click"));
+
+			expect(component.headerState$.value).toBe("closed");
+		});
+	});
+
+	describe("logout", () => {
+		it("should call HeaderService.logout when web logout button is clicked", () => {
+			const logoutSpy = vi.spyOn(headerService, "logout");
+			logoutSpy.mockImplementation(() => {});
+			fixture.autoDetectChanges();
+
+			const logoutButton: HTMLButtonElement =
+				fixture.nativeElement.querySelector('button[color="primary"]');
+			logoutButton.click();
+
+			expect(logoutSpy).toHaveBeenCalledOnce();
+		});
+
+		it("should call HeaderService.logout when mobile logout button is clicked", () => {
+			matchWebBreakpointSpy$.mockReturnValue(of(false));
+			const logoutSpy = vi.spyOn(headerService, "logout");
+			logoutSpy.mockImplementation(() => {});
+			fixture.autoDetectChanges();
+
+			const logoutButton: HTMLButtonElement =
+				fixture.nativeElement.querySelector('button[color="primary"]');
+			logoutButton.click();
+
+			expect(logoutSpy).toHaveBeenCalledOnce();
+		});
+	});
+
+	describe("toggleDrawer", () => {
+		it("should emit toggleDrawer when menu button is clicked", () => {
+			fixture.autoDetectChanges();
+
+			const toggleDrawerSpy = vi.spyOn(component.toggleDrawer, "emit");
+			const menuButton: HTMLButtonElement = (
+				fixture.nativeElement.querySelector(
+					"button mat-icon",
+				) as HTMLElement
+			).parentElement as HTMLButtonElement;
+			menuButton.click();
+
+			expect(toggleDrawerSpy).toHaveBeenCalledOnce();
+		});
 	});
 });

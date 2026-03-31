@@ -1,5 +1,4 @@
 import { Injectable, inject } from "@angular/core";
-import { Router } from "@angular/router";
 import { ScrumApiService } from "../scrum-api/scrum-api.service";
 import { BreakpointsService } from "../shared/shared-services/breakpoints/breakpoints.service";
 
@@ -7,11 +6,14 @@ import { BreakpointsService } from "../shared/shared-services/breakpoints/breakp
 	providedIn: "root",
 })
 export class HeaderService {
-	scrumApi = inject(ScrumApiService);
-	breakPoints = inject(BreakpointsService);
-	router = inject(Router);
+	private scrumApi = inject(ScrumApiService);
+	private breakPoints = inject(BreakpointsService);
 
 	logout() {
 		this.scrumApi.logout();
+	}
+
+	get matchWebBreakpoint$() {
+		return this.breakPoints.matchesWebBreakpoint$;
 	}
 }

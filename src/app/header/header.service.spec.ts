@@ -1,24 +1,33 @@
 import { TestBed } from "@angular/core/testing";
+import { Subject } from "rxjs";
 import { ScrumApiService } from "../scrum-api/scrum-api.service";
+import { BreakpointsService } from "../shared/shared-services/breakpoints/breakpoints.service";
 import { HeaderService } from "./header.service";
-
-class ScrumApiServiceStub {
-	logout = vi.fn();
-}
 
 describe("HeaderService", () => {
 	let service: HeaderService;
-	let scrumApiStub: ScrumApiServiceStub;
+	const logout = vi.fn();
+	const matchesWebBreakpoint$ = new Subject<boolean>();
 
 	beforeEach(() => {
-		scrumApiStub = new ScrumApiServiceStub();
 		TestBed.configureTestingModule({
 			providers: [
 				HeaderService,
-				{ provide: ScrumApiService, useValue: scrumApiStub },
+				{
+					provide: ScrumApiService,
+					useValue: { logout },
+				},
+				{
+					provide: BreakpointsService,
+					useValue: { matchesWebBreakpoint$ },
+				},
 			],
 		});
 		service = TestBed.inject(HeaderService);
+	});
+
+	afterEach(() => {
+		vi.clearAllMocks();
 	});
 
 	it("should be created", () => {
@@ -27,6 +36,10 @@ describe("HeaderService", () => {
 
 	it("should delegate logout to ScrumApiService", () => {
 		service.logout();
-		expect(scrumApiStub.logout).toHaveBeenCalledTimes(1);
+		expect(logout).toHaveBeenCalledTimes(1);
+	});
+
+	it("should return the breakpoints observable", () => {
+		expect(service.matchWebBreakpoint$).toBe(matchesWebBreakpoint$);
 	});
 });

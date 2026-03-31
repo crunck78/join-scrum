@@ -35,6 +35,6 @@ export class HeaderComponent {
 	}
 
 	get matchWebBreakpoint$() {
-		return this.headerService.breakPoints.matchesWebBreakpoint$;
+		return this.headerService.matchWebBreakpoint$;
 	}
 }
