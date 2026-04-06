@@ -50,7 +50,7 @@ describe("ScrumApiInterceptor", () => {
 			apiToken$.next({ token: "test-token" });
 			httpClient.get("/test").subscribe();
 
-			const req = httpTesting.expectOne("/test");
+			const req = httpTesting.expectOne("http://localhost:8000/test");
 			expect(req.request.headers.has("Authorization")).toBe(true);
 			expect(req.request.headers.get("Authorization")).toBe("Token test-token");
 			req.flush({});
@@ -60,8 +60,17 @@ describe("ScrumApiInterceptor", () => {
 			isLoggedIn.mockReturnValue(false);
 			httpClient.get("/test").subscribe();
 
-			const req = httpTesting.expectOne("/test");
+			const req = httpTesting.expectOne("http://localhost:8000/test");
 			expect(req.request.headers.has("Authorization")).toBe(false);
+			req.flush({});
+		});
+
+		it("should not modify URL when it is already absolute", () => {
+			isLoggedIn.mockReturnValue(false);
+			httpClient.get("http://other-host.com/api/resource").subscribe();
+
+			const req = httpTesting.expectOne("http://other-host.com/api/resource");
+			expect(req.request.url).toBe("http://other-host.com/api/resource");
 			req.flush({});
 		});
 	});

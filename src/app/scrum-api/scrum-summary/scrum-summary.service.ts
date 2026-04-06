@@ -6,9 +6,7 @@ import {
 	SummaryResponse,
 	SummaryResponseAPI,
 } from "../../shared/models/summary.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-
-export const SUMMARY_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/summary/`;
+export const SUMMARY_ENDPOINT = "/api/summary/";
 
 @Injectable({
 	providedIn: "root",

@@ -7,9 +7,7 @@ import {
 	BoardResponse,
 	BoardResponseAPI,
 } from "../../shared/models/board.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-
-export const BOARDS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/board/boards/`;
+export const BOARDS_ENDPOINT = "/api/board/boards/";
 
 @Injectable({
 	providedIn: "root",

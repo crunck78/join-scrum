@@ -8,15 +8,20 @@ import { type Observable } from "rxjs";
 import { environment } from "../../environments/environment.development";
 import { ScrumApiService } from "./scrum-api.service";
 
-export const SCRUM_API_ENDPOINT = environment.apiEndpoint;
-
 @Injectable()
 export class ScrumApiInterceptor {
 	private scrumApiService = inject(ScrumApiService);
+
 	intercept(
 		httpRequest: HttpRequest<unknown>,
 		next: HttpHandler,
 	): Observable<HttpEvent<unknown>> {
+		if (!httpRequest.url.startsWith("http")) {
+			httpRequest = httpRequest.clone({
+				url: `${environment.apiEndpoint}${httpRequest.url}`,
+			});
+		}
+
 		if (this.scrumApiService.isLoggedIn()) {
 			httpRequest = httpRequest.clone({
 				setHeaders: {
@@ -24,6 +29,7 @@ export class ScrumApiInterceptor {
 				},
 			});
 		}
+
 		return next.handle(httpRequest);
 	}
 }

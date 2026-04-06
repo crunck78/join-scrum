@@ -8,9 +8,7 @@ import {
 	TaskResponse,
 	TaskResponseAPI,
 } from "../../shared/models/task.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-
-export const TASKS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/task/tasks/`;
+export const TASKS_ENDPOINT = "/api/task/tasks/";
 
 @Injectable({
 	providedIn: "root",

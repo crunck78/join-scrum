@@ -7,9 +7,7 @@ import {
 	ListResponse,
 	ListResponseAPI,
 } from "../../shared/models/list.model";
-import { SCRUM_API_ENDPOINT } from "../scrum-api-interceptor.service";
-
-export const LISTS_ENDPOINT = `${SCRUM_API_ENDPOINT}/api/list/lists/`;
+export const LISTS_ENDPOINT = "/api/list/lists/";
 
 @Injectable({
 	providedIn: "root",
