@@ -5,7 +5,6 @@ import type {
 	HttpRequest,
 } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Router } from "@angular/router";
 import { catchError, throwError, type Observable } from "rxjs";
 import {
 	DURATION_SNACK_BAR,
@@ -17,18 +16,13 @@ import { ScrumApiService } from "./scrum-api.service";
 export class ErrorCatchingInterceptor {
 	private feedback = inject(FeedbackService);
 	private scrumApi = inject(ScrumApiService);
-	private router = inject(Router);
 
 	intercept(
-		httpRequest: HttpRequest<any>,
+		httpRequest: HttpRequest<unknown>,
 		next: HttpHandler,
-	): Observable<HttpEvent<any>> {
+	): Observable<HttpEvent<unknown>> {
 		return next.handle(httpRequest).pipe(
-			catchError((errorResponse: any) => {
-				if (errorResponse.status === 401) {
-					this.router.navigate(["/auth/log-in"]);
-					this.scrumApi.apiToken$.next({ token: "" });
-				}
+			catchError((errorResponse: HttpErrorResponse) => {
 				this._handleErrorResponse(errorResponse);
 				return throwError(() => errorResponse);
 			}),
@@ -37,12 +31,14 @@ export class ErrorCatchingInterceptor {
 
 	private _handleErrorResponse(errorResponse: HttpErrorResponse) {
 		const errors: string[] = [];
-		if (
+		if (errorResponse.status === 401) {
+			this.scrumApi.logout();
+		} else if (
 			this._isUnknownError(errorResponse) ||
 			this._isServerError(errorResponse)
-		)
+		) {
 			errors.push(this._getErrorMessage(errorResponse));
-		else if (this._isBadRequest(errorResponse)) {
+		} else if (this._isBadRequest(errorResponse)) {
 			for (const key in errorResponse.error) {
 				if (!Object.hasOwn(errorResponse.error, key)) continue;
 
@@ -57,15 +53,29 @@ export class ErrorCatchingInterceptor {
 					errors.push(`${key.toUpperCase()}: ${errorContent}`);
 					continue;
 				}
-				errors.push(this._getErrorMessage(errorResponse));
+				if (typeof errorContent === "object" && errorContent !== null) {
+					for (const subKey in errorContent) {
+						if (!Object.hasOwn(errorContent, subKey)) continue;
+						const subContent = errorContent[subKey];
+						if (Array.isArray(subContent)) {
+							subContent.forEach((msg) => {
+								errors.push(
+									`${key.toUpperCase()} - ${subKey.toUpperCase()}: ${msg}`,
+								);
+							});
+						} else if (typeof subContent === "string") {
+							errors.push(
+								`${key.toUpperCase()} - ${subKey.toUpperCase()}: ${subContent}`,
+							);
+						}
+					}
+				}
 			}
 		}
 
 		errors.forEach((e, i) => {
 			setTimeout(
-				() => {
-					this.feedback.openSnackBar(e);
-				},
+				() => this.feedback.openSnackBar(e),
 				i * DURATION_SNACK_BAR + 500,
 			);
 		});
@@ -85,11 +95,10 @@ export class ErrorCatchingInterceptor {
 
 	private _getErrorMessage(errorResponse: HttpErrorResponse) {
 		if (
-			errorResponse.statusText !== "" &&
-			errorResponse.statusText.toLowerCase() !== "ok"
+			typeof errorResponse.error?.detail === "string" &&
+			errorResponse.error.detail !== ""
 		)
-			return errorResponse.statusText;
-		if (errorResponse.message !== "") return errorResponse.message;
+			return errorResponse.error.detail;
 		if (typeof errorResponse.error === "string" && errorResponse.error !== "")
 			return errorResponse.error;
 

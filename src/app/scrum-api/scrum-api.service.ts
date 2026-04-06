@@ -1,4 +1,3 @@
-import { HttpHeaders } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
@@ -13,23 +12,20 @@ export interface ApiToken {
 export class ScrumApiService {
 	private router = inject(Router);
 
-	token!: string;
-	apiToken$!: BehaviorSubject<ApiToken>;
+	apiToken$: BehaviorSubject<ApiToken>;
 
 	constructor() {
 		const init = this.rememberMe ? this.localToken : "";
 		this.apiToken$ = new BehaviorSubject<ApiToken>({ token: init });
 	}
 
-	isLoggedIn(): boolean {
-		const token = this.apiToken$.getValue();
-		return token && token.token !== "";
+	get token(): string {
+		return this.apiToken$.getValue().token;
 	}
 
-	get headersTokenAuthorization() {
-		return new HttpHeaders({
-			Authorization: `Token ${this.token}`,
-		});
+	isLoggedIn(): boolean {
+		const token = this.apiToken$.getValue();
+		return !!token && token.token !== "";
 	}
 
 	set rememberMe(value: boolean) {
@@ -66,12 +62,8 @@ export class ScrumApiService {
 		}
 	}
 
-	onNextToken(apiToken: ApiToken) {
-		if (this.rememberMe) this.localToken = apiToken.token;
-		this.token = apiToken?.token;
-	}
-
 	logout() {
+		if (this.rememberMe) this.localToken = "";
 		this.router.navigate(["/auth/log-in"]);
 		this.apiToken$.next({ token: "" });
 	}

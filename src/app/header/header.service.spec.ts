@@ -12,7 +12,6 @@ describe("HeaderService", () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			providers: [
-				HeaderService,
 				{
 					provide: ScrumApiService,
 					useValue: { logout },
