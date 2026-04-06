@@ -7,6 +7,21 @@ import { Injectable, inject } from "@angular/core";
 import { type Observable } from "rxjs";
 import { environment } from "../../environments/environment.development";
 import { ScrumApiService } from "./scrum-api.service";
+import { FORGOT_PASSWORD_ENDPOINT } from "./scrum-forgot-password/scrum-forgot-password.service";
+import {
+	GUEST_LOGIN_ENDPOINT,
+	LOGIN_ENDPOINT,
+} from "./scrum-login/login-interceptor.service";
+import { RESET_PASSWORD_ENDPOINT } from "./scrum-reset-password/scrum-reset-password.service";
+import { SIGNUP_ENDPOINT } from "./scrum-signup/scrum-signup.service";
+
+const PUBLIC_ENDPOINTS = [
+	LOGIN_ENDPOINT,
+	GUEST_LOGIN_ENDPOINT,
+	SIGNUP_ENDPOINT,
+	FORGOT_PASSWORD_ENDPOINT,
+	RESET_PASSWORD_ENDPOINT,
+];
 
 @Injectable()
 export class ScrumApiInterceptor {
@@ -22,7 +37,11 @@ export class ScrumApiInterceptor {
 			});
 		}
 
-		if (this.scrumApiService.isLoggedIn()) {
+		const isPublic = PUBLIC_ENDPOINTS.some((endpoint) =>
+			httpRequest.url.includes(endpoint),
+		);
+
+		if (!isPublic && this.scrumApiService.isLoggedIn()) {
 			httpRequest = httpRequest.clone({
 				setHeaders: {
 					Authorization: `Token ${this.scrumApiService.apiToken$.getValue().token}`,
