@@ -52,7 +52,7 @@ export class ScrumProfileService {
 	}
 
 	deleteProfile$(): Observable<boolean> {
-		return this.http.delete<number | null>(this.profileEndpoint).pipe(
+		return this.http.delete<void>(this.profileEndpoint).pipe(
 			map(() => true),
 			catchError(() => of(false)),
 		);

@@ -59,11 +59,9 @@ export class ScrumContactsService {
 	}
 
 	deleteContact$(contactId: number): Observable<boolean> {
-		return this.http
-			.delete<number>(`${this.contactsEndpoint + contactId}/`)
-			.pipe(
-				map(() => true),
-				catchError(() => of(false)), // TODO: the error is swallowed, show feedback
-			);
+		return this.http.delete<void>(`${this.contactsEndpoint + contactId}/`).pipe(
+			map(() => true),
+			catchError(() => of(false)), // TODO: the error is swallowed, show feedback
+		);
 	}
 }

@@ -216,7 +216,7 @@ describe("BoardComponent", () => {
 		const refreshBoardSpy = vi.spyOn(component, "refreshBoard");
 		const deleteListServiceSpy = vi.spyOn(boardService, "deleteList$");
 		deleteListServiceSpy.mockReturnValue(
-			of(list.id).pipe(
+			of(true).pipe(
 				tap({
 					next: () => {
 						board.lists.splice(board.lists.indexOf(list), 1);

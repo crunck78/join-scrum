@@ -17,10 +17,10 @@ export class ScrumListsService {
 
 	listsEndpoint = LISTS_ENDPOINT;
 
-	deleteList$(id: number): Observable<number | null> {
-		return this.http.delete<number | null>(`${this.listsEndpoint + id}/`).pipe(
-			map((value) => value || null),
-			catchError(() => of(null)),
+	deleteList$(id: number): Observable<boolean> {
+		return this.http.delete<void>(`${this.listsEndpoint + id}/`).pipe(
+			map(() => true),
+			catchError(() => of(false)),
 		);
 	}
 
