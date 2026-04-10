@@ -23,6 +23,11 @@ export class ScrumApiService {
 		return this.apiToken$.getValue().token;
 	}
 
+	set token(token: string) {
+		this.apiToken$.next({ token });
+		if (this.rememberMe) this.localToken = token;
+	}
+
 	isLoggedIn(): boolean {
 		const token = this.apiToken$.getValue();
 		return !!token && token.token !== "";

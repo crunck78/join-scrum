@@ -32,9 +32,7 @@ export class ScrumSubtasksService {
 		return this.http
 			.post<SubtaskResponseAPI>(this.subtasksEndpoint, newSubtask)
 			.pipe(
-				map((subtask) =>
-					subtask ? Subtask.createInternalValue(subtask) : null,
-				),
+				map((subtask) => Subtask.createInternalValue(subtask)),
 				catchError(() => of(null)),
 			);
 	}
@@ -45,14 +43,12 @@ export class ScrumSubtasksService {
 	): Observable<SubtaskResponse | null> {
 		const subtaskRequestAPI = Subtask.createRepresentation(taskRequest);
 		return this.http
-			.patch<SubtaskResponseAPI | null>(
+			.patch<SubtaskResponseAPI>(
 				`${this.subtasksEndpoint}${subtaskId}/`,
 				subtaskRequestAPI,
 			)
 			.pipe(
-				map((subtask) =>
-					subtask ? Subtask.createInternalValue(subtask) : null,
-				),
+				map((subtask) => Subtask.createInternalValue(subtask)),
 				catchError(() => of(null)),
 			);
 	}

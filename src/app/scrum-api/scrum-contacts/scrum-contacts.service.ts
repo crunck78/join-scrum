@@ -33,9 +33,7 @@ export class ScrumContactsService {
 		return this.http
 			.post<ContactResponseAPI>(this.contactsEndpoint, newContact)
 			.pipe(
-				map((contact: ContactResponseAPI | null) =>
-					contact ? Contact.createInternalValue(contact) : null,
-				),
+				map((contact) => Contact.createInternalValue(contact)),
 				catchError(() => of(null)),
 			);
 	}
@@ -51,8 +49,8 @@ export class ScrumContactsService {
 				editContact,
 			)
 			.pipe(
-				map((contact: ContactResponseAPI | null) =>
-					contact ? Contact.createInternalValue(contact) : null,
+				map((contact: ContactResponseAPI) =>
+					Contact.createInternalValue(contact),
 				),
 				catchError(() => of(null)),
 			);

@@ -11,7 +11,7 @@ import { LegalNoticeComponent } from "./admin/legal-notice/legal-notice.componen
 import { ProfileComponent } from "./admin/profile/profile.component";
 import { SummaryComponent } from "./admin/summary/summary.component";
 import { loginGuard } from "./scrum-api/scrum-login/log-in.guard";
-import { publicGuard } from "./scrum-api/scrum-login/public.guard";
+import { noAuthGuard } from "./scrum-api/scrum-login/no-auth.guard";
 
 export const ROUTES: Routes = [
 	{ path: "", redirectTo: "summary", pathMatch: "full" },
@@ -51,7 +51,7 @@ export const ROUTES: Routes = [
 		title: "Legal Notice",
 	},
 	{
-		canActivate: [publicGuard],
+		canActivate: [noAuthGuard],
 		path: "auth",
 		component: AuthenticationComponent,
 		title: "Authentication",

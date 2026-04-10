@@ -36,21 +36,16 @@ export class ScrumTasksService {
 
 	addTask$(task: Partial<TaskRequest>): Observable<TaskResponse | null> {
 		const newTask = Task.createRepresentation(task);
-		return this.http
-			.post<TaskResponseAPI | null>(this.tasksEndpoint, newTask)
-			.pipe(
-				map((task) => (task ? Task.createInternalValue(task) : null)),
-				catchError(() => of(null)),
-			);
+		return this.http.post<TaskResponseAPI>(this.tasksEndpoint, newTask).pipe(
+			map((task) => Task.createInternalValue(task)),
+			catchError(() => of(null)),
+		);
 	}
 
 	deleteTask$(taskId: number): Observable<number | null> {
 		return this.http
-			.delete<number | null>(`${this.tasksEndpoint + taskId}/`)
-			.pipe(
-				map((value) => value || null),
-				catchError(() => of(null)),
-			);
+			.delete<number>(`${this.tasksEndpoint + taskId}/`)
+			.pipe(catchError(() => of(null)));
 	}
 
 	updateTask$(
@@ -59,12 +54,9 @@ export class ScrumTasksService {
 	): Observable<TaskResponse | null> {
 		const taskRequestAPI = Task.createRepresentation(taskRequest);
 		return this.http
-			.patch<TaskResponseAPI | null>(
-				`${this.tasksEndpoint}${taskId}/`,
-				taskRequestAPI,
-			)
+			.patch<TaskResponseAPI>(`${this.tasksEndpoint}${taskId}/`, taskRequestAPI)
 			.pipe(
-				map((task) => (task ? Task.createInternalValue(task) : null)),
+				map((task) => Task.createInternalValue(task)),
 				catchError(() => of(null)),
 			);
 	}

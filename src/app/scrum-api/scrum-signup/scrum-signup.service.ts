@@ -1,12 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Router } from "@angular/router";
-import { take } from "rxjs";
-import { FeedbackService } from "../../shared/shared-services/feedback/feedback.service";
-import {
-	type Profile,
-	ScrumProfileService,
-} from "../scrum-profile/scrum-profile.service";
+import { catchError, map, of } from "rxjs";
 
 export const SIGNUP_ENDPOINT = "/api/user/create/";
 
@@ -21,25 +15,13 @@ export interface SignupCredentials {
 })
 export class ScrumSignupService {
 	private http = inject(HttpClient);
-	private scrumProfile = inject(ScrumProfileService);
-	private router = inject(Router);
-	private feedback = inject(FeedbackService);
 
-	signupCredentials!: SignupCredentials;
 	signupEndPoint = SIGNUP_ENDPOINT;
 
-	signup(credentials: SignupCredentials) {
-		this.http
-			.post<Profile>(this.signupEndPoint, credentials)
-			.pipe(take(1))
-			.subscribe({
-				next: (response: Profile) => {
-					this.scrumProfile.profile = response;
-					this.router.navigate(["/auth/log-in"]);
-					this.feedback.openSnackBar("Great Job! Successfully Signed Up!");
-				},
-				error: () =>
-					this.feedback.openSnackBar("Something went wrong!", "Try again"),
-			});
+	signup$(credentials: SignupCredentials) {
+		return this.http.post(this.signupEndPoint, credentials).pipe(
+			map(() => true as const),
+			catchError(() => of(false as const)),
+		);
 	}
 }

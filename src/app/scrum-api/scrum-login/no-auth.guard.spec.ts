@@ -4,13 +4,14 @@ import { provideRouter, Router } from "@angular/router";
 import { RouterTestingHarness } from "@angular/router/testing";
 import { ScrumApiService } from "../scrum-api.service";
 import { loginGuard } from "./log-in.guard";
+import { noAuthGuard } from "./no-auth.guard";
 
 @Component({ template: "<h1>Protected Page</h1>" })
 class Protected {}
 @Component({ template: "<h1>Login Page</h1>" })
 class Login {}
 
-describe("LogInGuard", () => {
+describe("NoAuthGuard", () => {
 	const isLoggedIn = vi.fn();
 	let harness: RouterTestingHarness;
 
@@ -23,31 +24,31 @@ describe("LogInGuard", () => {
 				},
 				provideRouter([
 					{
-						path: "protected",
+						path: "summary",
 						component: Protected,
 						canActivate: [loginGuard],
 					},
-					{ path: "auth/log-in", component: Login },
+					{ path: "auth/log-in", component: Login, canActivate: [noAuthGuard] },
 				]),
 			],
 		});
 		harness = await RouterTestingHarness.create();
 	});
 
-	it("allows navigation when user is authenticated", async () => {
-		isLoggedIn.mockReturnValue(true);
-		await harness.navigateByUrl("/protected", Protected);
-		// The protected component should render when authenticated
-		expect(harness.routeNativeElement?.textContent).toContain("Protected Page");
-	});
-
-	it("redirects to login when user is not authenticated", async () => {
+	it("allows navigation when user is not authenticated", async () => {
 		isLoggedIn.mockReturnValue(false);
-		await harness.navigateByUrl("/protected");
+		await harness.navigateByUrl("/auth/log-in", Login);
 		// The login component should render when not authenticated
 		expect(harness.routeNativeElement?.textContent).toContain("Login Page");
+	});
+
+	it("redirects to summary when user is authenticated", async () => {
+		isLoggedIn.mockReturnValue(true);
+		await harness.navigateByUrl("/auth/log-in");
+		// The protected component should render when authenticated
+		expect(harness.routeNativeElement?.textContent).toContain("Protected Page");
 		expect(harness.routeDebugElement?.injector.get(Router).url).toBe(
-			"/auth/log-in?returnUrl=%2Fprotected",
+			"/summary",
 		);
 	});
 });

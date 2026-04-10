@@ -21,7 +21,7 @@ export class ResetPasswordService {
 
 	resetPassword(newPassword: string) {
 		this.scrumResetPassword
-			.resetPassword({ password: newPassword, token: this.token })
+			.resetPassword$({ password: newPassword, token: this.token })
 			.pipe(take(1))
 			.subscribe((isReset) => {
 				if (isReset)

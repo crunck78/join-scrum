@@ -11,7 +11,7 @@ import { FORGOT_PASSWORD_ENDPOINT } from "./scrum-forgot-password/scrum-forgot-p
 import {
 	GUEST_LOGIN_ENDPOINT,
 	LOGIN_ENDPOINT,
-} from "./scrum-login/login-interceptor.service";
+} from "./scrum-login/scrum-login.service";
 import { RESET_PASSWORD_ENDPOINT } from "./scrum-reset-password/scrum-reset-password.service";
 import { SIGNUP_ENDPOINT } from "./scrum-signup/scrum-signup.service";
 
@@ -44,7 +44,7 @@ export class ScrumApiInterceptor {
 		if (!isPublic && this.scrumApiService.isLoggedIn()) {
 			httpRequest = httpRequest.clone({
 				setHeaders: {
-					Authorization: `Token ${this.scrumApiService.apiToken$.getValue().token}`,
+					Authorization: `Token ${this.scrumApiService.token}`,
 				},
 			});
 		}

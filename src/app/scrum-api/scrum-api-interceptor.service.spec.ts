@@ -9,15 +9,13 @@ import {
 	provideHttpClientTesting,
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
-import { BehaviorSubject } from "rxjs";
 import { ScrumApiInterceptor } from "./scrum-api-interceptor.service";
-import { type ApiToken, ScrumApiService } from "./scrum-api.service";
+import { ScrumApiService } from "./scrum-api.service";
 
 describe("ScrumApiInterceptor", () => {
 	let httpTesting: HttpTestingController;
 	let httpClient: HttpClient;
 	const isLoggedIn = vi.fn();
-	const apiToken$ = new BehaviorSubject<ApiToken>({ token: "" });
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -31,7 +29,10 @@ describe("ScrumApiInterceptor", () => {
 				},
 				{
 					provide: ScrumApiService,
-					useValue: { isLoggedIn, apiToken$ },
+					useValue: {
+						isLoggedIn,
+						token: "test-token",
+					},
 				},
 			],
 		});
@@ -47,7 +48,6 @@ describe("ScrumApiInterceptor", () => {
 	describe("intercept", () => {
 		it("should add Authorization header when logged in", () => {
 			isLoggedIn.mockReturnValue(true);
-			apiToken$.next({ token: "test-token" });
 			httpClient.get("/test").subscribe();
 
 			const req = httpTesting.expectOne("http://localhost:8000/test");

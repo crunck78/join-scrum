@@ -26,7 +26,6 @@ export class ScrumProfileService {
 	private http = inject(HttpClient);
 
 	profileEndpoint = PROFILE_ENDPOINT;
-	profile!: Profile;
 
 	getProfile$(): Observable<UserResponse | null> {
 		return this.http.get<UserResponseAPI>(this.profileEndpoint).pipe(
@@ -35,18 +34,12 @@ export class ScrumProfileService {
 		);
 	}
 
-	editProfile$(
-		profile: Partial<UserRequest>,
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		_profileId: number,
-	): Observable<UserResponse | null> {
+	editProfile$(profile: Partial<UserRequest>): Observable<UserResponse | null> {
 		const editProfile = User.createRepresentation(profile);
 		return this.http
 			.patch<UserResponseAPI>(this.profileEndpoint, editProfile)
 			.pipe(
-				map((profile: UserResponseAPI | null) =>
-					profile ? User.createInternalValue(profile) : null,
-				),
+				map((profile) => User.createInternalValue(profile)),
 				catchError(() => of(null)),
 			);
 	}

@@ -52,12 +52,9 @@ export class ScrumListsService {
 	): Observable<ListResponse | null> {
 		const taskRequestAPI = List.createRepresentation(listRequest);
 		return this.http
-			.patch<ListResponseAPI | null>(
-				`${this.listsEndpoint}${listId}/`,
-				taskRequestAPI,
-			)
+			.patch<ListResponseAPI>(`${this.listsEndpoint}${listId}/`, taskRequestAPI)
 			.pipe(
-				map((list) => (list ? List.createInternalValue(list) : null)),
+				map((list) => List.createInternalValue(list)),
 				catchError(() => of(null)),
 			);
 	}

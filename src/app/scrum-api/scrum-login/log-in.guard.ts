@@ -18,6 +18,7 @@ export const loginGuard: CanActivateFn = (
 		return true;
 	}
 
-	router.navigate(["/auth/log-in"], { queryParams: { returnUrl: state.url } });
-	return false;
+	return router.createUrlTree(["/auth/log-in"], {
+		queryParams: { returnUrl: state.url },
+	});
 };

@@ -33,9 +33,7 @@ export class ScrumCategoriesService {
 		return this.http
 			.post<CategoryResponseAPI>(this.categoriesEndpoint, newCategory)
 			.pipe(
-				map((category: CategoryResponseAPI | null) =>
-					category ? Category.createInternalValue(category) : null,
-				),
+				map((category) => Category.createInternalValue(category)),
 				catchError(() => of(null)),
 			);
 	}
