@@ -9,7 +9,7 @@ import {
 import type { ErrorStateMatcher } from "@angular/material/core";
 import { ColorPickerDirective } from "ngx-color-picker";
 import { MaterialModule } from "../../modules/material/material.module";
-import { SanitizeHtmlPipe } from "../../pipes/sanitize-html/sanitize-html.pipe";
+import { ByPassSanitizeHtmlPipe } from "../../pipes/sanitize-html/sanitize-html.pipe";
 import { HasErrorPipe } from "./has-error.pipe";
 import { MessageErrorPipe } from "./message-error.pipe";
 
@@ -58,7 +58,7 @@ export const EMAIL_REGEX =
 		MaterialModule,
 		HasErrorPipe,
 		MessageErrorPipe,
-		SanitizeHtmlPipe,
+		ByPassSanitizeHtmlPipe,
 		ColorPickerDirective,
 	],
 	providers: [],
