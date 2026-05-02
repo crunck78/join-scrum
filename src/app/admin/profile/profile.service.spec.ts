@@ -53,7 +53,7 @@ describe("ProfileService", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -79,13 +79,15 @@ describe("ProfileService", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
 			};
 
-			const result = await firstValueFrom(service.openEditProfileDialog(profile));
+			const result = await firstValueFrom(
+				service.openEditProfileDialog(profile),
+			);
 
 			expect(result).toBeNull();
 		});
@@ -95,7 +97,7 @@ describe("ProfileService", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -108,7 +110,9 @@ describe("ProfileService", () => {
 				afterClosed: () => of(profile),
 			});
 
-			const result = await firstValueFrom(service.openEditProfileDialog(profile));
+			const result = await firstValueFrom(
+				service.openEditProfileDialog(profile),
+			);
 
 			expect(result).toEqual(profile);
 		});
@@ -118,13 +122,16 @@ describe("ProfileService", () => {
 				id: 42,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
 			};
 			const patchValue = vi.fn();
-			const componentInstance = { profileToEdit: 0, editProfileForm: { patchValue } };
+			const componentInstance = {
+				profileToEdit: 0,
+				editProfileForm: { patchValue },
+			};
 			dialogOpen.mockReturnValue({
 				componentInstance,
 				afterClosed: () => of(null),
@@ -159,7 +166,9 @@ describe("ProfileService", () => {
 		it("should return false when dialog is closed without change", async () => {
 			dialogOpen.mockReturnValue({ afterClosed: () => of(false) });
 
-			const result = await firstValueFrom(service.openProfileImageCropperDialog());
+			const result = await firstValueFrom(
+				service.openProfileImageCropperDialog(),
+			);
 
 			expect(result).toBeFalsy();
 		});
@@ -167,7 +176,9 @@ describe("ProfileService", () => {
 		it("should return true when image is changed", async () => {
 			dialogOpen.mockReturnValue({ afterClosed: () => of(true) });
 
-			const result = await firstValueFrom(service.openProfileImageCropperDialog());
+			const result = await firstValueFrom(
+				service.openProfileImageCropperDialog(),
+			);
 
 			expect(result).toBeTruthy();
 		});

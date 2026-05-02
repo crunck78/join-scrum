@@ -17,10 +17,7 @@ describe("SummaryComponent", () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [SummaryComponent],
-			providers: [
-				SummaryService,
-				{ provide: ActivatedRoute, useValue: {} },
-			],
+			providers: [SummaryService, { provide: ActivatedRoute, useValue: {} }],
 		});
 		summaryService = TestBed.inject(SummaryService);
 		getSummaryServiceSpy$ = vi.spyOn(summaryService, "summary$", "get");
@@ -75,7 +72,7 @@ describe("SummaryComponent", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -254,7 +251,7 @@ describe("SummaryComponent", () => {
 					id: 1,
 					name: "John Doe",
 					email: "john@test.local",
-					image: null,
+					image: "",
 					createdAt: new Date(),
 					updatedAt: new Date(),
 					isGuest: false,
@@ -274,7 +271,7 @@ describe("SummaryComponent", () => {
 					id: 1,
 					name: "",
 					email: "john@test.local",
-					image: null,
+					image: "",
 					createdAt: new Date(),
 					updatedAt: new Date(),
 					isGuest: false,

@@ -2,7 +2,7 @@ export interface UserResponse {
 	id: number;
 	email: string;
 	name: string;
-	image: string | null;
+	image: string;
 	createdAt: Date;
 	updatedAt: Date;
 	isGuest: boolean;
@@ -12,7 +12,7 @@ export interface UserResponseAPI {
 	id: number;
 	email: string;
 	name: string;
-	image: string | null;
+	image: string;
 	created_at: string;
 	updated_at: string;
 	is_guest: boolean;

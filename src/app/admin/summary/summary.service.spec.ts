@@ -79,7 +79,7 @@ describe("SummaryService", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,

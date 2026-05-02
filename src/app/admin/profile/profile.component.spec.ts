@@ -52,7 +52,7 @@ describe("ProfileComponent", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -80,7 +80,7 @@ describe("ProfileComponent", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -100,7 +100,7 @@ describe("ProfileComponent", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -121,7 +121,7 @@ describe("ProfileComponent", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -157,7 +157,7 @@ describe("ProfileComponent", () => {
 				id: 1,
 				name: "Test User",
 				email: "test@test.local",
-				image: null,
+				image: "",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isGuest: false,
@@ -188,7 +188,16 @@ describe("ProfileComponent", () => {
 		});
 
 		it("should call deleteProfile when Delete menu item is clicked", async () => {
-			getProfileServiceSpy$.mockReturnValue(of(null));
+			const profile: UserResponse = {
+				id: 1,
+				name: "Test User",
+				email: "test@test.local",
+				image: "",
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				isGuest: false,
+			};
+			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const deleteProfileSpy = vi.spyOn(profileService, "deleteProfile");
 			deleteProfileSpy.mockImplementation(() => {});
 			fixture.autoDetectChanges();
@@ -215,7 +224,16 @@ describe("ProfileComponent", () => {
 
 	describe("changeImg", () => {
 		it("should call openProfileImageCropperDialog when change image button is clicked", () => {
-			getProfileServiceSpy$.mockReturnValue(of(null));
+			const profile: UserResponse = {
+				id: 1,
+				name: "Test User",
+				email: "test@test.local",
+				image: "",
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				isGuest: false,
+			};
+			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const changeImgSpy = vi.spyOn(component, "changeImg");
 			const openCropperSpy = vi.spyOn(
 				profileService,
