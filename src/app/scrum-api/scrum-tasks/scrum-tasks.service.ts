@@ -42,10 +42,11 @@ export class ScrumTasksService {
 		);
 	}
 
-	deleteTask$(taskId: number): Observable<number | null> {
-		return this.http
-			.delete<number>(`${this.tasksEndpoint + taskId}/`)
-			.pipe(catchError(() => of(null)));
+	deleteTask$(taskId: number): Observable<boolean> {
+		return this.http.delete<boolean>(`${this.tasksEndpoint + taskId}/`).pipe(
+			map(() => true),
+			catchError(() => of(false)),
+		);
 	}
 
 	updateTask$(
