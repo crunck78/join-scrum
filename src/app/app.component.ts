@@ -1,9 +1,6 @@
 import { Component, inject } from "@angular/core";
-import type { MatDrawerMode } from "@angular/material/sidenav";
-import { map } from "rxjs";
 import { AppModule } from "./app.module";
-import { type ApiToken, ScrumApiService } from "./scrum-api/scrum-api.service";
-import { BreakpointsService } from "./shared/shared-services/breakpoints/breakpoints.service";
+import { AppService } from "./app.service";
 
 @Component({
 	selector: "app-root",
@@ -12,15 +9,13 @@ import { BreakpointsService } from "./shared/shared-services/breakpoints/breakpo
 	imports: [AppModule],
 })
 export class AppComponent {
-	private scrumApi = inject(ScrumApiService);
-	private breakpoints = inject(BreakpointsService);
+	private appService = inject(AppService);
 
-	title = "join";
-	web$ = this.breakpoints.matchesWebBreakpoint$.pipe(
-		map((matches) => (matches ? "side" : ("over" as MatDrawerMode))),
-	);
+	get web$() {
+		return this.appService.web$;
+	}
 
-	isLoggedIn$ = this.scrumApi.apiToken$.pipe(
-		map((apiToken: ApiToken) => !!apiToken.token),
-	);
+	get isLoggedIn$() {
+		return this.appService.isLoggedIn$;
+	}
 }
