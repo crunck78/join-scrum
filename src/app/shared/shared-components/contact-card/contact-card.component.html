@@ -1,13 +1,15 @@
+@if (contact) {
 <app-contact-initials
 	[size]="size"
-	[contactPhone]="contact?.phoneNumber"
-	[contactEmail]="contact?.email"
-	[contactName]="contact?.name"
+	[contactPhone]="contact.phoneNumber"
+	[contactEmail]="contact.email"
+	[contactName]="contact.name"
 ></app-contact-initials>
-<div class="text-left">
+<section class="text-left">
 	@if (showName) {
-	<div [style.fontSize]="size">{{ contact?.name }}</div>
+	<div [style.fontSize]="size">{{ contact.name }}</div>
 	} @if (!content.children.length) {
-	<app-email-link [email]="contact?.email"></app-email-link>}
+	<app-email-link [email]="contact.email"></app-email-link>}
 	<div #content><ng-content></ng-content></div>
-</div>
+</section>
+}

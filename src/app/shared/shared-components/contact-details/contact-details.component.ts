@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, inject, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialog } from "@angular/material/dialog";
 import type { ContactResponse } from "../../models/contact.model";
@@ -16,7 +16,7 @@ import { EmailLinkComponent } from "../email-link/email-link.component";
 export class ContactDetailsComponent {
 	private dialog = inject(MatDialog);
 
-	@Input() contact!: ContactResponse | null;
+	@Input() contact!: ContactResponse;
 	@Output() contactChange = new EventEmitter<ContactResponse>();
 
 	editContact() {
@@ -35,7 +35,7 @@ export class ContactDetailsComponent {
 	addToTask() {
 		const dialogRef = this.dialog.open(AddTaskDialogComponent);
 		dialogRef.componentInstance.predefinedTaskRequest = {
-			assignees: [this.contact?.id as number],
+			assignees: [this.contact.id],
 		};
 	}
 }

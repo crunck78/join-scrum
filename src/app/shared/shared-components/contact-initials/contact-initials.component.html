@@ -8,8 +8,8 @@
 	<img
 		class="person-img"
 		[src]="imgSrc || 'assets/person.svg'"
-		alt="person image"
+		alt="{{contactName ? contactName : 'Person'}} image"
 	>
-	} @else {<!-- {{contactName.substr(substrBegin, substrEnd)}} -->
+	} @else {
 	{{ contactInitials }}}
 </div>

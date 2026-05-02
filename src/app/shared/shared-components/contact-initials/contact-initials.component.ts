@@ -7,17 +7,17 @@ import { Component, Input } from "@angular/core";
 	imports: [],
 })
 export class ContactInitialsComponent {
-	@Input() contactName!: string | undefined;
+	@Input() contactName = "";
 	@Input() backgroundColor = "#FF7A00";
 	@Input() borderColor = "#FFFFFF";
 	@Input() size = "21px"; // font-size
-	@Input() imgSrc: string | null | undefined;
-	@Input() contactEmail!: string | undefined;
-	@Input() contactPhone!: string | undefined;
+	@Input() imgSrc = "";
+	@Input() contactEmail = "";
+	@Input() contactPhone = "";
 
 	get contactInitials() {
 		// Check if contactName is not null or undefined and has a length greater than 0
-		if (this.contactName && this.contactName.length > 0) {
+		if (this.contactName) {
 			const contactNames = this.contactName
 				.split(" ")
 				.filter((cn) => cn !== "");
@@ -30,7 +30,7 @@ export class ContactInitialsComponent {
 				: `${initials[0]}${initials[initials.length - 1]}`;
 		}
 
-		if (this.contactEmail && this.contactEmail.length > 0) {
+		if (this.contactEmail) {
 			const initials = this.contactEmail.split("@")[0].toUpperCase();
 
 			return initials.length === 1
@@ -38,7 +38,7 @@ export class ContactInitialsComponent {
 				: `${initials[0]}${initials[initials.length - 1]}`;
 		}
 
-		if (this.contactPhone && this.contactPhone.length > 0) {
+		if (this.contactPhone) {
 			return "#";
 		}
 

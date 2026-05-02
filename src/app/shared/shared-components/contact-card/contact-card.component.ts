@@ -10,8 +10,7 @@ import { EmailLinkComponent } from "../email-link/email-link.component";
 	imports: [ContactInitialsComponent, EmailLinkComponent],
 })
 export class ContactCardComponent {
-	@Input() contact!: ContactResponse | null;
+	@Input() contact!: ContactResponse;
 	@Input() size = "21px";
 	@Input() showName = true;
-	contentProjected = false;
 }

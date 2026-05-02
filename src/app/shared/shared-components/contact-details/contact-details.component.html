@@ -1,5 +1,11 @@
+@if (contact) {
 <app-contact-card [showName]="false" [size]="'42px'" [contact]="contact">
-	<button mat-button color="primary" (click)="addToTask()">
+	<button
+		aria-label="Add contact to Task"
+		mat-button
+		color="primary"
+		(click)="addToTask()"
+	>
 		<svg
 			width="17"
 			height="17"
@@ -22,7 +28,7 @@
 		</svg>
 		Add task
 	</button>
-	<button mat-button (click)="editContact()">
+	<button aria-label="Edit Contact" mat-button (click)="editContact()">
 		<svg
 			width="17"
 			height="17"
@@ -46,14 +52,15 @@
 <ng-container>
 	<div class="contact-information">
 		<h2>Contact Information</h2>
-		@if (contact?.name) {
+		@if (contact.name) {
 		<p><b>Name</b></p>
-		<div>{{ contact?.name }}</div>
-		} @if (contact?.email) {
+		<div>{{ contact.name }}</div>
+		} @if (contact.email) {
 		<p><b>Email</b></p>
-		<app-email-link [email]="contact?.email"></app-email-link>} @if
-		(contact?.phoneNumber) {
+		<app-email-link [email]="contact.email"></app-email-link>} @if
+		(contact.phoneNumber) {
 		<p><b>Phone </b></p>
-		<a>{{ contact?.phoneNumber }}</a>}
+		<a>{{ contact.phoneNumber }}</a>}
 	</div>
 </ng-container>
+}

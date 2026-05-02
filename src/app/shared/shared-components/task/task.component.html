@@ -22,8 +22,8 @@
 		@for (assignee of task.assignees; track assignee; let i = $index) { @if
 		(task.assignees.length > 3) { @if (i < 2) {
 		<app-contact-initials
-			[contactPhone]="assignee?.phoneNumber"
-			[contactEmail]="assignee?.email"
+			[contactPhone]="assignee.phoneNumber"
+			[contactEmail]="assignee.email"
 			[contactName]="assignee.name"
 		></app-contact-initials>
 		} @if (i === 3) {

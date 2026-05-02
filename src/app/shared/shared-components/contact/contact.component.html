@@ -1,17 +1,16 @@
 @if(contact) { @if (selected) {
 <button mat-raised-button color="primary">
-	<app-contact-card [contact]="contact" subtitle>
-		<!-- <span *ngIf="contact.name && !contact.email">{{contact.name}}</span> -->
-		@if (contact.phoneNumber && !contact.email && !contact.name) {
-		<a href="tel:{{contact.phoneNumber}}">{{ contact.phoneNumber }}</a>}
-	</app-contact-card>
+	<ng-container *ngTemplateOutlet="contactTemplate"></ng-container>
 </button>
 } @else {
 <button mat-stroked-button>
+	<ng-container *ngTemplateOutlet="contactTemplate"></ng-container>
+</button>
+} }
+
+<ng-template #contactTemplate>
 	<app-contact-card [contact]="contact" subtitle>
-		<!-- <span *ngIf="contact.name && !contact.email">{{contact.name}}</span> -->
 		@if (contact.phoneNumber && !contact.email && !contact.name) {
 		<a href="tel:{{contact.phoneNumber}}">{{ contact.phoneNumber }}</a>}
 	</app-contact-card>
-</button>
-} }
+</ng-template>
