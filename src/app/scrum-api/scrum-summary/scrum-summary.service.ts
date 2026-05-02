@@ -18,7 +18,7 @@ export class ScrumSummaryService {
 
 	getSummary$(): Observable<SummaryResponse | null> {
 		return this.http.get<SummaryResponseAPI>(this.summaryEndpoint).pipe(
-			map((summary) => (summary ? Summary.createInternalValue(summary) : null)),
+			map((summary) => Summary.createInternalValue(summary)),
 			catchError(() => of(null)),
 		);
 	}

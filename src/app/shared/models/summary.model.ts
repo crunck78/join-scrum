@@ -1,30 +1,30 @@
-interface TaskCategoryCountResponseAPI {
+export interface TaskCategoryCountResponseAPI {
 	category__name: string;
 	category__color: string;
 	count: number;
 	latest_due_date: string;
 }
 
-interface TaskCategoryCountResponse {
+export interface TaskCategoryCountResponse {
 	categoryName: string;
 	categoryColor: string;
 	count: number;
 	latestDueDate: Date;
 }
 
-interface TaskPriorityCountResponseAPI {
+export interface TaskPriorityCountResponseAPI {
 	priority: string;
 	count: number;
 	latest_due_date: string;
 }
 
-interface TaskPriorityCountResponse {
+export interface TaskPriorityCountResponse {
 	priority: string;
 	count: number;
 	latestDueDate: Date;
 }
 
-interface TaskListsCountResponseAPI {
+export interface TaskListsCountResponseAPI {
 	list__name: string;
 	count: number;
 	list__position: number;
@@ -32,7 +32,7 @@ interface TaskListsCountResponseAPI {
 	latest_due_date: string;
 }
 
-interface TaskListsCountResponse {
+export interface TaskListsCountResponse {
 	listName: string;
 	count: number;
 	listPosition: number;
@@ -40,12 +40,12 @@ interface TaskListsCountResponse {
 	latestDueDate: Date;
 }
 
-interface TasksInBacklogResponseAPI {
+export interface TasksInBacklogResponseAPI {
 	count: number;
 	latest_due_date: string;
 }
 
-interface TasksInBacklogResponse {
+export interface TasksInBacklogResponse {
 	count: number;
 	latestDueDate: Date;
 }
