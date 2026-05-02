@@ -8,7 +8,11 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
-import { Board, BoardResponseAPI } from "../../shared/models/board.model";
+import {
+	Board,
+	BoardRequest,
+	BoardResponseAPI,
+} from "../../shared/models/board.model";
 import { CategoryResponseAPI } from "../../shared/models/category.model";
 import { ContactResponseAPI } from "../../shared/models/contact.model";
 import { ListResponseAPI } from "../../shared/models/list.model";
@@ -72,7 +76,7 @@ const mockBoard: BoardResponseAPI = {
 	lists: [mockList],
 };
 
-const mockBoardRequest = { title: "New Board" };
+const mockBoardRequest: BoardRequest = { title: "New Board" };
 
 describe("ScrumBoardsService", () => {
 	let service: ScrumBoardsService;

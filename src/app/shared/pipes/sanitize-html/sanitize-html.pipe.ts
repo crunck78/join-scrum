@@ -5,7 +5,7 @@ import { DomSanitizer, type SafeHtml } from "@angular/platform-browser";
 	name: "sanitizeHtml",
 	standalone: true,
 })
-export class SanitizeHtmlPipe implements PipeTransform {
+export class ByPassSanitizeHtmlPipe implements PipeTransform {
 	private _sanitizer = inject(DomSanitizer);
 
 	transform(v: string): SafeHtml {

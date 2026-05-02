@@ -1,16 +1,16 @@
 import { TestBed } from "@angular/core/testing";
 import { DomSanitizer } from "@angular/platform-browser";
 
-import { SanitizeHtmlPipe } from "./sanitize-html.pipe";
+import { ByPassSanitizeHtmlPipe } from "./sanitize-html.pipe";
 
 // TODO: XSS check
 
 describe("SanitizeHtmlPipe", () => {
-	let pipe: SanitizeHtmlPipe;
+	let pipe: ByPassSanitizeHtmlPipe;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({ providers: [DomSanitizer] });
-		pipe = TestBed.runInInjectionContext(() => new SanitizeHtmlPipe());
+		pipe = TestBed.runInInjectionContext(() => new ByPassSanitizeHtmlPipe());
 	});
 
 	it("create an instance", () => {
