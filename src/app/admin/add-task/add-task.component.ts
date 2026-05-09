@@ -1,8 +1,8 @@
 import {
 	Component,
 	EventEmitter,
-	Input,
 	inject,
+	Input,
 	type OnChanges,
 	Output,
 	type SimpleChanges,
@@ -13,8 +13,7 @@ import {
 	FormGroup,
 	Validators,
 } from "@angular/forms";
-import type { MatSnackBarDismiss } from "@angular/material/snack-bar";
-import { type Observable, Subject, take } from "rxjs";
+import { type Observable } from "rxjs";
 import { CategoryResponse } from "../../shared/models/category.model";
 import { ContactResponse } from "../../shared/models/contact.model";
 import {
@@ -26,8 +25,6 @@ import {
 	TaskRequest,
 	TaskResponse,
 } from "../../shared/models/task.model";
-import { AddCategoryComponent } from "../../shared/shared-components/dialogs/add-category/add-category.component";
-import { AddContactComponent } from "../../shared/shared-components/dialogs/add-contact/add-contact.component";
 import { OptionType } from "../../shared/shared-components/form-field/form-field.component";
 import {
 	AddTaskModule,
@@ -91,7 +88,6 @@ export class AddTaskComponent implements OnChanges {
 	categories$!: Observable<CategoryResponse[]>;
 	contacts$!: Observable<ContactResponse[]>;
 	subtasks$!: Observable<SubtaskResponse[]>;
-	changingSubtaskTitle$ = new Subject<number | string>();
 
 	@Input() showPageTitle = true; // TODO: can not find usage references
 	@Input() task!: TaskResponse;
@@ -164,8 +160,7 @@ export class AddTaskComponent implements OnChanges {
 	}
 
 	addCategory() {
-		const dialogRef = this.addTaskService.dialog.open(AddCategoryComponent);
-		dialogRef.afterClosed().subscribe((newCategory) => {
+		this.addTaskService.openDialogAddCategory().subscribe((newCategory) => {
 			if (newCategory) this.updateCategories();
 		});
 	}
@@ -175,8 +170,7 @@ export class AddTaskComponent implements OnChanges {
 	}
 
 	addContact() {
-		const dialogRef = this.addTaskService.dialog.open(AddContactComponent);
-		dialogRef.afterClosed().subscribe((newContact) => {
+		this.addTaskService.openAddContactDialog().subscribe((newContact) => {
 			if (newContact) this.refreshContacts();
 		});
 	}
@@ -212,24 +206,10 @@ export class AddTaskComponent implements OnChanges {
 		this.addSubtaskForm.reset();
 	}
 
-	// TODO: is this used?
-	handleSelectSubtask(subtask: SubtaskResponse, checked: boolean) {
-		if (checked) this.pushSubtask(subtask);
-		else this.popSubtask(subtask);
-	}
-
 	pushSubtask(subtask: SubtaskRequest) {
 		const currentSubtasks =
 			(this.addTaskForm.get("subtasks")?.value as SubtaskRequest[]) || [];
 		currentSubtasks.push(subtask);
-		this.addTaskForm.get("subtasks")?.patchValue(currentSubtasks);
-	}
-
-	// TODO: is this used?
-	popSubtask(subtask: SubtaskRequest) {
-		const currentSubtasks = this.addTaskForm.get("subtasks")
-			?.value as SubtaskRequest[];
-		currentSubtasks.splice(currentSubtasks.indexOf(subtask), 1);
 		this.addTaskForm.get("subtasks")?.patchValue(currentSubtasks);
 	}
 
@@ -246,11 +226,6 @@ export class AddTaskComponent implements OnChanges {
 		this.addSubtaskForm.reset();
 	}
 
-	// TODO: is this used?
-	editSubtask(subtaskId: number | string) {
-		this.changingSubtaskTitle$.next(subtaskId);
-	}
-
 	saveTask() {
 		if (this.mode === "add") this.addTask();
 		if (this.mode === "edit") this.editTask();
@@ -258,42 +233,27 @@ export class AddTaskComponent implements OnChanges {
 
 	addTask() {
 		if (!this.addTaskForm.valid) return;
-		this.addTaskService.scrumTask
-			.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
-			.pipe(take(1))
+		this.addTaskService
+			.addTask(this.addTaskForm.value as Partial<TaskRequest>)
 			.subscribe((newTask) => {
 				if (!newTask) return;
 				this.addedTask$.emit(newTask);
-				const feedbackRef = this.addTaskService.feedback.openSnackBar(
-					"Task Created!",
-					"To Board",
-				);
-				feedbackRef?.afterDismissed().subscribe((value: MatSnackBarDismiss) => {
-					if (value.dismissedByAction)
-						this.addTaskService.router.navigate(["/board"]);
-				});
 			});
 	}
 
 	editTask() {
 		if (!this.addTaskForm.valid) return;
 		const toEditTask = this.addTaskForm.value as Partial<TaskRequest>;
-		this.addTaskService.scrumTask
-			.updateTask$(this.task.id, toEditTask)
-			.pipe(take(1))
-			.subscribe({
-				next: (res) => this.editedTask$.emit(res),
-			});
+		this.addTaskService.editTask(this.task.id, toEditTask).subscribe({
+			next: (res) => this.editedTask$.emit(res),
+		});
 	}
 
 	deleteTask() {
 		if (this.mode !== "edit") return;
-		this.addTaskService.scrumTask
-			.deleteTask$(this.task.id)
-			.pipe(take(1))
-			.subscribe({
-				next: () => this.deletedTaskId$.emit(this.task.id),
-			});
+		this.addTaskService.deleteTask(this.task.id).subscribe({
+			next: () => this.deletedTaskId$.emit(this.task.id),
+		});
 	}
 
 	resetAddTask() {

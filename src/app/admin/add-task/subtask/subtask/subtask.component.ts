@@ -10,10 +10,10 @@ import { ContentEditableComponent } from "../../../../shared/shared-components/c
 	imports: [MaterialModule, ContentEditableComponent],
 })
 export class SubtaskComponent {
-	changingSubtaskTitle$ = new Subject<number | string>();
+	changingSubtaskTitle$ = new Subject<number>();
 
 	@Input() subtask!: SubtaskRequest;
-	@Input() subtaskId!: number | string;
+	@Input() subtaskId!: number;
 
 	@Output() removeSubtask$ = new EventEmitter<SubtaskRequest>();
 

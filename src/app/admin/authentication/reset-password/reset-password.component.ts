@@ -28,11 +28,4 @@ export class ResetPasswordComponent {
 		const newPassword = this.resetPasswordForm.getRawValue().password;
 		this.resetPasswordService.resetPassword(newPassword);
 	}
-
-	// TODO: where is this been used? seems like password confirmation logic
-	matches(_left: FormControl, right: FormControl) {
-		return (left: FormControl) => {
-			right.valueChanges.subscribe(() => left.value === right);
-		};
-	}
 }

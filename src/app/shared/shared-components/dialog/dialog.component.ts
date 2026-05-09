@@ -9,5 +9,5 @@ import { LogoComponent } from "../logo/logo.component";
 	imports: [LogoComponent, MatDialogModule],
 })
 export class DialogComponent {
-	@Input() title!: string;
+	@Input() title = "";
 }

@@ -1,18 +1,49 @@
+import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import { DialogComponent } from "./dialog.component";
 
+@Component({
+	standalone: true,
+	imports: [DialogComponent],
+	template: `
+	<app-dialog [title]="'Test title'">
+		<ng-container side>
+			Side content
+		</ng-container>
+		<ng-container titleContentLeft>
+			Title content left
+		</ng-container>
+		<ng-container titleContentRight>
+			Title content right
+		</ng-container>
+		<ng-container actions>
+			Actions
+		</ng-container>
+	</app-dialog>`,
+})
+class TestHostComponent {}
+
 describe("DialogComponent", () => {
-	let component: DialogComponent;
-	let fixture: ComponentFixture<DialogComponent>;
+	let component: TestHostComponent;
+	let fixture: ComponentFixture<TestHostComponent>;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({ imports: [DialogComponent] });
-		fixture = TestBed.createComponent(DialogComponent);
+		TestBed.configureTestingModule({
+			imports: [DialogComponent, TestHostComponent],
+		});
+		fixture = TestBed.createComponent(TestHostComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
-		expect(component).toBeDefined();
+	it("should display contents and title", () => {
+		const debugElement = fixture.debugElement.query(By.css(".title-content"));
+		expect(debugElement).toBeDefined();
+		const titleContent = debugElement.nativeElement as HTMLElement;
+		console.log(titleContent);
+		expect(titleContent.innerText).toContain("Title content left");
+		expect(titleContent.innerText).toContain("Test title");
+		expect(titleContent.innerText).toContain("Title content right");
 	});
 });
