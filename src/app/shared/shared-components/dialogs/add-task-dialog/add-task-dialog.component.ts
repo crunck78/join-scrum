@@ -33,9 +33,9 @@ export class AddTaskDialogComponent implements OnInit {
 	task!: TaskResponse;
 	mode: TaskMode = "add";
 	formStatus!: FormControlStatus;
-	clearTaskForm = new EventEmitter();
-	deleteTask = new EventEmitter();
-	submitTaskForm = new EventEmitter();
+	clearTaskForm$ = new EventEmitter();
+	deleteTask$ = new EventEmitter();
+	submitTaskForm$ = new EventEmitter();
 	predefinedTaskRequest!: Partial<TaskRequest>;
 
 	ngOnInit(): void {

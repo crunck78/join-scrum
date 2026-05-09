@@ -128,10 +128,10 @@ describe("ScrumContactsService", () => {
 		});
 	});
 
-	describe("editContact$", () => {
+	describe("updateContact$", () => {
 		it("should return mapped contact on success", async () => {
 			const resultPromise = firstValueFrom(
-				service.editContact$(mockAssigneeRequest, 1),
+				service.updateContact$(mockAssigneeRequest, 1),
 			);
 			const req = httpTesting.expectOne(
 				`${CONTACTS_ENDPOINT + 1}/`,
@@ -151,7 +151,7 @@ describe("ScrumContactsService", () => {
 
 		it("should return null on error", async () => {
 			const resultPromise = firstValueFrom(
-				service.editContact$(mockAssigneeRequest, 1),
+				service.updateContact$(mockAssigneeRequest, 1),
 			);
 			const req = httpTesting.expectOne(
 				`${CONTACTS_ENDPOINT + 1}/`,

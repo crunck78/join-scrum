@@ -16,7 +16,7 @@ export interface SubtaskResponse {
 	title: string;
 	done: boolean;
 	createdAt: Date;
-	updateAt: Date;
+	updatedAt: Date;
 }
 
 export interface SubtaskResponseAPI {
@@ -33,7 +33,7 @@ export class Subtask {
 			title: subtask.title,
 			done: subtask.done,
 			createdAt: new Date(subtask.created_at),
-			updateAt: new Date(subtask.updated_at),
+			updatedAt: new Date(subtask.updated_at),
 			id: subtask.id,
 		};
 	}

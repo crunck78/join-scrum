@@ -42,7 +42,7 @@ const createBacklog = (): TaskResponse[] => [
 			name: "IT",
 			color: "#fff",
 			createdAt: new Date(),
-			updateAt: new Date(),
+			updatedAt: new Date(),
 		},
 		dueDate: new Date(),
 		assignees: [],

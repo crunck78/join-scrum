@@ -62,7 +62,7 @@ export class AddTaskService {
 		return this.scrumTask.deleteTask$(taskId).pipe(take(1));
 	}
 
-	openDialogAddCategory() {
+	openAddCategoryDialog() {
 		const dialogRef = this.dialog.open<
 			AddCategoryComponent,
 			any,

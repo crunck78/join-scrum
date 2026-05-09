@@ -104,9 +104,9 @@ export class AddTaskComponent implements OnChanges {
 	@Output() deletedTaskId$ = new EventEmitter<number | null>();
 
 	constructor() {
-		this.updateCategories();
-		this.refreshContacts();
-		this.updateSubtasks();
+		this.loadCategories();
+		this.loadContacts();
+		this.loadSubtasks();
 		this.addTaskForm.statusChanges.subscribe((status: FormControlStatus) =>
 			this.formStatus$.emit(status),
 		);
@@ -160,22 +160,22 @@ export class AddTaskComponent implements OnChanges {
 	}
 
 	addCategory() {
-		this.addTaskService.openDialogAddCategory().subscribe((newCategory) => {
-			if (newCategory) this.updateCategories();
+		this.addTaskService.openAddCategoryDialog().subscribe((newCategory) => {
+			if (newCategory) this.loadCategories();
 		});
 	}
 
-	updateCategories() {
+	loadCategories() {
 		this.categories$ = this.addTaskService.categories$;
 	}
 
 	addContact() {
 		this.addTaskService.openAddContactDialog().subscribe((newContact) => {
-			if (newContact) this.refreshContacts();
+			if (newContact) this.loadContacts();
 		});
 	}
 
-	refreshContacts() {
+	loadContacts() {
 		this.contacts$ = this.addTaskService.contacts$;
 	}
 
@@ -221,7 +221,7 @@ export class AddTaskComponent implements OnChanges {
 		this.addTaskForm.get("subtasks")?.patchValue(patchedSubtasks);
 	}
 
-	updateSubtasks() {
+	loadSubtasks() {
 		this.subtasks$ = this.addTaskService.subtasks$;
 		this.addSubtaskForm.reset();
 	}

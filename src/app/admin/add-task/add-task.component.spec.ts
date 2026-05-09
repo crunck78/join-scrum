@@ -268,7 +268,7 @@ describe("AddTaskComponent", () => {
 				name: "Bug",
 				color: "#ff0000",
 				createdAt: new Date(),
-				updateAt: new Date(),
+				updatedAt: new Date(),
 				id: 1,
 			} as CategoryResponse,
 			assignees: <ContactResponse[]>[

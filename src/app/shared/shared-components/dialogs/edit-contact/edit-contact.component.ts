@@ -42,7 +42,7 @@ export class EditContactComponent {
 	editContact() {
 		if (this.editContactForm.valid) {
 			this.scrumContacts
-				.editContact$(
+				.updateContact$(
 					this.editContactForm.value as Partial<ContactRequest>,
 					this.contactToEdit,
 				)

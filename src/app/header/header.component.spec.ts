@@ -91,7 +91,7 @@ describe("HeaderComponent", () => {
 		it("should emit toggleDrawer when menu button is clicked", () => {
 			fixture.autoDetectChanges();
 
-			const toggleDrawerSpy = vi.spyOn(component.toggleDrawer, "emit");
+			const toggleDrawerSpy = vi.spyOn(component.toggleDrawer$, "emit");
 			const menuButton: HTMLButtonElement = (
 				fixture.nativeElement.querySelector(
 					"button mat-icon",

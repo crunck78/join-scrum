@@ -8,9 +8,9 @@
 		[predefinedTaskRequest]="predefinedTaskRequest"
 		(formStatus$)="updateFormStatus($event)"
 		[showPageTitle]="false"
-		[deleteTask$]="deleteTask"
-		[clearTaskForm$]="clearTaskForm"
-		[submitTaskForm$]="submitTaskForm"
+		[deleteTask$]="deleteTask$"
+		[clearTaskForm$]="clearTaskForm$"
+		[submitTaskForm$]="submitTaskForm$"
 		[hideFooter]="true"
 		[mode]="mode"
 		[task]="task"
@@ -19,16 +19,16 @@
 	<div class="footer" actions>
 		<div class="simple-grid">
 			@if (mode === 'edit') {
-			<button (click)="deleteTask.emit()" color="warn" mat-stroked-button>
+			<button (click)="deleteTask$.emit()" color="warn" mat-stroked-button>
 				Delete
 			</button>
 			}
-			<button (click)="clearTaskForm.emit()" mat-stroked-button color="primary">
+			<button (click)="clearTaskForm$.emit()" mat-stroked-button color="primary">
 				Clear
 			</button>
 			<button
 				[disabled]="formStatus && formStatus !== 'VALID'"
-				(click)="submitTaskForm.emit()"
+				(click)="submitTaskForm$.emit()"
 				mat-raised-button
 				color="primary"
 			>

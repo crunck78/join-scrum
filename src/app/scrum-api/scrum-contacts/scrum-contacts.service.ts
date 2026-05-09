@@ -38,7 +38,7 @@ export class ScrumContactsService {
 			);
 	}
 
-	editContact$(
+	updateContact$(
 		contact: Partial<ContactRequest>,
 		contactId: number,
 	): Observable<ContactResponse | null> {

@@ -7,7 +7,7 @@ const mockCategory: CategoryResponse = {
 	name: "Development",
 	color: "#ff0000",
 	createdAt: new Date(),
-	updateAt: new Date(),
+	updatedAt: new Date(),
 };
 
 describe("CategoryCardComponent", () => {

@@ -13,7 +13,7 @@ export type OpenCloseStatus = "closed" | "open";
 })
 export class HeaderComponent {
 	private headerService = inject(HeaderService);
-	@Output() toggleDrawer = new EventEmitter();
+	@Output() toggleDrawer$ = new EventEmitter();
 	headerState$ = new BehaviorSubject<OpenCloseStatus>("closed");
 
 	arrowTransform$ = this.headerState$.pipe(
