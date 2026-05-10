@@ -6,8 +6,13 @@ import { MatMenuHarness } from "@angular/material/menu/testing";
 import { Observable, of, tap } from "rxjs";
 import { Mock } from "vitest";
 import { BoardResponse } from "../../shared/models/board.model";
-import { ListResponse } from "../../shared/models/list.model";
 import { TaskRequest, TaskResponse } from "../../shared/models/task.model";
+import {
+	createBoardResponse,
+	createCategoryResponse,
+	createListResponse,
+	createTaskResponse,
+} from "../../testing/fixtures";
 import { BoardComponent } from "./board.component";
 import { BoardService } from "./board.service";
 
@@ -44,13 +49,7 @@ describe("BoardComponent", () => {
 	});
 
 	it("should create board", async () => {
-		const board: BoardResponse = {
-			title: "First Board",
-			id: "1",
-			lists: [],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
+		const board = createBoardResponse({ title: "First Board" });
 
 		getBoardServiceSpy.mockReturnValue(of(null));
 		getBacklogServiceSpy.mockReturnValue(of([]));
@@ -87,21 +86,8 @@ describe("BoardComponent", () => {
 	});
 
 	it("should create list", async () => {
-		const board: BoardResponse = {
-			title: "First Board",
-			id: "1",
-			lists: [],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
-		const list: ListResponse = {
-			id: 1,
-			name: "TODO",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			position: 0,
-			tasks: [],
-		};
+		const board = createBoardResponse({ title: "First Board" });
+		const list = createListResponse();
 		getBoardServiceSpy.mockReturnValue(of(board));
 		getBacklogServiceSpy.mockReturnValue(of([]));
 		fixture.autoDetectChanges();
@@ -134,21 +120,8 @@ describe("BoardComponent", () => {
 	});
 
 	it("should update list name", async () => {
-		const list: ListResponse = {
-			id: 1,
-			name: "TODO",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			position: 0,
-			tasks: [],
-		};
-		const board: BoardResponse = {
-			title: "First Board",
-			id: "1",
-			lists: [list],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
+		const list = createListResponse();
+		const board = createBoardResponse({ title: "First Board", lists: [list] });
 		getBoardServiceSpy.mockReturnValue(of(board));
 		getBacklogServiceSpy.mockReturnValue(of([]));
 		fixture.autoDetectChanges();
@@ -194,21 +167,8 @@ describe("BoardComponent", () => {
 	});
 
 	it("should delete list", async () => {
-		const list: ListResponse = {
-			id: 1,
-			name: "TODO",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			position: 0,
-			tasks: [],
-		};
-		const board: BoardResponse = {
-			title: "First Board",
-			id: "1",
-			lists: [list],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
+		const list = createListResponse();
+		const board = createBoardResponse({ title: "First Board", lists: [list] });
 		getBoardServiceSpy.mockReturnValue(of(board));
 		getBacklogServiceSpy.mockReturnValue(of([]));
 		fixture.autoDetectChanges();
@@ -233,7 +193,7 @@ describe("BoardComponent", () => {
 
 		expect(buttonListMenu).toBeTruthy();
 
-		buttonListMenu.click(); // to open the target menu
+		buttonListMenu.click();
 
 		const matMenus = await loader.getAllHarnesses(MatMenuHarness);
 		for (let index = 0; index < matMenus.length; index++) {
@@ -258,34 +218,9 @@ describe("BoardComponent", () => {
 	});
 
 	it("should clear backlog", async () => {
-		const task: TaskResponse = {
-			id: 1,
-			title: "Todo",
-			description: "",
-			category: {
-				id: 1,
-				name: "IT",
-				color: "#ff8899",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			},
-			assignees: [],
-			dueDate: new Date(),
-			priority: "Low",
-			subtasks: [],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			position: 0,
-		};
-
+		const task = createTaskResponse({ title: "Todo", category: createCategoryResponse() });
 		const backlog: TaskResponse[] = [task];
-		const board: BoardResponse = {
-			title: "First Board",
-			id: "1",
-			lists: [],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
+		const board = createBoardResponse({ title: "First Board" });
 		getBoardServiceSpy.mockReturnValue(of(board));
 		getBacklogServiceSpy.mockReturnValue(of(backlog));
 		fixture.autoDetectChanges();
@@ -311,7 +246,7 @@ describe("BoardComponent", () => {
 
 		expect(buttonBacklogMenu).toBeTruthy();
 
-		buttonBacklogMenu.click(); // to open the target menu
+		buttonBacklogMenu.click();
 
 		const matMenus = await loader.getAllHarnesses(MatMenuHarness);
 		for (let index = 0; index < matMenus.length; index++) {
@@ -335,44 +270,10 @@ describe("BoardComponent", () => {
 	});
 
 	it("should drop task from backlog to list", async () => {
-		const task: TaskResponse = {
-			id: 1,
-			title: "Todo",
-			description: "",
-			category: {
-				id: 1,
-				name: "IT",
-				color: "#ff8899",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			},
-			assignees: [],
-			dueDate: new Date(),
-			priority: "Low",
-			subtasks: [],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			position: 0,
-		};
-
+		const task = createTaskResponse({ title: "Todo", category: createCategoryResponse() });
 		const backlog: TaskResponse[] = [task];
-
-		const list: ListResponse = {
-			id: 1,
-			name: "TODO",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			position: 0,
-			tasks: [],
-		};
-
-		const board: BoardResponse = {
-			title: "First Board",
-			id: "1",
-			lists: [list],
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
+		const list = createListResponse();
+		const board = createBoardResponse({ title: "First Board", lists: [list] });
 
 		getBoardServiceSpy.mockReturnValue(of(board));
 		getBacklogServiceSpy.mockReturnValue(of(backlog));

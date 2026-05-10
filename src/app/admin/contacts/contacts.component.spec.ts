@@ -4,6 +4,7 @@ import { Observable, of, tap } from "rxjs";
 import { Mock } from "vitest";
 import { ContactResponse } from "../../shared/models/contact.model";
 import { ContactDetailsComponent } from "../../shared/shared-components/contact-details/contact-details.component";
+import { createContactResponse } from "../../testing/fixtures";
 import { ContactsComponent } from "./contacts.component";
 import { ContactsService } from "./contacts.service";
 
@@ -12,6 +13,8 @@ describe("ContactsComponent", () => {
 	let fixture: ComponentFixture<ContactsComponent>;
 	let contactsService: ContactsService;
 	let getContactsServiceSpy$: Mock<() => Observable<ContactResponse[]>>;
+
+	const contact = createContactResponse({ email: "John", name: "Doe", phoneNumber: "015777777777" });
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -34,14 +37,6 @@ describe("ContactsComponent", () => {
 	});
 
 	it("should show contact", () => {
-		const contact: ContactResponse = {
-			id: 1,
-			email: "John",
-			name: "Doe",
-			phoneNumber: "015777777777",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
 		getContactsServiceSpy$.mockReturnValue(of([contact]));
 		fixture.autoDetectChanges();
 
@@ -50,14 +45,6 @@ describe("ContactsComponent", () => {
 
 	it("should called addContact when action button is clicked", () => {
 		getContactsServiceSpy$.mockReturnValue(of([]));
-		const toAddContact: ContactResponse = {
-			id: 1,
-			email: "John",
-			name: "Doe",
-			phoneNumber: "015777777777",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
 
 		const addContactSpy = vi.spyOn(component, "addContact");
 		const afterAddContactServiceSpy = vi.spyOn(
@@ -65,10 +52,10 @@ describe("ContactsComponent", () => {
 			"openAddContactDialog",
 		);
 		afterAddContactServiceSpy.mockReturnValue(
-			of(toAddContact).pipe(
+			of(contact).pipe(
 				tap({
 					next: () => {
-						getContactsServiceSpy$.mockReturnValue(of([toAddContact]));
+						getContactsServiceSpy$.mockReturnValue(of([contact]));
 					},
 				}),
 			),
@@ -80,18 +67,10 @@ describe("ContactsComponent", () => {
 
 		expect(afterAddContactServiceSpy).toHaveBeenCalledOnce();
 		expect(addContactSpy).toHaveBeenCalledTimes(1);
-		expect(component.contacts).toEqual([toAddContact]);
+		expect(component.contacts).toEqual([contact]);
 	});
 
 	it("should set selectedContact when app-contact is clicked", () => {
-		const contact: ContactResponse = {
-			id: 1,
-			email: "John",
-			name: "Doe",
-			phoneNumber: "015777777777",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
 		getContactsServiceSpy$.mockReturnValue(of([contact]));
 		fixture.autoDetectChanges();
 
@@ -103,14 +82,6 @@ describe("ContactsComponent", () => {
 
 	it("should called closeSelectedContact when action button is clicked", () => {
 		const closeSelectedContactSpy = vi.spyOn(component, "closeSelectedContact");
-		const contact: ContactResponse = {
-			id: 1,
-			email: "John",
-			name: "Doe",
-			phoneNumber: "015777777777",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
 		getContactsServiceSpy$.mockReturnValue(of([contact]));
 		component.selectedContact = contact;
 		fixture.autoDetectChanges();
@@ -125,14 +96,6 @@ describe("ContactsComponent", () => {
 
 	it("should called deleteContact when action button is clicked", () => {
 		const deleteContactSpy = vi.spyOn(component, "deleteContact");
-		const contact: ContactResponse = {
-			id: 1,
-			email: "John",
-			name: "Doe",
-			phoneNumber: "015777777777",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
 		getContactsServiceSpy$.mockReturnValue(of([contact]));
 		component.selectedContact = contact;
 		const deleteContactServiceSpy = vi.spyOn(contactsService, "deleteContact$");
@@ -157,14 +120,6 @@ describe("ContactsComponent", () => {
 	});
 
 	it("should called refreshContacts when contactChanged emits", () => {
-		const contact: ContactResponse = {
-			id: 1,
-			email: "John",
-			name: "Doe",
-			phoneNumber: "015777777777",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
 		getContactsServiceSpy$.mockReturnValue(of([contact]));
 		component.selectedContact = contact;
 		fixture.autoDetectChanges();

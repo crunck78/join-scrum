@@ -2,9 +2,8 @@ import { TestBed } from "@angular/core/testing";
 import { firstValueFrom, of, Subject } from "rxjs";
 import { ScrumProfileService } from "../../scrum-api/scrum-profile/scrum-profile.service";
 import { ScrumSummaryService } from "../../scrum-api/scrum-summary/scrum-summary.service";
-import { SummaryResponse } from "../../shared/models/summary.model";
-import { UserResponse } from "../../shared/models/user.model";
 import { BreakpointsService } from "../../shared/shared-services/breakpoints/breakpoints.service";
+import { createSummaryResponse, createUserResponse } from "../../testing/fixtures";
 import { SummaryService } from "./summary.service";
 
 describe("SummaryService", () => {
@@ -51,12 +50,7 @@ describe("SummaryService", () => {
 		});
 
 		it("should return summary", async () => {
-			const summary: SummaryResponse = {
-				tasksByCategory: [],
-				tasksByPriority: [],
-				tasksInLists: [],
-				tasksInBacklog: { count: 3, latestDueDate: new Date() },
-			};
+			const summary = createSummaryResponse({ tasksInBacklog: { count: 3, latestDueDate: new Date() } });
 			getSummary$.mockReturnValue(of(summary));
 
 			const result = await firstValueFrom(service.summary$);
@@ -75,15 +69,7 @@ describe("SummaryService", () => {
 		});
 
 		it("should return profile", async () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfile$.mockReturnValue(of(profile));
 
 			const result = await firstValueFrom(service.profile$);

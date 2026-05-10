@@ -4,6 +4,7 @@ import { Observable, of } from "rxjs";
 import { Mock } from "vitest";
 import { SummaryResponse } from "../../shared/models/summary.model";
 import { UserResponse } from "../../shared/models/user.model";
+import { createSummaryResponse, createUserResponse } from "../../testing/fixtures";
 import { SummaryComponent } from "./summary.component";
 import { SummaryService } from "./summary.service";
 
@@ -35,24 +36,17 @@ describe("SummaryComponent", () => {
 
 	it("should create", () => {
 		fixture.autoDetectChanges();
-
 		expect(component).toBeDefined();
 	});
 
 	describe("summary", () => {
 		it("should be null when summary$ returns null", () => {
 			fixture.autoDetectChanges();
-
 			expect(component.summary).toBeNull();
 		});
 
 		it("should be set when summary$ returns data", () => {
-			const summary: SummaryResponse = {
-				tasksByCategory: [],
-				tasksByPriority: [],
-				tasksInLists: [],
-				tasksInBacklog: { count: 3, latestDueDate: new Date() },
-			};
+			const summary = createSummaryResponse({ tasksInBacklog: { count: 3, latestDueDate: new Date() } });
 			getSummaryServiceSpy$.mockReturnValue(of(summary));
 			fixture.autoDetectChanges();
 
@@ -68,15 +62,7 @@ describe("SummaryComponent", () => {
 		});
 
 		it("should be set when profile$ returns data", () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			fixture.autoDetectChanges();
 
@@ -92,14 +78,7 @@ describe("SummaryComponent", () => {
 		});
 
 		it("should return true when all counts are zero", () => {
-			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [],
-					tasksByPriority: [],
-					tasksInLists: [],
-					tasksInBacklog: { count: 0, latestDueDate: new Date() },
-				}),
-			);
+			getSummaryServiceSpy$.mockReturnValue(of(createSummaryResponse()));
 			fixture.autoDetectChanges();
 
 			expect(component.summaryEmpty).toBe(true);
@@ -107,12 +86,7 @@ describe("SummaryComponent", () => {
 
 		it("should return false when summary has data", () => {
 			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [],
-					tasksByPriority: [],
-					tasksInLists: [],
-					tasksInBacklog: { count: 5, latestDueDate: new Date() },
-				}),
+				of(createSummaryResponse({ tasksInBacklog: { count: 5, latestDueDate: new Date() } })),
 			);
 			fixture.autoDetectChanges();
 
@@ -150,14 +124,9 @@ describe("SummaryComponent", () => {
 	describe("tasks by priority", () => {
 		it("should show 'Task' for a single task", () => {
 			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [],
-					tasksByPriority: [
-						{ priority: "Low", count: 1, latestDueDate: new Date() },
-					],
-					tasksInLists: [],
-					tasksInBacklog: { count: 0, latestDueDate: new Date() },
-				}),
+				of(createSummaryResponse({
+					tasksByPriority: [{ priority: "Low", count: 1, latestDueDate: new Date() }],
+				})),
 			);
 			fixture.autoDetectChanges();
 
@@ -171,14 +140,9 @@ describe("SummaryComponent", () => {
 
 		it("should show 'Tasks' for multiple tasks", () => {
 			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [],
-					tasksByPriority: [
-						{ priority: "High", count: 3, latestDueDate: new Date() },
-					],
-					tasksInLists: [],
-					tasksInBacklog: { count: 0, latestDueDate: new Date() },
-				}),
+				of(createSummaryResponse({
+					tasksByPriority: [{ priority: "High", count: 3, latestDueDate: new Date() }],
+				})),
 			);
 			fixture.autoDetectChanges();
 
@@ -193,20 +157,9 @@ describe("SummaryComponent", () => {
 	describe("tasks in lists", () => {
 		it("should show list name and 'Task' for a single task", () => {
 			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [],
-					tasksByPriority: [],
-					tasksInLists: [
-						{
-							listName: "TODO",
-							count: 1,
-							listPosition: 0,
-							listBoardTitle: "Board",
-							latestDueDate: new Date(),
-						},
-					],
-					tasksInBacklog: { count: 0, latestDueDate: new Date() },
-				}),
+				of(createSummaryResponse({
+					tasksInLists: [{ listName: "TODO", count: 1, listPosition: 0, listBoardTitle: "Board", latestDueDate: new Date() }],
+				})),
 			);
 			fixture.autoDetectChanges();
 
@@ -220,20 +173,9 @@ describe("SummaryComponent", () => {
 
 		it("should show 'Tasks' for multiple tasks", () => {
 			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [],
-					tasksByPriority: [],
-					tasksInLists: [
-						{
-							listName: "In Progress",
-							count: 5,
-							listPosition: 1,
-							listBoardTitle: "Board",
-							latestDueDate: new Date(),
-						},
-					],
-					tasksInBacklog: { count: 0, latestDueDate: new Date() },
-				}),
+				of(createSummaryResponse({
+					tasksInLists: [{ listName: "In Progress", count: 5, listPosition: 1, listBoardTitle: "Board", latestDueDate: new Date() }],
+				})),
 			);
 			fixture.autoDetectChanges();
 
@@ -246,17 +188,7 @@ describe("SummaryComponent", () => {
 
 	describe("greeting", () => {
 		it("should show profile name when profile has a name", () => {
-			getProfileServiceSpy$.mockReturnValue(
-				of({
-					id: 1,
-					name: "John Doe",
-					email: "john@test.local",
-					image: "",
-					createdAt: new Date(),
-					updatedAt: new Date(),
-					isGuest: false,
-				}),
-			);
+			getProfileServiceSpy$.mockReturnValue(of(createUserResponse({ name: "John Doe", email: "john@test.local" })));
 			fixture.autoDetectChanges();
 
 			const titleEl = fixture.nativeElement.querySelector(
@@ -266,17 +198,7 @@ describe("SummaryComponent", () => {
 		});
 
 		it("should show profile email when profile has no name", () => {
-			getProfileServiceSpy$.mockReturnValue(
-				of({
-					id: 1,
-					name: "",
-					email: "john@test.local",
-					image: "",
-					createdAt: new Date(),
-					updatedAt: new Date(),
-					isGuest: false,
-				}),
-			);
+			getProfileServiceSpy$.mockReturnValue(of(createUserResponse({ name: "", email: "john@test.local" })));
 			fixture.autoDetectChanges();
 
 			const titleEl = fixture.nativeElement.querySelector(
@@ -298,19 +220,9 @@ describe("SummaryComponent", () => {
 	describe("tasks by category", () => {
 		it("should show 'Task' for a single task", () => {
 			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [
-						{
-							categoryName: "IT",
-							categoryColor: "#ff0000",
-							count: 1,
-							latestDueDate: new Date(),
-						},
-					],
-					tasksByPriority: [],
-					tasksInLists: [],
-					tasksInBacklog: { count: 0, latestDueDate: new Date() },
-				}),
+				of(createSummaryResponse({
+					tasksByCategory: [{ categoryName: "IT", categoryColor: "#ff0000", count: 1, latestDueDate: new Date() }],
+				})),
 			);
 			fixture.autoDetectChanges();
 
@@ -323,19 +235,9 @@ describe("SummaryComponent", () => {
 
 		it("should show 'Tasks' for multiple tasks", () => {
 			getSummaryServiceSpy$.mockReturnValue(
-				of({
-					tasksByCategory: [
-						{
-							categoryName: "IT",
-							categoryColor: "#ff0000",
-							count: 4,
-							latestDueDate: new Date(),
-						},
-					],
-					tasksByPriority: [],
-					tasksInLists: [],
-					tasksInBacklog: { count: 0, latestDueDate: new Date() },
-				}),
+				of(createSummaryResponse({
+					tasksByCategory: [{ categoryName: "IT", categoryColor: "#ff0000", count: 4, latestDueDate: new Date() }],
+				})),
 			);
 			fixture.autoDetectChanges();
 

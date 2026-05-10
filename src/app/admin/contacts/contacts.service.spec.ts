@@ -2,8 +2,8 @@ import { TestBed } from "@angular/core/testing";
 import { MatDialog } from "@angular/material/dialog";
 import { firstValueFrom, of, Subject } from "rxjs";
 import { ScrumContactsService } from "../../scrum-api/scrum-contacts/scrum-contacts.service";
-import { ContactResponse } from "../../shared/models/contact.model";
 import { BreakpointsService } from "../../shared/shared-services/breakpoints/breakpoints.service";
+import { createContactResponse } from "../../testing/fixtures";
 import { ContactsService } from "./contacts.service";
 
 describe("ContactsService", () => {
@@ -50,14 +50,7 @@ describe("ContactsService", () => {
 		});
 
 		it("should return contacts when there are any", async () => {
-			const contact: ContactResponse = {
-				id: 1,
-				createdAt: new Date(),
-				email: "contact@test.local",
-				name: "Test Contact",
-				phoneNumber: "01222222222",
-				updatedAt: new Date(),
-			};
+			const contact = createContactResponse();
 			getContacts$.mockReturnValue(of([contact]));
 
 			const result = await firstValueFrom(service.contacts$);
@@ -97,14 +90,7 @@ describe("ContactsService", () => {
 		});
 
 		it("should return new contact after dialog closed", async () => {
-			const contact: ContactResponse = {
-				id: 1,
-				createdAt: new Date(),
-				email: "contact@test.local",
-				name: "Test Contact",
-				phoneNumber: "01222222222",
-				updatedAt: new Date(),
-			};
+			const contact = createContactResponse();
 			dialogOpen.mockReturnValue({ afterClosed: () => of(contact) });
 
 			const result = await firstValueFrom(service.openAddContactDialog());

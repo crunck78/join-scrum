@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { firstValueFrom, of } from "rxjs";
 import { ScrumApiService } from "../../scrum-api/scrum-api.service";
 import { ScrumProfileService } from "../../scrum-api/scrum-profile/scrum-profile.service";
-import { UserResponse } from "../../shared/models/user.model";
+import { createUserResponse } from "../../testing/fixtures";
 import { ProfileService } from "./profile.service";
 
 describe("ProfileService", () => {
@@ -49,15 +49,7 @@ describe("ProfileService", () => {
 		});
 
 		it("should return the user profile", async () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfile$.mockReturnValue(of(profile));
 
 			const result = await firstValueFrom(service.profile$);
@@ -75,15 +67,7 @@ describe("ProfileService", () => {
 				},
 				afterClosed: () => of(null),
 			});
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 
 			const result = await firstValueFrom(
 				service.openEditProfileDialog(profile),
@@ -93,15 +77,7 @@ describe("ProfileService", () => {
 		});
 
 		it("should return the edited profile when dialog is saved", async () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			dialogOpen.mockReturnValue({
 				componentInstance: {
 					profileToEdit: 0,
@@ -118,15 +94,7 @@ describe("ProfileService", () => {
 		});
 
 		it("should set profileToEdit id and patch form on dialog componentInstance", async () => {
-			const profile: UserResponse = {
-				id: 42,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse({ id: 42 });
 			const patchValue = vi.fn();
 			const componentInstance = {
 				profileToEdit: 0,

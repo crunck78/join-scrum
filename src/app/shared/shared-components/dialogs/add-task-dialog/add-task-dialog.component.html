@@ -7,7 +7,6 @@
 		(editedTask$)="handleEditedTask($any($event))"
 		[predefinedTaskRequest]="predefinedTaskRequest"
 		(formStatus$)="updateFormStatus($event)"
-		[showPageTitle]="false"
 		[deleteTask$]="deleteTask$"
 		[clearTaskForm$]="clearTaskForm$"
 		[submitTaskForm$]="submitTaskForm$"
@@ -23,7 +22,11 @@
 				Delete
 			</button>
 			}
-			<button (click)="clearTaskForm$.emit()" mat-stroked-button color="primary">
+			<button
+				(click)="clearTaskForm$.emit()"
+				mat-stroked-button
+				color="primary"
+			>
 				Clear
 			</button>
 			<button

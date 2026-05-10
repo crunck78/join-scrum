@@ -89,7 +89,6 @@ export class AddTaskComponent implements OnChanges {
 	contacts$!: Observable<ContactResponse[]>;
 	subtasks$!: Observable<SubtaskResponse[]>;
 
-	@Input() showPageTitle = true; // TODO: can not find usage references
 	@Input() task!: TaskResponse;
 	@Input() mode: TaskMode = "add";
 	@Input() hideFooter = false;

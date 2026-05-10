@@ -5,6 +5,7 @@ import { MatMenuHarness } from "@angular/material/menu/testing";
 import { Observable, of } from "rxjs";
 import { Mock } from "vitest";
 import { UserResponse } from "../../shared/models/user.model";
+import { createUserResponse } from "../../testing/fixtures";
 import { ProfileComponent } from "./profile.component";
 import { ProfileService } from "./profile.service";
 
@@ -48,15 +49,7 @@ describe("ProfileComponent", () => {
 		});
 
 		it("should set profile when profile is loaded", () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			fixture.autoDetectChanges();
 
@@ -76,15 +69,7 @@ describe("ProfileComponent", () => {
 		});
 
 		it("should open edit dialog when profile exists", () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const openEditSpy = vi.spyOn(profileService, "openEditProfileDialog");
 			openEditSpy.mockReturnValue(of(null));
@@ -96,15 +81,7 @@ describe("ProfileComponent", () => {
 		});
 
 		it("should refresh profile when dialog is closed with a result", () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const openEditSpy = vi.spyOn(profileService, "openEditProfileDialog");
 			openEditSpy.mockReturnValue(of(profile));
@@ -117,15 +94,7 @@ describe("ProfileComponent", () => {
 		});
 
 		it("should not refresh profile when dialog is closed without saving", () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const openEditSpy = vi.spyOn(profileService, "openEditProfileDialog");
 			openEditSpy.mockReturnValue(of(null));
@@ -153,15 +122,7 @@ describe("ProfileComponent", () => {
 
 	describe("profile menu", () => {
 		it("should call editProfile when Edit menu item is clicked", async () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const editProfileSpy = vi.spyOn(component, "editProfile");
 			const openEditSpy = vi.spyOn(profileService, "openEditProfileDialog");
@@ -188,15 +149,7 @@ describe("ProfileComponent", () => {
 		});
 
 		it("should call deleteProfile when Delete menu item is clicked", async () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const deleteProfileSpy = vi.spyOn(profileService, "deleteProfile");
 			deleteProfileSpy.mockImplementation(() => {});
@@ -224,15 +177,7 @@ describe("ProfileComponent", () => {
 
 	describe("changeImg", () => {
 		it("should call openProfileImageCropperDialog when change image button is clicked", () => {
-			const profile: UserResponse = {
-				id: 1,
-				name: "Test User",
-				email: "test@test.local",
-				image: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				isGuest: false,
-			};
+			const profile = createUserResponse();
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			const changeImgSpy = vi.spyOn(component, "changeImg");
 			const openCropperSpy = vi.spyOn(

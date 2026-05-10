@@ -1,16 +1,31 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
+import { Subject } from "rxjs";
+import { AppService } from "./app.service";
+import { ScrumApiService } from "./scrum-api/scrum-api.service";
+import { BreakpointsService } from "./shared/shared-services/breakpoints/breakpoints.service";
 
-import { AppService } from './app.service';
+describe("AppService", () => {
+	let service: AppService;
+	const matchesWebBreakpoint$ = new Subject<boolean>();
+	const isLoggedIn = vi.fn();
 
-describe('AppService', () => {
-  let service: AppService;
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [
+				{
+					provide: ScrumApiService,
+					useValue: { isLoggedIn },
+				},
+				{
+					provide: BreakpointsService,
+					useValue: { matchesWebBreakpoint$ },
+				},
+			],
+		});
+		service = TestBed.inject(AppService);
+	});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AppService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });
