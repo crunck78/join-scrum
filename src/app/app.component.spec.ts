@@ -1,15 +1,22 @@
+import { HarnessLoader } from "@angular/cdk/testing";
+import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { BehaviorSubject, firstValueFrom, Observable, of } from "rxjs";
+import { MatDrawerHarness } from "@angular/material/sidenav/testing";
+import { By } from "@angular/platform-browser";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Mock } from "vitest";
 import { AppComponent } from "./app.component";
 import { AppService } from "./app.service";
+import { HeaderComponent } from "./header/header.component";
 
 describe("AppComponent", () => {
-	let component: AppComponent;
 	let fixture: ComponentFixture<AppComponent>;
 	let appService: AppService;
 	let getIsLoggedInSpy$: Mock<() => Observable<boolean>>;
 	let getWebSpy$: Mock<() => Observable<string>>;
+	let loader: HarnessLoader;
+	let web$: BehaviorSubject<string>;
+	let isLoggedIn$: BehaviorSubject<boolean>;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -19,49 +26,41 @@ describe("AppComponent", () => {
 		appService = TestBed.inject(AppService);
 		getIsLoggedInSpy$ = vi.spyOn(appService, "isLoggedIn$", "get");
 		getWebSpy$ = vi.spyOn(appService, "web$", "get");
+
 		fixture = TestBed.createComponent(AppComponent);
-		component = fixture.componentInstance;
+
+		web$ = new BehaviorSubject("");
+		isLoggedIn$ = new BehaviorSubject(false);
+
+		getWebSpy$.mockReturnValue(web$);
+		getIsLoggedInSpy$.mockReturnValue(isLoggedIn$);
+		loader = TestbedHarnessEnvironment.loader(fixture);
 	});
 
 	afterEach(() => {
 		vi.restoreAllMocks();
 	});
 
-	it("should create", () => {
-		getIsLoggedInSpy$.mockReturnValue(of(false));
-		getWebSpy$.mockReturnValue(of("over"));
-		fixture.detectChanges();
-		expect(component).toBeDefined();
-	});
+	it("should create component", async () => {
+		const matDrawer = await loader.getHarness(MatDrawerHarness);
 
-	it("should emit false when not logged in", async () => {
-		getIsLoggedInSpy$.mockReturnValue(of(false));
-		expect(await firstValueFrom(component.isLoggedIn$)).toBe(false);
-	});
+		expect(await matDrawer.getMode()).toBe("side");
 
-	it("should emit true when logged in", async () => {
-		getIsLoggedInSpy$.mockReturnValue(of(true));
-		expect(await firstValueFrom(component.isLoggedIn$)).toBe(true);
-	});
+		web$.next("side");
+		expect(await matDrawer.getMode()).toBe("side");
 
-	it("should emit 'over' when web breakpoint is not matched", async () => {
-		getWebSpy$.mockReturnValue(of("over"));
-		expect(await firstValueFrom(component.web$)).toBe("over");
-	});
+		web$.next("over");
+		expect(await matDrawer.getMode()).toBe("over");
 
-	it("should emit 'side' when web breakpoint is matched", async () => {
-		getWebSpy$.mockReturnValue(of("side"));
-		expect(await firstValueFrom(component.web$)).toBe("side");
-	});
-
-	it("should show the header only when logged in", () => {
-		const isLoggedIn$ = new BehaviorSubject(false);
-		getIsLoggedInSpy$.mockReturnValue(isLoggedIn$);
-		getWebSpy$.mockReturnValue(of("over"));
-		fixture.detectChanges();
-		expect(fixture.nativeElement.querySelector("app-header")).toBeNull();
 		isLoggedIn$.next(true);
 		fixture.detectChanges();
-		expect(fixture.nativeElement.querySelector("app-header")).not.toBeNull();
+		expect(fixture.nativeElement.querySelector("app-header")).toBeTruthy();
+
+		const header = fixture.debugElement.query(By.directive(HeaderComponent))
+			.componentInstance as HeaderComponent;
+		header.toggleDrawer$.emit();
+		expect(await matDrawer.isOpen()).toBe(false);
+		header.toggleDrawer$.emit();
+		expect(await matDrawer.isOpen()).toBe(true);
 	});
 });

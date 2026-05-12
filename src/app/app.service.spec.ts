@@ -1,20 +1,20 @@
 import { TestBed } from "@angular/core/testing";
-import { Subject } from "rxjs";
+import { firstValueFrom, ReplaySubject } from "rxjs";
 import { AppService } from "./app.service";
-import { ScrumApiService } from "./scrum-api/scrum-api.service";
+import { ApiToken, ScrumApiService } from "./scrum-api/scrum-api.service";
 import { BreakpointsService } from "./shared/shared-services/breakpoints/breakpoints.service";
 
 describe("AppService", () => {
 	let service: AppService;
-	const matchesWebBreakpoint$ = new Subject<boolean>();
-	const isLoggedIn = vi.fn();
+	const matchesWebBreakpoint$ = new ReplaySubject<boolean>(1);
+	const apiToken$ = new ReplaySubject<ApiToken>(1);
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			providers: [
 				{
 					provide: ScrumApiService,
-					useValue: { isLoggedIn },
+					useValue: { apiToken$ },
 				},
 				{
 					provide: BreakpointsService,
@@ -25,7 +25,27 @@ describe("AppService", () => {
 		service = TestBed.inject(AppService);
 	});
 
-	it("should be created", () => {
+	afterEach(() => {
+		vi.clearAllMocks();
+	});
+
+	it("should be created", async () => {
 		expect(service).toBeTruthy();
+
+		matchesWebBreakpoint$.next(true);
+		let mode = await firstValueFrom(service.web$);
+		expect(mode).toBe("side");
+
+		matchesWebBreakpoint$.next(false);
+		mode = await firstValueFrom(service.web$);
+		expect(mode).toBe("over");
+
+		apiToken$.next({ token: "some-token" });
+		let loggedIn = await firstValueFrom(service.isLoggedIn$);
+		expect(loggedIn).toBe(true);
+
+		apiToken$.next({ token: "" });
+		loggedIn = await firstValueFrom(service.isLoggedIn$);
+		expect(loggedIn).toBe(false);
 	});
 });

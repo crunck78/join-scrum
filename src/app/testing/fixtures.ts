@@ -6,7 +6,9 @@ import { SummaryResponse } from "../shared/models/summary.model";
 import { TaskResponse } from "../shared/models/task.model";
 import { UserResponse } from "../shared/models/user.model";
 
-export function createUserResponse(overrides?: Partial<UserResponse>): UserResponse {
+export function createUserResponse(
+	overrides?: Partial<UserResponse>,
+): UserResponse {
 	return {
 		id: 1,
 		name: "Test User",
@@ -19,7 +21,9 @@ export function createUserResponse(overrides?: Partial<UserResponse>): UserRespo
 	};
 }
 
-export function createSummaryResponse(overrides?: Partial<SummaryResponse>): SummaryResponse {
+export function createSummaryResponse(
+	overrides?: Partial<SummaryResponse>,
+): SummaryResponse {
 	return {
 		tasksByCategory: [],
 		tasksByPriority: [],
@@ -29,7 +33,9 @@ export function createSummaryResponse(overrides?: Partial<SummaryResponse>): Sum
 	};
 }
 
-export function createContactResponse(overrides?: Partial<ContactResponse>): ContactResponse {
+export function createContactResponse(
+	overrides?: Partial<ContactResponse>,
+): ContactResponse {
 	return {
 		id: 1,
 		email: "contact@test.local",
@@ -41,7 +47,9 @@ export function createContactResponse(overrides?: Partial<ContactResponse>): Con
 	};
 }
 
-export function createCategoryResponse(overrides?: Partial<CategoryResponse>): CategoryResponse {
+export function createCategoryResponse(
+	overrides?: Partial<CategoryResponse>,
+): CategoryResponse {
 	return {
 		id: 1,
 		name: "IT",
@@ -52,7 +60,9 @@ export function createCategoryResponse(overrides?: Partial<CategoryResponse>): C
 	};
 }
 
-export function createTaskResponse(overrides?: Partial<TaskResponse>): TaskResponse {
+export function createTaskResponse(
+	overrides?: Partial<TaskResponse>,
+): TaskResponse {
 	return {
 		id: 1,
 		title: "Test Task",
@@ -69,7 +79,9 @@ export function createTaskResponse(overrides?: Partial<TaskResponse>): TaskRespo
 	};
 }
 
-export function createListResponse(overrides?: Partial<ListResponse>): ListResponse {
+export function createListResponse(
+	overrides?: Partial<ListResponse>,
+): ListResponse {
 	return {
 		id: 1,
 		name: "TODO",
@@ -81,7 +93,9 @@ export function createListResponse(overrides?: Partial<ListResponse>): ListRespo
 	};
 }
 
-export function createBoardResponse(overrides?: Partial<BoardResponse>): BoardResponse {
+export function createBoardResponse(
+	overrides?: Partial<BoardResponse>,
+): BoardResponse {
 	return {
 		title: "Test Board",
 		id: "1",
