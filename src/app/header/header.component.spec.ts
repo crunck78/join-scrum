@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Observable, of } from "rxjs";
+import { BehaviorSubject, Observable, of } from "rxjs";
 import { Mock } from "vitest";
 import { ScrumApiService } from "../scrum-api/scrum-api.service";
 import { BreakpointsService } from "../shared/shared-services/breakpoints/breakpoints.service";
@@ -11,6 +11,8 @@ describe("HeaderComponent", () => {
 	let fixture: ComponentFixture<HeaderComponent>;
 	let headerService: HeaderService;
 	let matchWebBreakpointSpy$: Mock<() => Observable<boolean>>;
+	let logoutSpy: Mock<() => void>;
+	let getMatchWebBreakpoint$: BehaviorSubject<boolean>;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -18,12 +20,23 @@ describe("HeaderComponent", () => {
 			providers: [
 				HeaderService,
 				{ provide: ScrumApiService, useValue: { logout: vi.fn() } },
-				{ provide: BreakpointsService, useValue: { matchesWebBreakpoint$: of(true) } },
+				{
+					provide: BreakpointsService,
+					useValue: { matchesWebBreakpoint$: of(true) },
+				},
 			],
 		});
 		headerService = TestBed.inject(HeaderService);
-		matchWebBreakpointSpy$ = vi.spyOn(headerService, "matchWebBreakpoint$", "get");
-		matchWebBreakpointSpy$.mockReturnValue(of(true));
+
+		matchWebBreakpointSpy$ = vi.spyOn(
+			headerService,
+			"matchWebBreakpoint$",
+			"get",
+		);
+		getMatchWebBreakpoint$ = new BehaviorSubject(true);
+		matchWebBreakpointSpy$.mockReturnValue(getMatchWebBreakpoint$);
+		logoutSpy = vi.spyOn(headerService, "logout");
+		logoutSpy.mockImplementation(() => {});
 
 		fixture = TestBed.createComponent(HeaderComponent);
 		component = fixture.componentInstance;
@@ -37,69 +50,33 @@ describe("HeaderComponent", () => {
 		fixture.autoDetectChanges();
 
 		expect(component).toBeDefined();
-	});
+		expect(component.headerState$.value).toBe("closed");
 
-	describe("toggleHeader", () => {
-		it("should toggle headerState from closed to open", () => {
-			fixture.autoDetectChanges();
+		const opener: HTMLElement = fixture.nativeElement.querySelector(".opener");
+		opener.click();
+		expect(component.headerState$.value).toBe("open");
 
-			expect(component.headerState$.value).toBe("closed");
+		opener.dispatchEvent(new TouchEvent("touchstart"));
+		expect(component.headerState$.value).toBe("closed");
 
-			component.toggleHeader(new Event("click"));
+		let logoutButton: HTMLButtonElement = fixture.nativeElement.querySelector(
+			'button[color="primary"]',
+		);
+		logoutButton.click();
+		getMatchWebBreakpoint$.next(false);
+		fixture.detectChanges();
+		logoutButton = fixture.nativeElement.querySelector(
+			'button[color="primary"]',
+		);
+		logoutButton.click();
+		expect(logoutSpy).toHaveBeenCalledTimes(2);
 
-			expect(component.headerState$.value).toBe("open");
-		});
+		const toggleDrawerSpy = vi.spyOn(component.toggleDrawer$, "emit");
+		const menuButton: HTMLButtonElement = (
+			fixture.nativeElement.querySelector("button mat-icon") as HTMLElement
+		).parentElement as HTMLButtonElement;
+		menuButton.click();
 
-		it("should toggle headerState back to closed", () => {
-			fixture.autoDetectChanges();
-
-			component.toggleHeader(new Event("click"));
-			component.toggleHeader(new Event("click"));
-
-			expect(component.headerState$.value).toBe("closed");
-		});
-	});
-
-	describe("logout", () => {
-		it("should call HeaderService.logout when web logout button is clicked", () => {
-			const logoutSpy = vi.spyOn(headerService, "logout");
-			logoutSpy.mockImplementation(() => {});
-			fixture.autoDetectChanges();
-
-			const logoutButton: HTMLButtonElement =
-				fixture.nativeElement.querySelector('button[color="primary"]');
-			logoutButton.click();
-
-			expect(logoutSpy).toHaveBeenCalledOnce();
-		});
-
-		it("should call HeaderService.logout when mobile logout button is clicked", () => {
-			matchWebBreakpointSpy$.mockReturnValue(of(false));
-			const logoutSpy = vi.spyOn(headerService, "logout");
-			logoutSpy.mockImplementation(() => {});
-			fixture.autoDetectChanges();
-
-			const logoutButton: HTMLButtonElement =
-				fixture.nativeElement.querySelector('button[color="primary"]');
-			logoutButton.click();
-
-			expect(logoutSpy).toHaveBeenCalledOnce();
-		});
-	});
-
-	describe("toggleDrawer", () => {
-		it("should emit toggleDrawer when menu button is clicked", () => {
-			fixture.autoDetectChanges();
-
-			const toggleDrawerSpy = vi.spyOn(component.toggleDrawer$, "emit");
-			const menuButton: HTMLButtonElement = (
-				fixture.nativeElement.querySelector(
-					"button mat-icon",
-				) as HTMLElement
-			).parentElement as HTMLButtonElement;
-			menuButton.click();
-
-			expect(toggleDrawerSpy).toHaveBeenCalledOnce();
-		});
+		expect(toggleDrawerSpy).toHaveBeenCalledOnce();
 	});
 });

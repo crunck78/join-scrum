@@ -26,10 +26,6 @@ export class SummaryComponent implements OnInit {
 		);
 	}
 
-	get matchWebBreakpoint$() {
-		return this.summaryService.matchWebBreakpoint$;
-	}
-
 	get greetUser(): string {
 		const hours = new Date().getHours();
 		if (hours < 12) {

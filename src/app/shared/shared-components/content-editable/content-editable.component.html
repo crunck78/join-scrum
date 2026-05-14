@@ -1,8 +1,8 @@
 <input
 	class="edit-input"
 	[style.display]="'none'"
-	(blur)="updateValue(inputEdit)"
-	(keydown.enter)="updateValue(inputEdit); $event.preventDefault(); $event.stopPropagation()"
+	(blur)="updateValue()"
+	(keydown.enter)="updateValue($event);"
 	#inputEdit
 	type="text"
 	#inputField="ngModel"

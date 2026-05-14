@@ -2,6 +2,7 @@ import { BoardResponse } from "../shared/models/board.model";
 import { CategoryResponse } from "../shared/models/category.model";
 import { ContactResponse } from "../shared/models/contact.model";
 import { ListResponse } from "../shared/models/list.model";
+import { SubtaskRequest } from "../shared/models/subtask.model";
 import { SummaryResponse } from "../shared/models/summary.model";
 import { TaskResponse } from "../shared/models/task.model";
 import { UserResponse } from "../shared/models/user.model";
@@ -102,6 +103,16 @@ export function createBoardResponse(
 		lists: [],
 		createdAt: new Date(),
 		updatedAt: new Date(),
+		...overrides,
+	};
+}
+
+export function createSubtaskRequest(
+	overrides?: Partial<SubtaskRequest>,
+): SubtaskRequest {
+	return {
+		title: "Test Subtask",
+		done: false,
 		...overrides,
 	};
 }

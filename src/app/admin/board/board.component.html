@@ -77,7 +77,6 @@
 					<!-- Position:{{list.position}} -->
 					<h3 #listTitleElem>{{ list.name }}</h3>
 					<app-content-editable
-						[contentId]="i"
 						(valueToEditChange)="updateListName($event, list)"
 						[elementViewClick]="true"
 						[valueToEdit]="list.name"

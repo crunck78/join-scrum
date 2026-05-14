@@ -1,4 +1,3 @@
-<!-- <app-page-title title *ngIf="matchWebBreakpoint$ | async"></app-page-title> -->
 @if (summary) {
 <div class="summary-counts">
 	@if (summary.tasksInBacklog.count) {
@@ -10,7 +9,6 @@
 			<br>
 			in Backlog
 		</p>
-		<!-- <span>Due date: {{summary?.tasksInBacklog?.latestDueDate | date: 'MMMM dd, yyyy'}}</span> -->
 	</app-card>
 	}
 	<div class="tasks-by-priority">
@@ -42,14 +40,6 @@
 	</div>
 </div>
 }
-
-<!-- <ng-template #emptySummary>
-  <div class="summary-counts">
-    <app-card class="greeting-wrapper">
-      <p title>There is not much going on here.</p>
-    </app-card>
-  </div>
-</ng-template> -->
 
 <div class="summary-counts">
 	<app-card class="greeting-wrapper">
@@ -83,7 +73,6 @@
 				></app-category-card>
 				{{ counter.count > 1 ? 'Tasks' : 'Task' }}
 			</p>
-			<!-- <p footer>{{counter.listBoardTitle}}</p> -->
 		</app-card>
 		}
 	</div>

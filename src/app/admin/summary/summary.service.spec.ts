@@ -3,7 +3,10 @@ import { firstValueFrom, of, Subject } from "rxjs";
 import { ScrumProfileService } from "../../scrum-api/scrum-profile/scrum-profile.service";
 import { ScrumSummaryService } from "../../scrum-api/scrum-summary/scrum-summary.service";
 import { BreakpointsService } from "../../shared/shared-services/breakpoints/breakpoints.service";
-import { createSummaryResponse, createUserResponse } from "../../testing/fixtures";
+import {
+	createSummaryResponse,
+	createUserResponse,
+} from "../../testing/fixtures";
 import { SummaryService } from "./summary.service";
 
 describe("SummaryService", () => {
@@ -50,7 +53,9 @@ describe("SummaryService", () => {
 		});
 
 		it("should return summary", async () => {
-			const summary = createSummaryResponse({ tasksInBacklog: { count: 3, latestDueDate: new Date() } });
+			const summary = createSummaryResponse({
+				tasksInBacklog: { count: 3, latestDueDate: new Date() },
+			});
 			getSummary$.mockReturnValue(of(summary));
 
 			const result = await firstValueFrom(service.summary$);
@@ -75,12 +80,6 @@ describe("SummaryService", () => {
 			const result = await firstValueFrom(service.profile$);
 
 			expect(result).toEqual(profile);
-		});
-	});
-
-	describe("matchWebBreakpoint$", () => {
-		it("should return the breakpoints observable", () => {
-			expect(service.matchWebBreakpoint$).toBe(matchesWebBreakpoint$);
 		});
 	});
 });

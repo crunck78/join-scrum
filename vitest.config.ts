@@ -4,6 +4,12 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	plugins: [angular()],
+	resolve: {
+		conditions: ["module"],
+	},
+	optimizeDeps: {
+		include: ["rxjs", "rxjs/operators"],
+	},
 	test: {
 		globals: true,
 		setupFiles: ["src/test-setup.ts"],

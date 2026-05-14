@@ -21,46 +21,37 @@ type DisplayStyle = "none" | "inline" | "block";
 })
 export class ContentEditableComponent implements AfterViewInit {
 	ngAfterViewInit(): void {
-		// subscribe to given subject that emits contentId when editing is requested
-		this.changing?.subscribe((contentId) => {
-			if (contentId === this.contentId)
-				this.editValue(this.inputEdit.nativeElement);
+		this.changing?.subscribe(() => {
+			this.editValue();
 		});
 
-		// sets click event on the element containing the current value that requested editing
 		if (this.elementViewClick)
 			this.elementView.addEventListener("click", () => {
-				this.editValue(this.inputEdit.nativeElement);
+				this.editValue();
 			});
 	}
 
-	@Input() contentId!: number;
 	@Input() elementView!: HTMLElement;
 	@Input() elementViewDisplay!: DisplayStyle;
 	@Input() valueToEdit!: string;
-	@Input() changing!: Subject<number>;
+	@Input() changing!: Subject<void>;
 	@Input() elementViewClick = false;
 	@Input() label!: string;
 
 	@Output() valueToEditChange = new EventEmitter<string>();
 	@ViewChild("inputEdit") inputEdit!: ElementRef<HTMLInputElement>;
 
-	editValue(inputEdit: HTMLInputElement) {
-		// hide element containing the current value
+	editValue() {
 		this.elementView.style.display = "none";
-		// show input field
-		inputEdit.style.display = "inline";
-		// focus input
-		inputEdit.focus();
+		this.inputEdit.nativeElement.style.display = "inline";
+		this.inputEdit.nativeElement.focus();
 	}
 
-	updateValue(inputEdit: HTMLInputElement) {
-		// finish editing
-		// shows element containing the value edited
+	updateValue(event?: Event) {
+		event?.preventDefault();
+		event?.stopPropagation();
 		this.elementView.style.display = this.elementViewDisplay;
-		// hide input
-		inputEdit.style.display = "none";
-		// emit back the new value
+		this.inputEdit.nativeElement.style.display = "none";
 		this.valueToEditChange.emit(this.valueToEdit);
 	}
 }

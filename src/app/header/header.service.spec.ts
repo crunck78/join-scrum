@@ -1,5 +1,5 @@
 import { TestBed } from "@angular/core/testing";
-import { Subject } from "rxjs";
+import { firstValueFrom, ReplaySubject } from "rxjs";
 import { ScrumApiService } from "../scrum-api/scrum-api.service";
 import { BreakpointsService } from "../shared/shared-services/breakpoints/breakpoints.service";
 import { HeaderService } from "./header.service";
@@ -7,7 +7,7 @@ import { HeaderService } from "./header.service";
 describe("HeaderService", () => {
 	let service: HeaderService;
 	const logout = vi.fn();
-	const matchesWebBreakpoint$ = new Subject<boolean>();
+	const matchesWebBreakpoint$ = new ReplaySubject<boolean>(1);
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -29,16 +29,15 @@ describe("HeaderService", () => {
 		vi.clearAllMocks();
 	});
 
-	it("should be created", () => {
+	it("should be created", async () => {
 		expect(service).toBeTruthy();
-	});
-
-	it("should delegate logout to ScrumApiService", () => {
 		service.logout();
 		expect(logout).toHaveBeenCalledTimes(1);
-	});
 
-	it("should return the breakpoints observable", () => {
-		expect(service.matchWebBreakpoint$).toBe(matchesWebBreakpoint$);
+		matchesWebBreakpoint$.next(true);
+		expect(await firstValueFrom(service.matchWebBreakpoint$)).toBe(true);
+
+		matchesWebBreakpoint$.next(false);
+		expect(await firstValueFrom(service.matchWebBreakpoint$)).toBe(false);
 	});
 });
