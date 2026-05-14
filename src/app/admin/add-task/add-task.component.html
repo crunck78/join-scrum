@@ -19,7 +19,7 @@
 				(action)="
                 addCategory()"
 				[actionLabel]="'Add Category'"
-				[options]="$any(categories$ | async) | options : 'name' : 'id': this.getCategoryOptionHTML"
+				[options]="categories | options : 'name' : 'id': getCategoryOptionHTML"
 				[required]="true"
 				[inputType]="'select'"
 				[labelName]="'Select a category'"
@@ -31,7 +31,7 @@
 				[suffixIcon]="'add'"
 				[actionLabel]="'Add Contact'"
 				(action)="addContact()"
-				[options]="$any(contacts$ | async) | options : 'name' : 'id'"
+				[options]="contacts | options : 'name' : 'id'"
 				[required]="false"
 				[inputType]="'select'"
 				[labelName]="'Select assignees'"
@@ -63,7 +63,7 @@
 
 			<app-form-field
 				[errors]="[{name: 'required', htmlMessage: 'Priority is <strong>required</strong>'}]"
-				[options]="[{name: 'Low'}, {name: 'Medium'}, {name: 'Urgent'}] | options : 'name' : 'name': this.getPriorityOptionHTML"
+				[options]="[{name: 'Low'}, {name: 'Medium'}, {name: 'Urgent'}] | options : 'name' : 'name': getPriorityOptionHTML"
 				[required]="true"
 				[inputType]="'select'"
 				[labelName]="'Select a priority'"

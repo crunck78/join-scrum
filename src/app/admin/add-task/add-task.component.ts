@@ -13,19 +13,16 @@ import {
 	FormGroup,
 	Validators,
 } from "@angular/forms";
-import { type Observable } from "rxjs";
 import { CategoryResponse } from "../../shared/models/category.model";
 import { ContactResponse } from "../../shared/models/contact.model";
 import {
 	SubtaskRequest,
-	SubtaskResponse,
 } from "../../shared/models/subtask.model";
 import {
 	Task,
 	TaskRequest,
 	TaskResponse,
 } from "../../shared/models/task.model";
-import { OptionType } from "../../shared/shared-components/form-field/form-field.component";
 import {
 	AddTaskModule,
 	PriorityType,
@@ -85,9 +82,8 @@ export class AddTaskComponent implements OnChanges {
 
 	addSubtaskForm = new FormControl("");
 
-	categories$!: Observable<CategoryResponse[]>;
-	contacts$!: Observable<ContactResponse[]>;
-	subtasks$!: Observable<SubtaskResponse[]>;
+	categories: CategoryResponse[] = [];
+	contacts: ContactResponse[] = [];
 
 	@Input() task!: TaskResponse;
 	@Input() mode: TaskMode = "add";
@@ -105,7 +101,6 @@ export class AddTaskComponent implements OnChanges {
 	constructor() {
 		this.loadCategories();
 		this.loadContacts();
-		this.loadSubtasks();
 		this.addTaskForm.statusChanges.subscribe((status: FormControlStatus) =>
 			this.formStatus$.emit(status),
 		);
@@ -159,41 +154,45 @@ export class AddTaskComponent implements OnChanges {
 	}
 
 	addCategory() {
-		this.addTaskService.openAddCategoryDialog().subscribe((newCategory) => {
+		this.addTaskService.openAddCategoryDialog$().subscribe((newCategory) => {
 			if (newCategory) this.loadCategories();
 		});
 	}
 
 	loadCategories() {
-		this.categories$ = this.addTaskService.categories$;
+		this.addTaskService.categories$.subscribe(
+			(values) => (this.categories = values),
+		);
 	}
 
 	addContact() {
-		this.addTaskService.openAddContactDialog().subscribe((newContact) => {
+		this.addTaskService.openAddContactDialog$().subscribe((newContact) => {
 			if (newContact) this.loadContacts();
 		});
 	}
 
 	loadContacts() {
-		this.contacts$ = this.addTaskService.contacts$;
+		this.addTaskService.contacts$.subscribe(
+			(values) => (this.contacts = values),
+		);
 	}
 
-	getCategoryOptionHTML(option: OptionType) {
+	getCategoryOptionHTML = (option: CategoryResponse) => {
 		return `
     <span class="category-option">
       <span  class="category-color" style="background-color: ${option["color"]}"></span>
       <span class="category-name">${option["name"]}</span>
     </span>`;
-	}
+	};
 
-	getPriorityOptionHTML(option: OptionType) {
+	getPriorityOptionHTML = (option: { name: string }) => {
 		return `
     <span class="priority-option">
       <span class="priority-option">${(option["name"] as string)?.toUpperCase()}</span>
       <img class="priority-icon" src="assets/${(option["name"] as string)?.toLowerCase()}.svg" alt="Priority Icon">
     </span>
     `;
-	}
+	};
 
 	addSubtask() {
 		if (!this.addSubtaskForm.value) return;
@@ -220,11 +219,6 @@ export class AddTaskComponent implements OnChanges {
 		this.addTaskForm.get("subtasks")?.patchValue(patchedSubtasks);
 	}
 
-	loadSubtasks() {
-		this.subtasks$ = this.addTaskService.subtasks$;
-		this.addSubtaskForm.reset();
-	}
-
 	saveTask() {
 		if (this.mode === "add") this.addTask();
 		if (this.mode === "edit") this.editTask();
@@ -233,7 +227,7 @@ export class AddTaskComponent implements OnChanges {
 	addTask() {
 		if (!this.addTaskForm.valid) return;
 		this.addTaskService
-			.addTask(this.addTaskForm.value as Partial<TaskRequest>)
+			.addTask$(this.addTaskForm.value as Partial<TaskRequest>)
 			.subscribe((newTask) => {
 				if (!newTask) return;
 				this.addedTask$.emit(newTask);
@@ -243,14 +237,14 @@ export class AddTaskComponent implements OnChanges {
 	editTask() {
 		if (!this.addTaskForm.valid) return;
 		const toEditTask = this.addTaskForm.value as Partial<TaskRequest>;
-		this.addTaskService.editTask(this.task.id, toEditTask).subscribe({
+		this.addTaskService.editTask$(this.task.id, toEditTask).subscribe({
 			next: (res) => this.editedTask$.emit(res),
 		});
 	}
 
 	deleteTask() {
 		if (this.mode !== "edit") return;
-		this.addTaskService.deleteTask(this.task.id).subscribe({
+		this.addTaskService.deleteTask$(this.task.id).subscribe({
 			next: () => this.deletedTaskId$.emit(this.task.id),
 		});
 	}

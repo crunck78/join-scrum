@@ -1,29 +1,24 @@
 import { Pipe, type PipeTransform } from "@angular/core";
-import type {
-	Option,
-	OptionType,
-} from "./../../shared-components/form-field/form-field.component";
+import type { Option } from "./../../shared-components/form-field/form-field.component";
 
-type HtmlFunction = (item: OptionType) => string;
+type HtmlFunction<T> = (item: T) => string;
 
 @Pipe({
 	name: "options",
 	standalone: true,
 })
 export class OptionsPipe implements PipeTransform {
-	transform(
-		optionValues: OptionType[] | null,
-		displayValue: keyof OptionType,
-		valueOnSelect: keyof OptionType,
-		htmlFn?: HtmlFunction,
-	): Option<OptionType>[] | null | undefined {
-		return optionValues?.map((o) => {
-			return {
-				value: o,
-				displayValue: o[displayValue],
-				valueOnSelect: o[valueOnSelect],
-				html: htmlFn ? htmlFn(o) : "",
-			} as Option<OptionType>;
-		});
+	transform<T>(
+		optionValues: T[],
+		displayValue: keyof T,
+		valueOnSelect: keyof T,
+		htmlFn?: HtmlFunction<T>,
+	): Option[] {
+		return optionValues.map((o) => ({
+			value: o,
+			displayValue: o[displayValue],
+			valueOnSelect: o[valueOnSelect],
+			html: htmlFn ? htmlFn(o) : "",
+		}));
 	}
 }

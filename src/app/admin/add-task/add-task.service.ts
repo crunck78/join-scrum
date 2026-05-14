@@ -27,18 +27,18 @@ export class AddTaskService {
 	feedback = inject(FeedbackService);
 
 	get categories$() {
-		return this.scrumCategory.getCategories$();
+		return this.scrumCategory.getCategories$().pipe(take(1));
 	}
 
 	get contacts$() {
-		return this.scrumContacts.getContacts$();
+		return this.scrumContacts.getContacts$().pipe(take(1));
 	}
 
 	get subtasks$() {
-		return this.scrumSubtasks.getSubtasks$();
+		return this.scrumSubtasks.getSubtasks$().pipe(take(1));
 	}
 
-	addTask(task: Partial<TaskRequest>) {
+	addTask$(task: Partial<TaskRequest>) {
 		return this.scrumTask.addTask$(task).pipe(
 			take(1),
 			tap((newTask) => {
@@ -54,15 +54,15 @@ export class AddTaskService {
 		);
 	}
 
-	editTask(taskId: number, task: Partial<TaskRequest>) {
+	editTask$(taskId: number, task: Partial<TaskRequest>) {
 		return this.scrumTask.updateTask$(taskId, task).pipe(take(1));
 	}
 
-	deleteTask(taskId: number) {
+	deleteTask$(taskId: number) {
 		return this.scrumTask.deleteTask$(taskId).pipe(take(1));
 	}
 
-	openAddCategoryDialog() {
+	openAddCategoryDialog$() {
 		const dialogRef = this.dialog.open<
 			AddCategoryComponent,
 			any,
@@ -71,7 +71,7 @@ export class AddTaskService {
 		return dialogRef.afterClosed().pipe(take(1));
 	}
 
-	openAddContactDialog() {
+	openAddContactDialog$() {
 		const dialogRef = this.dialog.open<
 			AddContactComponent,
 			any,

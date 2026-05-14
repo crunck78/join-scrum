@@ -30,13 +30,11 @@ export interface ValidatorError {
 	htmlMessage?: string;
 }
 
-export type OptionType = {
-	[k: string]: object | string | number;
-};
-export interface Option<OptionType> {
-	valueOnSelect: keyof OptionType;
-	displayValue: keyof OptionType;
-	value: OptionType;
+export type OptionType = Record<string, unknown>;
+export interface Option {
+	valueOnSelect: unknown;
+	displayValue: unknown;
+	value: unknown;
 	html?: string;
 }
 export declare type InputType =
@@ -73,7 +71,7 @@ export class FormFieldComponent {
 	@Input() errors!: ValidatorError[];
 	@Input() minLength!: number;
 	@Input() required = true;
-	@Input() options!: Option<OptionType>[] | null | undefined;
+	@Input() options: Option[] = [];
 	@Input() actionName!: string;
 	@Input() suffixIcon!: string;
 	@Input() multiple = false;
