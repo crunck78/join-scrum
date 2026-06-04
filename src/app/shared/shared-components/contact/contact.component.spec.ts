@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { getElement } from "../../../testing/fixtures";
 import { ContactResponse } from "../../models/contact.model";
 import { ContactComponent } from "./contact.component";
 
@@ -31,14 +32,10 @@ describe("ContactComponent", () => {
 		component.selected = true;
 		fixture.detectChanges();
 
-		const compiled = fixture.nativeElement as HTMLElement;
-		expect(compiled.querySelector("app-contact-card")).toBeTruthy();
-		expect(compiled.querySelector("app-contact-card")?.textContent).toContain(
-			"John Doe",
-		);
-		expect(compiled.querySelector("app-contact-card")?.textContent).toContain(
-			"john.doe@example.com",
-		);
+		const contactCard = getElement(fixture, "app-contact-card");
+		expect(contactCard).toBeTruthy();
+		expect(contactCard?.textContent).toContain("John Doe");
+		expect(contactCard?.textContent).toContain("john.doe@example.com");
 	});
 
 	it("should display phoneNumber when email and name are not provided", () => {
@@ -50,11 +47,9 @@ describe("ContactComponent", () => {
 		component.selected = true;
 		fixture.detectChanges();
 
-		const compiled = fixture.nativeElement as HTMLElement;
-		expect(compiled.querySelector("app-contact-card")).toBeTruthy();
-		expect(compiled.querySelector("app-contact-card")?.textContent).toContain(
-			"123-456-7890",
-		);
+		const contactCard = getElement(fixture, "app-contact-card");
+		expect(contactCard).toBeTruthy();
+		expect(contactCard?.textContent).toContain("123-456-7890");
 	});
 
 	it("should display mat-raised-button when selected is true", async () => {
@@ -62,11 +57,8 @@ describe("ContactComponent", () => {
 		component.selected = true;
 
 		fixture.detectChanges();
-		const button = fixture.nativeElement.querySelector(
-			"button[mat-raised-button]",
-		);
 
-		expect(button).toBeTruthy();
+		expect(getElement(fixture, "button[mat-raised-button]")).toBeTruthy();
 	});
 
 	it("should display mat-stroked-button when selected is false", async () => {
@@ -74,10 +66,7 @@ describe("ContactComponent", () => {
 		component.selected = false;
 
 		fixture.detectChanges();
-		const button = fixture.nativeElement.querySelector(
-			"button[mat-stroked-button]",
-		);
 
-		expect(button).toBeTruthy();
+		expect(getElement(fixture, "button[mat-stroked-button]")).toBeTruthy();
 	});
 });

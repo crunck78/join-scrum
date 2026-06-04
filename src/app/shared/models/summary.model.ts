@@ -40,27 +40,15 @@ export interface TaskListsCountResponse {
 	latestDueDate: Date;
 }
 
-export interface TasksInBacklogResponseAPI {
-	count: number;
-	latest_due_date: string;
-}
-
-export interface TasksInBacklogResponse {
-	count: number;
-	latestDueDate: Date;
-}
-
 export interface SummaryResponseAPI {
 	tasks_by_priority: TaskPriorityCountResponseAPI[];
 	tasks_in_lists: TaskListsCountResponseAPI[];
-	tasks_in_backlog: TasksInBacklogResponseAPI;
 	tasks_by_category: TaskCategoryCountResponseAPI[];
 }
 
 export interface SummaryResponse {
 	tasksByPriority: TaskPriorityCountResponse[];
 	tasksInLists: TaskListsCountResponse[];
-	tasksInBacklog: TasksInBacklogResponse;
 	tasksByCategory: TaskCategoryCountResponse[];
 }
 
@@ -103,25 +91,11 @@ class TaskListsCount {
 	}
 }
 
-class TasksInBacklog {
-	static createInternalValue(
-		tasksInBackLog: TasksInBacklogResponseAPI,
-	): TasksInBacklogResponse {
-		return {
-			count: tasksInBackLog.count,
-			latestDueDate: new Date(tasksInBackLog.latest_due_date),
-		};
-	}
-}
-
 export class Summary {
 	static createInternalValue(summary: SummaryResponseAPI): SummaryResponse {
 		return {
 			tasksByPriority: summary.tasks_by_priority.map((taskByPriority) =>
 				TaskPriorityCount.createInternalValue(taskByPriority),
-			),
-			tasksInBacklog: TasksInBacklog.createInternalValue(
-				summary.tasks_in_backlog,
 			),
 			tasksInLists: summary.tasks_in_lists.map((taskListsCount) =>
 				TaskListsCount.createInternalValue(taskListsCount),

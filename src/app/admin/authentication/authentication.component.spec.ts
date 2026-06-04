@@ -26,19 +26,29 @@ describe("AuthenticationComponent", () => {
 		expect(component).toBeDefined();
 	});
 
-	it("should show header on not mobile", async () => {
-		mobileGetSpy.mockReturnValue(of(false));
-		const el: HTMLElement = fixture.nativeElement;
-		await fixture.whenStable();
-		expect(el.querySelector(".header")).not.toBeNull();
-		expect(el.querySelectorAll("app-to-sign-up").length).toBe(1);
-	});
+	describe("toggle header", () => {
+		const scenarios = [
+			{
+				description: "not show header",
+				isMobile: true,
+				expected: 0,
+			},
+			{
+				description: "show header",
+				isMobile: false,
+				expected: 1,
+			},
+		];
 
-	it("should not show header on mobile", async () => {
-		mobileGetSpy.mockReturnValue(of(true));
-		const el: HTMLElement = fixture.nativeElement;
-		await fixture.whenStable();
-		expect(el.querySelector(".header")).toBeNull();
-		expect(el.querySelectorAll("app-to-sign-up").length).toBe(1);
+		it.each(scenarios)("should $description", async ({
+			isMobile,
+			expected,
+		}) => {
+			mobileGetSpy.mockReturnValue(of(isMobile));
+			await fixture.whenStable();
+			const el: HTMLElement = fixture.nativeElement;
+			expect(el.querySelectorAll(".header").length).toBe(expected);
+			expect(el.querySelectorAll("app-to-sign-up").length).toBe(1);
+		});
 	});
 });

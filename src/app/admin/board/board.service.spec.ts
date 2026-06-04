@@ -4,33 +4,14 @@ import { firstValueFrom, of, Subject } from "rxjs";
 import { ScrumBoardsService } from "../../scrum-api/scrum-boards/scrum-boards.service";
 import { ScrumListsService } from "../../scrum-api/scrum-lists/scrum-lists.service";
 import { ScrumTasksService } from "../../scrum-api/scrum-tasks/scrum-tasks.service";
-import { BoardResponse } from "../../shared/models/board.model";
-import { ListResponse } from "../../shared/models/list.model";
 import { TaskResponse } from "../../shared/models/task.model";
 import { BreakpointsService } from "../../shared/shared-services/breakpoints/breakpoints.service";
 import { FeedbackService } from "../../shared/shared-services/feedback/feedback.service";
+import {
+	createBoardResponse,
+	createListResponse,
+} from "../../testing/fixtures";
 import { BoardService } from "./board.service";
-
-const createBoard = (
-	overrides: Partial<BoardResponse> = {},
-): BoardResponse => ({
-	title: "First Board",
-	id: "1",
-	lists: [],
-	createdAt: new Date(),
-	updatedAt: new Date(),
-	...overrides,
-});
-
-const createList = (overrides: Partial<ListResponse> = {}): ListResponse => ({
-	id: 1,
-	name: "List 1",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-	tasks: [],
-	position: 0,
-	...overrides,
-});
 
 const createBacklog = (): TaskResponse[] => [
 	{
@@ -109,60 +90,71 @@ describe("BoardService", () => {
 	});
 
 	describe("board$", () => {
-		it("should return null when no boards exist", async () => {
-			getBoards$.mockReturnValue(of([]));
+		const board = createBoardResponse();
+		const scenarios = [
+			{
+				description: "should return null when no boards exist",
+				boards: [],
+				expected: null,
+			},
+			{
+				description: "should return the first board when boards exist",
+				boards: [board],
+				expected: board,
+			},
+		];
 
+		it.each(scenarios)("$description", async ({ boards, expected }) => {
+			getBoards$.mockReturnValue(of(boards));
 			const result = await firstValueFrom(service.board$);
-
-			expect(result).toBeNull();
-		});
-
-		it("should return the first board when boards exist", async () => {
-			const board = createBoard();
-			getBoards$.mockReturnValue(of([board]));
-
-			const result = await firstValueFrom(service.board$);
-
-			expect(result).toEqual(board);
+			expect(result).toEqual(expected);
 		});
 	});
 
 	describe("backlog$", () => {
-		it("should return empty list when backlog has no tasks", async () => {
-			getBacklog$.mockReturnValue(of([]));
+		const backlog = createBacklog();
+		const scenarios = [
+			{
+				description: "should return empty list when backlog has no tasks",
+				backlog: [],
+				expected: [],
+			},
+			{
+				description: "should return tasks when backlog has tasks",
+				backlog: backlog,
+				expected: backlog,
+			},
+		];
 
-			const result = await firstValueFrom(service.backlog$);
-
-			expect(result.length).toEqual(0);
-		});
-
-		it("should return tasks when backlog has tasks", async () => {
-			const backlog = createBacklog();
+		it.each(scenarios)("$description", async ({ backlog, expected }) => {
 			getBacklog$.mockReturnValue(of(backlog));
-
 			const result = await firstValueFrom(service.backlog$);
-
-			expect(result).toEqual(backlog);
+			expect(result).toEqual(expected);
 		});
 	});
 
 	describe("boardLists$", () => {
-		it("should return empty array when no board exists", async () => {
-			getBoards$.mockReturnValue(of([]));
+		const list = createListResponse();
+		const board = createBoardResponse({ lists: [list] });
+		const scenarios = [
+			{
+				description: "should return empty array when no board exists",
+				boards: [],
+				expected: [],
+			},
+			{
+				description: "should return board lists when board exists",
+				boards: [board],
+				expected: [list],
+			},
+		];
+
+		it.each(scenarios)("$description", async ({ boards, expected }) => {
+			getBoards$.mockReturnValue(of(boards));
 
 			const result = await firstValueFrom(service.boardLists$);
 
-			expect(result).toEqual([]);
-		});
-
-		it("should return board lists when board exists", async () => {
-			const list = createList();
-			const board = createBoard({ lists: [list] });
-			getBoards$.mockReturnValue(of([board]));
-
-			const result = await firstValueFrom(service.boardLists$);
-
-			expect(result).toEqual([list]);
+			expect(result).toEqual(expected);
 		});
 	});
 
@@ -209,31 +201,30 @@ describe("BoardService", () => {
 	});
 
 	describe("updateList", () => {
-		it("should show success snackbar when update returns a list", () => {
-			const list = createList();
-			updateList$.mockReturnValue(of(list));
+		const scenarios = [
+			{
+				description: "should show success snackbar when update returns a list",
+				updateListResponse: createListResponse(),
+				expected: ["List Updated", "Ok"],
+			},
+			{
+				description: "should show failure snackbar when update returns null",
+				updateListResponse: null,
+				expected: ["List Name Update Failed!", "Try Again"],
+			},
+		];
+		it.each([scenarios])("$description", ({ updateListResponse, expected }) => {
+			updateList$.mockReturnValue(of(updateListResponse));
 
-			service.updateList(list);
+			service.updateList(createListResponse());
 
-			expect(openSnackBar).toHaveBeenCalledWith("List Updated", "Ok");
-		});
-
-		it("should show failure snackbar when update returns null", () => {
-			const list = createList();
-			updateList$.mockReturnValue(of(null));
-
-			service.updateList(list);
-
-			expect(openSnackBar).toHaveBeenCalledWith(
-				"List Name Update Failed!",
-				"Try Again",
-			);
+			expect(openSnackBar).toHaveBeenCalledWith(...expected);
 		});
 	});
 
 	describe("setPosition$", () => {
 		it("should delegate to scrumList updateList$ and return result", async () => {
-			const list = createList();
+			const list = createListResponse();
 			updateList$.mockReturnValue(of(list));
 
 			const result = await firstValueFrom(service.setPosition$(list));
@@ -245,7 +236,7 @@ describe("BoardService", () => {
 
 	describe("addBoard$", () => {
 		it("should delegate to scrumBoards and return new board", async () => {
-			const board = createBoard();
+			const board = createBoardResponse();
 			addBoard$.mockReturnValue(of(board));
 
 			const result = await firstValueFrom(service.addBoard$());
@@ -256,26 +247,37 @@ describe("BoardService", () => {
 	});
 
 	describe("addList$", () => {
-		it("should show success snackbar and return new list when dialog confirms", async () => {
-			const list = createList();
-			dialogOpen.mockReturnValue({ afterClosed: () => of(list) });
+		const list = createListResponse();
+		const scenarios = [
+			{
+				description:
+					"should show success snackbar and return new list when dialog confirms",
+				dialogAfterClosedValue: list,
+				expectedSnackBar: ["List Created", "Ok"],
+				expectedAddListValue: list,
+			},
+			{
+				description:
+					"should show failure snackbar and return undefined when dialog is dismissed",
+				dialogAfterClosedValue: undefined,
+				expectedSnackBar: ["List Creation Failed!", "Try Again"],
+				expectedAddListValue: undefined,
+			},
+		];
+
+		it.each(scenarios)("$description", async ({
+			dialogAfterClosedValue,
+			expectedSnackBar,
+			expectedAddListValue,
+		}) => {
+			dialogOpen.mockReturnValue({
+				afterClosed: () => of(dialogAfterClosedValue),
+			});
 
 			const result = await firstValueFrom(service.addList$());
 
-			expect(openSnackBar).toHaveBeenCalledWith("List Created", "Ok");
-			expect(result).toEqual(list);
-		});
-
-		it("should show failure snackbar and return undefined when dialog is dismissed", async () => {
-			dialogOpen.mockReturnValue({ afterClosed: () => of(undefined) });
-
-			const result = await firstValueFrom(service.addList$());
-
-			expect(openSnackBar).toHaveBeenCalledWith(
-				"List Creation Failed!",
-				"Try Again",
-			);
-			expect(result).toBeUndefined();
+			expect(openSnackBar).toHaveBeenCalledWith(...expectedSnackBar);
+			expect(result).toEqual(expectedAddListValue);
 		});
 	});
 });

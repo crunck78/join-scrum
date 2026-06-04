@@ -14,7 +14,7 @@
 		<app-form-field
 			[errors]="[{name: 'required', htmlMessage: 'Board is <strong>required</strong>'}]"
 			[suffixIcon]="'add'"
-			[options]="$any(boards$ | async) | options : 'name' : 'id': this.getBoardOptionHTML"
+			[options]="boards | options : 'title' : 'id': getBoardOptionHTML"
 			[required]="true"
 			[inputType]="'select'"
 			[labelName]="'Select a board'"

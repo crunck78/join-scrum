@@ -2,6 +2,7 @@ import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatCheckboxHarness } from "@angular/material/checkbox/testing";
 import { provideRouter } from "@angular/router";
+import { clickElement } from "../../../testing/fixtures";
 import { LogInComponent } from "./log-in.component";
 
 describe("LogInComponent", () => {
@@ -22,17 +23,14 @@ describe("LogInComponent", () => {
 		expect(component).toBeDefined();
 	});
 
-	it("should call login method on button click", () => {
+	it("should call login service on button click and when loginForm is valid", () => {
 		const loginSpy = vi.spyOn(component, "login");
 		const loginServiceSpy = vi.spyOn(component["loginService"], "login");
 		// Enable the form to allow interaction
 		component.loginForm.enable();
 
-		const button: HTMLElement = fixture.nativeElement.querySelector(
-			"button[aria-label='Login']",
-		);
+		clickElement(fixture, "button[aria-label='Login']");
 
-		button.click();
 		expect(loginSpy).toHaveBeenCalled();
 		expect(loginServiceSpy).toHaveBeenCalledTimes(0);
 
@@ -40,16 +38,13 @@ describe("LogInComponent", () => {
 			email: "test@email.com",
 			password: "<PASSWORD>",
 		});
-		button.click();
+		clickElement(fixture, "button[aria-label='Login']");
 		expect(loginServiceSpy).toHaveBeenCalledTimes(1);
 	});
 
 	it("should call guest login method on button click", () => {
 		const guestLoginSpy = vi.spyOn(component, "guestLogin");
-		const button: HTMLElement = fixture.nativeElement.querySelector(
-			"button[aria-label='Guest Login']",
-		);
-		button.click();
+		clickElement(fixture, "button[aria-label='Guest Login']");
 		expect(guestLoginSpy).toHaveBeenCalled();
 	});
 

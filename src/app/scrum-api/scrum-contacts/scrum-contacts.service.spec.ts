@@ -8,30 +8,18 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
+import { Contact } from "../../shared/models/contact.model";
 import {
-	Contact,
-	ContactRequestAPI,
-	ContactResponseAPI,
-} from "../../shared/models/contact.model";
+	createContactRequestAPI,
+	createContactResponseAPI,
+} from "../../testing/fixtures";
 import {
 	CONTACTS_ENDPOINT,
 	ScrumContactsService,
 } from "./scrum-contacts.service";
 
-const mockAssignee: ContactResponseAPI = {
-	created_at: "",
-	email: "test.user@example.local",
-	id: 1,
-	name: "John Doe",
-	phone_number: "01555555555",
-	updated_at: "",
-};
-
-const mockAssigneeRequest: ContactRequestAPI = {
-	email: "test.user@example.local",
-	name: "John Doe",
-	phone_number: "01555555555",
-};
+const mockAssignee = createContactResponseAPI();
+const mockAssigneeRequest = createContactRequestAPI();
 
 describe("ScrumContactsService", () => {
 	let service: ScrumContactsService;

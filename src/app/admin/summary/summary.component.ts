@@ -42,8 +42,7 @@ export class SummaryComponent implements OnInit {
 		return (
 			this.summary.tasksByCategory.length === 0 &&
 			this.summary.tasksByPriority.length === 0 &&
-			this.summary.tasksInLists.length === 0 &&
-			this.summary.tasksInBacklog.count === 0
+			this.summary.tasksInLists.length === 0
 		);
 	}
 }

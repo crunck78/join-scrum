@@ -44,42 +44,48 @@ describe("SummaryService", () => {
 	});
 
 	describe("summary$", () => {
-		it("should return null when there is no summary", async () => {
-			getSummary$.mockReturnValue(of(null));
+		const summary = createSummaryResponse();
+
+		it.each([
+			{
+				description: "should return null when there is no summary",
+				serviceResult: null,
+				expected: null,
+			},
+			{
+				description: "should return summary",
+				serviceResult: summary,
+				expected: summary,
+			},
+		])("$description", async ({ serviceResult, expected }) => {
+			getSummary$.mockReturnValue(of(serviceResult));
 
 			const result = await firstValueFrom(service.summary$);
 
-			expect(result).toBeNull();
-		});
-
-		it("should return summary", async () => {
-			const summary = createSummaryResponse({
-				tasksInBacklog: { count: 3, latestDueDate: new Date() },
-			});
-			getSummary$.mockReturnValue(of(summary));
-
-			const result = await firstValueFrom(service.summary$);
-
-			expect(result).toEqual(summary);
+			expect(result).toEqual(expected);
 		});
 	});
 
 	describe("profile$", () => {
-		it("should return null when there is no profile", async () => {
-			getProfile$.mockReturnValue(of(null));
+		const profile = createUserResponse();
+
+		it.each([
+			{
+				description: "should return null when there is no profile",
+				serviceResult: null,
+				expected: null,
+			},
+			{
+				description: "should return profile",
+				serviceResult: profile,
+				expected: profile,
+			},
+		])("$description", async ({ serviceResult, expected }) => {
+			getProfile$.mockReturnValue(of(serviceResult));
 
 			const result = await firstValueFrom(service.profile$);
 
-			expect(result).toBeNull();
-		});
-
-		it("should return profile", async () => {
-			const profile = createUserResponse();
-			getProfile$.mockReturnValue(of(profile));
-
-			const result = await firstValueFrom(service.profile$);
-
-			expect(result).toEqual(profile);
+			expect(result).toEqual(expected);
 		});
 	});
 });

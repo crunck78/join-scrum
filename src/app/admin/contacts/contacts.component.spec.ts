@@ -1,10 +1,14 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { Observable, of, tap } from "rxjs";
+import { Observable, of } from "rxjs";
 import { Mock } from "vitest";
 import { ContactResponse } from "../../shared/models/contact.model";
 import { ContactDetailsComponent } from "../../shared/shared-components/contact-details/contact-details.component";
-import { createContactResponse } from "../../testing/fixtures";
+import {
+	clickElement,
+	createContactResponse,
+	getComponentInstance,
+	mockWithSideEffect,
+} from "../../testing/fixtures";
 import { ContactsComponent } from "./contacts.component";
 import { ContactsService } from "./contacts.service";
 
@@ -14,7 +18,11 @@ describe("ContactsComponent", () => {
 	let contactsService: ContactsService;
 	let getContactsServiceSpy$: Mock<() => Observable<ContactResponse[]>>;
 
-	const contact = createContactResponse({ email: "John", name: "Doe", phoneNumber: "015777777777" });
+	const contact = createContactResponse({
+		email: "John",
+		name: "Doe",
+		phoneNumber: "015777777777",
+	});
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -52,18 +60,12 @@ describe("ContactsComponent", () => {
 			"openAddContactDialog",
 		);
 		afterAddContactServiceSpy.mockReturnValue(
-			of(contact).pipe(
-				tap({
-					next: () => {
-						getContactsServiceSpy$.mockReturnValue(of([contact]));
-					},
-				}),
-			),
+			mockWithSideEffect(contact, () => {
+				getContactsServiceSpy$.mockReturnValue(of([contact]));
+			}),
 		);
 
-		const addContactButton: HTMLButtonElement =
-			fixture.nativeElement.querySelector('button[aria-label="Add Contact"]');
-		addContactButton.click();
+		clickElement(fixture, 'button[aria-label="Add Contact"]');
 
 		expect(afterAddContactServiceSpy).toHaveBeenCalledOnce();
 		expect(addContactSpy).toHaveBeenCalledTimes(1);
@@ -74,8 +76,7 @@ describe("ContactsComponent", () => {
 		getContactsServiceSpy$.mockReturnValue(of([contact]));
 		fixture.autoDetectChanges();
 
-		const appComponentEl = fixture.debugElement.query(By.css("app-contact"));
-		appComponentEl.nativeElement.click();
+		clickElement(fixture, "app-contact");
 
 		expect(component.selectedContact).toEqual(contact);
 	});
@@ -86,11 +87,7 @@ describe("ContactsComponent", () => {
 		component.selectedContact = contact;
 		fixture.autoDetectChanges();
 
-		const closeSelectedContactBtn: HTMLButtonElement =
-			fixture.nativeElement.querySelector(
-				'button[aria-label="Close selected contact"]',
-			);
-		closeSelectedContactBtn.click();
+		clickElement(fixture, 'button[aria-label="Close selected contact"]');
 		expect(closeSelectedContactSpy).toHaveBeenCalledTimes(1);
 	});
 
@@ -100,21 +97,13 @@ describe("ContactsComponent", () => {
 		component.selectedContact = contact;
 		const deleteContactServiceSpy = vi.spyOn(contactsService, "deleteContact$");
 		deleteContactServiceSpy.mockReturnValue(
-			of(true).pipe(
-				tap({
-					next: () => {
-						getContactsServiceSpy$.mockReturnValue(of([]));
-					},
-				}),
-			),
+			mockWithSideEffect(true, () => {
+				getContactsServiceSpy$.mockReturnValue(of([]));
+			}),
 		);
 		fixture.autoDetectChanges();
 
-		const deleteContactBtn: HTMLButtonElement =
-			fixture.nativeElement.querySelector(
-				'button[aria-label="Delete contact"]',
-			);
-		deleteContactBtn.click();
+		clickElement(fixture, 'button[aria-label="Delete contact"]');
 		expect(deleteContactSpy).toHaveBeenCalledExactlyOnceWith(contact.id);
 		expect(component.contacts).toEqual([]);
 	});
@@ -126,11 +115,10 @@ describe("ContactsComponent", () => {
 
 		const refreshContactsSpy = vi.spyOn(component, "refreshContacts");
 
-		const childDebugEl = fixture.debugElement.query(
-			By.directive(ContactDetailsComponent),
+		const childInstance = getComponentInstance(
+			fixture,
+			ContactDetailsComponent,
 		);
-		const childInstance =
-			childDebugEl.componentInstance as ContactDetailsComponent;
 
 		childInstance.contactChange.emit();
 

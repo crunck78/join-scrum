@@ -1,16 +1,5 @@
 @if (summary) {
 <div class="summary-counts">
-	@if (summary.tasksInBacklog.count) {
-	<app-card class="counter-wrapper">
-		<p title class="counter">{{ summary.tasksInBacklog.count }}</p>
-		<p subtitle class="counter">
-			{{ summary && summary.tasksInBacklog.count > 1 ? 'Tasks' :
-          'Task' }}
-			<br>
-			in Backlog
-		</p>
-	</app-card>
-	}
 	<div class="tasks-by-priority">
 		@for (counter of summary.tasksByPriority; track counter) {
 		<app-card class="counter-wrapper">

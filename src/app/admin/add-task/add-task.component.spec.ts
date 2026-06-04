@@ -1,16 +1,65 @@
+import { EventEmitter } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { BehaviorSubject, Subject } from "rxjs";
+import { CategoryResponse } from "../../shared/models/category.model";
+import { ContactResponse } from "../../shared/models/contact.model";
+import { TaskResponse } from "../../shared/models/task.model";
+import {
+	createCategoryResponse,
+	createContactResponse,
+	createSubtaskRequest,
+	createTaskRequest,
+	createTaskResponse,
+} from "../../testing/fixtures";
 import { AddTaskComponent } from "./add-task.component";
+import { AddTaskService } from "./add-task.service";
 
 describe("AddTaskComponent", () => {
 	let component: AddTaskComponent;
 	let fixture: ComponentFixture<AddTaskComponent>;
 
+	let categories$: BehaviorSubject<CategoryResponse[]>;
+	let contacts$: BehaviorSubject<ContactResponse[]>;
+	let addTask$: Subject<TaskResponse | null>;
+	let editTask$: Subject<TaskResponse | null>;
+	let deleteTask$: Subject<void>;
+	let openAddCategoryDialog$: Subject<CategoryResponse | null>;
+	let openAddContactDialog$: Subject<ContactResponse | null>;
+	let mockService: {
+		categories$: BehaviorSubject<CategoryResponse[]>;
+		contacts$: BehaviorSubject<ContactResponse[]>;
+		addTask$: ReturnType<typeof vi.fn>;
+		editTask$: ReturnType<typeof vi.fn>;
+		deleteTask$: ReturnType<typeof vi.fn>;
+		openAddCategoryDialog$: ReturnType<typeof vi.fn>;
+		openAddContactDialog$: ReturnType<typeof vi.fn>;
+	};
+
 	beforeEach(() => {
+		categories$ = new BehaviorSubject<CategoryResponse[]>([]);
+		contacts$ = new BehaviorSubject<ContactResponse[]>([]);
+		addTask$ = new Subject<TaskResponse | null>();
+		editTask$ = new Subject<TaskResponse | null>();
+		deleteTask$ = new Subject<void>();
+		openAddCategoryDialog$ = new Subject<CategoryResponse | null>();
+		openAddContactDialog$ = new Subject<ContactResponse | null>();
+
+		mockService = {
+			categories$,
+			contacts$,
+			addTask$: vi.fn().mockReturnValue(addTask$),
+			editTask$: vi.fn().mockReturnValue(editTask$),
+			deleteTask$: vi.fn().mockReturnValue(deleteTask$),
+			openAddCategoryDialog$: vi.fn().mockReturnValue(openAddCategoryDialog$),
+			openAddContactDialog$: vi.fn().mockReturnValue(openAddContactDialog$),
+		};
+
 		TestBed.configureTestingModule({
 			imports: [AddTaskComponent],
+			providers: [{ provide: AddTaskService, useValue: mockService }],
 		});
-		fixture = TestBed.createComponent(AddTaskComponent);
 
+		fixture = TestBed.createComponent(AddTaskComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
@@ -19,302 +68,286 @@ describe("AddTaskComponent", () => {
 		expect(component).toBeDefined();
 	});
 
-	// it("should emit form status changes when task input changes", async () => {
-	// 	const emitSpy = vi.spyOn(component.formStatus$, "emit");
+	describe("ngOnInit", () => {
+		it("loads categories into component.categories", () => {
+			const category = createCategoryResponse();
+			categories$.next([category]);
+			expect(component.categories).toEqual([category]);
+		});
 
-	// 	const task = {
-	// 		id: 1,
-	// 		title: "Existing task",
-	// 		description: "Description",
-	// 		category: {
-	// 			id: 1,
-	// 			name: "Category",
-	// 			color: "#ff0000",
-	// 		} as CategoryResponse,
-	// 		assignees: [
-	// 			{
-	// 				id: 1,
-	// 				name: "John Doe",
-	// 				email: "john@example.com",
-	// 				phoneNumber: "+4915777777777",
-	// 				createdAt: new Date(),
-	// 				updatedAt: new Date(),
-	// 			} as ContactResponse,
-	// 		],
-	// 		dueDate: new Date(),
-	// 		priority: "Low",
-	// 		subtasks: [
-	// 			{
-	// 				id: 1,
-	// 				title: "Subtask",
-	// 				done: false,
-	// 			} as SubtaskResponse,
-	// 		],
-	// 		createdAt: new Date(),
-	// 		updatedAt: new Date(),
-	// 		position: 0,
-	// 	} as TaskResponse;
+		it("loads contacts into component.contacts", () => {
+			const contact = createContactResponse();
+			contacts$.next([contact]);
+			expect(component.contacts).toEqual([contact]);
+		});
 
-	// 	component.task = task;
-	// 	component.ngOnChanges({
-	// 		task: new SimpleChange(undefined, task, true),
-	// 	});
-	// 	await fixture.whenStable();
+		it("emits formStatus$ when form status changes", () => {
+			const emitted: string[] = [];
+			component.formStatus$.subscribe((s) => emitted.push(s));
+			component.addTaskForm.get("title")?.setValue("x");
+			expect(emitted).toContain("INVALID");
+		});
+	});
 
-	// 	expect(emitSpy).toHaveBeenCalled();
-	// 	const lastStatus = emitSpy.mock.calls[emitSpy.mock.calls.length - 1][0];
-	// 	expect(lastStatus).toBe("VALID");
-	// });
+	describe("ngOnChanges", () => {
+		it("patches the form when task input changes", () => {
+			const category = createCategoryResponse();
+			const task = createTaskResponse({ category, title: "My Task" });
+			component.task = task;
+			component.ngOnChanges({
+				task: {
+					currentValue: task,
+					previousValue: null,
+					firstChange: true,
+					isFirstChange: () => true,
+				},
+			});
+			expect(component.addTaskForm.get("title")?.value).toBe("My Task");
+			expect(component.addTaskForm.get("category")?.value).toBe(category.id);
+		});
 
-	// it("should reset form when clearTaskForm$ emits after being set", () => {
-	// 	const resetSpy = vi.spyOn(component, "resetAddTask");
-	// 	const clearTaskEmitter = new EventEmitter<void>();
+		it("resets the form when clearTaskForm$ emits", () => {
+			component.addTaskForm.get("title")?.setValue("Some Title");
+			const emitter = new EventEmitter<void>();
+			component.clearTaskForm$ = emitter;
+			component.ngOnChanges({
+				clearTaskForm$: {
+					currentValue: emitter,
+					previousValue: null,
+					firstChange: true,
+					isFirstChange: () => true,
+				},
+			});
+			emitter.emit();
+			expect(component.addTaskForm.get("title")?.value).toBe("");
+		});
 
-	// 	component.clearTaskForm$ = clearTaskEmitter;
-	// 	component.ngOnChanges({
-	// 		clearTaskForm$: new SimpleChange(undefined, clearTaskEmitter, true),
-	// 	});
+		it("calls saveTask when submitTaskForm$ emits", () => {
+			const spy = vi.spyOn(component, "saveTask");
+			const emitter = new EventEmitter<void>();
+			component.submitTaskForm$ = emitter;
+			component.ngOnChanges({
+				submitTaskForm$: {
+					currentValue: emitter,
+					previousValue: null,
+					firstChange: true,
+					isFirstChange: () => true,
+				},
+			});
+			emitter.emit();
+			expect(spy).toHaveBeenCalledOnce();
+		});
 
-	// 	clearTaskEmitter.emit();
-	// 	expect(resetSpy).toHaveBeenCalledTimes(1);
-	// });
+		it("calls deleteTask when deleteTask$ emits", () => {
+			const spy = vi.spyOn(component, "deleteTask");
+			const emitter = new EventEmitter<void>();
+			component.deleteTask$ = emitter;
+			component.ngOnChanges({
+				deleteTask$: {
+					currentValue: emitter,
+					previousValue: null,
+					firstChange: true,
+					isFirstChange: () => true,
+				},
+			});
+			emitter.emit();
+			expect(spy).toHaveBeenCalledOnce();
+		});
 
-	// it("should delete task when deleteTask$ emits after being set", () => {
-	// 	const deleteSpy = vi.spyOn(component, "deleteTask");
-	// 	const deleteTaskEmitter = new EventEmitter<void>();
+		it("resets the form with predefinedTaskRequest values", () => {
+			const request = createTaskRequest({ title: "Predefined Title" });
+			component.predefinedTaskRequest = request;
+			component.ngOnChanges({
+				predefinedTaskRequest: {
+					currentValue: request,
+					previousValue: null,
+					firstChange: true,
+					isFirstChange: () => true,
+				},
+			});
+			expect(component.addTaskForm.get("title")?.value).toBe(
+				"Predefined Title",
+			);
+		});
 
-	// 	component.deleteTask$ = deleteTaskEmitter;
-	// 	component.ngOnChanges({
-	// 		deleteTask$: new SimpleChange(undefined, deleteTaskEmitter, true),
-	// 	});
+		it("falls back to InitTask defaults for missing predefinedTaskRequest fields", () => {
+			component.predefinedTaskRequest = { title: "Partial" };
+			component.ngOnChanges({
+				predefinedTaskRequest: {
+					currentValue: { title: "Partial" },
+					previousValue: null,
+					firstChange: true,
+					isFirstChange: () => true,
+				},
+			});
+			expect(component.addTaskForm.get("assignees")?.value).toEqual([]);
+			expect(component.addTaskForm.get("description")?.value).toBe("");
+		});
+	});
 
-	// 	deleteTaskEmitter.emit();
-	// 	expect(deleteSpy).toHaveBeenCalledTimes(1);
-	// });
+	describe("addSubtask", () => {
+		it("does nothing when addSubtaskForm is empty", () => {
+			component.addSubtaskForm.setValue("");
+			component.addSubtask();
+			expect(component.addTaskForm.get("subtasks")?.value).toEqual([]);
+		});
 
-	// it("should reset from to predefinedTaskRequest when predefinedTaskRequest input changes ", async () => {
-	// 	const predefinedTaskRequest = {
-	// 		title: "Predefined Task",
-	// 		description: "Description",
-	// 		category: 1,
-	// 		assignees: [1, 2],
-	// 		dueDate: new Date(),
-	// 		priority: "Low",
-	// 		subtasks: [{ title: "Subtask 1", done: false }],
-	// 	} as Partial<TaskRequest>;
+		it("pushes a new subtask onto the form", () => {
+			component.addSubtaskForm.setValue("New Subtask");
+			component.addSubtask();
+			expect(component.addTaskForm.get("subtasks")?.value).toEqual([
+				{ title: "New Subtask", done: false },
+			]);
+		});
 
-	// 	component.predefinedTaskRequest = predefinedTaskRequest;
-	// 	component.ngOnChanges({
-	// 		predefinedTaskRequest: new SimpleChange(
-	// 			undefined,
-	// 			predefinedTaskRequest,
-	// 			true,
-	// 		),
-	// 	});
-	// 	await fixture.whenStable();
+		it("resets addSubtaskForm after adding", () => {
+			component.addSubtaskForm.setValue("New Subtask");
+			component.addSubtask();
+			expect(component.addSubtaskForm.value).toBeNull();
+		});
+	});
 
-	// 	const formValue = component.addTaskForm.getRawValue();
-	// 	expect(formValue).toEqual(predefinedTaskRequest);
-	// });
+	describe("removeSubtask", () => {
+		it("removes the specified subtask from the form", () => {
+			const subtaskToRemove = createSubtaskRequest({ title: "Remove Me" });
+			const subtaskToKeep = createSubtaskRequest({ title: "Keep Me" });
+			component.pushSubtask(subtaskToRemove);
+			component.pushSubtask(subtaskToKeep);
+			component.removeSubtask(subtaskToRemove);
+			expect(component.addTaskForm.get("subtasks")?.value).toEqual([
+				subtaskToKeep,
+			]);
+		});
+	});
 
-	// it("should reset from to initialTask when predefinedTaskRequest input changes and empty", async () => {
-	// 	const predefinedTaskRequest = {} as Partial<TaskRequest>;
+	describe("addCategory", () => {
+		it("calls loadCategories when dialog returns a new category", () => {
+			const spy = vi.spyOn(component, "loadCategories");
+			component.addCategory();
+			openAddCategoryDialog$.next(createCategoryResponse());
+			expect(spy).toHaveBeenCalledOnce();
+		});
 
-	// 	component.predefinedTaskRequest = predefinedTaskRequest;
-	// 	component.ngOnChanges({
-	// 		predefinedTaskRequest: new SimpleChange(
-	// 			undefined,
-	// 			predefinedTaskRequest,
-	// 			true,
-	// 		),
-	// 	});
-	// 	await fixture.whenStable();
+		it("does not call loadCategories when dialog returns null", () => {
+			const spy = vi.spyOn(component, "loadCategories");
+			component.addCategory();
+			openAddCategoryDialog$.next(null);
+			expect(spy).not.toHaveBeenCalled();
+		});
+	});
 
-	// 	const expectedTaskFormValue = component.InitTask;
+	describe("addContact", () => {
+		it("calls loadContacts when dialog returns a new contact", () => {
+			const spy = vi.spyOn(component, "loadContacts");
+			component.addContact();
+			openAddContactDialog$.next(createContactResponse());
+			expect(spy).toHaveBeenCalledOnce();
+		});
 
-	// 	const formValue = component.addTaskForm.getRawValue();
-	// 	expect(formValue).toEqual(expectedTaskFormValue);
-	// });
+		it("does not call loadContacts when dialog returns null", () => {
+			const spy = vi.spyOn(component, "loadContacts");
+			component.addContact();
+			openAddContactDialog$.next(null);
+			expect(spy).not.toHaveBeenCalled();
+		});
+	});
 
-	// it("should called addCategory when action button is clicked", () => {
-	// 	const addCategorySpy = vi.spyOn(component, "addCategory");
-	// 	const addCategoryButton: HTMLButtonElement =
-	// 		fixture.nativeElement.querySelector('button[aria-label="Add Category"]');
-	// 	addCategoryButton.click();
-	// 	expect(addCategorySpy).toHaveBeenCalledTimes(1);
-	// });
+	describe("saveTask", () => {
+		it("routes to addTask when mode is add", () => {
+			fillValidForm();
+			component.mode = "add";
+			component.saveTask();
+			expect(mockService.addTask$).toHaveBeenCalledOnce();
+		});
 
-	// it("should called addContact when action button is clicked", () => {
-	// 	const addContactSpy = vi.spyOn(component, "addContact");
-	// 	const addContactButton: HTMLButtonElement =
-	// 		fixture.nativeElement.querySelector('button[aria-label="Add Contact"]');
-	// 	addContactButton.click();
-	// 	expect(addContactSpy).toHaveBeenCalledTimes(1);
-	// });
+		it("routes to editTask when mode is edit", () => {
+			fillValidForm();
+			component.mode = "edit";
+			component.task = createTaskResponse();
+			component.saveTask();
+			expect(mockService.editTask$).toHaveBeenCalledOnce();
+		});
+	});
 
-	// it("should called addSubtask when action button is clicked", async () => {
-	// 	const addSubtaskSpy = vi.spyOn(component, "addSubtask");
+	describe("addTask", () => {
+		it("does not call service when form is invalid", () => {
+			component.addTask();
+			expect(mockService.addTask$).not.toHaveBeenCalled();
+		});
 
-	// 	component.addSubtaskForm.patchValue("New Subtask");
-	// 	await fixture.whenStable();
-	// 	const addSubtaskButton: HTMLButtonElement =
-	// 		fixture.nativeElement.querySelector('button[aria-label="Add Subtask"]');
-	// 	addSubtaskButton.click();
-	// 	expect(addSubtaskSpy).toHaveBeenCalledTimes(1);
-	// });
+		it("emits addedTask$ with the response from the service", () => {
+			fillValidForm();
+			const emitted: (TaskResponse | null)[] = [];
+			component.addedTask$.subscribe((t) => emitted.push(t));
+			component.addTask();
+			const newTask = createTaskResponse();
+			addTask$.next(newTask);
+			expect(emitted).toEqual([newTask]);
+		});
+	});
 
-	// it("should called removeSubtask when button is clicked", async () => {
-	// 	const removeSubtaskSpy = vi.spyOn(component, "removeSubtask");
+	describe("editTask", () => {
+		it("does not call service when form is invalid", () => {
+			component.editTask();
+			expect(mockService.editTask$).not.toHaveBeenCalled();
+		});
 
-	// 	component.addTaskForm.patchValue({
-	// 		subtasks: [
-	// 			{
-	// 				title: "Existing Subtask",
-	// 				done: false,
-	// 			} as SubtaskRequest,
-	// 		],
-	// 	});
-	// 	await fixture.whenStable();
-	// 	fixture.detectChanges();
-	// 	const removeSubtaskButton: HTMLButtonElement =
-	// 		fixture.nativeElement.querySelector(
-	// 			'button[aria-label="Remove Subtask"]',
-	// 		);
-	// 	removeSubtaskButton.click();
-	// 	expect(removeSubtaskSpy).toHaveBeenCalledTimes(1);
-	// });
+		it("emits editedTask$ with the response from the service", () => {
+			fillValidForm();
+			component.task = createTaskResponse();
+			const emitted: (TaskResponse | null)[] = [];
+			component.editedTask$.subscribe((t) => emitted.push(t));
+			component.editTask();
+			const updated = createTaskResponse({ title: "Updated" });
+			editTask$.next(updated);
+			expect(emitted).toEqual([updated]);
+		});
+	});
 
-	// it("should reset forms to initial state when resetAddTask is called", () => {
-	// 	const task = {
-	// 		title: "Some Task",
-	// 		description: "Some Description",
-	// 		category: 1,
-	// 		assignees: <number[]>[1, 2],
-	// 		dueDate: new Date(),
-	// 		priority: "Low",
-	// 		subtasks: <SubtaskRequest[]>[{ title: "Subtask 1", done: true }],
-	// 	} as TaskFormGroup;
+	describe("deleteTask", () => {
+		it("does nothing when mode is add", () => {
+			component.mode = "add";
+			component.task = createTaskResponse();
+			component.deleteTask();
+			expect(mockService.deleteTask$).not.toHaveBeenCalled();
+		});
 
-	// 	component.addTaskForm.patchValue(task);
-	// 	component.resetAddTask();
+		it("calls service and emits deletedTaskId$ when mode is edit", () => {
+			const task = createTaskResponse({ id: 42 });
+			component.mode = "edit";
+			component.task = task;
+			const emitted: (number | null)[] = [];
+			component.deletedTaskId$.subscribe((id) => emitted.push(id));
+			component.deleteTask();
+			deleteTask$.next();
+			expect(mockService.deleteTask$).toHaveBeenCalledWith(42);
+			expect(emitted).toEqual([42]);
+		});
+	});
 
-	// 	expect(component.addTaskForm.getRawValue()).toEqual(component.InitTask);
-	// 	expect(component.addSubtaskForm.value).toBeNull();
-	// });
+	describe("resetAddTask", () => {
+		it("resets addTaskForm to InitTask values", () => {
+			component.addTaskForm.get("title")?.setValue("some title");
+			component.resetAddTask();
+			expect(component.addTaskForm.get("title")?.value).toBe("");
+		});
 
-	// it("should save form when submitTaskForm$ emits after being set", () => {
-	// 	const saveSpy = vi.spyOn(component, "saveTask");
-	// 	const submitTaskForm = new EventEmitter<void>();
+		it("resets addSubtaskForm", () => {
+			component.addSubtaskForm.setValue("some subtask");
+			component.resetAddTask();
+			expect(component.addSubtaskForm.value).toBeNull();
+		});
+	});
 
-	// 	component.submitTaskForm$ = submitTaskForm;
-	// 	component.ngOnChanges({
-	// 		submitTaskForm$: new SimpleChange(undefined, submitTaskForm, true),
-	// 	});
-
-	// 	submitTaskForm.emit();
-	// 	expect(saveSpy).toHaveBeenCalledTimes(1);
-	// });
-
-	// it("should call addTask on add mode when saveTask is called", () => {
-	// 	const addSpy = vi.spyOn(component, "addTask");
-	// 	const editSpy = vi.spyOn(component, "editTask");
-
-	// 	const task = {
-	// 		title: "Some Task",
-	// 		description: "Some Description",
-	// 		category: 1,
-	// 		assignees: <number[]>[1, 2],
-	// 		dueDate: new Date(),
-	// 		priority: "Low",
-	// 		subtasks: <SubtaskRequest[]>[{ title: "Subtask 1", done: true }],
-	// 	} as TaskFormGroup;
-
-	// 	component.addTaskForm.patchValue(task);
-
-	// 	component.mode = "add";
-	// 	component.saveTask();
-
-	// 	expect(component.addTaskForm.getRawValue()).toEqual(task);
-	// 	// is this broken? the subtasks are part of the main form, not the addSubtaskForm
-	// 	// expect(component.addSubtaskForm.getRawValue()).toEqual(task.subtasks);
-	// 	expect(addSpy).toHaveBeenCalledTimes(1);
-	// 	expect(editSpy).toHaveBeenCalledTimes(0);
-	// });
-
-	// it("should call editTask on edit mode when saveTask is called", () => {
-	// 	const addSpy = vi.spyOn(component, "addTask");
-	// 	const editSpy = vi.spyOn(component, "editTask");
-
-	// 	const task = {
-	// 		id: 1,
-	// 		createdAt: new Date(),
-	// 		updatedAt: new Date(),
-	// 		title: "Some Task",
-	// 		description: "Some Description",
-	// 		category: {
-	// 			name: "Bug",
-	// 			color: "#ff0000",
-	// 			createdAt: new Date(),
-	// 			updatedAt: new Date(),
-	// 			id: 1,
-	// 		} as CategoryResponse,
-	// 		assignees: <ContactResponse[]>[
-	// 			{
-	// 				email: "john@example.com",
-	// 				name: "John",
-	// 				phoneNumber: "+4915777777777",
-	// 				createdAt: new Date(),
-	// 				updatedAt: new Date(),
-	// 				id: 1,
-	// 			},
-	// 		],
-	// 		dueDate: new Date(),
-	// 		priority: "Low",
-	// 		subtasks: <SubtaskRequest[]>[{ title: "Subtask 1", done: true }],
-	// 		position: 0,
-	// 	} as TaskResponse;
-
-	// 	component.task = task;
-	// 	const taskRepresentation = Task.convertToRepresentation(task);
-	// 	delete taskRepresentation.position; // position is not part of the form
-	// 	component.addTaskForm.patchValue(taskRepresentation);
-
-	// 	component.mode = "edit";
-	// 	component.saveTask();
-
-	// 	const addTaskFormValue = component.addTaskForm.getRawValue();
-	// 	// const addSubtaskFormValue = component.addSubtaskForm.getRawValue();
-
-	// 	expect(addTaskFormValue).toEqual(taskRepresentation);
-	// 	// is this broken? the subtasks are part of the main form, not the addSubtaskForm
-	// 	// expect(addSubtaskFormValue).toEqual(task.subtasks);
-	// 	expect(addSpy).toHaveBeenCalledTimes(0);
-	// 	expect(editSpy).toHaveBeenCalledTimes(1);
-	// });
-
-	// it("should call resetTask on button click", () => {
-	// 	const resetSpy = vi.spyOn(component, "resetAddTask");
-	// 	const button: HTMLButtonElement = fixture.nativeElement.querySelector(
-	// 		'button[aria-label="Clear Task Form"]',
-	// 	);
-	// 	button.click();
-	// 	expect(resetSpy).toHaveBeenCalledTimes(1);
-	// });
-
-	// it("should call saveTask on button click", () => {
-	// 	const saveSpy = vi.spyOn(component, "saveTask");
-	// 	component.hideFooter = false;
-	// 	component.addTaskForm.patchValue({
-	// 		title: "Some Task",
-	// 		category: 1,
-	// 		dueDate: new Date(),
-	// 		priority: "Low",
-	// 	});
-	// 	fixture.detectChanges();
-	// 	const button: HTMLButtonElement = fixture.nativeElement.querySelector(
-	// 		'button[aria-label="Save Task"]',
-	// 	);
-	// 	button.click();
-	// 	expect(saveSpy).toHaveBeenCalledTimes(1);
-	// });
+	function fillValidForm() {
+		component.addTaskForm.setValue({
+			title: "Test Task",
+			description: "",
+			category: 1,
+			assignees: [],
+			dueDate: new Date(),
+			priority: "Low",
+			subtasks: [],
+		});
+	}
 });

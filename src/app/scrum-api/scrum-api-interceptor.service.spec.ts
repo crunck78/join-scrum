@@ -9,6 +9,7 @@ import {
 	provideHttpClientTesting,
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
+import { environment } from "../../environments/environment.development";
 import { ScrumApiInterceptor } from "./scrum-api-interceptor.service";
 import { ScrumApiService } from "./scrum-api.service";
 
@@ -50,7 +51,7 @@ describe("ScrumApiInterceptor", () => {
 			isLoggedIn.mockReturnValue(true);
 			httpClient.get("/test").subscribe();
 
-			const req = httpTesting.expectOne("http://localhost:8000/test");
+			const req = httpTesting.expectOne(`${environment.apiEndpoint}/test`);
 			expect(req.request.headers.has("Authorization")).toBe(true);
 			expect(req.request.headers.get("Authorization")).toBe("Token test-token");
 			req.flush({});
@@ -60,7 +61,7 @@ describe("ScrumApiInterceptor", () => {
 			isLoggedIn.mockReturnValue(false);
 			httpClient.get("/test").subscribe();
 
-			const req = httpTesting.expectOne("http://localhost:8000/test");
+			const req = httpTesting.expectOne(`${environment.apiEndpoint}/test`);
 			expect(req.request.headers.has("Authorization")).toBe(false);
 			req.flush({});
 		});

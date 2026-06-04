@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
+import { getElement } from "../../../testing/fixtures";
 import { DialogComponent } from "./dialog.component";
 
 @Component({
@@ -38,10 +38,7 @@ describe("DialogComponent", () => {
 	});
 
 	it("should display contents and title", () => {
-		const debugElement = fixture.debugElement.query(By.css(".title-content"));
-		expect(debugElement).toBeDefined();
-		const titleContent = debugElement.nativeElement as HTMLElement;
-		console.log(titleContent);
+		const titleContent = getElement(fixture, ".title-content");
 		expect(titleContent.innerText).toContain("Title content left");
 		expect(titleContent.innerText).toContain("Test title");
 		expect(titleContent.innerText).toContain("Title content right");

@@ -8,57 +8,25 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
-import { CategoryResponseAPI } from "../../shared/models/category.model";
-import { ContactResponseAPI } from "../../shared/models/contact.model";
+import { SubtaskRequest } from "../../shared/models/subtask.model";
+import { Task, TaskRequest } from "../../shared/models/task.model";
 import {
-	SubtaskRequest,
-	SubtaskResponseAPI,
-} from "../../shared/models/subtask.model";
-import {
-	Task,
-	TaskRequest,
-	TaskResponseAPI,
-} from "../../shared/models/task.model";
+	createCategoryResponseAPI,
+	createContactResponseAPI,
+	createSubtaskResponseAPI,
+	createTaskResponseAPI,
+} from "../../testing/fixtures";
 import { ScrumTasksService, TASKS_ENDPOINT } from "./scrum-tasks.service";
 
-const mockAssignee: ContactResponseAPI = {
-	created_at: "",
-	email: "test.user@example.local",
-	id: 1,
-	name: "John Doe",
-	phone_number: "01555555555",
-	updated_at: "",
-};
+const mockAssignee = createContactResponseAPI();
+const mockCategory = createCategoryResponseAPI();
+const mockSubtask = createSubtaskResponseAPI();
 
-const mockCategory: CategoryResponseAPI = {
-	color: "#ffffff",
-	created_at: "",
-	id: 1,
-	name: "IT",
-	update_at: "",
-};
-
-const mockSubtask: SubtaskResponseAPI = {
-	created_at: "",
-	done: false,
-	id: 1,
-	title: "Unit tests",
-	updated_at: "",
-};
-
-const mockTask: TaskResponseAPI = {
+const mockTask = createTaskResponseAPI({
 	assignees: [mockAssignee],
 	category: mockCategory,
-	created_at: "",
-	description: "Some Bug to fix",
-	due_date: "",
-	id: 1,
-	position: 1,
-	priority: "Low",
 	subtasks: [mockSubtask],
-	title: "Fix the bug",
-	updated_at: "",
-};
+});
 
 const newSubTaskRequest: SubtaskRequest = {
 	title: "Subtask 1",

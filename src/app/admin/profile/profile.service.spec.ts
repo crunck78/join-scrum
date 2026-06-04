@@ -42,55 +42,56 @@ describe("ProfileService", () => {
 	});
 
 	describe("profile$", () => {
-		it("should return null when there is no profile", async () => {
-			getProfile$.mockReturnValue(of(null));
+		const profile = createUserResponse();
+
+		it.each([
+			{
+				description: "should return null when there is no profile",
+				serviceResult: null,
+				expected: null,
+			},
+			{
+				description: "should return the user profile",
+				serviceResult: profile,
+				expected: profile,
+			},
+		])("$description", async ({ serviceResult, expected }) => {
+			getProfile$.mockReturnValue(of(serviceResult));
+
 			const result = await firstValueFrom(service.profile$);
-			expect(result).toBeNull();
-		});
 
-		it("should return the user profile", async () => {
-			const profile = createUserResponse();
-			getProfile$.mockReturnValue(of(profile));
-
-			const result = await firstValueFrom(service.profile$);
-
-			expect(result).toEqual(profile);
+			expect(result).toEqual(expected);
 		});
 	});
 
 	describe("openEditProfileDialog", () => {
-		it("should return null when dialog is closed without saving", async () => {
+		const profile = createUserResponse();
+
+		it.each([
+			{
+				description: "should return null when dialog is closed without saving",
+				dialogResult: null,
+				expected: null,
+			},
+			{
+				description: "should return the edited profile when dialog is saved",
+				dialogResult: profile,
+				expected: profile,
+			},
+		])("$description", async ({ dialogResult, expected }) => {
 			dialogOpen.mockReturnValue({
 				componentInstance: {
 					profileToEdit: 0,
 					editProfileForm: { patchValue: vi.fn() },
 				},
-				afterClosed: () => of(null),
-			});
-			const profile = createUserResponse();
-
-			const result = await firstValueFrom(
-				service.openEditProfileDialog(profile),
-			);
-
-			expect(result).toBeNull();
-		});
-
-		it("should return the edited profile when dialog is saved", async () => {
-			const profile = createUserResponse();
-			dialogOpen.mockReturnValue({
-				componentInstance: {
-					profileToEdit: 0,
-					editProfileForm: { patchValue: vi.fn() },
-				},
-				afterClosed: () => of(profile),
+				afterClosed: () => of(dialogResult),
 			});
 
 			const result = await firstValueFrom(
 				service.openEditProfileDialog(profile),
 			);
 
-			expect(result).toEqual(profile);
+			expect(result).toEqual(expected);
 		});
 
 		it("should set profileToEdit id and patch form on dialog componentInstance", async () => {
@@ -104,51 +105,57 @@ describe("ProfileService", () => {
 				componentInstance,
 				afterClosed: () => of(null),
 			});
-
 			await firstValueFrom(service.openEditProfileDialog(profile));
-
 			expect(componentInstance.profileToEdit).toBe(42);
 			expect(patchValue).toHaveBeenCalledWith(profile);
 		});
 	});
 
 	describe("deleteProfile", () => {
-		it("should call logout when profile is successfully deleted", () => {
-			deleteProfile$.mockReturnValue(of(true));
+		it.each([
+			{
+				description: "should call logout when profile is successfully deleted",
+				deleteResult: true,
+				shouldLogout: true,
+			},
+			{
+				description: "should not call logout when profile deletion fails",
+				deleteResult: false,
+				shouldLogout: false,
+			},
+		])("$description", ({ deleteResult, shouldLogout }) => {
+			deleteProfile$.mockReturnValue(of(deleteResult));
 
 			service.deleteProfile();
 
-			expect(logout).toHaveBeenCalledOnce();
-		});
-
-		it("should not call logout when profile deletion fails", () => {
-			deleteProfile$.mockReturnValue(of(false));
-
-			service.deleteProfile();
-
-			expect(logout).not.toHaveBeenCalled();
+			if (shouldLogout) {
+				expect(logout).toHaveBeenCalledOnce();
+			} else {
+				expect(logout).not.toHaveBeenCalled();
+			}
 		});
 	});
 
 	describe("openProfileImageCropperDialog", () => {
-		it("should return false when dialog is closed without change", async () => {
-			dialogOpen.mockReturnValue({ afterClosed: () => of(false) });
+		it.each([
+			{
+				description: "should return false when dialog is closed without change",
+				dialogResult: false,
+			},
+			{
+				description: "should return true when image is changed",
+				dialogResult: true,
+			},
+		])("$description", async ({ dialogResult }) => {
+			dialogOpen.mockReturnValue({
+				afterClosed: () => of(dialogResult),
+			});
 
 			const result = await firstValueFrom(
 				service.openProfileImageCropperDialog(),
 			);
 
-			expect(result).toBeFalsy();
-		});
-
-		it("should return true when image is changed", async () => {
-			dialogOpen.mockReturnValue({ afterClosed: () => of(true) });
-
-			const result = await firstValueFrom(
-				service.openProfileImageCropperDialog(),
-			);
-
-			expect(result).toBeTruthy();
+			expect(result).toBe(dialogResult);
 		});
 	});
 });

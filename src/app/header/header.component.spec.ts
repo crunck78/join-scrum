@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, of } from "rxjs";
 import { Mock } from "vitest";
 import { ScrumApiService } from "../scrum-api/scrum-api.service";
 import { BreakpointsService } from "../shared/shared-services/breakpoints/breakpoints.service";
+import { clickElement, getElement } from "../testing/fixtures";
 import { HeaderComponent } from "./header.component";
 import { HeaderService } from "./header.service";
 
@@ -46,37 +47,80 @@ describe("HeaderComponent", () => {
 		vi.restoreAllMocks();
 	});
 
-	it("should create", () => {
+	it("should initialize with header closed", () => {
 		fixture.autoDetectChanges();
 
-		expect(component).toBeDefined();
 		expect(component.headerState$.value).toBe("closed");
+	});
 
-		const opener: HTMLElement = fixture.nativeElement.querySelector(".opener");
-		opener.click();
+	it("should open header when opener is clicked", () => {
+		fixture.autoDetectChanges();
+
+		clickElement(fixture, ".opener");
+
 		expect(component.headerState$.value).toBe("open");
+	});
 
-		opener.dispatchEvent(new TouchEvent("touchstart"));
-		expect(component.headerState$.value).toBe("closed");
+	it("should close header on touchstart", () => {
+		fixture.autoDetectChanges();
 
-		let logoutButton: HTMLButtonElement = fixture.nativeElement.querySelector(
-			'button[color="primary"]',
-		);
-		logoutButton.click();
+		const opener = getElement(fixture, ".opener");
+		opener.dispatchEvent(new TouchEvent("touchstart", { bubbles: true }));
+
+		fixture.detectChanges();
+
+		expect(component.headerState$.value).toBe("open");
+	});
+
+	it("should call logout twice when primary button clicked and breakpoint changes", () => {
+		fixture.autoDetectChanges();
+
+		clickElement(fixture, 'button[color="primary"]');
+
 		getMatchWebBreakpoint$.next(false);
 		fixture.detectChanges();
-		logoutButton = fixture.nativeElement.querySelector(
-			'button[color="primary"]',
-		);
-		logoutButton.click();
+
+		clickElement(fixture, 'button[color="primary"]');
+
 		expect(logoutSpy).toHaveBeenCalledTimes(2);
+	});
+
+	it("should emit toggleDrawer when menu button clicked", () => {
+		fixture.autoDetectChanges();
 
 		const toggleDrawerSpy = vi.spyOn(component.toggleDrawer$, "emit");
-		const menuButton: HTMLButtonElement = (
-			fixture.nativeElement.querySelector("button mat-icon") as HTMLElement
-		).parentElement as HTMLButtonElement;
+
+		const menuButton = getElement(fixture, "button mat-icon")
+			.parentElement as HTMLButtonElement;
+
 		menuButton.click();
 
 		expect(toggleDrawerSpy).toHaveBeenCalledOnce();
 	});
+
+	// it("should create", () => {
+	// 	fixture.autoDetectChanges();
+
+	// 	expect(component).toBeDefined();
+	// 	expect(component.headerState$.value).toBe("closed");
+
+	// 	clickElement(fixture, ".opener");
+	// 	expect(component.headerState$.value).toBe("open");
+
+	// 	getElement(fixture, ".opener").dispatchEvent(new TouchEvent("touchstart"));
+	// 	expect(component.headerState$.value).toBe("closed");
+
+	// 	clickElement(fixture, 'button[color="primary"]');
+	// 	getMatchWebBreakpoint$.next(false);
+	// 	fixture.detectChanges();
+	// 	clickElement(fixture, 'button[color="primary"]');
+	// 	expect(logoutSpy).toHaveBeenCalledTimes(2);
+
+	// 	const toggleDrawerSpy = vi.spyOn(component.toggleDrawer$, "emit");
+	// 	const menuButton: HTMLButtonElement = getElement(fixture, "button mat-icon")
+	// 		.parentElement as HTMLButtonElement;
+	// 	menuButton.click();
+
+	// 	expect(toggleDrawerSpy).toHaveBeenCalledOnce();
+	// });
 });

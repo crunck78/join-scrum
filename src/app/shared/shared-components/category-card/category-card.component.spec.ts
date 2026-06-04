@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { getElement } from "../../../testing/fixtures";
 import { CategoryResponse } from "../../models/category.model";
 import { CategoryCardComponent } from "./category-card.component";
 
@@ -27,9 +28,7 @@ describe("CategoryCardComponent", () => {
 	it("should display category name and color when category is provided", async () => {
 		component.category = mockCategory;
 		await fixture.whenStable();
-		const compiled = fixture.nativeElement as HTMLElement;
-		const categoryElement = compiled.querySelector(".task-category");
-		expect(categoryElement).toBeTruthy();
+		const categoryElement = getElement(fixture, ".task-category");
 		expect(categoryElement?.textContent).toContain("Development");
 		expect(categoryElement?.getAttribute("style")).toContain(
 			"background-color: rgb(255, 0, 0);",

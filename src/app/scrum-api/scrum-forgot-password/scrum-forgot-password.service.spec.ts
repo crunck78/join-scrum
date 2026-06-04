@@ -45,7 +45,7 @@ describe("ScrumForgotPasswordService", () => {
 	describe("sendEmail", () => {
 		it("should return true when request succeeded", async () => {
 			const resultPromise = firstValueFrom(
-				service.sendMail(mockedForgotPasswordPayload),
+				service.sendMail$(mockedForgotPasswordPayload),
 			);
 			const req = httpTesting.expectOne(
 				`${FORGOT_PASSWORD_ENDPOINT}?email=${mockedForgotPasswordPayload.email}`,
@@ -59,7 +59,7 @@ describe("ScrumForgotPasswordService", () => {
 		});
 		it("should return fails when request fails", async () => {
 			const resultPromise = firstValueFrom(
-				service.sendMail(mockedForgotPasswordPayload),
+				service.sendMail$(mockedForgotPasswordPayload),
 			);
 			const req = httpTesting.expectOne(
 				`${FORGOT_PASSWORD_ENDPOINT}?email=${mockedForgotPasswordPayload.email}`,

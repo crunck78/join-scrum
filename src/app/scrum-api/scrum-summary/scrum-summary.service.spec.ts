@@ -14,8 +14,8 @@ import {
 	TaskCategoryCountResponseAPI,
 	TaskListsCountResponseAPI,
 	TaskPriorityCountResponseAPI,
-	TasksInBacklogResponseAPI,
 } from "../../shared/models/summary.model";
+import { createSummaryResponseAPI } from "../../testing/fixtures";
 import { ScrumSummaryService, SUMMARY_ENDPOINT } from "./scrum-summary.service";
 
 const mockTaskByPriorityResponse: TaskPriorityCountResponseAPI = {
@@ -32,11 +32,6 @@ const mockTaskListsCountResponse: TaskListsCountResponseAPI = {
 	latest_due_date: "2024-01-01T00:00:00Z",
 };
 
-const mockTasksInBacklogResponse: TasksInBacklogResponseAPI = {
-	count: 5,
-	latest_due_date: "2024-01-01T00:00:00Z",
-};
-
 const mockTaskByCategoryCountResponse: TaskCategoryCountResponseAPI = {
 	category__name: "Bug",
 	count: 3,
@@ -44,12 +39,11 @@ const mockTaskByCategoryCountResponse: TaskCategoryCountResponseAPI = {
 	category__color: "#ff0000",
 };
 
-const mockSummaryResponse: SummaryResponseAPI = {
+const mockSummaryResponse: SummaryResponseAPI = createSummaryResponseAPI({
 	tasks_by_category: [mockTaskByCategoryCountResponse],
 	tasks_by_priority: [mockTaskByPriorityResponse],
-	tasks_in_backlog: mockTasksInBacklogResponse,
 	tasks_in_lists: [mockTaskListsCountResponse],
-};
+});
 
 describe("ScrumSummaryService", () => {
 	let service: ScrumSummaryService;

@@ -2,12 +2,12 @@ import { HarnessLoader } from "@angular/cdk/testing";
 import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatDrawerHarness } from "@angular/material/sidenav/testing";
-import { By } from "@angular/platform-browser";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Mock } from "vitest";
 import { AppComponent } from "./app.component";
 import { AppService } from "./app.service";
 import { HeaderComponent } from "./header/header.component";
+import { getComponentInstance, getElement } from "./testing/fixtures";
 
 describe("AppComponent", () => {
 	let fixture: ComponentFixture<AppComponent>;
@@ -54,10 +54,9 @@ describe("AppComponent", () => {
 
 		isLoggedIn$.next(true);
 		fixture.detectChanges();
-		expect(fixture.nativeElement.querySelector("app-header")).toBeTruthy();
+		expect(getElement(fixture, "app-header")).toBeTruthy();
 
-		const header = fixture.debugElement.query(By.directive(HeaderComponent))
-			.componentInstance as HeaderComponent;
+		const header = getComponentInstance(fixture, HeaderComponent);
 		header.toggleDrawer$.emit();
 		expect(await matDrawer.isOpen()).toBe(false);
 		header.toggleDrawer$.emit();

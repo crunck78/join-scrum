@@ -8,24 +8,18 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
-import { Subtask, SubtaskResponseAPI } from "../../shared/models/subtask.model";
+import { Subtask } from "../../shared/models/subtask.model";
+import {
+	createSubtaskRequest,
+	createSubtaskResponseAPI,
+} from "../../testing/fixtures";
 import {
 	ScrumSubtasksService,
 	SUBTASKS_ENDPOINT,
 } from "./scrum-subtasks.service";
 
-const mockSubtask: SubtaskResponseAPI = {
-	created_at: "",
-	done: false,
-	id: 1,
-	title: "Unit tests",
-	updated_at: "",
-};
-
-const mockSubtaskRequest = {
-	title: "Unit tests",
-	done: false,
-};
+const mockSubtask = createSubtaskResponseAPI();
+const mockSubtaskRequest = createSubtaskRequest();
 
 describe("ScrumSubtasksService", () => {
 	let service: ScrumSubtasksService;

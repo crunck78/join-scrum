@@ -8,28 +8,18 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
+import { Category } from "../../shared/models/category.model";
 import {
-	Category,
-	CategoryRequestAPI,
-	CategoryResponseAPI,
-} from "../../shared/models/category.model";
+	createCategoryRequestAPI,
+	createCategoryResponseAPI,
+} from "../../testing/fixtures";
 import {
 	CATEGORIES_ENDPOINT,
 	ScrumCategoriesService,
 } from "./scrum-categories.service";
 
-const mockCategory: CategoryResponseAPI = {
-	color: "#ffffff",
-	created_at: "",
-	id: 1,
-	name: "IT",
-	update_at: "",
-};
-
-const mockCategoryRequest: CategoryRequestAPI = {
-	name: "IT",
-	color: "#ffffff",
-};
+const mockCategory = createCategoryResponseAPI();
+const mockCategoryRequest = createCategoryRequestAPI();
 
 describe("ScrumCategoriesService", () => {
 	let service: ScrumCategoriesService;

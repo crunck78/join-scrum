@@ -7,6 +7,7 @@ import { UserResponse } from "../../shared/models/user.model";
 import {
 	createSummaryResponse,
 	createUserResponse,
+	getElement,
 } from "../../testing/fixtures";
 import { SummaryComponent } from "./summary.component";
 import { SummaryService } from "./summary.service";
@@ -46,9 +47,7 @@ describe("SummaryComponent", () => {
 		it.each([
 			{ value: null },
 			{
-				value: createSummaryResponse({
-					tasksInBacklog: { count: 3, latestDueDate: new Date() },
-				}),
+				value: createSummaryResponse(),
 			},
 		])("should reflect summary$ emission", ({ value }) => {
 			getSummaryServiceSpy$.mockReturnValue(of(value));
@@ -74,7 +73,30 @@ describe("SummaryComponent", () => {
 			{ summary: createSummaryResponse(), expected: true },
 			{
 				summary: createSummaryResponse({
-					tasksInBacklog: { count: 5, latestDueDate: new Date() },
+					tasksByCategory: [
+						{
+							categoryName: "",
+							categoryColor: "",
+							count: 0,
+							latestDueDate: new Date(),
+						},
+					],
+					tasksByPriority: [
+						{
+							priority: "",
+							count: 0,
+							latestDueDate: new Date(),
+						},
+					],
+					tasksInLists: [
+						{
+							listName: "",
+							count: 0,
+							listPosition: 0,
+							listBoardTitle: "",
+							latestDueDate: new Date(),
+						},
+					],
 				}),
 				expected: false,
 			},
@@ -120,10 +142,9 @@ describe("SummaryComponent", () => {
 		])("should show '$expected' in title", ({ profile, expected }) => {
 			getProfileServiceSpy$.mockReturnValue(of(profile));
 			fixture.autoDetectChanges();
-			const titleEl = fixture.nativeElement.querySelector(
-				".greeting-wrapper [title]",
-			);
-			expect(titleEl.textContent).toContain(expected);
+			expect(
+				getElement(fixture, ".greeting-wrapper [title]").textContent,
+			).toContain(expected);
 		});
 	});
 
@@ -196,7 +217,7 @@ describe("SummaryComponent", () => {
 		it("should show 'Task' for a single task", () => {
 			getSummaryServiceSpy$.mockReturnValue(of(createSummaryResponse(single)));
 			fixture.autoDetectChanges();
-			const el = fixture.nativeElement.querySelector(`${selector} [subtitle]`);
+			const el = getElement(fixture, `${selector} [subtitle]`);
 			expect(el.textContent).toContain("Task");
 			expect(el.textContent).not.toContain("Tasks");
 		});
@@ -206,7 +227,7 @@ describe("SummaryComponent", () => {
 				of(createSummaryResponse(multiple)),
 			);
 			fixture.autoDetectChanges();
-			const el = fixture.nativeElement.querySelector(`${selector} [subtitle]`);
+			const el = getElement(fixture, `${selector} [subtitle]`);
 			expect(el.textContent).toContain("Tasks");
 		});
 	});

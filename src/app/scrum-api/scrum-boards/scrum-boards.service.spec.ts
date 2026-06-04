@@ -8,74 +8,27 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
+import { Board, BoardRequest } from "../../shared/models/board.model";
 import {
-	Board,
-	BoardRequest,
-	BoardResponseAPI,
-} from "../../shared/models/board.model";
-import { CategoryResponseAPI } from "../../shared/models/category.model";
-import { ContactResponseAPI } from "../../shared/models/contact.model";
-import { ListResponseAPI } from "../../shared/models/list.model";
-import { SubtaskResponseAPI } from "../../shared/models/subtask.model";
-import { TaskResponseAPI } from "../../shared/models/task.model";
+	createBoardResponseAPI,
+	createCategoryResponseAPI,
+	createContactResponseAPI,
+	createListResponseAPI,
+	createSubtaskResponseAPI,
+	createTaskResponseAPI,
+} from "../../testing/fixtures";
 import { BOARDS_ENDPOINT, ScrumBoardsService } from "./scrum-boards.service";
 
-const mockAssignee: ContactResponseAPI = {
-	created_at: "",
-	email: "test.user@example.local",
-	id: 1,
-	name: "John Doe",
-	phone_number: "01555555555",
-	updated_at: "",
-};
-
-const mockCategory: CategoryResponseAPI = {
-	color: "#ffffff",
-	created_at: "",
-	id: 1,
-	name: "IT",
-	update_at: "",
-};
-
-const mockSubtask: SubtaskResponseAPI = {
-	created_at: "",
-	done: false,
-	id: 1,
-	title: "Unit tests",
-	updated_at: "",
-};
-
-const mockTask: TaskResponseAPI = {
+const mockAssignee = createContactResponseAPI();
+const mockCategory = createCategoryResponseAPI();
+const mockSubtask = createSubtaskResponseAPI();
+const mockTask = createTaskResponseAPI({
 	assignees: [mockAssignee],
 	category: mockCategory,
-	created_at: "",
-	description: "Some Bug to fix",
-	due_date: "",
-	id: 1,
-	position: 1,
-	priority: "Low",
 	subtasks: [mockSubtask],
-	title: "Fix the bug",
-	updated_at: "",
-};
-
-const mockList: ListResponseAPI = {
-	created_at: "",
-	updated_at: "",
-	id: 1,
-	tasks: [mockTask],
-	name: "Todo",
-	position: 1,
-};
-
-const mockBoard: BoardResponseAPI = {
-	title: "Board Title",
-	id: "1",
-	created_at: "",
-	updated_at: "",
-	lists: [mockList],
-};
-
+});
+const mockList = createListResponseAPI({ tasks: [mockTask] });
+const mockBoard = createBoardResponseAPI({ lists: [mockList] });
 const mockBoardRequest: BoardRequest = { title: "New Board" };
 
 describe("ScrumBoardsService", () => {

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivatedRoute } from "@angular/router";
+import { clickElement } from "../../../testing/fixtures";
 import { ForgotPasswordComponent } from "./forgot-password.component";
 
 describe("ForgotPasswordComponent", () => {
@@ -25,15 +26,12 @@ describe("ForgotPasswordComponent", () => {
 		expect(component).toBeDefined();
 	});
 
-	it("should have a send mail button with aria-label", async () => {
+	it("should call sendMail when button is clicked", async () => {
 		const sendMailSpy = vi.spyOn(component, "sendMail");
 
 		component.forgotPasswordForm.patchValue({ email: "test@example.com" });
 		component.forgotPasswordForm.enable();
-		const button = fixture.nativeElement.querySelector(
-			'button[aria-label="Send reset password mail"]',
-		);
-		button.click();
+		clickElement(fixture, 'button[aria-label="Send reset password mail"]');
 		expect(sendMailSpy).toHaveBeenCalled();
 	});
 });

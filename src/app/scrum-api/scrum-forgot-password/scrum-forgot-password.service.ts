@@ -16,7 +16,7 @@ export class ScrumForgotPasswordService {
 
 	forgotPasswordEndpoint = FORGOT_PASSWORD_ENDPOINT;
 
-	sendMail(credentials: ForgotPasswordCredentials) {
+	sendMail$(credentials: ForgotPasswordCredentials) {
 		return this.http
 			.post(
 				`${this.forgotPasswordEndpoint}?email=${credentials.email}`,

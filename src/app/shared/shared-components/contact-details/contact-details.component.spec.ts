@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { clickElement } from "../../../testing/fixtures";
 import { ContactResponse } from "../../models/contact.model";
 import { ContactDetailsComponent } from "./contact-details.component";
 
@@ -36,21 +37,12 @@ describe("ContactDetailsComponent", () => {
 
 	it("should call addToTask and editContact on button clicks", async () => {
 		fixture.detectChanges();
-		const editButton = fixture.nativeElement.querySelector(
-			"button[aria-label='Edit Contact']",
-		) as HTMLButtonElement;
-		const addToTaskButton = fixture.nativeElement.querySelector(
-			"button[aria-label='Add contact to Task']",
-		) as HTMLButtonElement;
-
-		expect(editButton).toBeTruthy();
-		expect(addToTaskButton).toBeTruthy();
 
 		const editSpy = vi.spyOn(component, "editContact");
 		const addToTaskSpy = vi.spyOn(component, "addToTask");
 
-		editButton.click();
-		addToTaskButton.click();
+		clickElement(fixture, "button[aria-label='Edit Contact']");
+		clickElement(fixture, "button[aria-label='Add contact to Task']");
 
 		expect(editSpy).toHaveBeenCalled();
 		expect(addToTaskSpy).toHaveBeenCalled();

@@ -1,25 +1,38 @@
 import { TestBed } from "@angular/core/testing";
-import { Observable, of } from "rxjs";
-import { Mock } from "vitest";
-import {
-	ForgotPasswordCredentials,
-	ScrumForgotPasswordService,
-} from "../../../scrum-api/scrum-forgot-password/scrum-forgot-password.service";
+import { of, Subject } from "rxjs";
+import { ScrumForgotPasswordService } from "../../../scrum-api/scrum-forgot-password/scrum-forgot-password.service";
+import { BreakpointsService } from "../../../shared/shared-services/breakpoints/breakpoints.service";
+import { FeedbackService } from "../../../shared/shared-services/feedback/feedback.service";
 import { ForgotPasswordService } from "./forgot-password.service";
 
 describe("ForgotPasswordService", () => {
 	let service: ForgotPasswordService;
-	let scrumForgotPasswordServiceSpy: Mock<
-		(credentials: ForgotPasswordCredentials) => Observable<boolean>
-	>;
+	const matchesWebBreakpoint$ = new Subject<boolean>();
+	const sendMail$ = vi.fn();
+	const openSnackBar = vi.fn();
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [ForgotPasswordService, ScrumForgotPasswordService],
+			providers: [
+				{
+					provide: BreakpointsService,
+					useValue: { matchesWebBreakpoint$ },
+				},
+				{
+					provide: ScrumForgotPasswordService,
+					useValue: { sendMail$ },
+				},
+				{
+					provide: FeedbackService,
+					useValue: { openSnackBar },
+				},
+			],
 		});
-		const scrumService = TestBed.inject(ScrumForgotPasswordService);
-		scrumForgotPasswordServiceSpy = vi.spyOn(scrumService, "sendMail");
 		service = TestBed.inject(ForgotPasswordService);
+	});
+
+	afterEach(() => {
+		vi.clearAllMocks();
 	});
 
 	it("should be created", () => {
@@ -27,18 +40,16 @@ describe("ForgotPasswordService", () => {
 	});
 
 	it("should open snack bar on successful mail send", () => {
-		const feedbackSpy = vi.spyOn(service["feedbackService"], "openSnackBar");
-		scrumForgotPasswordServiceSpy.mockReturnValue(of(true));
+		sendMail$.mockReturnValue(of(true));
 
 		service.sendMail({ email: "test@example.com" });
-		expect(feedbackSpy).toHaveBeenCalledOnce();
+		expect(openSnackBar).toHaveBeenCalledOnce();
 	});
 
-	it("should not open snack bar on successful mail send", () => {
-		const feedbackSpy = vi.spyOn(service["feedbackService"], "openSnackBar");
-		scrumForgotPasswordServiceSpy.mockReturnValue(of(false));
+	it("should not open snack bar on failed mail send", () => {
+		sendMail$.mockReturnValue(of(false));
 
 		service.sendMail({ email: "test@example.com" });
-		expect(feedbackSpy).toHaveBeenCalledTimes(0);
+		expect(openSnackBar).toHaveBeenCalledTimes(0);
 	});
 });

@@ -1,9 +1,13 @@
 import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatCheckboxHarness } from "@angular/material/checkbox/testing";
-import { By } from "@angular/platform-browser";
 import { ContentEditableComponent } from "../../../../shared/shared-components/content-editable/content-editable.component";
-import { createSubtaskRequest } from "../../../../testing/fixtures";
+import {
+	clickElement,
+	createSubtaskRequest,
+	getComponentInstance,
+	getElement,
+} from "../../../../testing/fixtures";
 import { SubtaskComponent } from "./subtask.component";
 
 describe("SubtaskComponent", () => {
@@ -21,19 +25,14 @@ describe("SubtaskComponent", () => {
 
 		component.subtask = createSubtaskRequest();
 		fixture.detectChanges();
-		expect(
-			fixture.nativeElement.querySelector("app-content-editable"),
-		).toBeTruthy();
+		expect(getElement(fixture, "app-content-editable")).toBeTruthy();
 
-		const contentEditable = fixture.debugElement.query(
-			By.directive(ContentEditableComponent),
-		).componentInstance as ContentEditableComponent;
+		clickElement(fixture, 'button[aria-label="Edit Subtask"]');
 
-		const editButton = fixture.nativeElement.querySelector(
-			'button[aria-label="Edit Subtask"]',
+		const contentEditable = getComponentInstance(
+			fixture,
+			ContentEditableComponent,
 		);
-		editButton.click();
-
 		contentEditable.valueToEdit = "Changed Subtask title";
 		contentEditable.updateValue();
 
@@ -47,10 +46,7 @@ describe("SubtaskComponent", () => {
 		expect(component.subtask.done).toBeTruthy();
 
 		const removeSubtaskSpy = vi.spyOn(component.removeSubtask$, "emit");
-		const deleteButton = fixture.nativeElement.querySelector(
-			'button[aria-label="Remove Subtask"]',
-		);
-		deleteButton.click();
+		clickElement(fixture, 'button[aria-label="Remove Subtask"]');
 		fixture.detectChanges();
 		expect(removeSubtaskSpy).toHaveBeenCalledWith(component.subtask);
 	});

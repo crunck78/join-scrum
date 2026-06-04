@@ -15,7 +15,7 @@ import { AddContactComponent } from "../../shared/shared-components/dialogs/add-
 import { FeedbackService } from "../../shared/shared-services/feedback/feedback.service";
 
 @Injectable({
-	providedIn: "any",
+	providedIn: "root",
 })
 export class AddTaskService {
 	scrumCategory = inject(ScrumCategoriesService);
@@ -32,10 +32,6 @@ export class AddTaskService {
 
 	get contacts$() {
 		return this.scrumContacts.getContacts$().pipe(take(1));
-	}
-
-	get subtasks$() {
-		return this.scrumSubtasks.getSubtasks$().pipe(take(1));
 	}
 
 	addTask$(task: Partial<TaskRequest>) {

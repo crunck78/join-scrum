@@ -21,7 +21,7 @@ export class ForgotPasswordService {
 
 	sendMail(credentials: ForgotPasswordCredentials) {
 		this.scrumForgotPassword
-			.sendMail(credentials)
+			.sendMail$(credentials)
 			.pipe(take(1))
 			.subscribe((isSend) => {
 				if (isSend)

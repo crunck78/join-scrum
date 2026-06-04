@@ -29,12 +29,12 @@ describe("LogInService", () => {
 		scrumLoginServiceGuestLoginSpy.mockReturnValue(of(false));
 		service.login({ email: "", password: "" });
 		service.guestLogin();
-		expect(routerNavigationSpy).toBeCalledTimes(0);
+		expect(routerNavigationSpy).toHaveBeenCalledTimes(0);
 
 		scrumLoginServiceLoginSpy.mockReturnValue(of(true));
 		scrumLoginServiceGuestLoginSpy.mockReturnValue(of(true));
 		service.login({ email: "", password: "" });
 		service.guestLogin();
-		expect(routerNavigationSpy).toBeCalledTimes(2);
+		expect(routerNavigationSpy).toHaveBeenCalledTimes(2);
 	});
 });

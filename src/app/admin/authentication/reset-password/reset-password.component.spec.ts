@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivatedRoute, provideRouter } from "@angular/router";
 import { of } from "rxjs";
+import { clickElement } from "../../../testing/fixtures";
 import { ResetPasswordComponent } from "./reset-password.component";
 
 describe("ResetPasswordComponent", () => {
@@ -33,23 +34,20 @@ describe("ResetPasswordComponent", () => {
 			component["resetPasswordService"],
 			"resetPassword",
 		);
-		const button: HTMLElement = fixture.nativeElement.querySelector(
-			"button[aria-label='Reset password']",
-		);
 		// Enable the form to allow interaction
 		component.resetPasswordForm.enable();
 
-		button.click();
-		expect(resetPasswordPsy).toBeCalledTimes(0);
-		expect(serviceResetPasswordSpy).toBeCalledTimes(0);
+		clickElement(fixture, "button[aria-label='Reset password']");
+		expect(resetPasswordPsy).toHaveBeenCalledTimes(0);
+		expect(serviceResetPasswordSpy).toHaveBeenCalledTimes(0);
 
 		component.resetPasswordForm.setValue({
 			password: "<PASSWORD>",
 			confirmedPassword: "<PASSWORD>",
 		});
 		await fixture.whenStable();
-		button.click();
-		expect(resetPasswordPsy).toBeCalledTimes(1);
+		clickElement(fixture, "button[aria-label='Reset password']");
+		expect(resetPasswordPsy).toHaveBeenCalledTimes(1);
 		expect(serviceResetPasswordSpy).toHaveBeenCalledTimes(1);
 	});
 });

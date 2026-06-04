@@ -8,28 +8,15 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
+import { User } from "../../shared/models/user.model";
 import {
-	User,
-	UserRequest,
-	UserResponseAPI,
-} from "../../shared/models/user.model";
+	createUserRequest,
+	createUserResponseAPI,
+} from "../../testing/fixtures";
 import { ScrumProfileService } from "./scrum-profile.service";
 
-const mockProfile: UserResponseAPI = {
-	id: 1,
-	email: "test@example.com",
-	name: "Test User",
-	image: "test-image.jpg",
-	created_at: "2024-01-01T00:00:00Z",
-	updated_at: "2024-01-01T00:00:00Z",
-	is_guest: false,
-};
-
-const mockUserRequest: UserRequest = {
-	email: "test@example.com",
-	name: "Test User",
-	image: "test-image.jpg",
-};
+const mockProfile = createUserResponseAPI();
+const mockUserRequest = createUserRequest();
 
 describe("ScrumProfileService", () => {
 	let service: ScrumProfileService;

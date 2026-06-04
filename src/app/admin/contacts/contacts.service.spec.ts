@@ -42,20 +42,25 @@ describe("ContactsService", () => {
 	});
 
 	describe("contacts$", () => {
-		it("should return empty list when there are no contacts", async () => {
-			getContacts$.mockReturnValue(of([]));
+		const contact = createContactResponse();
+		const scenarios = [
+			{
+				description: "should return empty list when there are no contacts",
+				contacts: [],
+				expected: [],
+			},
+			{
+				description: "should return contacts when there are any",
+				contacts: [contact],
+				expected: [contact],
+			},
+		];
+
+		it.each(scenarios)("$description", async ({ contacts, expected }) => {
+			getContacts$.mockReturnValue(of(contacts));
 			const result = await firstValueFrom(service.contacts$);
 
-			expect(result.length).toEqual(0);
-		});
-
-		it("should return contacts when there are any", async () => {
-			const contact = createContactResponse();
-			getContacts$.mockReturnValue(of([contact]));
-
-			const result = await firstValueFrom(service.contacts$);
-
-			expect(result).toEqual([contact]);
+			expect(result).toEqual(expected);
 		});
 	});
 
@@ -66,35 +71,53 @@ describe("ContactsService", () => {
 	});
 
 	describe("deleteContact$", () => {
-		it("should delegate to scrumContacts and return false", async () => {
-			deleteContact$.mockReturnValue(of(false));
-			const result = await firstValueFrom(service.deleteContact$(1));
-			expect(deleteContact$).toHaveBeenCalledWith(1);
-			expect(result).toBeFalsy();
-		});
+		const scenarios = [
+			{
+				description: "should delegate to scrumContacts and return false",
+				deleteContactsResult: false,
+				expected: false,
+			},
+			{
+				description: "should delegate to scrumContacts and return true",
+				deleteContactsResult: true,
+				expected: true,
+			},
+		];
 
-		it("should delegate to scrumContacts and return true", async () => {
-			deleteContact$.mockReturnValue(of(true));
+		it.each(scenarios)("$description", async ({
+			deleteContactsResult,
+			expected,
+		}) => {
+			deleteContact$.mockReturnValue(of(deleteContactsResult));
 			const result = await firstValueFrom(service.deleteContact$(1));
 			expect(deleteContact$).toHaveBeenCalledWith(1);
-			expect(result).toBeTruthy();
+			expect(result).toBe(expected);
 		});
 	});
 
 	describe("openAddDialogContact", () => {
-		it("should return no contact after dialog closed", async () => {
-			dialogOpen.mockReturnValue({ afterClosed: () => of(null) });
+		const contact = createContactResponse();
+		const scenarios = [
+			{
+				description: "should return no contact after dialog closed",
+				afterClosedValue: null,
+				expected: null,
+			},
+			{
+				description: "should return new contact after dialog closed",
+				afterClosedValue: contact,
+				expected: contact,
+			},
+		];
+
+		it.each(scenarios)("$description", async ({
+			afterClosedValue,
+			expected,
+		}) => {
+			dialogOpen.mockReturnValue({ afterClosed: () => of(afterClosedValue) });
 
 			const result = await firstValueFrom(service.openAddContactDialog());
-			expect(result).toBeNull();
-		});
-
-		it("should return new contact after dialog closed", async () => {
-			const contact = createContactResponse();
-			dialogOpen.mockReturnValue({ afterClosed: () => of(contact) });
-
-			const result = await firstValueFrom(service.openAddContactDialog());
-			expect(result).toEqual(contact);
+			expect(result).toBe(expected);
 		});
 	});
 });

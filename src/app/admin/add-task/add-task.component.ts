@@ -4,6 +4,7 @@ import {
 	inject,
 	Input,
 	type OnChanges,
+	OnInit,
 	Output,
 	type SimpleChanges,
 } from "@angular/core";
@@ -15,9 +16,7 @@ import {
 } from "@angular/forms";
 import { CategoryResponse } from "../../shared/models/category.model";
 import { ContactResponse } from "../../shared/models/contact.model";
-import {
-	SubtaskRequest,
-} from "../../shared/models/subtask.model";
+import { SubtaskRequest } from "../../shared/models/subtask.model";
 import {
 	Task,
 	TaskRequest,
@@ -36,9 +35,8 @@ import { AddTaskService } from "./add-task.service";
 	templateUrl: "./add-task.component.html",
 	styleUrls: ["./add-task.component.scss"],
 	imports: [AddTaskModule],
-	providers: [AddTaskService],
 })
-export class AddTaskComponent implements OnChanges {
+export class AddTaskComponent implements OnInit, OnChanges {
 	private addTaskService = inject(AddTaskService);
 
 	/**
@@ -98,7 +96,7 @@ export class AddTaskComponent implements OnChanges {
 	@Output() addedTask$ = new EventEmitter<TaskResponse | null>();
 	@Output() deletedTaskId$ = new EventEmitter<number | null>();
 
-	constructor() {
+	ngOnInit() {
 		this.loadCategories();
 		this.loadContacts();
 		this.addTaskForm.statusChanges.subscribe((status: FormControlStatus) =>
