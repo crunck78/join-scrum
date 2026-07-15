@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { getElement } from "../../../testing/fixtures";
+import { createContactResponse, getElement } from "../../../testing/fixtures";
 import { ContactResponse } from "../../models/contact.model";
 import { ContactComponent } from "./contact.component";
 
-const mockContact: ContactResponse = {
-	id: 1,
-	name: "John Doe",
-	email: "john.doe@example.com",
-	phoneNumber: "123-456-7890",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-};
+const mockContact = createContactResponse();
 
 describe("ContactComponent", () => {
 	let component: ContactComponent;
 	let fixture: ComponentFixture<ContactComponent>;
+
+	function setup(contact: ContactResponse, selected: boolean) {
+		component.contact = contact;
+		component.selected = selected;
+		fixture.detectChanges();
+	}
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({ imports: [ContactComponent] });
@@ -28,9 +27,7 @@ describe("ContactComponent", () => {
 	});
 
 	it("should display contact information when contact is provided", () => {
-		component.contact = mockContact;
-		component.selected = true;
-		fixture.detectChanges();
+		setup(mockContact, true);
 
 		const contactCard = getElement(fixture, "app-contact-card");
 		expect(contactCard).toBeTruthy();
@@ -39,13 +36,14 @@ describe("ContactComponent", () => {
 	});
 
 	it("should display phoneNumber when email and name are not provided", () => {
-		component.contact = {
-			...mockContact,
-			email: "",
-			name: "",
-		};
-		component.selected = true;
-		fixture.detectChanges();
+		setup(
+			{
+				...mockContact,
+				email: "",
+				name: "",
+			},
+			true,
+		);
 
 		const contactCard = getElement(fixture, "app-contact-card");
 		expect(contactCard).toBeTruthy();
@@ -53,20 +51,12 @@ describe("ContactComponent", () => {
 	});
 
 	it("should display mat-raised-button when selected is true", async () => {
-		component.contact = mockContact;
-		component.selected = true;
-
-		fixture.detectChanges();
-
+		setup(mockContact, true);
 		expect(getElement(fixture, "button[mat-raised-button]")).toBeTruthy();
 	});
 
 	it("should display mat-stroked-button when selected is false", async () => {
-		component.contact = mockContact;
-		component.selected = false;
-
-		fixture.detectChanges();
-
+		setup(mockContact, false);
 		expect(getElement(fixture, "button[mat-stroked-button]")).toBeTruthy();
 	});
 });

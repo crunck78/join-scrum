@@ -175,23 +175,6 @@ export class AddTaskComponent implements OnInit, OnChanges {
 		);
 	}
 
-	getCategoryOptionHTML = (option: CategoryResponse) => {
-		return `
-    <span class="category-option">
-      <span  class="category-color" style="background-color: ${option["color"]}"></span>
-      <span class="category-name">${option["name"]}</span>
-    </span>`;
-	};
-
-	getPriorityOptionHTML = (option: { name: string }) => {
-		return `
-    <span class="priority-option">
-      <span class="priority-option">${(option["name"] as string)?.toUpperCase()}</span>
-      <img class="priority-icon" src="assets/${(option["name"] as string)?.toLowerCase()}.svg" alt="Priority Icon">
-    </span>
-    `;
-	};
-
 	addSubtask() {
 		if (!this.addSubtaskForm.value) return;
 		const newSubtask = {

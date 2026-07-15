@@ -1,15 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { getElement } from "../../../testing/fixtures";
-import { CategoryResponse } from "../../models/category.model";
+import { createCategoryResponse, getElement } from "../../../testing/fixtures";
 import { CategoryCardComponent } from "./category-card.component";
 
-const mockCategory: CategoryResponse = {
-	id: 1,
-	name: "Development",
-	color: "#ff0000",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-};
+const mockCategory = createCategoryResponse();
 
 describe("CategoryCardComponent", () => {
 	let component: CategoryCardComponent;
@@ -29,7 +22,7 @@ describe("CategoryCardComponent", () => {
 		component.category = mockCategory;
 		await fixture.whenStable();
 		const categoryElement = getElement(fixture, ".task-category");
-		expect(categoryElement?.textContent).toContain("Development");
+		expect(categoryElement?.textContent).toContain("IT");
 		expect(categoryElement?.getAttribute("style")).toContain(
 			"background-color: rgb(255, 0, 0);",
 		);

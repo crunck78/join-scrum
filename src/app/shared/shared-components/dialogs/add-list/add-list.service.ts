@@ -15,7 +15,7 @@ export class AddListService {
 		return this.scrumBoard.getBoards$().pipe(take(1));
 	}
 
-	addList(value: Partial<ListRequest>) {
+	addList$(value: Partial<ListRequest>) {
 		return this.scrumList.addList$(value).pipe(take(1));
 	}
 }

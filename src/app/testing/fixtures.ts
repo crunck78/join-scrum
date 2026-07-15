@@ -92,9 +92,9 @@ export function createContactResponse(
 ): ContactResponse {
 	return {
 		id: 1,
-		email: "contact@test.local",
-		name: "Test Contact",
-		phoneNumber: "01222222222",
+		name: "John Doe",
+		email: "john.doe@example.com",
+		phoneNumber: "123-456-7890",
 		createdAt: new Date(),
 		updatedAt: new Date(),
 		...overrides,
@@ -132,7 +132,7 @@ export function createCategoryResponse(
 	return {
 		id: 1,
 		name: "IT",
-		color: "#ff8899",
+		color: "#ff0000",
 		createdAt: new Date(),
 		updatedAt: new Date(),
 		...overrides,

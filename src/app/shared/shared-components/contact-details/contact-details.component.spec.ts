@@ -1,23 +1,26 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { clickElement } from "../../../testing/fixtures";
-import { ContactResponse } from "../../models/contact.model";
+import { MatDialog } from "@angular/material/dialog";
+import { of } from "rxjs";
+import { clickElement, createContactResponse } from "../../../testing/fixtures";
 import { ContactDetailsComponent } from "./contact-details.component";
 
-const mockContact: ContactResponse = {
-	id: 1,
-	name: "John Doe",
-	email: "john.doe@example.com",
-	phoneNumber: "123-456-7890",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-};
+const mockContact = createContactResponse();
 
 describe("ContactDetailsComponent", () => {
 	let component: ContactDetailsComponent;
 	let fixture: ComponentFixture<ContactDetailsComponent>;
+	const dialogOpen = vi.fn();
 
 	beforeEach(async () => {
-		TestBed.configureTestingModule({ imports: [ContactDetailsComponent] });
+		TestBed.configureTestingModule({
+			imports: [ContactDetailsComponent],
+			providers: [
+				{
+					provide: MatDialog,
+					useValue: { open: dialogOpen },
+				},
+			],
+		});
 		fixture = TestBed.createComponent(ContactDetailsComponent);
 		component = fixture.componentInstance;
 		component.contact = mockContact;
@@ -36,6 +39,15 @@ describe("ContactDetailsComponent", () => {
 	});
 
 	it("should call addToTask and editContact on button clicks", async () => {
+		dialogOpen.mockReturnValue({
+			afterClosed: () => of(createContactResponse()),
+			componentInstance: {
+				contactToEdit: "",
+				editContactForm: {
+					patchValue: () => {},
+				},
+			},
+		});
 		fixture.detectChanges();
 
 		const editSpy = vi.spyOn(component, "editContact");
@@ -48,18 +60,39 @@ describe("ContactDetailsComponent", () => {
 		expect(addToTaskSpy).toHaveBeenCalled();
 	});
 
-	// it("should emit contactChange on editContact", async () => {
-	// 	vi.spyOn(component.contactChange, "emit");
-	// 	component.contact = mockContact;
-	// 	component.editContact();
-	// 	await fixture.whenStable();
-	// 	expect(component.contactChange.emit).toHaveBeenCalled();
-	// });
+	it("should emit contactChange on editContact", async () => {
+		dialogOpen.mockReturnValue({
+			afterClosed: () =>
+				of(
+					createContactResponse({
+						email: "contactedited@test.local",
+						name: "Edited Contact",
+						phoneNumber: "01333333333",
+					}),
+				),
+			componentInstance: {
+				predefinedTaskRequest: null,
+				contactToEdit: "",
+				editContactForm: {
+					patchValue: () => {},
+				},
+			},
+		});
+		vi.spyOn(component.contactChange, "emit");
+		component.contact = mockContact;
+		component.editContact();
+		await fixture.whenStable();
+		expect(component.contactChange.emit).toHaveBeenCalled();
+	});
 
-	// it("should open add task dialog on addToTask", async () => {
-	// 	const dialogSpy = vi.spyOn(component["dialog"], "open");
-	// 	component.contact = mockContact;
-	// 	component.addToTask();
-	// 	expect(dialogSpy).toHaveBeenCalled();
-	// });
+	it("should open add task dialog on addToTask", async () => {
+		dialogOpen.mockReturnValue({
+			componentInstance: {
+				predefinedTaskRequest: null,
+			},
+		});
+		component.contact = mockContact;
+		component.addToTask();
+		expect(dialogOpen).toHaveBeenCalled();
+	});
 });

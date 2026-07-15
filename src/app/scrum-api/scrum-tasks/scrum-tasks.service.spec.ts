@@ -8,12 +8,13 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { firstValueFrom } from "rxjs";
-import { SubtaskRequest } from "../../shared/models/subtask.model";
-import { Task, TaskRequest } from "../../shared/models/task.model";
+import { Task } from "../../shared/models/task.model";
 import {
 	createCategoryResponseAPI,
 	createContactResponseAPI,
+	createSubtaskRequest,
 	createSubtaskResponseAPI,
+	createTaskRequest,
 	createTaskResponseAPI,
 } from "../../testing/fixtures";
 import { ScrumTasksService, TASKS_ENDPOINT } from "./scrum-tasks.service";
@@ -28,22 +29,8 @@ const mockTask = createTaskResponseAPI({
 	subtasks: [mockSubtask],
 });
 
-const newSubTaskRequest: SubtaskRequest = {
-	title: "Subtask 1",
-	done: false,
-};
-
-const newTaskRequest: TaskRequest = {
-	title: "New Task",
-	description: "Description of the new task",
-	category: 1,
-	assignees: [1],
-	dueDate: new Date("2024-12-31"),
-	priority: "Medium" as const,
-	subtasks: [newSubTaskRequest],
-	list: null,
-	position: 1,
-};
+const newSubTaskRequest = createSubtaskRequest();
+const newTaskRequest = createTaskRequest({ subtasks: [newSubTaskRequest] });
 
 describe("ScrumTasksService", () => {
 	let service: ScrumTasksService;

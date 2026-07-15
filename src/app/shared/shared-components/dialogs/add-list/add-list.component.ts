@@ -38,7 +38,10 @@ export class AddListComponent implements OnInit {
 
 	addListForm = new FormGroup({
 		name: new FormControl("", Validators.compose([Validators.required])),
-		board: new FormControl(null, Validators.compose([Validators.required])),
+		board: new FormControl<number | null>(
+			null,
+			Validators.compose([Validators.required]),
+		),
 	});
 
 	ngOnInit() {
@@ -48,18 +51,10 @@ export class AddListComponent implements OnInit {
 	addList() {
 		if (this.addListForm.valid) {
 			this.addListService
-				.addList(this.addListForm.value as Partial<ListRequest>)
+				.addList$(this.addListForm.value as Partial<ListRequest>)
 				.subscribe((res) => {
 					if (res) this.dialogRef.close(res);
 				});
 		}
 	}
-
-	getBoardOptionHTML = (option: BoardResponse) => {
-		return `
-    <span class="priority-option">
-      <span class="priority-option">${option["id"]} ${(option["title"] as string)?.toUpperCase()}</span>
-    </span>
-    `;
-	};
 }

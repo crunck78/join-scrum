@@ -32,9 +32,15 @@
 		"source.fixAll.stylelint": "explicit",
 		"source.fixAll.ts": "never"
 	},
-	"eslint.validate": ["typescript", "html"],
+	"eslint.validate": [
+		"typescript",
+		"html"
+	],
+	"js/ts.preferences.importModuleSpecifier": "relative",
 	"less.validate": false,
 	"scss.validate": false,
-	"stylelint.validate": ["css", "scss"],
-	"typescript.preferences.importModuleSpecifier": "relative"
+	"stylelint.validate": [
+		"css",
+		"scss"
+	]
 }

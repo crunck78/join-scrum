@@ -50,9 +50,14 @@
 	>
 		@for (option of options; track option) {
 		<mat-option [value]="option.valueOnSelect">
-			<div
-				[innerHTML]="(option.html || $any(option.displayValue)) | sanitizeHtml"
-			></div>
+			@if (optionTemplate) {
+			<ng-container
+				[ngTemplateOutlet]="optionTemplate"
+				[ngTemplateOutletContext]="{ $implicit: option.value }"
+			> </ng-container>
+			} @else {
+			{{ option.displayValue }}
+			}
 		</mat-option>
 		}
 	</mat-select>

@@ -19,7 +19,8 @@
 				(action)="
                 addCategory()"
 				[actionLabel]="'Add Category'"
-				[options]="categories | options : 'name' : 'id': getCategoryOptionHTML"
+				[options]="categories | options : 'name' : 'id'"
+				[optionTemplate]="categoryTpl"
 				[required]="true"
 				[inputType]="'select'"
 				[labelName]="'Select a category'"
@@ -63,7 +64,8 @@
 
 			<app-form-field
 				[errors]="[{name: 'required', htmlMessage: 'Priority is <strong>required</strong>'}]"
-				[options]="[{name: 'Low'}, {name: 'Medium'}, {name: 'Urgent'}] | options : 'name' : 'name': getPriorityOptionHTML"
+				[options]="[{name: 'Low'}, {name: 'Medium'}, {name: 'Urgent'}] | options : 'name' : 'name'"
+				[optionTemplate]="priorityTpl"
 				[required]="true"
 				[inputType]="'select'"
 				[labelName]="'Select a priority'"
@@ -119,3 +121,24 @@
 	</div>
 	}
 </app-card>
+
+<ng-template #priorityTpl let-item>
+	<span class="priority-option">
+		<span>{{ item.name | uppercase }}</span>
+		<img
+			class="priority-icon"
+			src="assets/{{ item.name | lowercase }}.svg"
+			alt=""
+		>
+	</span>
+</ng-template>
+
+<ng-template #categoryTpl let-item>
+	<span class="category-option">
+		<span
+			class="category-color"
+			style="background-color: {{item.color}}"
+		></span>
+		<span class="category-name">${{ item.name }}</span>
+	</span>
+</ng-template>

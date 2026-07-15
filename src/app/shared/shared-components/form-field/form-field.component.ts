@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	TemplateRef,
+} from "@angular/core";
 import {
 	type AbstractControl,
 	type FormControl,
@@ -9,7 +15,7 @@ import {
 import type { ErrorStateMatcher } from "@angular/material/core";
 import { ColorPickerDirective } from "ngx-color-picker";
 import { MaterialModule } from "../../modules/material/material.module";
-import { ByPassSanitizeHtmlPipe } from "../../pipes/sanitize-html/sanitize-html.pipe";
+import { Option } from "../../pipes/options/options.pipe";
 import { HasErrorPipe } from "./has-error.pipe";
 import { MessageErrorPipe } from "./message-error.pipe";
 
@@ -30,13 +36,6 @@ export interface ValidatorError {
 	htmlMessage?: string;
 }
 
-export type OptionType = Record<string, unknown>;
-export interface Option {
-	valueOnSelect: unknown;
-	displayValue: unknown;
-	value: unknown;
-	html?: string;
-}
 export declare type InputType =
 	| "input"
 	| "text-area"
@@ -56,7 +55,6 @@ export const EMAIL_REGEX =
 		MaterialModule,
 		HasErrorPipe,
 		MessageErrorPipe,
-		ByPassSanitizeHtmlPipe,
 		ColorPickerDirective,
 	],
 	providers: [],
@@ -77,6 +75,8 @@ export class FormFieldComponent {
 	@Input() multiple = false;
 	@Output() action = new EventEmitter<void>();
 	@Input() actionLabel!: string;
+	@Input() optionTemplate?: TemplateRef<{ $implicit: unknown }>;
+
 	today = new Date();
 
 	customMatcher = new CustomErrorStateMatcher();

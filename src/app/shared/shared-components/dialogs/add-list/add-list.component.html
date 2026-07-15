@@ -14,7 +14,8 @@
 		<app-form-field
 			[errors]="[{name: 'required', htmlMessage: 'Board is <strong>required</strong>'}]"
 			[suffixIcon]="'add'"
-			[options]="boards | options : 'title' : 'id': getBoardOptionHTML"
+			[options]="boards | options : 'title' : 'id'"
+			[optionTemplate]="priorityTpl"
 			[required]="true"
 			[inputType]="'select'"
 			[labelName]="'Select a board'"
@@ -40,8 +41,17 @@
 			[disabled]="addListForm.invalid"
 			mat-raised-button
 			color="primary"
+			[ariaLabel]="'Create List'"
 		>
 			Create List
 		</button>
 	</ng-container>
 </app-dialog>
+
+<ng-template #priorityTpl let-item>
+	<span class="priority-option">
+		<span class="priority-option"
+			>{{ item.id }} {{ item.title.toUpperCase() }}</span
+		>
+	</span>
+</ng-template>

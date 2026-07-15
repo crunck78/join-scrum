@@ -32,17 +32,6 @@
 			[control]="$any(addContactForm.get('phoneNumber'))"
 			[labelName]="'Phone'"
 		></app-form-field>
-
-		<!-- <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-description>
-                    Password requirements
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <p>Must be at least 8 character long</p>
-            <p>Must be a combination of letters, numbers and at least one special character.</p>
-
-        </mat-expansion-panel> -->
 	</form>
 
 	<ng-container actions>
@@ -52,6 +41,7 @@
 			[disabled]="addContactForm.invalid"
 			mat-raised-button
 			color="primary"
+			[ariaLabel]="'Create Contact'"
 		>
 			Create Contact
 		</button>

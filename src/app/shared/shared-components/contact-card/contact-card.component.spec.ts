@@ -1,15 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ContactResponse } from "../../models/contact.model";
+import { createContactResponse } from "../../../testing/fixtures";
 import { ContactCardComponent } from "./contact-card.component";
 
-const mockContact: ContactResponse = {
-	id: 1,
-	name: "John Doe",
-	email: "john.doe@example.com",
-	phoneNumber: "123-456-7890",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-};
+const mockContact = createContactResponse();
 
 describe("ContactCardComponent", () => {
 	let component: ContactCardComponent;

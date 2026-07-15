@@ -38,7 +38,7 @@ export class ErrorCatchingInterceptor {
 			this._isServerError(errorResponse)
 		) {
 			errors.push(this._getErrorMessage(errorResponse));
-		} else if (this._isBadRequest(errorResponse)) {
+		} else if (this._isClientError(errorResponse)) {
 			for (const key in errorResponse.error) {
 				if (!Object.hasOwn(errorResponse.error, key)) continue;
 
@@ -81,7 +81,7 @@ export class ErrorCatchingInterceptor {
 		});
 	}
 
-	private _isBadRequest(errorResponse: HttpErrorResponse) {
+	private _isClientError(errorResponse: HttpErrorResponse) {
 		return errorResponse.status >= 400 && errorResponse.status < 500;
 	}
 
