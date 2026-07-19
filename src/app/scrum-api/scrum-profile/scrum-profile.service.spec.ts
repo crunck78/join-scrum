@@ -43,7 +43,7 @@ describe("ScrumProfileService", () => {
 	});
 
 	describe("getProfile$", () => {
-		it("should return user profile on success", () => {
+		it("should return user profile on success", async () => {
 			const resultPromise = firstValueFrom(service.getProfile$());
 			const req = httpTesting.expectOne(
 				service.profileEndpoint,
@@ -53,12 +53,12 @@ describe("ScrumProfileService", () => {
 
 			req.flush(mockProfile);
 
-			expect(resultPromise).resolves.toEqual(
+			await expect(resultPromise).resolves.toEqual(
 				User.createInternalValue(mockProfile),
 			);
 		});
 
-		it("should return null on error", () => {
+		it("should return null on error", async () => {
 			const resultPromise = firstValueFrom(service.getProfile$());
 			const req = httpTesting.expectOne(
 				service.profileEndpoint,
@@ -70,12 +70,12 @@ describe("ScrumProfileService", () => {
 				statusText: "Internal Server Error",
 			});
 
-			expect(resultPromise).resolves.toEqual(null);
+			await expect(resultPromise).resolves.toEqual(null);
 		});
 	});
 
 	describe("editProfile$", () => {
-		it("should return updated user profile on success", () => {
+		it("should return updated user profile on success", async () => {
 			const resultPromise = firstValueFrom(
 				service.editProfile$(mockUserRequest),
 			);
@@ -90,12 +90,12 @@ describe("ScrumProfileService", () => {
 
 			req.flush(mockProfile);
 
-			expect(resultPromise).resolves.toEqual(
+			await expect(resultPromise).resolves.toEqual(
 				User.createInternalValue(mockProfile),
 			);
 		});
 
-		it("should return null on error", () => {
+		it("should return null on error", async () => {
 			const resultPromise = firstValueFrom(
 				service.editProfile$(mockUserRequest),
 			);
@@ -109,12 +109,12 @@ describe("ScrumProfileService", () => {
 				statusText: "Internal Server Error",
 			});
 
-			expect(resultPromise).resolves.toEqual(null);
+			await expect(resultPromise).resolves.toEqual(null);
 		});
 	});
 
 	describe("deleteProfile$", () => {
-		it("should return true on successful deletion", () => {
+		it("should return true on successful deletion", async () => {
 			const resultPromise = firstValueFrom(service.deleteProfile$());
 			const req = httpTesting.expectOne(
 				service.profileEndpoint,
@@ -124,10 +124,10 @@ describe("ScrumProfileService", () => {
 
 			req.flush(true);
 
-			expect(resultPromise).resolves.toBe(true);
+			await expect(resultPromise).resolves.toBe(true);
 		});
 
-		it("should return false on error", () => {
+		it("should return false on error", async () => {
 			const resultPromise = firstValueFrom(service.deleteProfile$());
 			const req = httpTesting.expectOne(
 				service.profileEndpoint,
@@ -140,7 +140,7 @@ describe("ScrumProfileService", () => {
 				statusText: "Internal Server Error",
 			});
 
-			expect(resultPromise).resolves.toBe(false);
+			await expect(resultPromise).resolves.toBe(false);
 		});
 	});
 });
