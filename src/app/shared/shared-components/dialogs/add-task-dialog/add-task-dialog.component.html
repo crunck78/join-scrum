@@ -2,9 +2,9 @@
 	<ng-container side></ng-container>
 
 	<app-add-task
-		(deletedTaskId$)="handleDeletedTask($any($event))"
-		(addedTask$)="handleAddedTask($any($event))"
-		(editedTask$)="handleEditedTask($any($event))"
+		(deletedTask$)="handleActionTaskForm($event)"
+		(addedTask$)="handleActionTaskForm($event)"
+		(editedTask$)="handleActionTaskForm($event)"
 		[predefinedTaskRequest]="predefinedTaskRequest"
 		(formStatus$)="updateFormStatus($event)"
 		[deleteTask$]="deleteTask$"
@@ -18,11 +18,12 @@
 	<div class="footer" actions>
 		<div class="simple-grid">
 			@if (mode === 'edit') {
-			<button (click)="deleteTask$.emit()" color="warn" mat-stroked-button>
+			<button aria-label="Delete Task" (click)="deleteTask$.emit()" color="warn" mat-stroked-button>
 				Delete
 			</button>
 			}
 			<button
+				aria-label="Clear Task Form"
 				(click)="clearTaskForm$.emit()"
 				mat-stroked-button
 				color="primary"
@@ -30,6 +31,7 @@
 				Clear
 			</button>
 			<button
+				aria-label="Submit Task Form"
 				[disabled]="formStatus && formStatus !== 'VALID'"
 				(click)="submitTaskForm$.emit()"
 				mat-raised-button

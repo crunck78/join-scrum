@@ -51,18 +51,10 @@ export class AddTaskDialogComponent implements OnInit {
 	get title() {
 		if (this.mode === "add") return "Add Task";
 		if (this.mode === "edit") return "Edit Task";
-		return "";
+		throw new Error(`Invalid mode: ${this.mode}`);
 	}
 
-	handleEditedTask(editedTask: TaskResponse) {
-		this.dialogRef.close(editedTask);
-	}
-
-	handleAddedTask(addedTask: TaskResponse) {
-		this.dialogRef.close(addedTask);
-	}
-
-	handleDeletedTask(deletedTaskId: number) {
-		this.dialogRef.close(deletedTaskId);
+	handleActionTaskForm(event: TaskResponse | null) {
+		this.dialogRef.close(event);
 	}
 }

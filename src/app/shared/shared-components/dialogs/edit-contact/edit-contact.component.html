@@ -33,21 +33,12 @@
 			[labelName]="'Phone'"
 		></app-form-field>
 
-		<!-- <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-description>
-                    Password requirements
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <p>Must be at least 8 character long</p>
-            <p>Must be a combination of letters, numbers and at least one special character.</p>
-
-        </mat-expansion-panel> -->
 	</form>
 
 	<ng-container actions>
 		<button mat-dialog-close mat-stroked-button color="primary">Cancel</button>
 		<button
+			aria-label="Save Contact"
 			(click)="editContact()"
 			[disabled]="editContactForm.invalid"
 			mat-raised-button

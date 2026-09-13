@@ -2,8 +2,8 @@ import {
 	Component,
 	EventEmitter,
 	HostListener,
-	Input,
 	inject,
+	Input,
 	Output,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
@@ -41,6 +41,8 @@ export class TaskComponent {
 			data: { task: this.task, mode: "edit" },
 		});
 		dialogRef.afterClosed().subscribe((result) => {
+			// how does one know if the task was deleted or edited?
+			// maybe we should have a different event for that
 			if (result) this.taskChange.emit(result);
 		});
 	}

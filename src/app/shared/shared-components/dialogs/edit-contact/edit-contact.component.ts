@@ -13,6 +13,8 @@ import { MaterialModule } from "../../../modules/material/material.module";
 import { requireAtLeastOne } from "../../../utils/custom-validators";
 import { DialogComponent } from "../../dialog/dialog.component";
 import { FormFieldComponent } from "../../form-field/form-field.component";
+
+export const UNDEFINED_CONTACT_ID = -1;
 @Component({
 	selector: "app-edit-contact",
 	templateUrl: "./edit-contact.component.html",
@@ -25,7 +27,7 @@ import { FormFieldComponent } from "../../form-field/form-field.component";
 	],
 })
 export class EditContactComponent {
-	dialogRef = inject<MatDialogRef<EditContactComponent>>(MatDialogRef);
+	private dialogRef = inject<MatDialogRef<EditContactComponent>>(MatDialogRef);
 	private scrumContacts = inject(ScrumContactsService);
 
 	editContactForm = new FormGroup(
@@ -37,10 +39,10 @@ export class EditContactComponent {
 		{ validators: requireAtLeastOne(["name", "email", "phoneNumber"]) },
 	);
 
-	contactToEdit!: number;
+	contactToEdit: number = UNDEFINED_CONTACT_ID;
 
 	editContact() {
-		if (this.editContactForm.valid) {
+		if (this.editContactForm.valid && this.contactToEdit !== UNDEFINED_CONTACT_ID) {
 			this.scrumContacts
 				.updateContact$(
 					this.editContactForm.value as Partial<ContactRequest>,
