@@ -15,7 +15,7 @@ import {
 	ContactResponse,
 	ContactResponseAPI,
 } from "../shared/models/contact.model";
-import { ListResponse, ListResponseAPI } from "../shared/models/list.model";
+import { ListRequest, ListResponse, ListResponseAPI } from "../shared/models/list.model";
 import {
 	SubtaskRequest,
 	SubtaskResponseAPI,
@@ -241,6 +241,17 @@ export function createListResponseAPI(
 		tasks: [],
 		name: "Todo",
 		position: 1,
+		...overrides,
+	};
+}
+
+export function createListRequest(
+	overrides?: Partial<ListRequest>,
+): ListRequest {
+	return {
+		name: "Todo",
+		position: 1,
+		board: 1,
 		...overrides,
 	};
 }

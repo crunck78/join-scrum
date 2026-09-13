@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import type { ContactResponse } from "../../models/contact.model";
 import { ContactCardComponent } from "../contact-card/contact-card.component";
 import { AddTaskDialogComponent } from "../dialogs/add-task-dialog/add-task-dialog.component";
-import { EditContactComponent } from "../dialogs/edit-contact/edit-contact.component";
+import { EditContactComponent, UNDEFINED_CONTACT_ID } from "../dialogs/edit-contact/edit-contact.component";
 import { EmailLinkComponent } from "../email-link/email-link.component";
 
 @Component({
@@ -21,7 +21,8 @@ export class ContactDetailsComponent {
 
 	editContact() {
 		const dialogRef = this.dialog.open(EditContactComponent);
-		dialogRef.componentInstance.contactToEdit = this.contact?.id ?? -1;
+		// TODO: Handle the case where contact id is undefined or null, and provide a fallback or error handling mechanism.
+		dialogRef.componentInstance.contactToEdit = this.contact?.id ?? UNDEFINED_CONTACT_ID;
 		dialogRef.componentInstance.editContactForm.patchValue(
 			this.contact as ContactResponse,
 		);

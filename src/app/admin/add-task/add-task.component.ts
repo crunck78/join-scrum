@@ -94,7 +94,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
 	@Output() formStatus$ = new EventEmitter<FormControlStatus>();
 	@Output() editedTask$ = new EventEmitter<TaskResponse | null>();
 	@Output() addedTask$ = new EventEmitter<TaskResponse | null>();
-	@Output() deletedTaskId$ = new EventEmitter<number | null>();
+	@Output() deletedTask$ = new EventEmitter<TaskResponse | null>();
 
 	ngOnInit() {
 		this.loadCategories();
@@ -226,7 +226,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
 	deleteTask() {
 		if (this.mode !== "edit") return;
 		this.addTaskService.deleteTask$(this.task.id).subscribe({
-			next: () => this.deletedTaskId$.emit(this.task.id),
+			next: () => this.deletedTask$.emit(this.task),
 		});
 	}
 

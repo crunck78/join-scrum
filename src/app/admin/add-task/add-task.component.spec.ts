@@ -316,12 +316,12 @@ describe("AddTaskComponent", () => {
 			const task = createTaskResponse({ id: 42 });
 			component.mode = "edit";
 			component.task = task;
-			const emitted: (number | null)[] = [];
-			component.deletedTaskId$.subscribe((id) => emitted.push(id));
+			const emitted: (TaskResponse | null)[] = [];
+			component.deletedTask$.subscribe((deletedTask) => emitted.push(deletedTask));
 			component.deleteTask();
 			deleteTask$.next();
 			expect(mockService.deleteTask$).toHaveBeenCalledWith(42);
-			expect(emitted).toEqual([42]);
+			expect(emitted).toEqual([task]);
 		});
 	});
 

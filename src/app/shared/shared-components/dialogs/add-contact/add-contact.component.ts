@@ -48,7 +48,6 @@ export class AddContactComponent {
 				.pipe(take(1))
 				.subscribe({
 					next: (res) => this.dialogRef.close(res),
-					error: (err) => console.log(err),
 				});
 		}
 	}
